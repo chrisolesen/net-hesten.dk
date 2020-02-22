@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+#RewriteMap imgfiles txt:/horserewritemap.txt
+#RewriteCond ^/imgHorse/Ghost_01.png$
+RewriteRule "imgHorse/(.*)" "horses/imgs/$1"
+#RewriteRule "imgHorse/(.*?\.png)" "http://files.net-hesten.dk/horses/htaccess_img_handler.php?image=$1"
+#RewriteRule "^/imgHorse/(.*)" "/../files.net-hesten.dk/horses/imgs/${imgsfromfiles:$1|/imgHorse/$1}" [PT]
+</IfModule>  
+
+<FilesMatch "\.(ttf|otf|eot|woff|woff2)$">
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+  </IfModule>
+</FilesMatch> 
+# 1 Month for most static assets
+#<filesMatch ".(css|jpg|jpeg|png|gif|js|ico)$">
+<filesMatch ".(jpg|jpeg|png|gif|ico)$">
+Header set Cache-Control "max-age=2592000, public"
+</filesMatch>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# This domain inherits the “PHP” package.
+# php -- END cPanel-generated handler, do not edit

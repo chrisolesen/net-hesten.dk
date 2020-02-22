@@ -8,7 +8,10 @@
 /app_core/impersonations_module.php
 /app_core/db_conf.php
 /app_core/action_routing_logic.php
-/files.net-hesten.dk/*
+/files.net-hesten.dk/graphics
+/files.net-hesten.dk/scripts/*
+/files.net-hesten.dk/style/graphics/*
+/files.net-hesten.dk/templates
 /global_modules/*
 /independant_modules/*
 /net-hesten.dk/*

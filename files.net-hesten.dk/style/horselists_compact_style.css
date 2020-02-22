@@ -1,0 +1,197 @@
+body [data-section-type="info_square"] {
+  display: block;
+  float: none;
+  width: 100%;
+  height: 80px;
+}
+
+body [data-section-type="info_square"] br {
+  display: none !important;
+}
+
+body [data-section-type="info_square"] > * {
+  margin-left: 0 !important;
+  margin-right: 10px  !important;
+  /*display: inline-block !important;*/
+  position: static;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  height: 30px !important;
+  line-height: 23px;
+  float: left;
+}
+
+body .horse_object {
+  overflow: visible;
+  width: 100%;
+  display: block;
+  float: none;
+  height: 100px;
+  position: relative;
+  z-index: initial;
+}
+
+body .horse_object .action_popup {
+  text-align: center;
+  width: 300px;
+  height: 200px;
+  z-index: 99999;
+  border: 3px double white;
+  padding: 10px;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+  background: #92ba6a;
+  -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+body .horse_object .action_popup.buy_horse {
+  height: 155px;
+}
+
+body .horse_object img {
+  left: 60px;
+  top: 50px;
+  max-width: 70px;
+  max-height: 70px;
+  cursor: pointer;
+}
+
+body .horse_object img:hover + img.zoom_img {
+  /*img.zoom_img:hover {*/
+  display: block !important;
+  max-width: 500px;
+  max-height: 500px;
+  z-index: 5;
+  border: 3px double white;
+  padding: 10px;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  background: #92ba6a;
+  -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+body .horse_object .horse_vcard .icon-vcard {
+  display: none;
+  /*			right:initial;
+						top:60px;
+						left:0;*/
+}
+
+body .horse_object .info {
+  z-index: initial;
+  left: 70px;
+}
+
+body .horse_object .info .gender {
+  /*				right:initial;
+								top:22px;
+								left:3px;*/
+  display: none;
+}
+
+body .horse_object .info .name {
+  position: absolute;
+  left: 30px;
+  background: none;
+  border: none;
+  top: 10px;
+  max-width: 300px;
+}
+
+body .horse_object .info .horse_vcard .extended_info {
+  font-size: 15px;
+  padding: 0 !important;
+  opacity: 1;
+  display: block;
+  right: 140px;
+  background: none;
+  border: none;
+  left: 30px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  top: 15px;
+  bottom: initial;
+  color: black;
+  /*text-shadow:0 0 1px black;*/
+}
+
+body .horse_object .info .horse_vcard .extended_info .type_age {
+  padding: 26px 8px 8px;
+}
+
+body .horse_object .info .horse_vcard .extended_info * {
+  color: black;
+  display: inline-block;
+}
+
+body .horse_object .info .horse_vcard .extended_info .horse_id {
+  padding: 8px;
+  position: absolute;
+  top: 40px;
+  left: 0;
+}
+
+body .horse_object .info .horse_vcard .extended_info .ability,
+body .horse_object .info .horse_vcard .extended_info .disability,
+body .horse_object .info .horse_vcard .extended_info .talent {
+  left: 475px;
+  position: absolute;
+  padding: 8px;
+}
+
+body .horse_object .info .horse_vcard .extended_info .ability {
+  top: 20px;
+}
+
+body .horse_object .info .horse_vcard .extended_info .disability {
+  top: 40px;
+}
+
+body .horse_object .info .horse_vcard .extended_info .talent {
+  top: 0px;
+}
+
+body .horse_object .info .horse_vcard .extended_info .artist {
+  position: absolute;
+  padding: 8px;
+  left: 100px;
+  top: 40px;
+}
+
+body .horse_object .info .horse_vcard .extended_info br {
+  display: none !important;
+}
+
+body .horse_object .info .value {
+  bottom: initial;
+  right: initial;
+  padding: 8px;
+  left: 300px;
+  top: 40px;
+  position: absolute;
+  background: none;
+  border: none;
+}
+
+body .horse_object .compact_bottom_button {
+  bottom: 12px !important;
+  left: initial !important;
+  right: 12px !important;
+}
+
+body .horse_object .compact_top_button {
+  left: initial !important;
+  right: 12px !important;
+  bottom: 55px !important;
+}
+
+body .hide_on_compact {
+  display: none;
+}
+/*# sourceMappingURL=horselists_compact_style.css.map */
