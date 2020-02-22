@@ -22,8 +22,10 @@
 /net-hesten.dk/area/artist_center
 /net-hesten.dk/area/chat/elements/footer.php
 /net-hesten.dk/area/chat/vdh
-/net-hesten.dk/area/stud
-/net-hesten.dk/area/world
+/net-hesten.dk/area/stud/main
+/net-hesten.dk/area/world/*
+!/net-hesten.dk/area/world/dev_notes/
+!/net-hesten.dk/area/world/horsetrader/
 /net-hesten.dk/font*
 #Old versions of data regulations
 /net-hesten.dk/infosheets/*[0-9]*
