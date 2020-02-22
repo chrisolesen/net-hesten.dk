@@ -12,6 +12,8 @@
 /files.net-hesten.dk/scripts/*
 /files.net-hesten.dk/style/graphics/*
 /files.net-hesten.dk/templates
-/global_modules/*
+/global_modules/modals/json_feedback.php
+/global_modules/footer.php
+/global_modules/left_menu.php
 /independant_modules/*
 /net-hesten.dk/*
