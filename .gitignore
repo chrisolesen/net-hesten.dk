@@ -1,3 +1,6 @@
+#In time only the db_conf file should be ignored 
+/app_core/db_conf.php
+
 /ajax.net-hesten.dk/feed_live_content.php
 /ajax.net-hesten.dk/fetch_stud_horse.php
 /ajax.net-hesten.dk/suggest_event_participants.php
@@ -6,7 +9,6 @@
 /app_core/object_handlers/*
 /app_core/user_validate.php
 /app_core/impersonations_module.php
-/app_core/db_conf.php
 /app_core/action_routing_logic.php
 /files.net-hesten.dk/graphics
 /files.net-hesten.dk/scripts/*
@@ -15,4 +17,16 @@
 /global_modules/modals/json_feedback.php
 /global_modules/footer.php
 /global_modules/left_menu.php
-/net-hesten.dk/*
+#Adminpanels
+/net-hesten.dk/admin
+/net-hesten.dk/area/artist_center
+/net-hesten.dk/area/chat/elements/footer.php
+/net-hesten.dk/area/chat/vdh
+/net-hesten.dk/area/stud
+/net-hesten.dk/area/world
+/net-hesten.dk/font*
+#Old versions of data regulations
+/net-hesten.dk/infosheets/*[0-9]*
+/net-hesten.dk/scripts
+/net-hesten.dk/style/graphics
+/net-hesten.dk/favicon.ico
