@@ -1,0 +1,17 @@
+.tabs {
+
+	> nav {
+		ul {
+		}
+		li {
+			@extend %raised;
+		}
+	}
+	> section {
+		display:none;
+		margin-top:0;
+		&.visible {
+			display: block;
+		}
+	}
+}

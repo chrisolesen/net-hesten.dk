@@ -2,7 +2,12 @@
 /ajax.net-hesten.dk/fetch_stud_horse.php
 /ajax.net-hesten.dk/suggest_event_participants.php
 /ajax.net-hesten.dk/suggest_user_names.php
-/app_core/*
+/app_core/cron_files/*
+/app_core/object_handlers/*
+/app_core/user_validate.php
+/app_core/impersonations_module.php
+/app_core/db_conf.php
+/app_core/action_routing_logic.php
 /files.net-hesten.dk/*
 /global_modules/*
 /independant_modules/*
