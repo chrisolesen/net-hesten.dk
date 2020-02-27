@@ -18,7 +18,14 @@
 /global_modules/footer.php
 /global_modules/left_menu.php
 #Adminpanels
-/net-hesten.dk/admin
+/net-hesten.dk/admin/*
+!/net-hesten.dk/admin/lists
+/net-hesten.dk/admin/lists/index.php
+/net-hesten.dk/admin/lists/online_times.php
+/net-hesten.dk/admin/lists/tabel_stability.php
+/net-hesten.dk/admin/lists/user_reminders.php
+!/net-hesten.dk/admin/style
+!/net-hesten.dk/admin/index.php
 /net-hesten.dk/area/artist_center
 /net-hesten.dk/area/chat/elements/footer.php
 /net-hesten.dk/area/chat/vdh
