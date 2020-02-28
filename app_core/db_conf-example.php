@@ -3,6 +3,8 @@
 $_GLOBALS['hidden_system_users'] = [1, 2, 3];
 $_GLOBALS['hidden_system_users_sql'] = '1, 2, 3';
 
+$_GLOBALS['project_upload_secret'] = 'crypt-code';
+
 date_default_timezone_set('Europe/Copenhagen');
 define('DB_HOST', 'localhost');
 define('DB_USER', '');
@@ -15,7 +17,7 @@ $_GLOBALS['DB_NAME_NEW'] = DB_NAME_NEW;
 
 $link = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME_OLD, DB_PORT);
 if (!$link) {
-	die('<!--Could not connect: ' . mysql_error() . '-->');
+	die('<!--Could not connect: ' . mysqli_error($link) . '-->');
 }
 $link_old = $link;
 $link_old->set_charset('latin1');

@@ -1,39 +1,44 @@
-#In time only the db_conf file should be ignored 
+#Database configurations 
 /app_core/db_conf.php
+#Graphics and font files
+/net-hesten.dk/style/graphics
+/net-hesten.dk/font*
+/files.net-hesten.dk/graphics
+/files.net-hesten.dk/scripts/*
+/files.net-hesten.dk/style/graphics/*
 
+#Files that should not be in gitignore
 /ajax.net-hesten.dk/feed_live_content.php
 /ajax.net-hesten.dk/fetch_stud_horse.php
 /ajax.net-hesten.dk/suggest_event_participants.php
 /ajax.net-hesten.dk/suggest_user_names.php
 /app_core/cron_files/*
 /app_core/object_handlers/*
-/app_core/user_validate.php
-/app_core/impersonations_module.php
-/app_core/action_routing_logic.php
-/files.net-hesten.dk/graphics
-/files.net-hesten.dk/scripts/*
-/files.net-hesten.dk/style/graphics/*
+
+
 /files.net-hesten.dk/templates
 /global_modules/modals/json_feedback.php
 /global_modules/left_menu.php
+
 #Adminpanels
-/net-hesten.dk/admin/*
-!/net-hesten.dk/admin/lists
+/net-hesten.dk/admin/competitions
+/net-hesten.dk/admin/elements
+/net-hesten.dk/admin/hestetegner
+/net-hesten.dk/admin/management
+/net-hesten.dk/admin/manuel_crons
+/net-hesten.dk/admin/moderator
+/net-hesten.dk/admin/opinions
+/net-hesten.dk/admin/specifications
+/net-hesten.dk/admin/test
 /net-hesten.dk/admin/lists/index.php
 /net-hesten.dk/admin/lists/online_times.php
 /net-hesten.dk/admin/lists/tabel_stability.php
-/net-hesten.dk/admin/lists/user_reminders.php
-!/net-hesten.dk/admin/style
-!/net-hesten.dk/admin/index.php
+
 /net-hesten.dk/area/artist_center
-/net-hesten.dk/area/chat/elements/footer.php
-/net-hesten.dk/area/chat/vdh
 /net-hesten.dk/area/stud/main
 /net-hesten.dk/area/world/*
 !/net-hesten.dk/area/world/dev_notes/
 !/net-hesten.dk/area/world/horsetrader/
-/net-hesten.dk/font*
 #Old versions of data regulations
 /net-hesten.dk/infosheets/*[0-9]*
-/net-hesten.dk/style/graphics
 /net-hesten.dk/favicon.ico
