@@ -154,9 +154,6 @@
 						continue;
 					}
 					$total_wkr = (int) $total_wkr + (int) $data['penge'];
-					if ($data['nyhedsbrev'] == 'ja') {
-						++$nyhedsbrev;
-					}
 					if ($data['penge'] > $richest_wkr) {
 						$richest_wkr = $data['penge'];
 						$richest = $data['stutteri'];
@@ -171,7 +168,7 @@
 					} elseif ($data['penge'] >= 1000000) {
 						++$wealthy;
 					}
-
+/*
 					if ($data['penge'] >= 25000000) {
 						++$stats[months_ago($data['logindate'])]['super_rich'];
 					} elseif ($data['penge'] >= 10000000) {
@@ -180,7 +177,7 @@
 						++$stats[months_ago($data['logindate'])]['wealthy'];
 					}
 
-					++$stats[months_ago($data['logindate'])]['active'];
+					++$stats[months_ago($data['logindate'])]['active'];*/
 					++$i;
 				}
 				?>

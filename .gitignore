@@ -1,10 +1,12 @@
 #Database configurations 
 /app_core/db_conf.php
 #Graphics and font files
-/net-hesten.dk/style/graphics
 /net-hesten.dk/font*
+/net-hesten.dk/favicon.ico
+/net-hesten.dk/style/graphics
 /files.net-hesten.dk/graphics
 /files.net-hesten.dk/scripts/*
+/files.net-hesten.dk/templates
 /files.net-hesten.dk/style/graphics/*
 
 #Files that should not be in gitignore
@@ -12,7 +14,11 @@
 /ajax.net-hesten.dk/fetch_stud_horse.php
 /ajax.net-hesten.dk/suggest_event_participants.php
 /ajax.net-hesten.dk/suggest_user_names.php
-/app_core/cron_files/functions/*
+/app_core/cron_files/functions/automate_contests.php
+/app_core/cron_files/functions/generate_horses.php
+/app_core/cron_files/functions/give_birth_version_two.php
+/app_core/cron_files/functions/give_birth.php
+/app_core/cron_files/functions/grow_up.php
 /app_core/cron_files/five_minutes.php
 /app_core/object_handlers/accounting.php
 /app_core/object_handlers/alias_chat.php
@@ -29,19 +35,15 @@
 /app_core/object_handlers/private_trade.php
 /app_core/object_handlers/user.php
 
-/files.net-hesten.dk/templates
-/global_modules/modals/json_feedback.php
-/global_modules/left_menu.php
 
 #Adminpanels
 /net-hesten.dk/admin/competitions
 /net-hesten.dk/admin/elements
 /net-hesten.dk/admin/hestetegner
 /net-hesten.dk/admin/management
-/net-hesten.dk/admin/manuel_crons
+/net-hesten.dk/admin/manuel_crons/breeding.php
+/net-hesten.dk/admin/manuel_crons/competitions.php
 /net-hesten.dk/admin/moderator
-/net-hesten.dk/admin/opinions
-/net-hesten.dk/admin/specifications
 /net-hesten.dk/admin/test
 /net-hesten.dk/admin/lists/index.php
 /net-hesten.dk/admin/lists/online_times.php
@@ -54,4 +56,3 @@
 /net-hesten.dk/area/world/visit
 #Old versions of data regulations
 /net-hesten.dk/infosheets/*[0-9]*
-/net-hesten.dk/favicon.ico
