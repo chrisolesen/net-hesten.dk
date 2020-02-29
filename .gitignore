@@ -47,11 +47,11 @@
 /net-hesten.dk/admin/lists/online_times.php
 /net-hesten.dk/admin/lists/tabel_stability.php
 
-/net-hesten.dk/area/artist_center
 /net-hesten.dk/area/stud/main
-/net-hesten.dk/area/world/*
-!/net-hesten.dk/area/world/dev_notes/
-!/net-hesten.dk/area/world/horsetrader/
+/net-hesten.dk/area/world/landscape
+/net-hesten.dk/area/world/privat_trade
+/net-hesten.dk/area/world/simple_competition
+/net-hesten.dk/area/world/visit
 #Old versions of data regulations
 /net-hesten.dk/infosheets/*[0-9]*
 /net-hesten.dk/favicon.ico

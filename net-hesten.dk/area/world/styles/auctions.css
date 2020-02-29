@@ -1,0 +1,213 @@
+@media screen and (max-width: 440px) {
+  body {
+    /*text-align:center;*/ }
+
+  .filters {
+    display: none !important; }
+
+  .grid {
+    text-align: center !important; } }
+section[data-zone="your-auctions"] .grid,
+section[data-zone="other-auctions"] .grid,
+section[data-zone="your-horses"] .grid {
+  position: relative;
+  text-align: justify;
+  overflow: hidden; }
+
+.horse_square.graesing img {
+  max-height: 90%;
+  max-width: 90%; }
+
+.horse_square.graesing {
+  background: url("/style/graphics/graesing-one.jpg");
+  background-size: 210px 210px; }
+
+.horse_square {
+  position: relative;
+  display: inline-block;
+  width: 210px;
+  height: 210px;
+  overflow: hidden; }
+
+.horse_square .info {
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  opacity: 0;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-transition: opacity 0.25s linear;
+  -moz-transition: opacity 0.25s linear;
+  transition: opacity 0.25s linear; }
+
+.horse_square .info .name {
+  max-width: 160px;
+  display: inline-block;
+  line-height: 20px;
+  font-size: 16px; }
+
+.horse_square .info .gender {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  font-size: 16px; }
+
+.horse_square .info .name,
+.horse_square .info .end_date,
+.horse_square .info .buy_now_price,
+.horse_square .info .highest_bid,
+.horse_square .info .value {
+  /*		text-shadow:0 0 1px black, 
+                          0 0 2px black,
+                          0 0 3px white,
+                          0 0 4px white,
+                          0 0 5px black,
+                          0 0 6px black;*/
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
+  padding: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.5); }
+
+.horse_square .info .end_date {
+  position: absolute;
+  right: 10px;
+  bottom: 76px; }
+
+.horse_square .info .value {
+  position: absolute;
+  bottom: 10px;
+  right: 10px; }
+
+.horse_square .info .highest_bid {
+  position: absolute;
+  bottom: 54px;
+  right: 10px; }
+
+.horse_square .info .buy_now_price {
+  position: absolute;
+  bottom: 32px;
+  right: 10px; }
+
+.horse_square .info form {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  z-index: 6;
+  display: none;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.8);
+  -webkit-transition: opacity 1.5s linear;
+  -moz-transition: opacity 1.5s linear;
+  transition: opacity 1.5s linear; }
+
+.horse_square .info form.visible {
+  display: block;
+  opacity: 1; }
+
+.horse_square .info form input {
+  margin-bottom: 5px;
+  width: 100%; }
+
+.horse_square .info .close_sell_window,
+.horse_square .info .open_sell_window {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 50px;
+  z-index: 3; }
+
+.horse_square.visible .info,
+.horse_square:hover .info {
+  opacity: 1; }
+
+section[data-zone="your-horses"] .grid:after,
+.horse_square:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+.horse_square img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: auto;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  -ms-transform: translate(-50%, -50%);
+  /* IE 9 */
+  -webkit-transform: translate(-50%, -50%);
+  /* Chrome, Safari, Opera */
+  transform: translate(-50%, -50%);
+  z-index: 1; }
+
+.female {
+  color: rgba(250, 200, 150, 0.8); }
+
+.male {
+  color: rgba(150, 200, 250, 0.8); }
+
+.horse_square .horse_vcard .icon-vcard {
+  z-index: 5;
+  position: absolute;
+  top: 40px;
+  right: 10px; }
+
+.horse_square .horse_vcard .icon-vcard:hover + .extended_info, .horse_square .horse_vcard .icon-vcard + .extended_info:hover {
+  opacity: 1;
+  z-index: 4;
+  display: block; }
+
+.horse_square .horse_vcard .extended_info {
+  color: whitesmoke;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  padding: 1px 30px 1px 5px;
+  background-color: rgba(0, 0, 0, 0.8);
+  line-height: 16px;
+  font-size: 12px;
+  text-align: left;
+  box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  display: none;
+  -webkit-transition: opacity 0.25s linear;
+  -moz-transition: opacity 0.25s linear;
+  transition: opacity 0.25s linear; }
+
+.horse_square .ability {
+  color: limegreen; }
+
+.horse_square .artist {
+  color: gold; }
+
+.horse_square .talent {
+  color: lightsteelblue; }
+
+.horse_square .disability {
+  color: lightcoral; }
+
+.horse_square .original {
+  color: gold; }
+
+.horse_square .unique {
+  color: gold; }
+
+.page_selector span {
+  font-weight: bold; }
+.page_selector a {
+  margin-left: 10px; }
+
+/*# sourceMappingURL=auctions.css.map */
