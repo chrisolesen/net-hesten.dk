@@ -11,7 +11,7 @@ $race = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR
 var_dump($race);
 if (!$race) {
     $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` (`name`,`max_height`,`min_height`,`description`) VALUES (:name, :max_height, :min_height, :description)";
-    $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->execute(['name' => 'Ghosts', 'max_height' => 170, 'min_height' => 150, 'description' => 'Mythical creatures']);
+    $GLOBALS['pdo_new']->prepare($sql)->execute(['name' => 'Ghosts', 'max_height' => 170, 'min_height' => 150, 'description' => 'Mythical creatures']);
 }
 
 $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` LIMIT 1";
