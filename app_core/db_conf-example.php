@@ -20,6 +20,11 @@ $mysql_database_new = DB_NAME_NEW;
 $_GLOBALS['DB_NAME_OLD'] = DB_NAME_OLD;
 $_GLOBALS['DB_NAME_NEW'] = DB_NAME_NEW;
 
+$GLOBALS['hidden_system_users'] = $_GLOBALS['hidden_system_users'];
+$GLOBALS['hidden_system_users_sql'] = $_GLOBALS['hidden_system_users_sql'];
+$GLOBALS['DB_NAME_OLD'] = DB_NAME_OLD;
+$GLOBALS['DB_NAME_NEW'] = DB_NAME_NEW;
+
 $link_old = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME_OLD, DB_PORT);
 $link_old->set_charset('latin1');
 $link_old->query("SET time_zone = 'Europe/Copenhagen'");
