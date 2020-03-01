@@ -1,4 +1,4 @@
-CREATE TABLE `game_data_private_trade` IF NOT EXISTS (
+CREATE TABLE `game_data_private_trade` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `seller` bigint(20) unsigned NOT NULL,
   `buyer` bigint(20) unsigned NOT NULL,

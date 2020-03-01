@@ -1,4 +1,4 @@
-CREATE TABLE `user_application` IF NOT EXISTS (
+CREATE TABLE `user_application` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(255) CHARACTER SET utf8 NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `user_application` IF NOT EXISTS (
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `user_data_json` IF NOT EXISTS (
+CREATE TABLE `user_data_json` (
   `parent_id` bigint(20) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
   `value` longblob NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `user_data_json` IF NOT EXISTS (
   PRIMARY KEY (`parent_id`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `user_data_numeric` IF NOT EXISTS (
+CREATE TABLE `user_data_numeric` (
   `parent_id` bigint(20) unsigned NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `value` bigint(20) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `user_data_numeric` IF NOT EXISTS (
   PRIMARY KEY (`parent_id`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `user_data_sessions` IF NOT EXISTS (
+CREATE TABLE `user_data_sessions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
   `start` datetime NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `user_data_sessions` IF NOT EXISTS (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `user_data_text` IF NOT EXISTS (
+CREATE TABLE `user_data_text` (
   `parent_id` bigint(20) unsigned NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `value` text CHARACTER SET latin1 NOT NULL,
@@ -49,14 +49,14 @@ CREATE TABLE `user_data_text` IF NOT EXISTS (
   PRIMARY KEY (`parent_id`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `user_data_timing` IF NOT EXISTS (
+CREATE TABLE `user_data_timing` (
   `parent_id` bigint(20) unsigned NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `value` datetime NOT NULL,
   PRIMARY KEY (`parent_id`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `user_data_varchar` IF NOT EXISTS (
+CREATE TABLE `user_data_varchar` (
   `parent_id` bigint(20) unsigned NOT NULL,
   `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `value` varchar(255) CHARACTER SET utf8 NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `user_data_varchar` IF NOT EXISTS (
   PRIMARY KEY (`parent_id`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `user_privileges` IF NOT EXISTS (
+CREATE TABLE `user_privileges` (
   `user_id` bigint(20) unsigned NOT NULL,
   `privilege_id` bigint(20) unsigned NOT NULL,
   `start` datetime NOT NULL,
@@ -72,7 +72,7 @@ CREATE TABLE `user_privileges` IF NOT EXISTS (
   PRIMARY KEY (`user_id`,`privilege_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `users` IF NOT EXISTS (
+CREATE TABLE `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(255) CHARACTER SET utf8 NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 NOT NULL,

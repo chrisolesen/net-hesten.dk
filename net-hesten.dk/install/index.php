@@ -16,7 +16,6 @@ $files = [
 ];
 foreach ($files as $file) {
     $query = file_get_contents("{$basepath}/shema_setups/new/{$file}.sql");
-    echo $query;
     $stmt = $GLOBALS['pdo_new']->prepare($query);
     if ($stmt->execute()) {
         echo "Success &lt;{$file}&gt;<br />";

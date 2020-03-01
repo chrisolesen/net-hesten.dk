@@ -1,4 +1,4 @@
-CREATE TABLE `game_data_chat_messages` IF NOT EXISTS (
+CREATE TABLE `game_data_chat_messages` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `creator` bigint(20) NOT NULL,
   `status_code` smallint(5) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE `game_data_chat_messages` IF NOT EXISTS (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `game_data_alias_chat` IF NOT EXISTS (
+CREATE TABLE `game_data_alias_chat` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `alias_id` bigint(20) unsigned NOT NULL,
   `creator` bigint(20) unsigned NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE `game_data_alias_chat` IF NOT EXISTS (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `game_data_private_messages` IF NOT EXISTS (
+CREATE TABLE `game_data_private_messages` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `status_code` smallint(5) unsigned NOT NULL,
   `hide` tinyint(3) unsigned NOT NULL,

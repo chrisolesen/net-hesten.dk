@@ -1,4 +1,4 @@
-CREATE TABLE `game_data_competitions` IF NOT EXISTS (
+CREATE TABLE `game_data_competitions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `status_code` smallint(5) unsigned NOT NULL,
   `start_date` datetime NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `game_data_competitions` IF NOT EXISTS (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `game_data_competition_participants` IF NOT EXISTS (
+CREATE TABLE `game_data_competition_participants` (
   `participant_id` bigint(20) unsigned NOT NULL,
   `competition_id` bigint(20) unsigned NOT NULL,
   `signup_date` datetime DEFAULT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `game_data_competition_participants` IF NOT EXISTS (
   PRIMARY KEY (`participant_id`,`competition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `game_data_simple_competition` IF NOT EXISTS (
+CREATE TABLE `game_data_simple_competition` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `competition_name` varchar(255) NOT NULL,
   `competition_description` text,
@@ -35,7 +35,7 @@ CREATE TABLE `game_data_simple_competition` IF NOT EXISTS (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `game_data_simple_competition_participants` IF NOT EXISTS (
+CREATE TABLE `game_data_simple_competition_participants` (
   `competition_id` bigint(20) unsigned NOT NULL,
   `participant_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`competition_id`,`participant_id`)

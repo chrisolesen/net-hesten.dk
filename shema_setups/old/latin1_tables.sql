@@ -1,4 +1,4 @@
-CREATE TABLE `Brugere` IF NOT EXISTS (
+CREATE TABLE `Brugere` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `stutteri` varchar(50) NOT NULL,
   `password` varchar(200) NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE `Brugere` IF NOT EXISTS (
   KEY `stutteri_4` (`stutteri`,`thumb`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `Chancen` IF NOT EXISTS (
+CREATE TABLE `Chancen` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `chancetekst` text NOT NULL,
   `penge` varchar(20) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `Chancen` IF NOT EXISTS (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `Heste` IF NOT EXISTS (
+CREATE TABLE `Heste` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `bruger` varchar(50) NOT NULL,
   `navn` varchar(50) NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE `Heste` IF NOT EXISTS (
   KEY `farid` (`farid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `Hesteracer` IF NOT EXISTS (
+CREATE TABLE `Hesteracer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `hesterace` varchar(50) NOT NULL,
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -108,7 +108,7 @@ CREATE TABLE `Hesteracer` IF NOT EXISTS (
   KEY `hesterace` (`hesterace`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `horse_habits` IF NOT EXISTS (
+CREATE TABLE `horse_habits` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `Egenskab` text NOT NULL,
   `Ulempe` text NOT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE `horse_habits` IF NOT EXISTS (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-CREATE TABLE `horse_height` IF NOT EXISTS (
+CREATE TABLE `horse_height` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `race` text NOT NULL,
   `lower` int(11) NOT NULL,
