@@ -1,7 +1,6 @@
 <?php
 $basepath = '../..';
 require_once("{$basepath}/app_core/db_conf.php");
-error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 $sql = 'INSERT INTO praktisk_dev_nethest_new.horse_races';
 
@@ -9,9 +8,10 @@ $sql = 'INSERT INTO praktisk_dev_nethest_new.horse_races';
 /* Insert a horse race */
 $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` LIMIT 1";
 try {
-    $race = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->execute()->fetch();
+    $statement = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->execute();
+     $race = $statement->fetch();
 } catch (Exception $e) {
-    $pdo->rollback();
+   /* $GLOBALS['pdo_new']->rollback();*/
     throw $e;
 }
 var_dump($race);
@@ -23,7 +23,7 @@ if (!$race) {
         $statement->execute(['name' => 'Ghosts', 'max_height' => 170, 'min_height' => 150, 'description' => 'Mythical creatures']);
         $GLOBALS['pdo_new']->commit();
     } catch (Exception $e) {
-        $pdo->rollback();
+        $GLOBALS['pdo_new']->rollback();
         throw $e;
     }
 }
