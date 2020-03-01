@@ -4,9 +4,7 @@ session_start();
 $index_caller = true;
 require_once '../app_core/db_conf.php';
 
-if (filter_input(INPUT_GET,'request') === 'suggest_user_names') {
-	require './suggest_user_names.php';
-} else if (filter_input(INPUT_GET,'request') === 'feed_live_content') {
+if (filter_input(INPUT_GET,'request') === 'feed_live_content') {
 	require './feed_live_content.php';
 } else if (filter_input(INPUT_GET,'request') === 'suggest_breed_targets') {
 	require './suggest_breed_targets.php';

@@ -28,14 +28,12 @@ require "$basepath/global_modules/header.php";
 </ul>
 <div class="new_thread">
 	<form action="/area/stud/messages/thread.php" method="post">
-		<input type="text" name="write_to" list="usernames" placeholder="Stutteri Navn" />
+		<input type="text" name="write_to" list="active_usernames" placeholder="Stutteri Navn" />
 		<input class="btn btn-green" type="submit" name="open_thread" value="Skriv til" />
 	</form>
 	<div class="result">
 
 	</div>
-	<datalist id="usernames">
-	</datalist>
 </div>
 
 <script type="text/javascript">
@@ -52,18 +50,6 @@ require "$basepath/global_modules/header.php";
 			// Leave this empty, that's the magic sauce
 		});
 	}
-
-	last_name = '';
-	$('[name="write_to"]').keyup(function() {
-		name = $('[name="write_to"]').val();
-		if (name !== last_name) {
-			last_name = name;
-			console.log('[name = ' + name + ']');
-			$.get("https://ajax.net-hesten.dk/index.php?request=suggest_user_names&partial_name=" + name, function(data) {
-				$("#usernames").html(data);
-			});
-		}
-	});
 </script>
 
 <?php

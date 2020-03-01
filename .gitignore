@@ -11,8 +11,6 @@
 /net-hesten.dk/admin/elements/fonts/*
 
 #Files that should not be in gitignore
-/ajax.net-hesten.dk/suggest_event_participants.php
-/ajax.net-hesten.dk/suggest_user_names.php
 /app_core/object_handlers/accounting.php
 /app_core/object_handlers/alias_chat.php
 /app_core/object_handlers/artist_center.php
@@ -68,27 +66,5 @@
 /net-hesten.dk/admin/management/user_cleanup.php
 /net-hesten.dk/admin/management/user_management.php
 
-
-/net-hesten.dk/admin/manuel_crons/breeding.php
-/net-hesten.dk/admin/manuel_crons/competitions.php
-/net-hesten.dk/admin/test/gen_birth.php
-/net-hesten.dk/admin/test/generation.php
-/net-hesten.dk/admin/test/horselist_export.php
-/net-hesten.dk/admin/test/index.php
-
-/net-hesten.dk/admin/lists/index.php
-/net-hesten.dk/admin/lists/online_times.php
-/net-hesten.dk/admin/lists/tabel_stability.php
-
-/net-hesten.dk/area/stud/main/index.php
-
-/net-hesten.dk/area/world/landscape/index.php
-/net-hesten.dk/area/world/privat_trade/index.php
-/net-hesten.dk/area/world/simple_competition/index.php
-/net-hesten.dk/area/world/visit/visit.php
-/net-hesten.dk/area/world/visit/index.php
-/net-hesten.dk/area/world/visit/visit_newmode.php
-#7 files
-/net-hesten.dk/area/world/visit/tabs/* 
 #Old versions of data regulations
 /net-hesten.dk/infosheets/*[0-9]*
