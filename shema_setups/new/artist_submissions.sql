@@ -1,4 +1,4 @@
-CREATE TABLE `artist_center_submissions` IF NOT EXISTS (
+CREATE TABLE `artist_center_submissions` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `race` varchar(255) DEFAULT NULL,
   `image` varchar(255) NOT NULL,
