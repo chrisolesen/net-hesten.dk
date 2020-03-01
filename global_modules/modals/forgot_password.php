@@ -1,4 +1,4 @@
-<div id="forgot_password" class="modal"><?php ?>
+<div id="forgot_password" class="modal"><?php /* */ ?>
 	<script>
 		function forgot_password(caller) {
 

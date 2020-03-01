@@ -1,4 +1,4 @@
-<div id="horze_extended_info" class="modal"><?php ?>
+<div id="horze_extended_info" class="modal"><?php /* */ ?>
     <script>
 
 		function horze_extended_info(caller) {

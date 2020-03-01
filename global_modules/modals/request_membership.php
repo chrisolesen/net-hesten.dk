@@ -1,4 +1,4 @@
-<div id="request_membership" class="modal"><?php ?>
+<div id="request_membership" class="modal"><?php /* */ ?>
 	<script>
 		function request_membership(caller) {
 

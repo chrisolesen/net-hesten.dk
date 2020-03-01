@@ -1,4 +1,4 @@
-<div id="horse_linage" class="modal" style="z-index: 7;">
+<div id="horse_linage" class="modal" style="z-index: 7;"><?php /* */ ?>
     <script>
         function horse_linage(caller) {
             horse_id = jQuery(caller).attr('data-horse-id');
