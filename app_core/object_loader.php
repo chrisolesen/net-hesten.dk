@@ -29,7 +29,6 @@ require "$basepath/app_core/object_handlers/horse_trader.php";
 require "$basepath/app_core/object_handlers/alias_chat.php";
 require "$basepath/app_core/object_handlers/chat.php";
 require "$basepath/app_core/object_handlers/private_trade.php";
-require "$basepath/app_core/object_handlers/private_messages_encrypted.php";
 require "$basepath/app_core/object_handlers/user.php";
 require "$basepath/app_core/object_handlers/artist_center.php";
 require "$basepath/app_core/object_handlers/competitions.php";
