@@ -1,4 +1,4 @@
-CREATE TABLE `game_date_opinion_pools` (
+CREATE TABLE `game_date_opinion_pools` IF NOT EXISTS (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `status` smallint(5) unsigned NOT NULL,
   `content` blob NOT NULL,

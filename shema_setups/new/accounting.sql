@@ -1,4 +1,4 @@
-CREATE TABLE `game_data_accounting` (
+CREATE TABLE `game_data_accounting` IF NOT EXISTS (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
   `entry_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,

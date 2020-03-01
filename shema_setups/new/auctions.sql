@@ -1,4 +1,4 @@
-CREATE TABLE `game_data_auctions` (
+CREATE TABLE `game_data_auctions` IF NOT EXISTS (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `creator` bigint(20) unsigned NOT NULL,
   `status_code` smallint(5) unsigned NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE `game_data_auctions` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `game_data_auction_bids` (
+CREATE TABLE `game_data_auction_bids` IF NOT EXISTS (
     `creator` bigint(20) unsigned NOT NULL,
     `auction` bigint(20) unsigned NOT NULL,
     `bid_amount` bigint(20) unsigned NOT NULL,

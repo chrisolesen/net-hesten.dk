@@ -1,4 +1,4 @@
-CREATE TABLE `horse_metadata` (
+CREATE TABLE `horse_metadata` IF NOT EXISTS (
   `horse_id` bigint(20) unsigned NOT NULL,
   `meta_key` varchar(250) NOT NULL,
   `meta_value` longblob,
@@ -6,7 +6,7 @@ CREATE TABLE `horse_metadata` (
   PRIMARY KEY (`horse_id`,`meta_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `horse_races` (
+CREATE TABLE `horse_races` IF NOT EXISTS (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `max_height` smallint(5) unsigned NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE `horse_races` (
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `horse_templates` (
+CREATE TABLE `horse_templates` IF NOT EXISTS (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `image` varchar(255) NOT NULL,
   `stance` varchar(100) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `horse_templates` (
   UNIQUE KEY `image_UNIQUE` (`image`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `horse_types` (
+CREATE TABLE `horse_types` IF NOT EXISTS (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `template` bigint(20) unsigned DEFAULT NULL,
   `race` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
