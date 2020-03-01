@@ -130,9 +130,9 @@ class auctions {
 
 				
 				/* Send besked til den ny ejer */
-				$sql = "INSERT INTO Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Du har vundet en auktion', '" . (mb_convert_encoding("Tillykke {$temp_user_data['username']}, du har købt en hest til køb nu pris.", 'latin1', 'UTF-8')) . "', 'Auktionshuset', '{$temp_user_data['username']}', 'Indbakke', NOW() )";
+				/*$sql = "INSERT INTO Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Du har vundet en auktion', '" . (mb_convert_encoding("Tillykke {$temp_user_data['username']}, du har købt en hest til køb nu pris.", 'latin1', 'UTF-8')) . "', 'Auktionshuset', '{$temp_user_data['username']}', 'Indbakke', NOW() )";
 				$link_old->query($sql);
-
+*/
 				/* indsæt besked i ny pb system */
 				$utf_8_username = mb_convert_encoding($temp_user_data['username'], 'UTF-8', 'latin1');
 				$utf_8_message = $link_new->real_escape_string("Tillykke {$utf_8_username}, du har købt en hest til køb nu pris.");
@@ -147,8 +147,8 @@ class auctions {
 					$temp_seller_data = ['money' => $data['penge'], 'username' => $data['stutteri']];
 				}
 				/* Send besked til den gamle ejer */
-				$sql = "INSERT INTO Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Din auktion er slut', '" . (mb_convert_encoding("Tillykke {$temp_seller_data['username']}, det er lykkeds at sælge din hest på auktion til køb nu pris!", 'latin1', 'UTF-8')) . "', 'Auktionshuset', '{$temp_seller_data['username']}', 'Indbakke', NOW() )";
-				$link_old->query($sql);
+				/*$sql = "INSERT INTO Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Din auktion er slut', '" . (mb_convert_encoding("Tillykke {$temp_seller_data['username']}, det er lykkeds at sælge din hest på auktion til køb nu pris!", 'latin1', 'UTF-8')) . "', 'Auktionshuset', '{$temp_seller_data['username']}', 'Indbakke', NOW() )";
+				$link_old->query($sql);*/
 				/* indsæt besked i ny pb system */
 //				$utf_8_username = mb_convert_encoding($temp_user_data['username'], 'UTF-8', 'latin1');
 //				$utf_8_message = $link_new->real_escape_string("Tillykke {$utf_8_username}, du har købt en hest til køb nu pris.");

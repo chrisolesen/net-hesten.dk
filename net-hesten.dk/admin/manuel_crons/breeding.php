@@ -133,11 +133,11 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 			$tegn = array("&", "$dims", "'");
 			$substitut = array("og", "&quot;", "&#039;");
 
-			$prut1 = str_replace($tegn, $substitut, $glnavn);
-			$prutbruger1 = str_replace($tegn, $substitut, $nybruger);
-			if ($prut1) {
-//				$link_old->query("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('$prut1 har f{$ø}dt et {$foel}','Tillykke $prutbruger1 :-)) <br>$prut1 har f{$ø}dt et velskabt {$foel}.<br><img src=\"/imgHorse/$glthumb\" style=\'FILTER: FlipH;\'><img src=/imgHorse/$nythumb>','admin@Net-hesten','$prutbruger1','Avl',now() )");
-			}
+			/*$horsename = str_replace($tegn, $substitut, $glnavn);
+			$username = str_replace($tegn, $substitut, $nybruger);
+			if ($horsename) {
+//				$link_old->query("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('$horsename har f{$ø}dt et {$foel}','Tillykke $username :-)) <br>$prut1 har f{$ø}dt et velskabt {$foel}.<br><img src=\"/imgHorse/$glthumb\" style=\'FILTER: FlipH;\'><img src=/imgHorse/$nythumb>','admin@Net-hesten','$username','Avl',now() )");
+			}*/
 		}
 	}
 

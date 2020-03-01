@@ -67,7 +67,7 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 			'Article', 'ArticleLayouts', 'ArticleRating', 'Brugere',
 			'Chancen', 'death_run',
 			'Heste', 'Hesteracer', 'horse_habits', 'horse_height',
-			'Indbetaling', 'Lotto', 'name_change', 'PaypalPayment', 'SolgtUdstyr',
+			'name_change', 'PaypalPayment', 'SolgtUdstyr',
 			'Udstyr'
 		];
 		foreach ($tables as $name) {

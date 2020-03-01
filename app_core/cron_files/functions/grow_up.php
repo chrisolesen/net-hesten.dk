@@ -74,8 +74,8 @@ while ($data = $result->fetch_assoc()) {
 
 				$horse_name = str_replace($tegn, $substitut, $nynavn);
 				$user_name = str_replace($tegn, $substitut, $nybruger);
-				if ($prut1) {
-					$link_old->query("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Dit {$foel} $horse_name er blevet voksen','Tillykke $user_name :-)) <br>$horse_name er blevet 4 &aring;r, og er nu en voksen hest<br>Derfor er den steget 5000 wkr i v&aelig;rdi.<br><img src=/imgHorse/$nythumb>','admin@net-hesten','$user_name','Indbakke',now() )");
+				if ($horse_name) {
+				//	$link_old->query("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Dit {$foel} $horse_name er blevet voksen','Tillykke $user_name :-)) <br>$horse_name er blevet 4 &aring;r, og er nu en voksen hest<br>Derfor er den steget 5000 wkr i v&aelig;rdi.<br><img src=/imgHorse/$nythumb>','admin@net-hesten','$user_name','Indbakke',now() )");
 				}
 			}
 		}
