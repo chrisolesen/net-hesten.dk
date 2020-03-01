@@ -1,6 +1,7 @@
 <?php
 $basepath = '../..';
 require_once("{$basepath}/app_core/db_conf.php");
+error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 
 $sql = 'INSERT INTO praktisk_dev_nethest_new.horse_races';
 
