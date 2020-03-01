@@ -9,10 +9,11 @@ $sql = 'INSERT INTO praktisk_dev_nethest_new.horse_races';
 $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` LIMIT 1";
 $race = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->fetch();
 var_dump($race);
-/*
-$sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` (`name`,`max_height`,`min_height`,`description`) VALUES (:name, :max_height, :min_height, :description)";
-$GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->execute(['name' => 'Ghosts', 'max_height' => 170, 'min_height' => 150, 'description' => 'Mythical creatures']);
-*/
+if (!$race) {
+    $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` (`name`,`max_height`,`min_height`,`description`) VALUES (:name, :max_height, :min_height, :description)";
+    $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->execute(['name' => 'Ghosts', 'max_height' => 170, 'min_height' => 150, 'description' => 'Mythical creatures']);
+}
+
 $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` LIMIT 1";
 $user = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->fetch();
 var_dump($user);
