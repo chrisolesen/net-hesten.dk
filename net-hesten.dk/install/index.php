@@ -16,7 +16,7 @@ $files = [
 ];
 foreach ($files as $file) {
     $query = file_get_contents("{$basepath}/shema_setups/new/{$file}.sql");
-    $stmt = $db->prepare($query);
+    $stmt = $GLOBALS['pdo_new']->prepare($query);
     if ($stmt->execute()) {
         echo "Success &lt;{$file}&gt;<br />";
     } else {
@@ -25,7 +25,7 @@ foreach ($files as $file) {
 }
 
 $query = file_get_contents("{$basepath}/shema_setups/old/latin1_tables.sql");
-$stmt = $db->prepare($query);
+$stmt = $GLOBALS['pdo_old']->prepare($query);
 if ($stmt->execute()) {
     echo "Success &lt;Latin 1&gt;<br />";
 } else {
