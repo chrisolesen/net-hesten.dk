@@ -1,4 +1,4 @@
-<div id="unprovoked_bid" class="modal">
+<div id="unprovoked_bid" class="modal"><?php ?>
     <script>
 		function unprovoked_bid(caller) {
 			$('#unprovoked_bid img').attr('src', $(caller).parent().parent().find('.zoom_img').attr('src'));

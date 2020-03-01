@@ -11,33 +11,13 @@
 /net-hesten.dk/admin/elements/fonts/*
 
 #Files that should not be in gitignore
-/app_core/object_handlers/accounting.php
-/app_core/object_handlers/alias_chat.php
-/app_core/object_handlers/artist_center.php
-/app_core/object_handlers/auctions.php
-/app_core/object_handlers/chat.php
-/app_core/object_handlers/competitions.php
-/app_core/object_handlers/file_uploads.php
-/app_core/object_handlers/horse_list_filters.php
-/app_core/object_handlers/horse_trader.php
 /app_core/object_handlers/horses.php
-/app_core/object_handlers/opinions.php
-/app_core/object_handlers/private_messages.php
-/app_core/object_handlers/private_trade.php
 /app_core/object_handlers/user.php
 
 
 #Adminpanels
-/net-hesten.dk/admin/competitions/index.php
-/net-hesten.dk/admin/competitions/simple_competitions.php
 
-/net-hesten.dk/admin/hestetegner/backup/admin_types.php
-/net-hesten.dk/admin/hestetegner/backup/change_generation_status.php
-/net-hesten.dk/admin/hestetegner/backup/list_heste_vis_race_two.php
-/net-hesten.dk/admin/hestetegner/backup/list_heste_vis_race.php
-/net-hesten.dk/admin/hestetegner/backup/vis_race.php
-/net-hesten.dk/admin/hestetegner/backup/list_heste.php
-/net-hesten.dk/admin/hestetegner/draw/index.php
+
 /net-hesten.dk/admin/hestetegner/move_to_files/count_old.php
 /net-hesten.dk/admin/hestetegner/move_to_files/fix.php
 /net-hesten.dk/admin/hestetegner/move_to_files/count.php

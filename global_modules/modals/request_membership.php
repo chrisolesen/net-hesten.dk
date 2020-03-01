@@ -1,4 +1,4 @@
-<div id="request_membership" class="modal">
+<div id="request_membership" class="modal"><?php ?>
 	<script>
 		function request_membership(caller) {
 
@@ -12,7 +12,6 @@
 			height: 1em;
 		}
 		#request_membership label {
-			display: inline-block;
 			margin-right: 1em;
 			height: 30px;
 			line-height: 30px;
@@ -23,7 +22,6 @@
 		#request_membership label + input {
 			line-height: 30px;
 			height: 30px;
-			display: inline-block;
 			float: left;
 		}
 		#request_membership form div + div + div + div + div {
