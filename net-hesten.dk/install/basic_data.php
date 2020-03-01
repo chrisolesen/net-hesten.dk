@@ -9,7 +9,7 @@ $sql = 'INSERT INTO praktisk_dev_nethest_new.horse_races';
 /* Insert a horse race */
 $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` LIMIT 1";
 try {
-    $race = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->fetch();
+    $race = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->execute()->fetch();
 } catch (Exception $e) {
     $pdo->rollback();
     throw $e;
