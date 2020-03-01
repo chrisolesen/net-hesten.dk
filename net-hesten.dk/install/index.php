@@ -15,7 +15,7 @@ $files = [
     'users'
 ];
 foreach ($files as $file) {
-    $query = file_get_contents("{$basepath}/{$file}.sql");
+    $query = file_get_contents("{$basepath}/shema_setups/new/{$file}.sql");
     $stmt = $db->prepare($query);
     if ($stmt->execute()) {
         echo "Success &lt;{$file}&gt;<br />";
@@ -24,7 +24,7 @@ foreach ($files as $file) {
     }
 }
 
-$query = file_get_contents("{$basepath}/shema_setups/old_latin1_tables.sql");
+$query = file_get_contents("{$basepath}/shema_setups/old/latin1_tables.sql");
 $stmt = $db->prepare($query);
 if ($stmt->execute()) {
     echo "Success &lt;Latin 1&gt;<br />";
