@@ -13,13 +13,7 @@
 /files.net-hesten.dk/style/graphics/*
 /net-hesten.dk/admin/elements/fonts/*
 
-#Files that should not be in gitignore
-/app_core/object_handlers/horses.php
-/app_core/object_handlers/user.php
-
-
 #Adminpanels
-
 
 /net-hesten.dk/admin/hestetegner/move_to_files/count_old.php
 /net-hesten.dk/admin/hestetegner/move_to_files/fix.php
@@ -40,14 +34,3 @@
 /net-hesten.dk/admin/hestetegner/show_all_uniques.php
 /net-hesten.dk/admin/hestetegner/submitted_horses.php
 /net-hesten.dk/admin/hestetegner/template_handling.php
-
-/net-hesten.dk/admin/management/error_checker.php
-/net-hesten.dk/admin/management/error_logs.php
-/net-hesten.dk/admin/management/horse_cleanup.php
-/net-hesten.dk/admin/management/lineage_cache_builder.php
-/net-hesten.dk/admin/management/review_applications.php
-/net-hesten.dk/admin/management/user_cleanup.php
-/net-hesten.dk/admin/management/user_management.php
-
-#Old versions of data regulations
-/net-hesten.dk/infosheets/*[0-9]*
