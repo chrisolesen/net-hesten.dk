@@ -8,16 +8,16 @@ $users = $link_old->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` 
 while($row = $users->fetch_object()){
     var_dump($row);
 }
-echo "result via mysqli";
+echo "<br />result via mysqli<br />";
 
 
 $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = ?";
 $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 $sth->execute([':user_id' => 150]);
 if ($sth->rowCount()) {
-    echo 'found user 150';
+    echo '<br />found user 150<br />';
 } else {
-    echo 'no user 150';
+    echo '<br />no user 150<br />';
 }
 
 $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = ?";
