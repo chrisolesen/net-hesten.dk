@@ -38,27 +38,27 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
     <?php
     }
     /* Initialize horse races */
-    $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`horse_races` LIMIT 1";
-    $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` LIMIT 1";
+    $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
     $sth->execute();
     if (!$sth->rowCount()) {
         /* Insert horse race */
-        $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`horse_races` 
+        $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` 
     (`name`, `min_height`, `max_height`, `description`) VALUES 
     ('Ghosts', 150, 170, 'Mythical creatures')";
-        $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
     }
     /* Initialize horse types */
-    $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`horse_types` LIMIT 1";
-    $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` LIMIT 1";
+    $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
     $sth->execute();
     if (!$sth->rowCount()) {
         /* Insert horse type */
-        $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`horse_types` 
+        $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` 
     (`race`, `image`, `status`, `date`, `allowed_gender`, `archived`, `artists`) VALUES 
     ('Ghosts', 'Ghost_01.png', 22, NOW(), 1,0,0)";
-        $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
     }
     ?>
