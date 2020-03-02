@@ -5,7 +5,7 @@ require_once("{$basepath}/app_core/db_conf.php");
 /*$sql = 'INSERT INTO praktisk_dev_nethest_new.horse_races';*/
 
 
-$sql = "'SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`Brugere` WHERE id = ?'";
+$sql = "'SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = ?'";
 $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 $sth->execute([':user_id' => 150]);
 if ($sth->rowCount()) {
@@ -14,7 +14,7 @@ if ($sth->rowCount()) {
     echo 'no user 150';
 }
 
-$sql = "'SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`Brugere` WHERE id = ?'";
+$sql = "'SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = ?'";
 $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 $sth->execute([':user_id' => 1]);
 if ($sth->rowCount()) {
