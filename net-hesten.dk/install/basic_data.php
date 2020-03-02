@@ -6,7 +6,7 @@ require_once("{$basepath}/app_core/db_conf.php");
 
 
 $sql = "'SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = ?'";
-$sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+$sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 $sth->execute([':user_id' => 150]);
 if ($sth->rowCount()) {
     echo 'found user 150';
@@ -15,7 +15,7 @@ if ($sth->rowCount()) {
 }
 
 $sql = "'SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = ?'";
-$sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+$sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 $sth->execute([':user_id' => 1]);
 if ($sth->rowCount()) {
     while (
