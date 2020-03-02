@@ -2,16 +2,41 @@
 $basepath = '../..';
 require_once("{$basepath}/app_core/db_conf.php");
 
-$sql = 'INSERT INTO praktisk_dev_nethest_new.horse_races';
+/*$sql = 'INSERT INTO praktisk_dev_nethest_new.horse_races';*/
+
+
+$sql = "'SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`Brugere` WHERE id = ?'";
+$sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+$sth->execute([':user_id' => 150]);
+if ($sth->rowCount()) {
+    echo 'found user 150';
+} else {
+    echo 'no user 150';
+}
+
+$sql = "'SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`Brugere` WHERE id = ?'";
+$sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+$sth->execute([':user_id' => 1]);
+if ($sth->rowCount()) {
+    while (
+        $row = $sth->fetch(PDO::FETCH_OBJ)
+    ) {
+        var_dump($row);
+    }
+    echo 'found user 1';
+} else {
+    echo 'no user 1';
+}
+exit();
 
 /*$result = $sth->fetchAll();*/
 /* Insert a horse race */
 $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` LIMIT 1";
 try {
     $statement = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY))->execute();
-     $race = $statement->fetch();
+    $race = $statement->fetch();
 } catch (Exception $e) {
-   /* $GLOBALS['pdo_new']->rollback();*/
+    /* $GLOBALS['pdo_new']->rollback();*/
     throw $e;
 }
 var_dump($race);
