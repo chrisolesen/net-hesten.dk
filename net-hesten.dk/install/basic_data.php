@@ -56,7 +56,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
     if (!$sth->rowCount()) {
         /* Insert horse type */
         $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`horse_types` 
-    (`race`, `image`, `status`, `date`, `allowed_gender`, `archived,artists`) VALUES 
+    (`race`, `image`, `status`, `date`, `allowed_gender`, `archived`, `artists`) VALUES 
     ('Ghosts', 'Ghost_01.png', 22, NOW(), 1,0,0)";
         $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
