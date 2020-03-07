@@ -22,7 +22,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
     }
 
     $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` LIMIT 1";
-    $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
     $sth->execute();
     if (!$sth->rowCount()) {
         /* No admin user detected */
@@ -54,7 +54,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         if (!$sth->rowCount()) {
             $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` 
             (`user_id`, `privilege_id`, `start`, `end`) VALUES (:user_id, :priv_id, NOW(), '0000-00-00 00:00:00')";
-            $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
             $sth->execute(['user_id' => $user_id, 'priv_id' => $priv_id]);
         } else {
             echo "<br />Privilege Tables initialised";
@@ -74,14 +74,14 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         }
 
         $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`horse_habits` LIMIT 1";
-        $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
         if (!$sth->rowCount()) { 
             /* Insert horse habit type */
             $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`horse_habits` 
         (`egenskab`, `ulempe`, `talent`) VALUES 
         ('Sød', 'Drilsk', 'Spring')";
-            $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
             $sth->execute();
             echo "<br />Horse habit type added";
         }

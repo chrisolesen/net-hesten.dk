@@ -243,7 +243,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 				exit('Kun en tegner lige nu tak.'); 
 			}
 			$thumb = '/imgHorse/' . $thumb_data->image;
-			$race = mb_convert_encoding($thumb_data->race, 'latin1', 'UTF-8');
+			$race = mb_convert_encoding($thumb_data->race, 'latin1', 'UTF-8'); 
 
 			$advantage = $link_old->query("SELECT egenskab FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
 			$disadvantage = $link_old->query("SELECT ulempe FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
