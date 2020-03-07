@@ -32,5 +32,5 @@ $link_new = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME_NEW, DB_PORT);
 $link_new->set_charset('utf8');
 $link_new->query("SET time_zone = 'Europe/Copenhagen'");
 
-$GLOBALS['pdo_new'] = new PDO("mysql:host=$mysql_host;dbname=$mysql_database_new", $mysql_user, $mysql_password);
-$GLOBALS['pdo_old'] = new PDO("mysql:host=$mysql_host;dbname=$mysql_database_old", $mysql_user, $mysql_password);
+$GLOBALS['pdo_new'] = new PDO("mysql:host=$mysql_host;dbname=$mysql_database_new;charset=utf8;", $mysql_user, $mysql_password);
+$GLOBALS['pdo_old'] = new PDO("mysql:host=$mysql_host;dbname=$mysql_database_old;charset=latin1;", $mysql_user, $mysql_password);
