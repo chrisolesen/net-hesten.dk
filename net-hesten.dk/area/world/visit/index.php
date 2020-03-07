@@ -4,7 +4,7 @@ $basepath = '../../../..';
 require "$basepath/app_core/object_loader.php";
 require "$basepath/global_modules/header.php";
 ?>
-<?php $dead = mb_convert_encoding('død', 'latin1', 'UTF-8'); ?>
+<?php $dead = 'død'; ?>
 <?php $user_info = user::get_info(['user_id' => $_SESSION['user_id']]); ?>
 <section class="tabs">
 	<section>

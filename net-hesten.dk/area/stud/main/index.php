@@ -183,7 +183,7 @@ $your_horses_page = max(0, (int) filter_input(INPUT_GET, 'your_horses_page'));
 $horses_pr_page = 10;
 ?>
 <?php $user_info = user::get_info(['user_id' => $_SESSION['user_id']]); ?>
-<?php $dead = mb_convert_encoding('død', 'latin1', 'UTF-8'); ?>
+<?php $dead = 'død'; ?>
 <style>
     .tabs {
         margin-top: 1em;

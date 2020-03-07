@@ -8,8 +8,8 @@ if (!(is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['right
 	ob_end_clean();
 	header('Location: /');
 }
-$Foelbox = mb_convert_encoding('Følkassen', 'latin1', 'UTF-8');
-$Foel = mb_convert_encoding('Føl', 'latin1', 'UTF-8');
+$Foelbox = 'Følkassen';
+$Foel = 'Føl';
 $selected_race = substr($_GET['race'], 1, -1);
 ?>
 <a href="/admin/hestetegner/admin_types_version_two.php">Tilbage</a><br /><br /> 
@@ -274,7 +274,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			$date_now_db_format = $current_date->format('Y-m-d H:i:s');
 			if (filter_input(INPUT_GET, 'type') === 'foel') {
 				$generation_age = 0;
-				$horse_birth_status = mb_convert_encoding('Føl', 'latin1', 'UTF-8');
+				$horse_birth_status = 'Føl';
 			} else {
 				$generation_age = 4;
 				$horse_birth_status = 'Hest';
@@ -328,7 +328,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 	$sql = "SELECT image, status, id, allowed_gender, archived FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE race = '{$selected_race}' ORDER BY date DESC";
 	$result = $link_new->query($sql);
 	$races = '';
-	$latin_dead = mb_convert_encoding('død', 'latin1', 'UTF-8');
+	$latin_dead = 'død';
 	while ($data = $result->fetch_object()) {
 		if (filter_input(INPUT_GET, 'type') == 'adult') {
 			if (in_array($data->status, [25, 26])) {

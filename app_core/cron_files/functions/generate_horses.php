@@ -17,8 +17,8 @@ file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_con
 require_once "{$basepath}app_core/db_conf.php";
 require_once "{$basepath}app_core/cron_files/data_collections/generation_horse_names.php";
 
-$Foelbox = mb_convert_encoding('Følkassen', 'latin1', 'UTF-8');
-$foel = mb_convert_encoding('føl', 'latin1', 'UTF-8');
+$Foelbox = 'Følkassen';
+$foel = 'føl';
 
 $today = date("d.m.y.G.i");
 

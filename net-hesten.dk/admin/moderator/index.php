@@ -6,8 +6,8 @@ require "$basepath/global_modules/header.php";
 ?>
 <h1>Net-Hesten - Spil Data</h1>
 <?php
-$dead = mb_convert_encoding('død', 'latin1', 'UTF-8');
-$foel = mb_convert_encoding('føl', 'latin1', 'UTF-8');
+$dead = 'død';
+$foel = 'føl';
 
 if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();

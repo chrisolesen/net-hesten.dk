@@ -28,11 +28,11 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 		$grow_up_amount = 0;
 		$breeding_stallions = 0;
 		$stallions_changed_status = 0;
-		$Foelbox = mb_convert_encoding('Følkassen', 'latin1', 'UTF-8');
-		$foel = mb_convert_encoding('føl', 'latin1', 'UTF-8');
-		$Foel = mb_convert_encoding('Føl', 'latin1', 'UTF-8');
+		$Foelbox = 'Følkassen';
+		$foel = 'føl';
+		$Foel = 'Føl';
 
-		$ø = mb_convert_encoding('ø', 'latin1', 'UTF-8');
+		$ø = 'ø';
 
 		$today = date("d.m.y.G.i");
 		$loop = 0;

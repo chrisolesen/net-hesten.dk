@@ -9,7 +9,7 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_adm
 	ob_end_clean();
 	header('Location: /');
 }
-$Foelbox = mb_convert_encoding('Følkassen', 'latin1', 'UTF-8');
+$Foelbox = 'Følkassen';
 
 if (filter_input(INPUT_POST, 'search_id')) {
 	$search_id = filter_input(INPUT_POST, 'search_id');
@@ -68,10 +68,10 @@ if (filter_input(INPUT_POST, 'search_id')) {
 
 			$status = '';
 			if (filter_input(INPUT_POST, 'status') == 'død') {
-				$status = mb_convert_encoding('død', 'latin1', 'UTF-8');
+				$status = 'død';
 			}
 			if (filter_input(INPUT_POST, 'status') == 'føl') {
-				$status = mb_convert_encoding('føl', 'latin1', 'UTF-8');
+				$status = 'føl';
 			}
 			if (filter_input(INPUT_POST, 'status') == 'hest') {
 				$status = 'hest';

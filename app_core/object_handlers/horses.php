@@ -87,8 +87,8 @@ class horses {
 		if (isset($attr['horse_id'])) {
 			$user_id = (int) $_SESSION['user_id'];
 			$username = mb_convert_encoding($_SESSION['username'], 'latin1', 'UTF-8');
-			$dead = mb_convert_encoding('død', 'latin1', 'UTF-8');
-			$graes_money = mb_convert_encoding('Græsningspenge', 'latin1', 'UTF-8');
+			$dead = 'død';
+			$graes_money = 'Græsningspenge';
 			$user = $link_old->query("SELECT id, penge, stutteri FROM Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
 
 			$sql = "SELECT "
@@ -141,9 +141,9 @@ class horses {
             $attr[$key] = $link_old->real_escape_string($value);
         }
 		if (isset($attr['user_name'])) {
-			$username = mb_convert_encoding($attr['user_name'], 'latin1', 'UTF-8');
-			$dead = mb_convert_encoding('død', 'latin1', 'UTF-8');
-			$ø = mb_convert_encoding('ø', 'latin1', 'UTF-8');
+			$username = $attr['user_name'];
+			$dead = 'død';
+			$ø = 'ø';
 
 			$sql = "SELECT "
 					. "heste.foersteplads AS gold_medal, "
@@ -181,11 +181,11 @@ class horses {
 					. "LEFT JOIN {$_GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
 					. "ON breeding.horse_id = heste.id AND breeding.meta_key = 'breeding' "
 					. "WHERE heste.id > 400000 "
-					. "AND status != '{$dead}' "
+					. "AND status != 'død' "
 					. (($attr['mode'] == 'search_all') ? "AND heste.talent != '' " : '' )
 					. (($attr['mode'] == 'search_all') ? "AND heste.egenskab != '' " : '')
 					. (($attr['mode'] == 'search_all') ? "AND heste.ulempe != '' " : '' )
-					. (($attr['mode'] !== 'search_all') ? "AND bruger = '{$username}' " : "AND bruger <> 'genfoedsel' AND bruger <> 'carsten' AND bruger <> 'hestehandleren*' and bruger <> 'f{$ø}lkassen' ")
+					. (($attr['mode'] !== 'search_all') ? "AND bruger = '{$username}' " : "AND bruger <> 'genfoedsel' AND bruger <> 'carsten' AND bruger <> 'hestehandleren*' and bruger <> 'følkassen' ")
 					. (($attr['mode'] !== 'search_all') ? '' : "AND thumb <> '/imgHorse/..' AND pris <> ''")
 					. (($attr['mode'] == 'auction') ? "AND staevne != 'ja' " : '')
 					. (($attr['mode'] == 'auction') ? "AND kaaring != 'ja' " : '')

@@ -16,7 +16,7 @@ if (!$visit_id) {
 $your_horses_page = max(0, (int) filter_input(INPUT_GET, 'your_horses_page'));
 $horses_pr_page = 10;
 
-$dead = mb_convert_encoding('død', 'latin1', 'UTF-8');
+$dead = 'død';
 $visit_user_info = user::get_info(['user_id' => $visit_id, 'link_mode' => 'new']);
 
 if (!$visit_user_info) {

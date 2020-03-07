@@ -59,7 +59,7 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
             $date_now_db_format = $current_date->format('Y-m-d H:i:s');
             if (filter_input(INPUT_GET, 'type') === 'foel') {
                 $generation_age = 0;
-                $horse_birth_status = mb_convert_encoding('Føl', 'latin1', 'UTF-8');
+                $horse_birth_status = 'Føl';
             } else {
                 $generation_age = 4;
                 $horse_birth_status = 'Hest';

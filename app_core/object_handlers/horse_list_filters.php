@@ -98,7 +98,7 @@ class horse_list_filters {
 		global $link_old;
 		global $cached_races;
 
-		$dead = mb_convert_encoding('død', 'latin1', 'UTF-8');
+		$dead = 'død';
 
 		foreach ($cached_races as $key => $row) {
 			$race_names[$row['name']] = ['name' => $row['name'], 'id' => $row['id']];
@@ -396,7 +396,7 @@ class horse_list_filters {
 
 		if ($user_filter_data[$attr['zone']]['filter_status'] && $user_filter_data[$attr['zone']]['filter_status'] != 'all_horses') {
 
-			$foel = mb_convert_encoding('føl', 'latin1', 'UTF-8');
+			$foel = 'føl';
 
 			if ($user_filter_data[$attr['zone']]['filter_status'] == 'idle_horses') {
 				$return_data .= " AND graesning != 'ja' AND staevne <> 'ja' AND status <> 'avl' AND status <> '{$foel}' AND kaaring <> 'ja' AND competition_id IS NULL ";

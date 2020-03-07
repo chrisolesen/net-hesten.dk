@@ -4,7 +4,7 @@ if ($index_caller !== true) {
 	exit();
 }
 
-$foel = mb_convert_encoding('føl', 'latin1', 'UTF-8');
+$foel = 'føl';
 $limits = filter_input(INPUT_GET, 'limits');
 $only_foels = '';
 if (strpos(' ' . $limits . ' ', 'only_foels')) {
@@ -26,7 +26,7 @@ if (stripos(' ' . $limits . ' ', 'races')) {
 $user_id = filter_input(INPUT_GET, 'user_id');
 $stutteri = $link_old->query("SELECT stutteri FROM `Brugere` WHERE `id` = {$user_id}")->fetch_object()->stutteri;
 
-$dead = mb_convert_encoding('død', 'latin1', 'UTF-8');
+$dead = 'død';
 
 $result = $link_old->query("SELECT id, navn, bruger, alder, thumb, egenskab, ulempe, talent, race "
 		. "FROM Heste AS heste "

@@ -9,10 +9,10 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();
 	header('Location: /');
 }
-$Foelbox = mb_convert_encoding('Følkassen', 'latin1', 'UTF-8');
-$Foel = mb_convert_encoding('Føl', 'latin1', 'UTF-8');
-$dead = mb_convert_encoding('død', 'latin1', 'UTF-8');
-$choose_race = mb_convert_encoding('*Vælg race*', 'latin1', 'UTF-8');
+$Foelbox = 'Følkassen';
+$Foel = 'Føl';
+$dead = 'død';
+$choose_race = '*Vælg race*';
 $errors = [];
 if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 	$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET kaaring = '' WHERE kaaring = 'ja' AND status != '{$Foel}'";
