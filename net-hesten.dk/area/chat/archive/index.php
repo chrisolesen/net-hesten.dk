@@ -15,10 +15,10 @@ if (filter_input(INPUT_GET, 'chat_page')) {
 	$page = 1;
 }
 ?>
-<link rel="stylesheet" href="https://net-hesten.dk/area/chat/styles/main.css?v=<?= time(); ?>" />
+<link rel="stylesheet" href="/area/chat/styles/main.css?v=<?= time(); ?>" />
 
 <header>
-	<a href="https://net-hesten.dk/area/chat/global/">Live chat</a>
+	<a href="/area/chat/global/">Live chat</a>
 	Side: <?= $page; ?>
 	<a href="?chat_page=<?= ($page + 1); ?>">Næste</a>
 	<?php if ($page > 1) { ?>

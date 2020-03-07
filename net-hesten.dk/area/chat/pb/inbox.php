@@ -9,7 +9,7 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
 	user::register_session(['user_id' => $_SESSION['user_id']]);
 }
 ?>
-<link rel="stylesheet" href="https://net-hesten.dk/area/chat/styles/version_two.css?v=<?= time(); ?>" />
+<link rel="stylesheet" href="/area/chat/styles/version_two.css?v=<?= time(); ?>" />
 
 <header><a href="/area/chat/global/">Live chat</a></header>
 <ul class="thread_list">
@@ -17,7 +17,7 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
 	foreach (private_messages::get_threads(['user_id' => $_SESSION['user_id']]) AS $user_id => $new_messages) {
 		?>
 		<li class="thread">
-			<span class="username"><a href="https://net-hesten.dk/area/chat/pb/thread.php?send_to=<?= $user_id; ?>"><?=  mb_convert_encoding(user::get_info(['user_id' => $user_id])->username, 'UTF-8', 'latin1'); ?> (<?= $new_messages; ?>)</a></span>	
+			<span class="username"><a href="/area/chat/pb/thread.php?send_to=<?= $user_id; ?>"><?=  mb_convert_encoding(user::get_info(['user_id' => $user_id])->username, 'UTF-8', 'latin1'); ?> (<?= $new_messages; ?>)</a></span>	
 		</li>
 		<?php
 	}

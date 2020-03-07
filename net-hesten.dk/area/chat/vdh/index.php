@@ -4,7 +4,7 @@ $title = 'Vær din hest';
 require "$basepath/app_core/object_loader.php";
 require "$basepath/net-hesten.dk/area/chat/elements/header.php";
 ?>
-<link rel="stylesheet" href="https://net-hesten.dk/area/chat/styles/version_two.css?v=<?= time(); ?>" />
+<link rel="stylesheet" href="/area/chat/styles/version_two.css?v=<?= time(); ?>" />
 <link rel="stylesheet" href="/style/messages.css?v=<?= time(); ?>" />
 <style>
     body ul.message_list {
@@ -12,7 +12,7 @@ require "$basepath/net-hesten.dk/area/chat/elements/header.php";
     }
 </style>
 <header>
-    <a href="https://net-hesten.dk/area/chat/global/">Normal Chat</a>
+    <a href="/area/chat/global/">Normal Chat</a>
 </header>
 <style>
     small {

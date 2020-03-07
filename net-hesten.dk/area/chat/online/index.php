@@ -11,8 +11,8 @@ user::register_session(['user_id' => $_SESSION['user_id']]);
 
 ?>
 
-<link rel="stylesheet" href="https://net-hesten.dk/area/chat/styles/version_two.css?v=<?= time(); ?>" />
-<header><a href="https://net-hesten.dk/area/chat/global/">Tilbage til chatten</a></header>
+<link rel="stylesheet" href="/area/chat/styles/version_two.css?v=<?= time(); ?>" />
+<header><a href="/area/chat/global/">Tilbage til chatten</a></header>
 <ul>
 	<?php
 	$segment = ['time_mode' => 'h', 'time_val' => '2'];

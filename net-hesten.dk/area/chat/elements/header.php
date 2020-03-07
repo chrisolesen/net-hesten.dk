@@ -6,7 +6,7 @@ if ((!$_SESSION['logged_in'] == true || !isset($basepath)) && filter_input(INPUT
 	<h2>Login for at se chatten.</h2>
 	<script>
 		setTimeout(function () {
-			window.location.replace("http://m.net-hesten.dk/area/chat/global/");
+			window.location.replace("/area/chat/global/");
 			;
 		}, 15000);
 	</script>

@@ -25,7 +25,7 @@ if (isset($_GET['delete_message'])) {
 
 private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => $_SESSION['user_id'], 'thread' => $_POST['thread']]);
 ?>
-<link rel="stylesheet" href="https://net-hesten.dk/area/chat/styles/version_two.css?v=<?= time(); ?>" />
+<link rel="stylesheet" href="/area/chat/styles/version_two.css?v=<?= time(); ?>" />
 <header style="height:50px;"><a href="/area/chat/pb/inbox.php">PB</a>&nbsp;|&nbsp;<a href="/area/chat/global/">Live chat</a>&nbsp;
 	<?php $pb_thread_page = max(1, filter_input(INPUT_GET, 'thread_page')); ?>
 	Side: <?= $pb_thread_page; ?>
@@ -51,7 +51,7 @@ private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => 
 			<li data-message_id="<?= $message->id; ?>" class="msg <?= $message->origin == $_SESSION['user_id'] ? 'mine' : 'theirs'; ?> status-<?= $message->status_code; ?>">
 				<div class="poster">
 					<span class="username"><?= mb_convert_encoding(user::get_info(['user_id' => $message->origin])->username, 'UTF-8', 'latin1'); ?>:</span>	<?= $message->date; ?>
-					<a href="https://net-hesten.dk/area/chat/pb/thread.php?delete_message=<?= $message->id; ?>&send_to=<?= $_POST['send_to']; ?>"><img class="delete_msg" src="https://files.net-hesten.dk/graphics/delete.png" height="20px" /></a>
+					<a href="/area/chat/pb/thread.php?delete_message=<?= $message->id; ?>&send_to=<?= $_POST['send_to']; ?>"><img class="delete_msg" src="https://files.net-hesten.dk/graphics/delete.png" height="20px" /></a>
 				</div>
 				<div class="msg"><?= str_replace(["\n", "\r"], ['<br />', ''], $message->message); ?></div>
 			</li>
@@ -69,7 +69,7 @@ private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => 
 	}
 </style>
 <div class="new_message">
-    <form action="https://net-hesten.dk/area/chat/pb/thread.php" method="post">
+    <form action="/area/chat/pb/thread.php" method="post">
 		<input name="action" value="post_private_message" type="hidden" />
 		<input name="send_to" value="<?= $_POST['send_to']; ?>" type="hidden" />
 		<input name="thread" value="<?= $_POST['thread']; ?>" type="hidden" />
