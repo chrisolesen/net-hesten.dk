@@ -3,23 +3,23 @@ session_start();
 
 $index_caller = true;
 require_once '../app_core/db_conf.php';
-if(!defined('HTTP_HOST')){
-	define('HTTP_HOST',filter_input(INPUT_SERVER,'HTTP_HOST'));
+if (!defined('HTTP_HOST')) {
+	define('HTTP_HOST', str_replace('ajax.', '', filter_input(INPUT_SERVER, 'HTTP_HOST')));
 }
 
-if (filter_input(INPUT_GET,'request') === 'feed_live_content') {
+if (filter_input(INPUT_GET, 'request') === 'feed_live_content') {
 	require './feed_live_content.php';
-} else if (filter_input(INPUT_GET,'request') === 'suggest_breed_targets') {
+} else if (filter_input(INPUT_GET, 'request') === 'suggest_breed_targets') {
 	require './suggest_breed_targets.php';
-} else if (filter_input(INPUT_GET,'request') === 'suggest_event_participants') {
+} else if (filter_input(INPUT_GET, 'request') === 'suggest_event_participants') {
 	require './suggest_event_participants.php';
-} else if (filter_input(INPUT_GET,'request') === 'fetch_stud_horse') {
-//	require './fetch_stud_horse.php';
-} else if (filter_input(INPUT_GET,'request') === 'save_horse_name') {
+} else if (filter_input(INPUT_GET, 'request') === 'fetch_stud_horse') {
+	//	require './fetch_stud_horse.php';
+} else if (filter_input(INPUT_GET, 'request') === 'save_horse_name') {
 	require './save_horse_name.php';
-} else if (filter_input(INPUT_GET,'request') === 'fecth_linage') {
+} else if (filter_input(INPUT_GET, 'request') === 'fecth_linage') {
 	require './fetch_linage.php';
-} else if (filter_input(INPUT_GET,'request') === 'fecth_extended_info') {
+} else if (filter_input(INPUT_GET, 'request') === 'fecth_extended_info') {
 	require './get_horse_extended_info.php';
 }
 exit();
