@@ -12,6 +12,7 @@ define('DB_PASS', '');
 define('DB_PORT', '3306');
 define('DB_NAME_OLD', '');
 define('DB_NAME_NEW', '');
+define('COOKIE_DOMAIN', '.dev-net-hesten.dk');
 $mysql_host = DB_HOST;
 $mysql_user = DB_USER;
 $mysql_password = DB_PASS;

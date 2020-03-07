@@ -1,7 +1,7 @@
 <?php
 
-ini_set('session.cookie_domain', '.net-hesten.dk');
-session_start(['cookie_lifetime' => 172800, 'cookie_domain' => '.net-hesten.dk']);
+ini_set('session.cookie_domain', COOKIE_DOMAIN);
+session_start(['cookie_lifetime' => 172800, 'cookie_domain' => COOKIE_DOMAIN]);
 
 if (isset($_POST['password']) && isset($_POST['username'])) {
 
