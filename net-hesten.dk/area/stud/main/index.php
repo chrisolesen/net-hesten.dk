@@ -294,8 +294,8 @@ if (is_array(horses::get_all($attr))) {
 			$horse_data .= "<button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Sæt på græs</button>";
 		}
 		$horse_data .= "</div>";
-		$horse_data .= "<img src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
-		$horse_data .= "<img style='display: none;' class='zoom_img' src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' />";
+		$horse_data .= "<img src='//files.".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
+		$horse_data .= "<img style='display: none;' class='zoom_img' src='//files".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' />";
 		$horse_data .= "</div>";
 
 		$horse_tabs['idle_horses'][] = $horse_data;
