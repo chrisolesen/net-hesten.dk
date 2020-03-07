@@ -347,9 +347,9 @@ if ($active_tab = filter_input(INPUT_GET, 'tab')) {
         <div class="image_block" style="height:130px;float:left;overflow: hidden;">
 			<?php
 			if ($user_info->thumb) {
-				$stud_thumbnail = "//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/users/{$user_info->thumb}";
+				$stud_thumbnail = "//files.".HTTP_HOST."/users/{$user_info->thumb}";
 			} else {
-				$stud_thumbnail = "//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/graphics/logo/default_logo.png";
+				$stud_thumbnail = "//files.".HTTP_HOST."/graphics/logo/default_logo.png";
 			}
 			?>
             <img style="float:left;margin-right: 2em;border-radius: 5px;max-width: 325px;max-height: 130px;" src="<?= $stud_thumbnail; ?>" />
