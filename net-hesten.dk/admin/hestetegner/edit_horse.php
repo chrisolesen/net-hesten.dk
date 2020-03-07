@@ -14,7 +14,7 @@ $Foelbox = mb_convert_encoding('Følkassen', 'latin1', 'UTF-8');
 if (filter_input(INPUT_POST, 'search_id')) {
 	$search_id = filter_input(INPUT_POST, 'search_id');
 } else if (filter_input(INPUT_GET, 'horse_id')) {
-	$search_id = filter_input(INPUT_GET, 'horse_id');
+	$search_id = filter_input(INPUT_GET, 'horse_id'); 
 }
 ?>
 <section>

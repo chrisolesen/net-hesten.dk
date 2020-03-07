@@ -240,7 +240,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			$thumb_data = $link_new->query("SELECT artists, image, race FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE id = {$selected_id} LIMIT 1")->fetch_object();
 			$artist = $link_old->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$thumb_data->artists} LIMIT 1")->fetch_object()->stutteri;
 			if (!$artist) {
-				exit('Kun en tegner lige nu tak.');
+				exit('Kun en tegner lige nu tak.'); 
 			}
 			$thumb = '/imgHorse/' . $thumb_data->image;
 			$race = mb_convert_encoding($thumb_data->race, 'latin1', 'UTF-8');

@@ -90,7 +90,7 @@ if (isset($_FILES['fileToUpload'])) {
 //			echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded. As {$target_file}.{$imageFileType}";
 			$file_path = str_replace("$basepath/files.net-hesten.dk/horses/imgs/", '', "{$target_file}.{$imageFileType}");
 			$sql = "INSERT INTO horse_types (image, date) VALUES ('{$file_path}', NOW())";
-			$link_new->query($sql);
+			$link_new->query($sql); 
 			echo mysqli_error($link_new);
 		} else {
 			echo "Beklager, der skete er sket en uventet fejl, prøv igen lidt senere, eller kontakt stutteri TechHesten.";
