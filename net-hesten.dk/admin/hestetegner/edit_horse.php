@@ -57,8 +57,8 @@ if (filter_input(INPUT_POST, 'search_id')) {
 		<?php
 		if (filter_input(INPUT_POST, 'action') === 'edit_horse') {
 			$id = filter_input(INPUT_POST, 'search_id');
-			$race = mb_convert_encoding(filter_input(INPUT_POST, 'horse_race'), 'latin1', 'UTF-8');
-			$user = mb_convert_encoding(filter_input(INPUT_POST, 'user_name'), 'latin1', 'UTF-8');
+			$race = filter_input(INPUT_POST, 'horse_race');
+			$user = filter_input(INPUT_POST, 'user_name');
 			$wanted_age = filter_input(INPUT_POST, 'age');
 
 			$horse_age_to_irl_days = $wanted_age * 40;

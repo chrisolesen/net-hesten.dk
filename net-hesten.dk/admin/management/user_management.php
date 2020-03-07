@@ -17,7 +17,7 @@ if (isset($_POST['adjust_wkr'])) {
 	$take = false;
 	$user_id = $_POST['player_id'];
 	$wkr = (string) $_POST['wkr'];
-	$reason = mb_convert_encoding($_POST['reason'], 'latin1', 'UTF-8');
+	$reason = $_POST['reason'];
 
 	if (substr($wkr, 0, 1) == '-') {
 		$take = true;

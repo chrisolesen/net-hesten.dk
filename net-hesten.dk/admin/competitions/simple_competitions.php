@@ -28,7 +28,7 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
             }
            
             $thumb = '/imgHorse/' . $thumb_data->image;
-            $race = mb_convert_encoding($thumb_data->race, 'latin1', 'UTF-8');
+            $race = $thumb_data->race;
 
             $advantage = $link_old->query("SELECT egenskab FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
             $disadvantage = $link_old->query("SELECT ulempe FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
@@ -48,7 +48,7 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
             } else {
                 $name = $girls_names[0];
             }
-            $name = mb_convert_encoding($name, 'latin1', 'UTF-8');
+            $name = $name;
 
             date_default_timezone_set('Europe/Copenhagen');
             $current_date = new DateTime('now');

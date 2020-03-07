@@ -176,7 +176,7 @@ if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
 	}
 }
 if (isset($_POST['your_name']) && $_POST['your_name'] !== $user_info->name) {
-	$new_name = $link_old->real_escape_string(mb_convert_encoding($_POST['your_name'], 'latin1', 'UTF-8'));
+	$new_name = $link_old->real_escape_string($_POST['your_name']);
 	$link_old->query("UPDATE Brugere SET navn = '{$new_name}' WHERE id = {$_SESSION['user_id']}");
 }
 $your_horses_page = max(0, (int) filter_input(INPUT_GET, 'your_horses_page'));

@@ -41,11 +41,11 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 		$born_amount = 0;
 		$in_waiting = 0;
 		while ($breed = $breeds->fetch_object()) {
-			$latin_race = mb_convert_encoding($breed->race, 'latin1', 'UTF-8');
+			$latin_race = $breed->race;
 			$horse = $breed->horse_id;
 			$partner = $breed->partner_id;
 			$user = $breed->bruger;
-			$nyrace = mb_convert_encoding($breed->race, 'latin1', 'UTF-8');
+			$nyrace = $breed->race;
 
 			if (rand(1, 2) == 1) {
 				$nykon = "Hingst";
@@ -122,7 +122,7 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 			$rand_thumb = $result_layer_three->fetch_object();
 			$nythumb = $rand_thumb->thumb;
 			$foltegner = $rand_thumb->tegner;
-			$nybruger = mb_convert_encoding($user, 'latin1', 'UTF-8');
+			$nybruger = $user;
 //----------generer føllene og stil status tilbage til "Hest"----------------------------------------------
 			$link_old->query("INSERT into Heste (bruger, navn, race, kon, alder, beskrivelse, pris, foersteplads, andenplads, tredieplads, status, farid, morid, tegner, thumb, date, changedate, status_skift, alder_skift, height, random_height, egenskab, ulempe, talent) VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','6000','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
 			$link_new->query("DELETE FROM `{$_GLOBALS['DB_NAME_NEW']}`.`horse_metadata` WHERE horse_id = '$horse' AND meta_key = 'breeding'");
