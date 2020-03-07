@@ -43,7 +43,7 @@ $years = 'år';
 $today = date("d.m.y.G.i");
 $loop = 0;
 /* Limit 200 = stabil */
-$sql = "SELECT id, alder, bruger, navn, foersteplads, andenplads, tredieplads, kaaringer, pris, race, original, unik FROM Heste WHERE alder > 20 AND bruger != '{$Foelbox}' AND bruger != 'hestehandleren*' and bruger <> 'genfoedsel' AND status = 'hest' ORDER BY rand() LIMIT 175";
+$sql = "SELECT id, alder, bruger, navn, foersteplads, andenplads, tredieplads, kaaringer, pris, race, original, unik FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE alder > 20 AND bruger != '{$Foelbox}' AND bruger != 'hestehandleren*' and bruger <> 'genfoedsel' AND status = 'hest' ORDER BY rand() LIMIT 175";
 $result = $link_new->query($sql);
 $viable_horses = 0;
 $killed_amount = 0;
@@ -55,8 +55,8 @@ while ($horse = $result->fetch_object()) {
         if ($horse->bruger == 'hestehandleren' || $horse->bruger == 'Hestehandleren' || $horse->bruger == NULL) {
             $horse->bruger = 'techhesten';
         }
-        $horse_name = mb_convert_encoding($horse->navn, 'UTF-8', 'latin1');
-        $horse_user_name = mb_convert_encoding($horse->bruger, 'UTF-8', 'latin1');
+        $horse_name = $horse->navn;
+        $horse_user_name = $horse->bruger;
 
 
         if (strpos("'", $horse->bruger)) {
@@ -68,7 +68,7 @@ while ($horse = $result->fetch_object()) {
         $substitut = array("og", "&quot;", "&#039;");
 
         $user = $link_new->query("SELECT id, penge, stutteri FROM Brugere WHERE stutteri = '{$horse->bruger}' LIMIT 1")->fetch_object();
-        $kids = $link_new->query("SELECT count(id) AS kids FROM Heste WHERE farid = {$horse->id} OR morid = {$horse->id}")->fetch_object()->kids;
+        $kids = $link_new->query("SELECT count(id) AS kids FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE farid = {$horse->id} OR morid = {$horse->id}")->fetch_object()->kids;
 
         $claim = round(($horse->pris * 0.8), 0);
         $claim += ($horse->foersteplads * 5000);

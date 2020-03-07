@@ -4,7 +4,7 @@ class horses {
 
 	public static function put_on_grass($attr = []) {
 		global $link_new;
-		global $_GLOBALS; /* {$_GLOBALS['DB_NAME_NEW']}{$_GLOBALS['DB_NAME_OLD']} */
+		global $GLOBALS; /* {$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']} */
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -17,12 +17,12 @@ class horses {
 			$user_id = (int) $_SESSION['user_id'];
 			$sql = "SELECT "
 					. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent, changedate "
-					. "FROM {$_GLOBALS['DB_NAME_OLD']}.Heste "
+					. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste "
 					. "WHERE id = {$attr['horse_id']}";
 			$result = $link_new->query($sql);
 			while ($data = $result->fetch_object()) {
 				if (strtolower($data->owner_name) == strtolower($_SESSION['username'])) {
-					$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET graesning = 'ja', changedate = NOW() WHERE id = {$attr['horse_id']}";
+					$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET graesning = 'ja', changedate = NOW() WHERE id = {$attr['horse_id']}";
 					$result = $link_new->query($sql);
 					return ["Hesten er nu sat på græs, husk at hente den ind, inden 14 timer.", 'success'];
 				} else {
@@ -34,11 +34,11 @@ class horses {
 	}
 
 	public static function breed_horse($attr = []) {
-		$username = mb_convert_encoding($_SESSION['username'], 'latin1', 'UTF-8');
+		$username = $_SESSION['username'];
 
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -47,8 +47,8 @@ class horses {
         foreach ($attr as $key => $value) {
             $attr[$key] = $link_new->real_escape_string($value);
         }
-		$target_horse_data = $link_new->query("SELECT * FROM Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
-		$horse_data = $link_new->query("SELECT * FROM Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
+		$target_horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
+		$horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
 		if (strtolower($horse_data->bruger) != strtolower($username)) {
 			return["Du ejer ikke den hest du forsøger at fole! {$horse_data->bruger} | {$username}", 'error'];
 		}
@@ -67,15 +67,15 @@ class horses {
 		/* Send besked til hingst */
 		/* Husk dyrelægen */
 		/* Få status til at slå igennem på mit stutteri listen */
-		$sql = "REPLACE INTO {$_GLOBALS['DB_NAME_NEW']}.horse_metadata (horse_id, meta_key, meta_value, meta_date) VALUES ({$horse_data->id}, 'breeding', '{$target_horse_data->id}', NOW())";
+		$sql = "REPLACE INTO {$GLOBALS['DB_NAME_NEW']}.horse_metadata (horse_id, meta_key, meta_value, meta_date) VALUES ({$horse_data->id}, 'breeding', '{$target_horse_data->id}', NOW())";
 		$link_new->query($sql);
 		return ["Du har nu folet {$horse_data->navn} med {$target_horse_data->navn}. Du kan forvente et føl om ~40 dage.", 'success'];
 	}
 
 	public static function put_horse_in_stable($attr = []) {
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS; /* {$_GLOBALS['DB_NAME_NEW']}{$_GLOBALS['DB_NAME_OLD']} */
+		global $link_new;
+		global $GLOBALS; /* {$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']} */
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -86,14 +86,14 @@ class horses {
         }
 		if (isset($attr['horse_id'])) {
 			$user_id = (int) $_SESSION['user_id'];
-			$username = mb_convert_encoding($_SESSION['username'], 'latin1', 'UTF-8');
+			$username = $_SESSION['username'];
 			$dead = 'død';
 			$graes_money = 'Græsningspenge';
 			$user = $link_new->query("SELECT id, penge, stutteri FROM Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
 
 			$sql = "SELECT "
 					. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent, changedate "
-					. "FROM {$_GLOBALS['DB_NAME_OLD']}.Heste "
+					. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste "
 					. "WHERE id = {$attr['horse_id']}";
 			$result = $link_new->query($sql);
 			while ($horse = $result->fetch_object()) {
@@ -106,7 +106,7 @@ class horses {
 						$durration = $date_now->diff($date_then);
 						if ($durration->y > 0 || $durration->m > 0 || $durration->d > 0 || $durration->h > 13) {
 							/* Punish */
-							$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
+							$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
 							$result = $link_new->query($sql);
 							return ["Din hest har stået for længe på græs!", 'warning'];
 						} else {
@@ -116,7 +116,7 @@ class horses {
 							if ($payment > 0) {
 								accounting::add_entry(['amount' => $payment, 'line_text' => "Græsning af hest", 'mode' => '+']);
 							}
-							$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
+							$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
 							$result = $link_new->query($sql);
 							return ["Du lige tjent {$payment} wkr på græsning, godt arbejde!", 'success'];
 						}
@@ -130,8 +130,8 @@ class horses {
 
 	public static function get_all($attr = []) {
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = ['mode' => 'auction'];
 		foreach ($defaults as $key => $value) {
@@ -175,10 +175,10 @@ class horses {
 					. "contests.points, "
 					. "breeding.meta_value AS breed_partner, "
 					. "breeding.meta_date AS breed_date "
-					. "FROM {$_GLOBALS['DB_NAME_OLD']}.Heste AS heste "
-					. "LEFT JOIN {$_GLOBALS['DB_NAME_NEW']}.game_data_competition_participants AS contests "
+					. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste AS heste "
+					. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.game_data_competition_participants AS contests "
 					. "ON contests.participant_id = heste.id AND contests.points IS NULL "
-					. "LEFT JOIN {$_GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
+					. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
 					. "ON breeding.horse_id = heste.id AND breeding.meta_key = 'breeding' "
 					. "WHERE heste.id > 400000 "
 					. "AND status != 'død' "
@@ -207,7 +207,7 @@ class horses {
 			if ($result) {
 				while ($data = $result->fetch_assoc()) {
 					foreach ($data as $key => $info) {
-						$return_data[$i][$key] = mb_convert_encoding($info, 'UTF-8', 'latin1');
+						$return_data[$i][$key] = $info;
 					}
 					++$i;
 				}
@@ -219,7 +219,7 @@ class horses {
 
 	public static function get_one($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -231,12 +231,12 @@ class horses {
 		if (isset($attr['ID'])) {
 			$sql = "SELECT "
 					. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent "
-					. "FROM Heste "
+					. "FROM {$GLOBALS['DB_NAME_NEW']}.Heste "
 					. "WHERE id = '{$attr['ID']}' ";
 			$result = $link_new->query($sql);
 			if ($data = $result->fetch_assoc()) {
 				foreach ($data as $key => $info) {
-					$return_data[$key] = mb_convert_encoding($info, 'UTF-8', 'latin1');
+					$return_data[$key] = $info;
 				}
 				return (object) $return_data;
 			}
@@ -249,8 +249,8 @@ class horses {
 
 	public static function bridge_get($horse_id) {
 		global $link_new;
-		global $link_old;
-		$horse_id = mysqli_real_escape_string($link_old, $horse_id);
+		global $link_new;
+		$horse_id = mysqli_real_escape_string($link_new, $horse_id);
 //	 , graesning, staevne, kaaring, 
 		$sql = ''
 				. "SELECT "
@@ -267,12 +267,12 @@ class horses {
 				. "ulempe, "
 				. "talent,"
 				. "status "
-				. "FROM Heste WHERE id = {$horse_id} LIMIT 1";
+				. "FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = {$horse_id} LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_assoc()) {
 				foreach ($data as $key => $value) {
-					$data[$key] = mb_convert_encoding($value, 'UTF-8', 'iso-8859-15');
+					$data[$key] = $value;
 				}
 				$return_data = [
 					'id' => $horse_id,

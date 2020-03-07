@@ -6,7 +6,7 @@ class alias_chat
     public static function post_message($attr = [])
     {
         global $link_new;
-        global $link_old;
+        global $link_new;
         $return_data = [];
         $defaults = [];
 
@@ -39,8 +39,8 @@ class alias_chat
     public static function get_messages($attr = [])
     {
         global $link_new;
-        global $link_old;
-        global $_GLOBALS;
+        global $link_new;
+        global $GLOBALS;
         $return_data = [];
         $defaults = ['limit' => 10];
         foreach ($defaults as $key => $value) {
@@ -56,7 +56,7 @@ class alias_chat
             . "new.value, "
             . "new.alias_id "
             . "FROM "
-            . "{$_GLOBALS['DB_NAME_NEW']}.game_data_alias_chat AS new "
+            . "{$GLOBALS['DB_NAME_NEW']}.game_data_alias_chat AS new "
             . "WHERE "
             . "new.status_code <> 13 "
             . ($limit == '' ? "AND new.creation_date > DATE_SUB(NOW(),INTERVAL 2 DAY) " : '')

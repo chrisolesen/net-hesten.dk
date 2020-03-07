@@ -4,7 +4,7 @@ class private_messages
 	public static function get_new_messages_count($attr = [])
 	{
 		global $link_new;
-		global $_GLOBALS;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -19,7 +19,7 @@ class private_messages
 		$sql = "SELECT "
 			. "count(id) AS amount "
 			. "FROM "
-			. "{$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
+			. "{$GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
 			. "WHERE "
 			. "target = {$attr['user_id']} "
 			. "AND "
@@ -40,7 +40,7 @@ class private_messages
 	public static function get_threads($attr = [])
 	{
 		global $link_new;
-		global $_GLOBALS;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -60,7 +60,7 @@ class private_messages
 			. "origin AS origin_id,"
 			. "hide "
 			. "FROM "
-			. "{$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
+			. "{$GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
 			. "WHERE "
 			. "hide <> 3 "
 			. "AND "
@@ -121,7 +121,7 @@ class private_messages
 	public static function hide_message($attr = [])
 	{
 		global $link_new;
-		global $_GLOBALS;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -132,7 +132,7 @@ class private_messages
 		}
 		/* 1 = hidden to origin, 2 = hidden to target, 3 = hidden to both */
 		$sql = "UPDATE "
-			. "{$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
+			. "{$GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
 			. "SET "
 			. "hide = 1 "
 			. "WHERE "
@@ -140,7 +140,7 @@ class private_messages
 			. "";
 		$result = $link_new->query($sql);
 		$sql = "UPDATE "
-			. "{$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
+			. "{$GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
 			. "SET "
 			. "hide = 2 "
 			. "WHERE "
@@ -148,7 +148,7 @@ class private_messages
 			. "";
 		$result = $link_new->query($sql);
 		$sql = "UPDATE "
-			. "{$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
+			. "{$GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
 			. "SET "
 			. "hide = 3 "
 			. "WHERE "
@@ -156,7 +156,7 @@ class private_messages
 			. "";
 		$result = $link_new->query($sql);
 		$sql = "UPDATE "
-			. "{$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
+			. "{$GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
 			. "SET "
 			. "hide = 3 "
 			. "WHERE "
@@ -171,7 +171,7 @@ class private_messages
 			return false;
 		}
 		global $link_new;
-		global $_GLOBALS;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -181,7 +181,7 @@ class private_messages
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 		$sql = "UPDATE "
-			. "{$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
+			. "{$GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
 			. "SET "
 			. "status_code = 18 "
 			. "WHERE "
@@ -193,7 +193,7 @@ class private_messages
 	public static function get_messages($attr = [])
 	{
 		global $link_new;
-		global $_GLOBALS;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = ['limit' => 10];
 		foreach ($defaults as $key => $value) {
@@ -216,7 +216,7 @@ class private_messages
 			. "origin,"
 			. "hide "
 			. "FROM "
-			. "{$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
+			. "{$GLOBALS['DB_NAME_NEW']}.game_data_private_messages "
 			. "WHERE "
 			. "hide <> 3 "
 			. "AND "

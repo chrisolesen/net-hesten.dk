@@ -4,7 +4,7 @@ class horse_trader {
 
 	public static function buy($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -63,7 +63,7 @@ class horse_trader {
 
 	public static function sell($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -86,7 +86,7 @@ class horse_trader {
 		if (!$temp_horse_data = horses::get_one(['ID' => $attr['horse_id']])) {
 			return ["Kritisk fejl: Hesten med det angivne ID {{$attr['horse_id']}} findes ikke, prøv igen eller kontakt en admin evt. på admin@net-hesten.dk", 'error'];
 		}
-		if (strtolower($temp_horse_data->owner_name) !== mb_convert_encoding(strtolower("{$temp_user_data['username']}"), 'UTF-8', 'latin1')) {
+		if (strtolower($temp_horse_data->owner_name) !== strtolower("{$temp_user_data['username']}")) {
 			return ['Hesten du har forsøgt at sælge, tilhører desværre ikke dig.', 'warning'];
 		}
 

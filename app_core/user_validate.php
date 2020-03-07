@@ -11,9 +11,9 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 	$username = mysqli_real_escape_string($link_new, $username);
 
 	if (strpos($username, '@')) {
-		$result = $link_new->query("SELECT email, id, stutteri, password, hestetegner, penge, navn FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE email = '$username'");
+		$result = $link_new->query("SELECT email, id, stutteri, password, hestetegner, penge, navn FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE email = '$username'");
 	} else {
-		$result = $link_new->query("SELECT email, id, stutteri, password, hestetegner, penge, navn FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '$username'");
+		$result = $link_new->query("SELECT email, id, stutteri, password, hestetegner, penge, navn FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '$username'");
 	}
 
 	$num_rows = $result->num_rows;

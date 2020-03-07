@@ -7,7 +7,7 @@ class chat
 			return false;
 		}
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -28,8 +28,8 @@ class chat
 	public static function get_online($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = ['time_mode' => 'm', 'time_val' => '30', 'mode' => 'return'];
 		foreach ($defaults as $key => $value) {
@@ -50,7 +50,7 @@ class chat
 			return $link_new->query("SELECT count(parent_id) AS amount FROM user_data_timing WHERE name = 'last_online_chat' AND value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode})")->fetch_object()->amount;
 		}
 		$user_id = (int)$attr['user_id'];
-		$sql = "SELECT old.id AS userid, old.stutteri AS username, new.value AS time FROM user_data_timing AS new LEFT JOIN {$_GLOBALS['DB_NAME_OLD']}.Brugere AS old ON old.id = new.parent_id WHERE new.name = 'last_online_chat' AND new.value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode}) ORDER BY new.value DESC";
+		$sql = "SELECT old.id AS userid, old.stutteri AS username, new.value AS time FROM user_data_timing AS new LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere AS old ON old.id = new.parent_id WHERE new.name = 'last_online_chat' AND new.value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode}) ORDER BY new.value DESC";
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_object()) {
@@ -68,7 +68,7 @@ class chat
 	public static function post_message($attr = [])
 	{
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -95,8 +95,8 @@ class chat
 	public static function get_messages($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = ['limit' => 10];
 		foreach ($defaults as $key => $value) {
@@ -113,9 +113,9 @@ class chat
 			. "new.creation_date, "
 			. "new.value "
 			. "FROM "
-			. "{$_GLOBALS['DB_NAME_NEW']}.game_data_chat_messages AS new "
+			. "{$GLOBALS['DB_NAME_NEW']}.game_data_chat_messages AS new "
 			. "LEFT JOIN "
-			. "{$_GLOBALS['DB_NAME_OLD']}.Brugere AS old "
+			. "{$GLOBALS['DB_NAME_OLD']}.Brugere AS old "
 			. "ON "
 			. "old.id = new.creator "
 			. "WHERE "

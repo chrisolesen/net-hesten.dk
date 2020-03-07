@@ -19,7 +19,7 @@ require_once "{$basepath}app_core/db_conf.php";
 require_once "{$basepath}app_core/object_handlers/accounting.php";
 
 /* End active competitions - start */
-$sql = "SELECT * FROM {$_GLOBALS['DB_NAME_NEW']}.game_data_competitions WHERE status_code <> 31 ORDER BY start_date DESC, id DESC";
+$sql = "SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.game_data_competitions WHERE status_code <> 31 ORDER BY start_date DESC, id DESC";
 $competition_result = $link_new->query($sql);
 while ($competition_data = $competition_result->fetch_object()) {
 	if ($end_competition_id = $competition_data->id) {
@@ -29,9 +29,9 @@ while ($competition_data = $competition_result->fetch_object()) {
 			echo 'Competion already ended';
 		} else {
 
-			$sql = "SELECT horse.id AS hid, horse.navn AS hname, user.stutteri AS uname, user.id AS uid, user.penge AS money, horse.pris AS value FROM `{$_GLOBALS['DB_NAME_NEW']}`.`game_data_competition_participants` AS PData "
-				. "LEFT JOIN `{$_GLOBALS['DB_NAME_OLD']}`.`Heste` AS horse ON horse.id = PData.participant_id "
-				. "LEFT JOIN `{$_GLOBALS['DB_NAME_OLD']}`.`Brugere` AS user ON user.stutteri = horse.bruger "
+			$sql = "SELECT horse.id AS hid, horse.navn AS hname, user.stutteri AS uname, user.id AS uid, user.penge AS money, horse.pris AS value FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competition_participants` AS PData "
+				. "LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS horse ON horse.id = PData.participant_id "
+				. "LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` AS user ON user.stutteri = horse.bruger "
 				. "WHERE `competition_id` = {$end_competition_id} "
 				. "ORDER BY rand()";
 			$result = $link_new->query($sql);
@@ -83,7 +83,7 @@ while ($competition_data = $competition_result->fetch_object()) {
 					$utf_8_message = "<b>Tilykke {$data->uname}</b>,<br /><br /> Din hest {$data->hname} har vundet {$medal} i {$competition->name}. ({$competition->end_date})<br /><br />Du har fået {$price_money}wkr og din hest er steget med {$value_add} i værdi.<br /><br /><b>Med venlig hilsen</b><br />Konkurrencestyrelsen";
 
 					$origin = 53844; /* Konkurrencestyrelsen */
-					$link_new->query("UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET pris = (pris + {$value_add}) WHERE id = {$data->hid}");
+					$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET pris = (pris + {$value_add}) WHERE id = {$data->hid}");
 
 					accounting::add_entry(['amount' => $price_money, 'line_text' => "{$medal} medalje i stævne til [{$data->hid}]", 'mode' => '+', 'user_id' => $data->uid]);
 					$link_new->query("INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, {$origin}, {$data->uid}, NOW(), '{$utf_8_message}' )");
@@ -120,7 +120,7 @@ $link_new->query('INSERT INTO game_data_competitions '
 
 $name = 'Western';
 $allowed_races = '';
-$sql = "SELECT id FROM {$_GLOBALS['DB_NAME_NEW']}.horse_races WHERE ID < 103 ORDER BY RAND() LIMIT 2";
+$sql = "SELECT id FROM {$GLOBALS['DB_NAME_NEW']}.horse_races WHERE ID < 103 ORDER BY RAND() LIMIT 2";
 $result = $link_new->query($sql);
 while ($data = $result->fetch_object()) {
 	$allowed_races .= "{$data->id},";
@@ -136,7 +136,7 @@ $link_new->query('INSERT INTO game_data_competitions '
 
 $name = 'Dressur';
 $allowed_races = '';
-$sql = "SELECT id FROM {$_GLOBALS['DB_NAME_NEW']}.horse_races WHERE ID < 103 ORDER BY RAND() LIMIT 2";
+$sql = "SELECT id FROM {$GLOBALS['DB_NAME_NEW']}.horse_races WHERE ID < 103 ORDER BY RAND() LIMIT 2";
 $result = $link_new->query($sql);
 while ($data = $result->fetch_object()) {
 	$allowed_races .= "{$data->id},";
@@ -152,7 +152,7 @@ $link_new->query('INSERT INTO game_data_competitions '
 
 $name = 'Spring';
 $allowed_races = '';
-$sql = "SELECT id FROM {$_GLOBALS['DB_NAME_NEW']}.horse_races WHERE ID < 103 ORDER BY RAND() LIMIT 2";
+$sql = "SELECT id FROM {$GLOBALS['DB_NAME_NEW']}.horse_races WHERE ID < 103 ORDER BY RAND() LIMIT 2";
 $result = $link_new->query($sql);
 while ($data = $result->fetch_object()) {
 	$allowed_races .= "{$data->id},";

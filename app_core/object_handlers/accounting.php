@@ -5,7 +5,7 @@ class accounting {
     public static function get_account_total($attr = []) {
 
         global $link_new;
-        global $_GLOBALS; 
+        global $GLOBALS; 
         $return_data = [];
         $defaults = ['user_id' => (int) $_SESSION['user_id']];
 
@@ -16,7 +16,7 @@ class accounting {
         foreach ($attr as $key => $value) {
             $attr[$key] = $link_new->real_escape_string($value);
         }
-        $money = ($link_new->query("SELECT penge AS money FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
+        $money = ($link_new->query("SELECT penge AS money FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
 
         return $money;
     }
@@ -24,7 +24,7 @@ class accounting {
     public static function fetch_entries($attr = []) {
 
         global $link_new;
-        global $_GLOBALS;
+        global $GLOBALS;
         $return_data = [];
         $defaults = ['user_id' => (int) $_SESSION['user_id']];
 
@@ -40,7 +40,7 @@ class accounting {
                 . "line_meta, "
                 . "line_amount "
                 . "FROM "
-                . "{$_GLOBALS['DB_NAME_NEW']}.game_data_accounting "
+                . "{$GLOBALS['DB_NAME_NEW']}.game_data_accounting "
                 . "WHERE "
                 . "user_id = {$attr['user_id']} "
                 . "ORDER BY "
@@ -57,7 +57,7 @@ class accounting {
     public static function add_entry($attr = []) {
 
         global $link_new;
-        global $_GLOBALS; 
+        global $GLOBALS; 
         $return_data = [];
         $defaults = [
             'mode' => '-'
@@ -74,15 +74,15 @@ class accounting {
             $attr[$key] = $link_new->real_escape_string($value);
         }
         /* Fetch current money */
-        $money = ($link_new->query("SELECT penge AS money FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
+        $money = ($link_new->query("SELECT penge AS money FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
         $attr['meta_data']['operator'] = $attr['mode'];
 
         /* Update user money */
         if ($attr['mode'] === '+') {
-            $sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge + {$attr['amount']}) WHERE id = {$attr['user_id']} ";
+            $sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge + {$attr['amount']}) WHERE id = {$attr['user_id']} ";
             $attr['meta_data']['line_total'] = $money + $attr['amount'];
         } else {
-            $sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge - {$attr['amount']}) WHERE id = {$attr['user_id']} ";
+            $sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge - {$attr['amount']}) WHERE id = {$attr['user_id']} ";
             $attr['meta_data']['line_total'] = $money - $attr['amount'];
         }
         $link_new->query($sql);
@@ -90,7 +90,7 @@ class accounting {
         $attr['meta_data']['line_text'] = $attr['line_text'];
         $meta_for_db = json_encode($attr['meta_data'], JSON_UNESCAPED_UNICODE);
 
-        $sql = "INSERT INTO {$_GLOBALS['DB_NAME_NEW']}.game_data_accounting "
+        $sql = "INSERT INTO {$GLOBALS['DB_NAME_NEW']}.game_data_accounting "
                 . "(user_id, line_meta, line_amount)"
                 . "VALUES "
                 . "({$attr['user_id']}, '{$meta_for_db}', {$attr['amount']}) "

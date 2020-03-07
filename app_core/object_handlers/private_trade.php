@@ -6,7 +6,7 @@ class private_trade
 	public static function offer_privat_trade($attr = [])
 	{
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -16,7 +16,7 @@ class private_trade
 		$horse_id = (int) $attr['horse_id'];
 		$price = (int) $attr['price'];
 		$seller_id = (int) $attr['seller_id'];
-		$recipient = $link_new->real_escape_string(mb_convert_encoding($attr['recipient'], 'latin1', 'UTF-8'));
+		$recipient = $link_new->real_escape_string($attr['recipient']);
 		$recipient_id = (int) $link_new->query("SELECT id FROM `Brugere` WHERE stutteri = '{$recipient}'")->fetch_object()->id;
 		if (!is_numeric($recipient_id) || !$recipient_id) {
 			return false;
@@ -43,7 +43,7 @@ class private_trade
 	public static function request_privat_trade($attr = [])
 	{
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -78,7 +78,7 @@ class private_trade
 	public static function accept_privat_trade($attr = [])
 	{
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -114,7 +114,7 @@ class private_trade
 	public static function reject_privat_trade($attr = [])
 	{
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -143,8 +143,8 @@ class private_trade
 	public static function list_trade_offerings($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = [];
 
@@ -176,7 +176,7 @@ class private_trade
 									. "heste.egenskab, "
 									. "heste.ulempe, "
 									. "heste.talent "
-									. "FROM {$_GLOBALS['DB_NAME_OLD']}.Heste AS heste WHERE id = $info"
+									. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste AS heste WHERE id = $info"
 							);
 							$show_horse_data = [];
 							while ($horse_data = $horse_datas->fetch_assoc()) {
@@ -201,8 +201,8 @@ class private_trade
 	public static function list_trade_offers($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = [];
 
@@ -234,7 +234,7 @@ class private_trade
 									. "heste.egenskab, "
 									. "heste.ulempe, "
 									. "heste.talent "
-									. "FROM {$_GLOBALS['DB_NAME_OLD']}.Heste AS heste WHERE id = $info"
+									. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste AS heste WHERE id = $info"
 							);
 							$show_horse_data = [];
 							while ($horse_data = $horse_datas->fetch_assoc()) {

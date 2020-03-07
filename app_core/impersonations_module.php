@@ -7,7 +7,7 @@ if (is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['rights'
 	$_SESSION['impersonator_email'] = $_SESSION['email'];
 	$impersonate_id = (int) filter_input(INPUT_GET, 'user_id');
 
-	$result = $link_new->query("SELECT email, id, stutteri, hestetegner, penge, navn FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$impersonate_id}");
+	$result = $link_new->query("SELECT email, id, stutteri, hestetegner, penge, navn FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$impersonate_id}");
 
 	$num_rows = $result->num_rows;
 	while ($data = $result->fetch_assoc()) {

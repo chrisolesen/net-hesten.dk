@@ -62,7 +62,7 @@ class user
 			return false;
 		}
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = ['key' => 'last_login'];
 		foreach ($defaults as $key => $value) {
@@ -84,8 +84,8 @@ class user
 	public static function get_timings($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 		$return_data = [];
 		$defaults = ['time_mode' => 'm', 'time_val' => '30', 'mode' => 'return'];
 		foreach ($defaults as $key => $value) {
@@ -109,7 +109,7 @@ class user
 			return $link_new->query("SELECT count(parent_id) AS amount FROM user_data_timing WHERE name = '{$attr['key']}' AND value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode})")->fetch_object()->amount;
 		}
 		$user_id = (int) $attr['user_id'];
-		$sql = "SELECT old.stutteri AS username, new.value AS time FROM user_data_timing AS new LEFT JOIN {$_GLOBALS['DB_NAME_OLD']}.Brugere AS old ON old.id = new.parent_id WHERE new.name = '{$attr['key']}' AND new.value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode}) ORDER BY new.value DESC";
+		$sql = "SELECT old.stutteri AS username, new.value AS time FROM user_data_timing AS new LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere AS old ON old.id = new.parent_id WHERE new.name = '{$attr['key']}' AND new.value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode}) ORDER BY new.value DESC";
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_object()) {
@@ -127,14 +127,14 @@ class user
 	public static function request_personal_data($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;/*{$_GLOBALS['DB_NAME_NEW']}{$_GLOBALS['DB_NAME_OLD']}*/
+		global $link_new;
+		global $GLOBALS;/*{$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']}*/
 		foreach ($attr as $key => $value) {
             $attr[$key] = $link_new->real_escape_string($value);
         }
 		$mail_message_data = '<br />';
 		$mail_message_data .= 'Basis data:<br />';
-		$result = $link_new->query("SELECT id, stutteri, `password`, navn, email, alder, kon, beskrivelse, thumb FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_id']}");
+		$result = $link_new->query("SELECT id, stutteri, `password`, navn, email, alder, kon, beskrivelse, thumb FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_id']}");
 		while ($data = $result->fetch_object()) {
 			$mail_message_data .= 'ID: ' . $data->id . '<br />';
 			$mail_message_data .= 'Stutteri navn: ' . $data->stutteri . '<br />';
@@ -148,14 +148,14 @@ class user
 		}
 		$mail_message_data .= '<br /><br />';
 		$mail_message_data .= 'Sessions:<br />';
-		$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_NEW']}.user_data_sessions WHERE user_id = {$_SESSION['user_id']}");
+		$result = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.user_data_sessions WHERE user_id = {$_SESSION['user_id']}");
 		while ($data = $result->fetch_object()) {
 			$mail_message_data .= 'Fra: ' . $data->start . ' til ' . $data->end . ' via ' . $data->ip . '<br />';
 			//			$mail_message_data .= var_export($data, true);
 		}
 		$mail_message_data .= '<br /><br />';
 		$mail_message_data .= 'Privat Beskeder Fra:<br />';
-		$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages WHERE origin = {$_SESSION['user_id']}");
+		$result = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.game_data_private_messages WHERE origin = {$_SESSION['user_id']}");
 		while ($data = $result->fetch_object()) {
 			$mail_message_data .= '<hr /><br />';
 			$mail_message_data .= 'Modtager: ' . $data->target . ' | Dato: ';
@@ -166,7 +166,7 @@ class user
 		}
 		$mail_message_data .= '<br /><br />';
 		$mail_message_data .= 'Privat Beskeder Til:<br />';
-		$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_NEW']}.game_data_private_messages WHERE target = {$_SESSION['user_id']} AND ORIGIN NOT IN (53432,52745)");
+		$result = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.game_data_private_messages WHERE target = {$_SESSION['user_id']} AND ORIGIN NOT IN (53432,52745)");
 		while ($data = $result->fetch_object()) {
 			$mail_message_data .= '<hr /><br />';
 			$mail_message_data .= 'Afsender: ' . $data->origin . ' | Dato: ';
@@ -177,7 +177,7 @@ class user
 		}
 		$mail_message_data .= '<br /><br />';
 		$mail_message_data .= 'Chat beskeder:<br />';
-		$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_NEW']}.game_data_chat_messages WHERE creator = {$_SESSION['user_id']}");
+		$result = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.game_data_chat_messages WHERE creator = {$_SESSION['user_id']}");
 		while ($data = $result->fetch_object()) {
 			$mail_message_data .= '<hr /><br />';
 			$mail_message_data .= $data->creation_date . '<br />';
@@ -211,8 +211,8 @@ class user
 	public static function get_info($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;/*{$_GLOBALS['DB_NAME_NEW']}{$_GLOBALS['DB_NAME_OLD']}*/
+		global $link_new;
+		global $GLOBALS;/*{$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']}*/
 		if (!isset($attr['user_id'])) {
 			return false;
 		}
@@ -226,10 +226,10 @@ class user
         }
 
 		if ($attr['mode'] === 'username') {
-			$search_for = mb_convert_encoding($attr['user_id'], 'latin1', 'UTF-8');
-			$sql = "SELECT stutteri AS username, thumb, penge AS money, id, navn AS name FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '$search_for' LIMIT 1";
+			$search_for = $attr['user_id'];
+			$sql = "SELECT stutteri AS username, thumb, penge AS money, id, navn AS name FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '$search_for' LIMIT 1";
 		} else {
-			$sql = "SELECT stutteri AS username, thumb, penge AS money, id, navn AS name FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = '{$attr['user_id']}' LIMIT 1";
+			$sql = "SELECT stutteri AS username, thumb, penge AS money, id, navn AS name FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = '{$attr['user_id']}' LIMIT 1";
 		}
 		if ($attr['link_mode'] == 'new') {
 			$result = $link_new->query($sql)->fetch_object();
@@ -246,7 +246,7 @@ class user
 	public static function update_membership_request($attr = [])
 	{
 		global $link_new;
-		global $link_old;
+		global $link_new;
 
 		$return_data = [];
 		$defaults = [];
@@ -281,8 +281,8 @@ class user
 	public static function request_membership($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 
 		$return_data = [];
 		$defaults = [];
@@ -293,11 +293,11 @@ class user
 		$block_signup = false;
 		$db_user = $link_new->real_escape_string($attr['user']);
 		$db_email = $link_new->real_escape_string($attr['mail']);
-		if ($link_new->query("SELECT count(id) AS count_result FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE email = '{$db_email}' LIMIT 1")->fetch_object()->count_result > 0) {
+		if ($link_new->query("SELECT count(id) AS count_result FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE email = '{$db_email}' LIMIT 1")->fetch_object()->count_result > 0) {
 			$return_data[] = ["Den valgte email '{$attr['mail']}', findes allerede.", 'warning'];
 			$block_signup = true;
 		}
-		if ($link_new->query("SELECT count(id) AS count_result FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$db_user}' LIMIT 1")->fetch_object()->count_result > 0) {
+		if ($link_new->query("SELECT count(id) AS count_result FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$db_user}' LIMIT 1")->fetch_object()->count_result > 0) {
 			$return_data[] = ["Det valgte stutterinavn '{$attr['user']}', findes allerede.", 'warning'];
 			$block_signup = true;
 		}
@@ -381,8 +381,8 @@ class user
 	public static function request_password($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 
 		$return_data = [];
 		$defaults = [];
@@ -390,11 +390,11 @@ class user
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		$new_password = substr(md5(rand()), 0, 7);
-		$attr['mail'] = $link_new->real_escape_string(mb_convert_encoding($attr['mail'], 'latin1', 'UTF-8'));
+		$attr['mail'] = $link_new->real_escape_string($attr['mail']);
 		$attr['user_id'] = $link_new->query("SELECT id FROM Brugere WHERE email = '{$attr['mail']}' LIMIT 1")->fetch_object()->id;
 		if ($attr['user_id']) {
-			$user_name = mb_convert_encoding($link_new->query("SELECT stutteri AS username FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->username, 'UTF-8', 'latin1');
-			$user_mail = mb_convert_encoding($link_new->query("SELECT email AS mail FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->mail, 'UTF-8', 'latin1');
+			$user_name = $link_new->query("SELECT stutteri AS username FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->username;
+			$user_mail = $link_new->query("SELECT email AS mail FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->mail;
 
 			$salt = uniqid('', true);
 			$algo = '6';
@@ -441,8 +441,8 @@ class user
 	public static function admin_user_password_reset($attr = [])
 	{
 		global $link_new;
-		global $link_old;
-		global $_GLOBALS;
+		global $link_new;
+		global $GLOBALS;
 
 		$return_data = [];
 		$defaults = [];
@@ -451,8 +451,8 @@ class user
 		}
 
 		$new_password = substr(md5(rand()), 0, 7);
-		$user_name = mb_convert_encoding($link_new->query("SELECT stutteri AS username FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->username, 'UTF-8', 'latin1');
-		$user_mail = mb_convert_encoding($link_new->query("SELECT email AS mail FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->mail, 'UTF-8', 'latin1');
+		$user_name = $link_new->query("SELECT stutteri AS username FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->username;
+		$user_mail = $link_new->query("SELECT email AS mail FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->mail;
 
 		$salt = uniqid('', true);
 		$algo = '6';

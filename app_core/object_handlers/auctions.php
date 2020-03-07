@@ -4,7 +4,7 @@ class auctions {
 
 	public static function list_bids($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -49,7 +49,7 @@ class auctions {
 
 	public static function get_highest_bid($attr = ['auction_id']) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -79,7 +79,7 @@ class auctions {
 
 	public static function place_bid($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		$attr['bid_amount'] = str_replace('.', '', $attr['bid_amount']);
@@ -128,13 +128,8 @@ class auctions {
 				/* TODO - update message */
 				accounting::add_entry(['amount' => $earnings, 'line_text' => "Solgt en hest på auktion", 'mode' => '+', 'user_id' => $temp_auctions_data['creator']]);
 
-				
-				/* Send besked til den ny ejer */
-				/*$sql = "INSERT INTO Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Du har vundet en auktion', '" . (mb_convert_encoding("Tillykke {$temp_user_data['username']}, du har købt en hest til køb nu pris.", 'latin1', 'UTF-8')) . "', 'Auktionshuset', '{$temp_user_data['username']}', 'Indbakke', NOW() )";
-				$link_new->query($sql);
-*/
 				/* indsæt besked i ny pb system */
-				$utf_8_username = mb_convert_encoding($temp_user_data['username'], 'UTF-8', 'latin1');
+				$utf_8_username = $temp_user_data['username'];
 				$utf_8_message = $link_new->real_escape_string("Tillykke {$utf_8_username}, du har købt en hest til køb nu pris.");
 				$sql = "INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, 52745, {$_SESSION['user_id']}, NOW(), '{$utf_8_message}' )";
 				$link_new->query($sql);
@@ -146,16 +141,7 @@ class auctions {
 					$data = $result->fetch_assoc();
 					$temp_seller_data = ['money' => $data['penge'], 'username' => $data['stutteri']];
 				}
-				/* Send besked til den gamle ejer */
-				/*$sql = "INSERT INTO Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Din auktion er slut', '" . (mb_convert_encoding("Tillykke {$temp_seller_data['username']}, det er lykkeds at sælge din hest på auktion til køb nu pris!", 'latin1', 'UTF-8')) . "', 'Auktionshuset', '{$temp_seller_data['username']}', 'Indbakke', NOW() )";
-				$link_new->query($sql);*/
-				/* indsæt besked i ny pb system */
-//				$utf_8_username = mb_convert_encoding($temp_user_data['username'], 'UTF-8', 'latin1');
-//				$utf_8_message = $link_new->real_escape_string("Tillykke {$utf_8_username}, du har købt en hest til køb nu pris.");
-//				$sql = "INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, 52745, {$_SESSION['user_id']}, NOW(), '{$utf_8_message}' )";
-//				$link_new->query($sql);
-
-								
+												
 				/* Refunder til højeste bud */
 				$sql = "SELECT creator, bid_amount, bid_date FROM game_data_auction_bids WHERE auction = {$attr['auction_id']} AND status_code = 4 ORDER BY bid_amount DESC LIMIT 1";
 				$result = $link_new->query($sql);
@@ -304,7 +290,7 @@ class auctions {
 
 	public static function get_all($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -339,7 +325,7 @@ class auctions {
 
 	public static function get_one($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -370,7 +356,7 @@ class auctions {
 
 	public static function put_on_sale($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		$return_data = [];
 		$default_date_holder = new DateTime('now');
 		$five_days_in_future = $default_date_holder->add(new DateInterval('P5D'));
@@ -389,7 +375,7 @@ class auctions {
 			/* Verify ownership of horse */
 			$horses = horses::get_all(['user_name' => $_SESSION['username']]);
 			/* TODO: optimise this loop */
-			$seller_user_name = mb_convert_encoding($_SESSION['username'], 'latin1', 'UTF-8');
+			$seller_user_name = $_SESSION['username'];
 
 			foreach ($horses as $horse) {
 				if ($horse['id'] == ($attr['horse_id'])) {

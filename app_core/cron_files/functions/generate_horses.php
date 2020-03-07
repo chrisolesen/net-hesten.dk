@@ -32,16 +32,16 @@ $target_horses = 1;
 $tech_mail_message = '';
 while ($generated_horses <= $target_horses) {
 
-	$thumb_data = $link_new->query("SELECT tegner, thumb, race FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger != 'Hestehandleren*' AND bruger <> '{$Foelbox}' AND status <> '{$foel}' AND genfodes = 'ja' AND unik <> 'ja' ORDER BY RAND() LIMIT 1")->fetch_object();
+	$thumb_data = $link_new->query("SELECT tegner, thumb, race FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger != 'Hestehandleren*' AND bruger <> '{$Foelbox}' AND status <> '{$foel}' AND genfodes = 'ja' AND unik <> 'ja' ORDER BY RAND() LIMIT 1")->fetch_object();
 	$artist = $thumb_data->tegner;
 	$thumb = $thumb_data->thumb;
 	$race = $thumb_data->race;
 
-	$advantage = $link_new->query("SELECT egenskab FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
-	$disadvantage = $link_new->query("SELECT ulempe FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
-	$talent = $link_new->query("SELECT talent FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
+	$advantage = $link_new->query("SELECT egenskab FROM {$GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
+	$disadvantage = $link_new->query("SELECT ulempe FROM {$GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
+	$talent = $link_new->query("SELECT talent FROM {$GLOBALS['DB_NAME_OLD']}.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
 
-	$height_data = $link_new->query("SELECT lower, upper FROM {$_GLOBALS['DB_NAME_OLD']}.horse_height WHERE race = '{$race}' LIMIT 1")->fetch_object();
+	$height_data = $link_new->query("SELECT lower, upper FROM {$GLOBALS['DB_NAME_OLD']}.horse_height WHERE race = '{$race}' LIMIT 1")->fetch_object();
 	$height_lower = $height_data->lower;
 	$height_upper = $height_data->upper;
 	$height = mt_rand($height_lower, $height_upper);
@@ -67,7 +67,7 @@ while ($generated_horses <= $target_horses) {
 
 
 	if ($artist && $thumb && $advantage && $disadvantage && $talent) {
-		$sql = "INSERT INTO {$_GLOBALS['DB_NAME_OLD']}.Heste " . PHP_EOL
+		$sql = "INSERT INTO {$GLOBALS['DB_NAME_OLD']}.Heste " . PHP_EOL
 				. '(' . PHP_EOL
 				. 'bruger, status, alder, pris, beskrivelse, ' . PHP_EOL
 				. 'foersteplads, andenplads, tredieplads, ' . PHP_EOL
@@ -87,7 +87,7 @@ while ($generated_horses <= $target_horses) {
 				. ")";
 		$link_new->query($sql);
 
-		$error = $link_old->error;
+		$error = $link_new->error;
 
 		
 	}

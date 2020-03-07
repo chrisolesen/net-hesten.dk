@@ -4,7 +4,7 @@ class horse_list_filters {
 
 	public static function save_filter_settings($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		global $_POST;
 
 		$return_data = [];
@@ -95,7 +95,7 @@ class horse_list_filters {
 
 	public static function render_filter_settings($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		global $cached_races;
 
 		$dead = 'død';
@@ -251,15 +251,15 @@ class horse_list_filters {
 				<select name="filter_artist" id="filter_artist">
 					<option value="all" <?= ($user_filter_data[$attr['zone']]['artist'] == 'all') ? 'selected' : ''; ?>>Alle Tegnere</option>
 					<?php
-					$artists = $link_new->query("SELECT DISTINCT users.stutteri AS name, users.id AS user_id FROM Heste AS horses LEFT JOIN Brugere AS users ON users.stutteri = horses.tegner WHERE status <> '{$dead}' ORDER BY users.stutteri ASC");
+					$artists = $link_new->query("SELECT DISTINCT users.stutteri AS name, users.id AS user_id FROM {$GLOBALS['DB_NAME_NEW']}.Heste AS horses LEFT JOIN Brugere AS users ON users.stutteri = horses.tegner WHERE status <> '{$dead}' ORDER BY users.stutteri ASC");
 					if ($artists) {
 						while ($artist = $artists->fetch_object()) {
 							if ($artist->name == '') {
 								continue;
 							}
 							?>
-							<option value="<?= mb_convert_encoding($artist->name, 'UTF-8', 'latin1'); ?>" <?= ($user_filter_data[$attr['zone']]['artist'] == mb_convert_encoding($artist->name, 'UTF-8', 'latin1')) ? 'selected' : ''; ?>>
-								<?= mb_convert_encoding($artist->name, 'UTF-8', 'latin1'); ?>
+							<option value="<?= $artist->name; ?>" <?= ($user_filter_data[$attr['zone']]['artist'] == $artist->name) ? 'selected' : ''; ?>>
+								<?= $artist->name; ?>
 							</option>
 							<?php
 						}
@@ -313,7 +313,7 @@ class horse_list_filters {
 
 	public static function get_filter_string($attr = []) {
 		global $link_new;
-		global $link_old;
+		global $link_new;
 		global $cached_races;
 
 		$return_data = '';
@@ -343,7 +343,7 @@ class horse_list_filters {
 		if (!empty($user_filter_data[$attr['zone']]['races'] && !in_array('all', $user_filter_data[$attr['zone']]['races']))) {
 			$races = '';
 			foreach ($user_filter_data[$attr['zone']]['races'] as $race_id) {
-				$race_name = mb_convert_encoding($cached_races[(int) $race_id]['name'], 'latin1', 'UTF-8');
+				$race_name = $cached_races[(int) $race_id]['name'];
 //				$race_name = $cached_races[(int) $race_id]['name'];
 				$races .= "'{$race_name}',";
 			}
@@ -374,7 +374,7 @@ class horse_list_filters {
 			if ($user_filter_data[$attr['zone']]['artist'] == 'all') {
 				
 			} else {
-				$artist_for_db = mb_convert_encoding($user_filter_data[$attr['zone']]['artist'], 'latin1', 'UTF-8');
+				$artist_for_db = $user_filter_data[$attr['zone']]['artist'];
 				$return_data .= " AND tegner = '{$artist_for_db}' ";
 			}
 		}

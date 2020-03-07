@@ -26,7 +26,7 @@ $loop = 0;
 //----------------------------------------------------------------------------------------------------
 //-----Find føl som er over 4 år-------------------------------------------------------------------
 
-$sql = "SELECT id FROM Heste WHERE bruger != '{$Foelbox}' and bruger != 'hestehandleren*' AND (status = '{$foel}' OR status = '{$Foel}') AND alder >= 4";
+$sql = "SELECT id FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE bruger != '{$Foelbox}' and bruger != 'hestehandleren*' AND (status = '{$foel}' OR status = '{$Foel}') AND alder >= 4";
 $result = $link_new->query($sql);
 $foel_amount = 0;
 $grow_up_amount = 0;
@@ -34,7 +34,7 @@ while ($data = $result->fetch_assoc()) {
 	$foel_id = $data['id'];
 	++$foel_amount;
 
-	$sql = "SELECT id, bruger, alder, navn, race, pris, thumb, date FROM Heste WHERE id = '$foel_id' LIMIT 1";
+	$sql = "SELECT id, bruger, alder, navn, race, pris, thumb, date FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$foel_id' LIMIT 1";
 	$result_layer_two = $link_new->query($sql);
 	$poalder = $result_layer_two->fetch_object();
 	if ($poalder) {
@@ -59,7 +59,7 @@ while ($data = $result->fetch_assoc()) {
 			$tilskrevet = $nyalder - $poalder->alder;
 
 //------pluk en tilfældig thumb fra hestene i databasen-----------------------------------------
-			$thumb_data = $link_new->query("SELECT tegner, thumb FROM Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND race = '$nyrace' AND status != '{$Foel}' and status != '{$foel}' AND genfodes = 'ja' AND unik != 'ja' ORDER BY RAND() LIMIT 1 ");
+			$thumb_data = $link_new->query("SELECT tegner, thumb FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND race = '$nyrace' AND status != '{$Foel}' and status != '{$foel}' AND genfodes = 'ja' AND unik != 'ja' ORDER BY RAND() LIMIT 1 ");
 			$rand_heste_thumb = $thumb_data->fetch_object();
 			if ($rand_heste_thumb) {
 //-----------SæT VARIABLER---------------------------------------
