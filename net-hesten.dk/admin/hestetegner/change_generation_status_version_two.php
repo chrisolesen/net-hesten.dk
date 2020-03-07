@@ -238,16 +238,16 @@ $selected_race = substr($_GET['race'], 1, -1);
 	if (filter_input(INPUT_GET, 'do') === 'generate_one') {
 		if ($selected_id = filter_input(INPUT_GET, 'id')) {
 			$thumb_data = $link_new->query("SELECT artists, image, race FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE id = {$selected_id} LIMIT 1")->fetch_object();
-			$artist = $link_old->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$thumb_data->artists} LIMIT 1")->fetch_object()->stutteri;
+			$artist = $link_new->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$thumb_data->artists} LIMIT 1")->fetch_object()->stutteri;
 			if (!$artist) {
 				exit('Kun en tegner lige nu tak.'); 
 			}
 			$thumb = '/imgHorse/' . $thumb_data->image;
 			$race = $thumb_data->race; 
 
-			$advantage = $link_old->query("SELECT egenskab FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
-			$disadvantage = $link_old->query("SELECT ulempe FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
-			$talent = $link_old->query("SELECT talent FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
+			$advantage = $link_new->query("SELECT egenskab FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
+			$disadvantage = $link_new->query("SELECT ulempe FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
+			$talent = $link_new->query("SELECT talent FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
 
 			$height_data = $link_new->query("SELECT max_height, min_height FROM {$_GLOBALS['DB_NAME_NEW']}.horse_races WHERE name = '{$race}' LIMIT 1")->fetch_object();
 			$height_lower = $height_data->lower;
@@ -306,7 +306,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 					. ")";
 //					echo $sql;
 //					exit('test');
-				$link_old->query($sql);
+				$link_new->query($sql);
 				?>
 					<a href="/admin/hestetegner/edit_horse.php?horse_id=<?= mysqli_insert_id($link_old); ?>"><?= mysqli_insert_id($link_old); ?></a>
 					<?php

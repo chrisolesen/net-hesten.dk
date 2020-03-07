@@ -54,7 +54,7 @@ require "$basepath/global_modules/header.php";
 		?>
 		<li>
 			<span class="user">
-				<?php // mb_convert_encoding($donor->user, 'UTF-8', 'latin1'); ?>
+				<?php // $donor->user; ?>
 				<?= 'Anonym bruger'; ?> 
 			</span>
 			<span class="amount">

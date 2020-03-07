@@ -79,7 +79,7 @@ if (isset($_FILES['fileToUpload']) && empty($_POST['new_password']) && $_POST['y
 			//			echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded. As {$target_file}.{$imageFileType}";
 			$file_path = str_replace("$basepath/files.net-hesten.dk/users/", '', "{$target_file}.{$imageFileType}");
 			$sql = "UPDATE Brugere SET thumb = '{$file_path}' WHERE id = {$_SESSION['user_id']}";
-			$link_old->query($sql);
+			$link_new->query($sql);
 		} else {
 			echo "Beklager, der skete er sket en uventet fejl, prøv igen lidt senere, eller kontakt stutteri TechHesten.";
 		}
@@ -87,7 +87,7 @@ if (isset($_FILES['fileToUpload']) && empty($_POST['new_password']) && $_POST['y
 }
 if (isset($_POST['remove_user_thumbnail']) && empty($_POST['new_password']) && $_POST['your_name'] == $user_info->name) {
 	$sql = "UPDATE Brugere SET thumb = '' WHERE id = {$_SESSION['user_id']}";
-	$link_old->query($sql);
+	$link_new->query($sql);
 }
 /* Change list-style */
 if (isset($_POST['liststyle'])) {
@@ -172,12 +172,12 @@ if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
 	$cryptSalt = '$' . $algo . '$rounds=' . $rounds . '$' . $salt;
 	$password_hash = crypt(trim($_POST['new_password']), $cryptSalt);
 	if ($password_hash) {
-		$link_old->query("UPDATE Brugere SET password = '{$password_hash}' WHERE id = {$_SESSION['user_id']}");
+		$link_new->query("UPDATE Brugere SET password = '{$password_hash}' WHERE id = {$_SESSION['user_id']}");
 	}
 }
 if (isset($_POST['your_name']) && $_POST['your_name'] !== $user_info->name) {
 	$new_name = $link_old->real_escape_string($_POST['your_name']);
-	$link_old->query("UPDATE Brugere SET navn = '{$new_name}' WHERE id = {$_SESSION['user_id']}");
+	$link_new->query("UPDATE Brugere SET navn = '{$new_name}' WHERE id = {$_SESSION['user_id']}");
 }
 $your_horses_page = max(0, (int) filter_input(INPUT_GET, 'your_horses_page'));
 $horses_pr_page = 10;
@@ -258,7 +258,7 @@ if (is_array(horses::get_all($attr))) {
 		$horse_data = '';
 		$horse_data .= "<div class='horse_square horse_object {$gender}' data-horse-id='{$horse['id']}' data-extended-info='{$extended_info}'>";
 		$horse_data .= "<div class='info'>";
-		//$horse_name_convert = mb_convert_encoding($horse['name'], 'UTF-8', 'latin1');
+		//$horse_name_convert = $horse['name'];
 		$horse_data .= "<span class='name'>{$horse['name']}</span>";
 		$horse_data .= "<i class='gender icon-{$gender}-1'></i>";
 		$horse_data .= "<div class='horse_vcard'>";
@@ -355,11 +355,11 @@ if ($active_tab = filter_input(INPUT_GET, 'tab')) {
             <img style="float:left;margin-right: 2em;border-radius: 5px;max-width: 325px;max-height: 130px;" src="<?= $stud_thumbnail; ?>" />
         </div>
         <span class="label">Stutterinavn:</span>
-		<?= mb_convert_encoding($user_info->username, 'UTF-8', 'latin1'); ?><br />
+		<?= $user_info->username; ?><br />
         <span class="label">Navn:</span>
 		<?= $user_info->name; ?><br />
         <span class="label">Antal heste:</span>
-		<?= number_dotter($link_old->query("SELECT count(id) AS amount FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = '{$user_info->username}' AND status <> '{$dead}'")->fetch_object()->amount); ?> <span style="font-variant: small-caps;font-size: 0.7em;">(
+		<?= number_dotter($link_new->query("SELECT count(id) AS amount FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = '{$user_info->username}' AND status <> '{$dead}'")->fetch_object()->amount); ?> <span style="font-variant: small-caps;font-size: 0.7em;">(
 			<?= number_dotter($amount_active_selection) . ($amount_active_selection >= 100 ? '+' : ''); ?>)</span><br />
         <span class="label">Penge:</span><span class="user_money_pool">
 			<?= number_dotter($user_info->money); ?></span> <span class="wkr_symbol dev_test_effect">wkr</span><br />

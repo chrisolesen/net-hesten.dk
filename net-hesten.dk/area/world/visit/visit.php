@@ -26,12 +26,12 @@ if (!$visit_user_info) {
 
 $horse_tabs = [];
 
-$attr = ['user_name' => mb_convert_encoding($visit_user_info->username, 'UTF-8', 'latin1'), 'mode' => 'visiting_one_stud'];
+$attr = ['user_name' => $visit_user_info->username, 'mode' => 'visiting_one_stud'];
 $attr = ['user_name' => $visit_user_info->username, 'mode' => 'visiting_one_stud'];
 
 if ($filter_id = filter_input(INPUT_POST, 'id_filter')) {
 
-	$attr = ['user_name' => mb_convert_encoding($visit_user_info->username, 'UTF-8', 'latin1'), 'id_filter' => $filter_id, 'mode' => 'visiting_one_stud'];
+	$attr = ['user_name' => $visit_user_info->username, 'id_filter' => $filter_id, 'mode' => 'visiting_one_stud'];
 	$attr = ['user_name' => $visit_user_info->username, 'id_filter' => $filter_id, 'mode' => 'visiting_one_stud'];
 }
 

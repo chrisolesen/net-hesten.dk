@@ -24,7 +24,7 @@ if (isset($_POST['adjust_wkr'])) {
 		$wkr = (int) substr($wkr, 1);
 	}
 
-	$user = $link_old->query("SELECT penge, stutteri FROM Brugere WHERE id = {$user_id} LIMIT 1")->fetch_object();
+	$user = $link_new->query("SELECT penge, stutteri FROM Brugere WHERE id = {$user_id} LIMIT 1")->fetch_object();
 
 	if (!$take) {
 		$saldo = (int) $user->penge + (int) $wkr;
@@ -35,8 +35,8 @@ if (isset($_POST['adjust_wkr'])) {
 		$money_sql = "UPDATE Brugere SET penge = (penge - {$wkr}) WHERE id = {$user_id}";
 		//		$archive_sql = "INSERT INTO Konto (stutteri, tekst, transaktion, beloeb, saldo, date) VALUES ('{$user->stutteri}', '$reason', 'justering', '-{$wkr}', '{$saldo}', NOW())";
 	}
-	$link_old->query($money_sql);
-	//	$link_old->query($archive_sql);
+	$link_new->query($money_sql);
+	//	$link_new->query($archive_sql);
 	//	echo $money_sql . '<br />';
 	//	echo $archive_sql;
 }
@@ -163,7 +163,7 @@ if (isset($_POST['adjust_wkr'])) {
 				$sql = "SELECT id, stutteri, penge, navn, email, date FROM Brugere WHERE stutteri LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
 			}
 		}
-		$result = $link_old->query($sql);
+		$result = $link_new->query($sql);
 		while ($data = $result->fetch_object()) {
 			$last_active = $link_new->query("SELECT value FROM user_data_timing WHERE parent_id = {$data->id} AND name = 'last_active'")->fetch_object()->value;
 			$fetch_rights = "SELECT * FROM user_privileges WHERE user_id = {$data->id}";
@@ -180,11 +180,11 @@ if (isset($_POST['adjust_wkr'])) {
 					<i class='id'><?= $data->id; ?></i>
 				</span>
 				<span>
-					<i class='name'><a style="text-decoration:underline;" href="https://net-hesten.dk/area/world/visit/visit.php?user=<?= $data->id; ?>"><?= mb_convert_encoding($data->stutteri, 'UTF-8', 'Latin1'); ?></a></i><br />
-					<?= mb_convert_encoding($data->navn, 'UTF-8', 'Latin1'); ?>
+					<i class='name'><a style="text-decoration:underline;" href="https://net-hesten.dk/area/world/visit/visit.php?user=<?= $data->id; ?>"><?= $data->stutteri, 'UTF-8', 'Latin1'); ?></a></i><br />
+					<?= $data->navn, 'UTF-8', 'Latin1'); ?>
 				</span>
 				<span class="wkr monospace"><a title="Alter WKR" data-lw-action="alter_wkr" href="javascript:void(0);"><?= number_dotter($data->penge); ?></a></span>
-				<span><?= mb_convert_encoding($data->email, 'UTF-8', 'Latin1'); ?><br /><a onclick="return confirm('Vil du virkelig nulstille koden til: <?= mb_convert_encoding($data->stutteri, 'UTF-8', 'Latin1'); ?> ?');" href="?action=admin_user_password_reset&user_id=<?= $data->id; ?>">Reset password</a></span>
+				<span><?= $data->email, 'UTF-8', 'Latin1'); ?><br /><a onclick="return confirm('Vil du virkelig nulstille koden til: <?= $data->stutteri, 'UTF-8', 'Latin1'); ?> ?');" href="?action=admin_user_password_reset&user_id=<?= $data->id; ?>">Reset password</a></span>
 				<span class="rights monospace center_text">
 					<?php if (in_array('5', $rights_array)) { ?>
 						<a href="?page=<?= $page; ?>&action=remove_right_horse_artist&user_id=<?= $data->id; ?>" class="active make_artist"><img src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/artist.png" /></a>

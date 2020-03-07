@@ -27,12 +27,12 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 		if (!$applicant) {
 			return [false, 'Ansøgningen findes ikke!'];
 		}
-		$test_old = $link_old->query("SELECT stutteri FROM Brugere WHERE stutteri = '{$applicant->username}' LIMIT 1")->fetch_object();
+		$test_old = $link_new->query("SELECT stutteri FROM Brugere WHERE stutteri = '{$applicant->username}' LIMIT 1")->fetch_object();
 		$test_new = $link_new->query("SELECT username FROM users WHERE username = '{$applicant->username}' LIMIT 1")->fetch_object();
 		if ($test_old || $test_new) {
 			return [false, 'Stutteri navnet er optaget!, lav et afslag på brugeren hvor du beder dem finde et andet navn.'];
 		}
-		$link_old->query(mb_convert_encoding("INSERT INTO Brugere (stutteri, password, navn, email, penge, thumb, date) VALUES ('{$applicant->username}','{$applicant->password}','Ny bruger','{$applicant->email}','{$initial_wkr}','',now())", 'iso-8859-15', 'UTF-8'));
+		$link_new->query("INSERT INTO Brugere (stutteri, password, navn, email, penge, thumb, date) VALUES ('{$applicant->username}','{$applicant->password}','Ny bruger','{$applicant->email}','{$initial_wkr}','',now())", 'iso-8859-15', 'UTF-8'));
 		$new_user_id = $link_old->insert_id;
 		$result = $link_new->query("INSERT INTO users (id, username, password, email, active_ip) VALUES ('{$new_user_id}', '{$applicant->username}','{$applicant->password}','{$applicant->email}','{$applicant->ip}')");
 		$new_user_id = $link_new->insert_id;
@@ -49,7 +49,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 				. "<br>Ellers kan du spørge i forummet <i>Hestesnak</i><br>"
 				. "<br><font color=red>Husk lige at du ikke må have 2 stutterier - det er udsmidningsgrund!</font><br>"
 				. "<br>Rigtig god fornøjelse :glad:";
-		$link_old->query(mb_convert_encoding("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Velkommen til Net-Hesten', '{$message}','admin@Net-hesten','{$applicant->username}','Indbakke',now() )", 'iso-8859-15', 'UTF-8'));
+		$link_new->query("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Velkommen til Net-Hesten', '{$message}','admin@Net-hesten','{$applicant->username}','Indbakke',now() )", 'iso-8859-15', 'UTF-8'));
 */
 		/* Send an email to the user */
 		$to = "$applicant->username <$applicant->email>";

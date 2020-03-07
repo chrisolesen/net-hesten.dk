@@ -18,7 +18,7 @@ require "$basepath/global_modules/header.php";
 		foreach (private_messages::get_threads(['user_id' => $_SESSION['user_id']]) as $user_id => $new_messages) {
 	?>
 			<li class="thread">
-				<span class="username"><a href="/area/stud/messages/thread.php?send_to=<?= $user_id; ?>"><?= mb_convert_encoding(user::get_info(['user_id' => $user_id])->username, 'UTF-8', 'latin1'); ?> (<?= $new_messages; ?>)</a></span>
+				<span class="username"><a href="/area/stud/messages/thread.php?send_to=<?= $user_id; ?>"><?= user::get_info(['user_id' => $user_id])->username; ?> (<?= $new_messages; ?>)</a></span>
 			</li>
 	<?php
 

@@ -40,10 +40,10 @@ $horse_trader_page_offset = $horse_trader_page * $horses_pr_page;
 				<a class="btn btn-info" style="line-height: 30px;" data-button-type='modal_activator' data-target='filter_horses' >Filtre</a>
 					<div style="font-size: 0.75em;line-height: 15px;">
 						<div>
-							Unikke: <?= $link_old->query("SELECT COUNT(id) AS antal FROM Heste WHERE bruger = 'hestehandleren' AND unik = 'ja' AND status <> '{$GLOBALS['latin_one']['dead']}'")->fetch_object()->antal; ?>
+							Unikke: <?= $link_new->query("SELECT COUNT(id) AS antal FROM Heste WHERE bruger = 'hestehandleren' AND unik = 'ja' AND status <> '{$GLOBALS['latin_one']['dead']}'")->fetch_object()->antal; ?>
 						</div>
 						<div>
-							Originale: <?= $link_old->query("SELECT COUNT(id) AS antal FROM Heste WHERE bruger = 'hestehandleren' AND original = 'ja' AND status <> '{$GLOBALS['latin_one']['dead']}'")->fetch_object()->antal; ?>
+							Originale: <?= $link_new->query("SELECT COUNT(id) AS antal FROM Heste WHERE bruger = 'hestehandleren' AND original = 'ja' AND status <> '{$GLOBALS['latin_one']['dead']}'")->fetch_object()->antal; ?>
 						</div>
 					</div>
 			</div>

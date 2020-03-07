@@ -81,7 +81,7 @@ LIMIT 1;
 				. "ORDER BY user.logindate ASC, timing.value ASC, user.id ASC "
 				. ""
 				. "";
-		$result = $link_old->query($sql);
+		$result = $link_new->query($sql);
 		$i = 0;
 		$ihorses = 0;
 		$iwkr = 0;
@@ -92,7 +92,7 @@ LIMIT 1;
 			$sql = "SELECT count(id) AS amount FROM game_data_private_messages WHERE target = '{$data->id}' OR origin = '{$data->id}'";
 			$number_of_new_messages = $link_new->query($sql)->fetch_object()->amount;
 			$sql = "SELECT count(id) AS amount FROM Heste WHERE bruger = '{$data->stutteri}'";
-			$number_of_horses = $link_old->query($sql)->fetch_object()->amount;
+			$number_of_horses = $link_new->query($sql)->fetch_object()->amount;
 			$sql = "SELECT count(id) AS amount FROM game_data_chat_messages WHERE creator = '{$data->id}'";
 			$number_of_chat = $link_new->query($sql)->fetch_object()->amount;
 //			if ($data->penge < 10000000) {
@@ -106,15 +106,15 @@ LIMIT 1;
 					<?= $data->IP; ?> 
 				</span>
 				<span>
-					Stutteri: <i class='name'><?= mb_convert_encoding($data->stutteri, 'UTF-8', 'Latin1'); ?></i><br />
-					Navn: <?= mb_convert_encoding($data->navn, 'UTF-8', 'Latin1'); ?><br />
-					Mail: <?= mb_convert_encoding($data->email, 'UTF-8', 'Latin1'); ?>
+					Stutteri: <i class='name'><?= $data->stutteri, 'UTF-8', 'Latin1'); ?></i><br />
+					Navn: <?= $data->navn, 'UTF-8', 'Latin1'); ?><br />
+					Mail: <?= $data->email, 'UTF-8', 'Latin1'); ?>
 				</span>
 				<span class="wkr monospace"><?= number_dotter($data->penge); ?></span><?php $iwkr += $data->penge; ?>
 				<span class="monospace center_text">(<?= $number_of_new_messages; ?>)(<?= $number_of_chat ?>)</span>
 				<span class="monospace center_text"><?= $number_of_horses; ?></span><?php $ihorses += $number_of_horses; ?>
 				<span class="monospace center_text"><?= $number_of_konto; ?></span>
-				<?php /* <span><?= mb_convert_encoding($data->email, 'UTF-8', 'Latin1'); ?></span> */ ?>
+				<?php /* <span><?= $data->email, 'UTF-8', 'Latin1'); ?></span> */ ?>
 				<span class="monospace center_text">
 					<?php
 					if ($data->logindate > $data->last_online) {

@@ -83,7 +83,7 @@ if (is_array(horses::get_all($attr))) {
         $horse_data = '';
         $horse_data .= "<div class='horse_square horse_object {$gender}' data-horse-id='{$horse['id']}' data-extended-info='{$extended_info}'>";
         $horse_data .= "<div class='info'>";
-        //$horse_name_convert = mb_convert_encoding($horse['name'], 'UTF-8', 'latin1');
+        //$horse_name_convert = $horse['name'];
         $horse_data .= "<span class='name'>{$horse['name']}</span>";
         $horse_data .= "<i class='gender icon-{$gender}-1'></i>";
         $horse_data .= "<div class='horse_vcard'>";

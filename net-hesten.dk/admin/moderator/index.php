@@ -15,7 +15,7 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 }
 
 $fun_facts = [];
-$fun_facts['users'] = $link_old->query("SELECT sum(penge) AS total_wkr FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri NOT IN ('Net-hesten', 'DennisTest', 'B', 'auktionshuset', 'Carsten', 'hestehandleren','{$foel}kassen') LIMIT 1")->fetch_object();
+$fun_facts['users'] = $link_new->query("SELECT sum(penge) AS total_wkr FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri NOT IN ('Net-hesten', 'DennisTest', 'B', 'auktionshuset', 'Carsten', 'hestehandleren','{$foel}kassen') LIMIT 1")->fetch_object();
 ?>
 <div>
 	Total mængde wkr: <?= number_dotter($fun_facts['users']->total_wkr); ?><br />
@@ -23,7 +23,7 @@ $fun_facts['users'] = $link_old->query("SELECT sum(penge) AS total_wkr FROM {$_G
 <?php
 $i = 0;
 
-$result = $link_old->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere");
+$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere");
 $i = 0;
 while ($data = $result->fetch_assoc()) {
 	++$i;
@@ -31,7 +31,7 @@ while ($data = $result->fetch_assoc()) {
 echo "<pre>";
 echo "$i users have never logged in<br />";
 
-$result = $link_old->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere");
+$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere");
 $i = 0;
 
 $rige = 0;
@@ -56,9 +56,9 @@ while ($data = $result->fetch_assoc()) {
 	if ($data['nyhedsbrev'] == 'ja') {
 		++$nyhedsbrev;
 	}
-	if ((mb_convert_encoding($data['penge'], 'UTF-8', 'iso-8859-15') > $richest_wkr)) {
+	if (($data['penge'], 'UTF-8', 'iso-8859-15') > $richest_wkr)) {
 		$richest_wkr = $data['penge'];
-		$richest = mb_convert_encoding($data['stutteri'], 'UTF-8', 'iso-8859-15');
+		$richest = $data['stutteri'], 'UTF-8', 'iso-8859-15');
 	}
 
 	if ($data['penge'] >= 100000000) {

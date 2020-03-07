@@ -62,13 +62,13 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 //-----test om heste skal have random højde i racens interval, ellers vælg fars og mors højde, afgør laveste og højeste værdi, generer en random højde mellem disse værdier---------------------------------
 
 			if (rand(1, 10) == 1) {
-				$lowest_height = $link_old->query("SELECT lower FROM horse_height WHERE race = '$latin_race' LIMIT 1")->fetch_object()->lower;
-				$highest_height = $link_old->query("SELECT upper FROM horse_height WHERE race = '$latin_race' LIMIT 1")->fetch_object()->upper;
+				$lowest_height = $link_new->query("SELECT lower FROM horse_height WHERE race = '$latin_race' LIMIT 1")->fetch_object()->lower;
+				$highest_height = $link_new->query("SELECT upper FROM horse_height WHERE race = '$latin_race' LIMIT 1")->fetch_object()->upper;
 				$child_height = rand($lowest_height, $highest_height);
 				$random_height = "ja";
 			} else {
-				$daddy_height = $link_old->query("SELECT height FROM Heste WHERE id = '$partner' LIMIT 1")->fetch_object();
-				$mommy_height = $link_old->query("SELECT height FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object();
+				$daddy_height = $link_new->query("SELECT height FROM Heste WHERE id = '$partner' LIMIT 1")->fetch_object();
+				$mommy_height = $link_new->query("SELECT height FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object();
 				$child_height = rand(min($daddy_height->height, $mommy_height->height), max($daddy_height->height, $mommy_height->height));
 				$random_height = "nej";
 			}
@@ -76,41 +76,41 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 //-------------------Vælg tilfældig egenskab, ulempe og talent, rand bruges for arvelighed, gider ikke forklare det, det burde være let at gennemskue------------------------------
 			if (rand(1, 10) == 1) {
 				if (rand(1, 2) == 1) {
-					$egenskab = $link_old->query("SELECT Egenskab FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Egenskab;
+					$egenskab = $link_new->query("SELECT Egenskab FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Egenskab;
 				} else {
-					$egenskab = $link_old->query("SELECT Egenskab FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Egenskab;
+					$egenskab = $link_new->query("SELECT Egenskab FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Egenskab;
 				}
 			} else {
-				$egenskab = $link_old->query("SELECT Egenskab FROM horse_habits WHERE Egenskab != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Egenskab;
+				$egenskab = $link_new->query("SELECT Egenskab FROM horse_habits WHERE Egenskab != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Egenskab;
 			}
 			if ($egenskab == "") {
-				$egenskab = $link_old->query("SELECT Egenskab FROM horse_habits WHERE Egenskab != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Egenskab;
+				$egenskab = $link_new->query("SELECT Egenskab FROM horse_habits WHERE Egenskab != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Egenskab;
 			}
 
 			if (rand(1, 10) == 1) {
 				if (rand(1, 2) == 1) {
-					$ulempe = $link_old->query("SELECT Ulempe FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Ulempe;
+					$ulempe = $link_new->query("SELECT Ulempe FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Ulempe;
 				} else {
-					$ulempe = $link_old->query("SELECT Ulempe FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Ulempe;
+					$ulempe = $link_new->query("SELECT Ulempe FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Ulempe;
 				}
 			} else {
-				$ulempe = $link_old->query("SELECT Ulempe FROM horse_habits WHERE Ulempe != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Ulempe;
+				$ulempe = $link_new->query("SELECT Ulempe FROM horse_habits WHERE Ulempe != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Ulempe;
 			}
 			if ($ulempe == "") {
-				$ulempe = $link_old->query("SELECT Ulempe FROM horse_habits WHERE Ulempe != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Ulempe;
+				$ulempe = $link_new->query("SELECT Ulempe FROM horse_habits WHERE Ulempe != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Ulempe;
 			}
 
 			if (rand(1, 100) <= 50) {
 				if (rand(1, 2) == 1) {
-					$talent = $link_old->query("SELECT Talent FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Talent;
+					$talent = $link_new->query("SELECT Talent FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Talent;
 				} else {
-					$talent = $link_old->query("SELECT Talent FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Talent;
+					$talent = $link_new->query("SELECT Talent FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Talent;
 				}
 			} else {
-				$talent = $link_old->query("SELECT Talent FROM horse_habits WHERE Talent != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Talent;
+				$talent = $link_new->query("SELECT Talent FROM horse_habits WHERE Talent != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Talent;
 			}
 			if ($talent == "") {
-				$talent = $link_old->query("SELECT Talent FROM horse_habits WHERE Talent != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Talent;
+				$talent = $link_new->query("SELECT Talent FROM horse_habits WHERE Talent != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Talent;
 			}
 
 
@@ -118,13 +118,13 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 
 //------pluk en tilfældig thumb fra føllene i Følkassen-----------------------------------------
 
-			$result_layer_three = $link_old->query("SELECT tegner, thumb FROM Heste WHERE bruger = '{$Foelbox}' AND race = '$latin_race' ORDER BY RAND() LIMIT 1");
+			$result_layer_three = $link_new->query("SELECT tegner, thumb FROM Heste WHERE bruger = '{$Foelbox}' AND race = '$latin_race' ORDER BY RAND() LIMIT 1");
 			$rand_thumb = $result_layer_three->fetch_object();
 			$nythumb = $rand_thumb->thumb;
 			$foltegner = $rand_thumb->tegner;
 			$nybruger = $user;
 //----------generer føllene og stil status tilbage til "Hest"----------------------------------------------
-			$link_old->query("INSERT into Heste (bruger, navn, race, kon, alder, beskrivelse, pris, foersteplads, andenplads, tredieplads, status, farid, morid, tegner, thumb, date, changedate, status_skift, alder_skift, height, random_height, egenskab, ulempe, talent) VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','6000','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
+			$link_new->query("INSERT into Heste (bruger, navn, race, kon, alder, beskrivelse, pris, foersteplads, andenplads, tredieplads, status, farid, morid, tegner, thumb, date, changedate, status_skift, alder_skift, height, random_height, egenskab, ulempe, talent) VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','6000','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
 			$link_new->query("DELETE FROM `{$_GLOBALS['DB_NAME_NEW']}`.`horse_metadata` WHERE horse_id = '$horse' AND meta_key = 'breeding'");
 
 
@@ -136,7 +136,7 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 			/*$horsename = str_replace($tegn, $substitut, $glnavn);
 			$username = str_replace($tegn, $substitut, $nybruger);
 			if ($horsename) {
-//				$link_old->query("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('$horsename har f{$ø}dt et {$foel}','Tillykke $username :-)) <br>$prut1 har f{$ø}dt et velskabt {$foel}.<br><img src=\"/imgHorse/$glthumb\" style=\'FILTER: FlipH;\'><img src=/imgHorse/$nythumb>','admin@Net-hesten','$username','Avl',now() )");
+//				$link_new->query("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('$horsename har f{$ø}dt et {$foel}','Tillykke $username :-)) <br>$prut1 har f{$ø}dt et velskabt {$foel}.<br><img src=\"/imgHorse/$glthumb\" style=\'FILTER: FlipH;\'><img src=/imgHorse/$nythumb>','admin@Net-hesten','$username','Avl',now() )");
 			}*/
 		}
 	}

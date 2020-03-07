@@ -16,7 +16,7 @@ $choose_race = '*Vælg race*';
 $errors = [];
 if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 	$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET kaaring = '' WHERE kaaring = 'ja' AND status != '{$Foel}'";
-	$link_old->query($sql);
+	$link_new->query($sql);
 }
 ?>
 <section>
@@ -67,15 +67,15 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 						$refund_suggestions[$i] = $related_bids->creator;
 					}
 					if (isset($_GET['do_suggested_auction_refund']) && $_GET['do_suggested_auction_refund'] == $i) {
-						$temp_user_name = $link_old->query("SELECT stutteri FROM Brugere WHERE id = {$related_bids->creator} LIMIT 1")->fetch_object()->stutteri;
-						$temp_user_money = $link_old->query("SELECT penge FROM Brugere WHERE id = {$related_bids->creator} LIMIT 1")->fetch_object()->penge;
+						$temp_user_name = $link_new->query("SELECT stutteri FROM Brugere WHERE id = {$related_bids->creator} LIMIT 1")->fetch_object()->stutteri;
+						$temp_user_money = $link_new->query("SELECT penge FROM Brugere WHERE id = {$related_bids->creator} LIMIT 1")->fetch_object()->penge;
 
 						$sql = "UPDATE Brugere SET penge = (penge + {$related_bids->bid_amount}) WHERE id = {$related_bids->creator}";
 //                        echo "<br /> {$sql}";
-						$link_old->query($sql);
+						$link_new->query($sql);
 						$sql = "INSERT INTO Konto (stutteri, tekst, transaktion, beloeb, saldo, date) VALUES ('{$temp_user_name}', 'Auktions bud [{$related_bids->bid_date}] refunderet.', 'auktion', '{$related_bids->bid_amount}', '" . ($temp_user_money + $related_bids->bid_amount) . "', NOW())";
 //                        echo "<br /> {$sql}";
-						$link_old->query($sql);
+						$link_new->query($sql);
 						$sql = "UPDATE game_data_auction_bids SET status_code = 5 WHERE bid_date = '{$related_bids->bid_date}' AND creator = {$related_bids->creator}";
 //                        echo "<br /> {$sql}";
 						$link_new->query($sql);
@@ -93,7 +93,7 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 					$suggested_sql === '' ? $suggested_sql = "update game_data_auction_bids SET status_code = 6 where creator = {$related_bids->creator} and bid_date = '{$related_bids->bid_date}' LIMIT 1" : '';
 					$verifying_sql = "SELECT h.id as HesteID, h.bruger, b.stutteri, b.id AS BrugerID FROM {$_GLOBALS['DB_NAME_OLD']}.Heste h LEFT JOIN {$_GLOBALS['DB_NAME_OLD']}.Brugere b ON h.bruger = b.stutteri WHERE h.id = {$related_bids->object_id} LIMIT 1";
 					/* Auto Verify */
-//                    $link_old->query($verifying_sql)->fetch_object();
+//                    $link_new->query($verifying_sql)->fetch_object();
 
 					if (isset($_GET['do_suggested_auction_fix']) && $_GET['do_suggested_auction_fix'] == 'kralamut') {
 						$result = $link_new->query($suggested_sql);
@@ -106,7 +106,7 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 				<?php
 			}
 			?>
-			<br /><br />Verifying SQL result: <?php print_r($link_old->query($verifying_sql)->fetch_object()); ?> 
+			<br /><br />Verifying SQL result: <?php print_r($link_new->query($verifying_sql)->fetch_object()); ?> 
 			<br />Suggesting SQL: "<?= $suggested_sql; ?>" <a style='position:absolute;top:5em;right:5em;' href="?do_suggested_auction_fix=kralamut">SET BID WON!</a>
 			<?php
 			foreach ($refund_suggestions as $key => $suggested_refund) {
@@ -121,13 +121,13 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 		?>
     </ul>
 	<?php
-	$result = $link_old->query("SELECT count(id) as count FROM {$_GLOBALS['DB_NAME_OLD']}.Heste where kaaring = 'ja' and status != '{$Foel}' Limit 1");
+	$result = $link_new->query("SELECT count(id) as count FROM {$_GLOBALS['DB_NAME_OLD']}.Heste where kaaring = 'ja' and status != '{$Foel}' Limit 1");
 	$count = $result->fetch_object()->count;
 	?>
     <h2>Heste kårings fejl (<?= $count; ?>)</h2>
     <ul>
 		<?php
-		$result = $link_old->query("SELECT id, kaaring, status, alder FROM {$_GLOBALS['DB_NAME_OLD']}.Heste where kaaring = 'ja' and status != '{$Foel}' order by ID asc LIMIT 25");
+		$result = $link_new->query("SELECT id, kaaring, status, alder FROM {$_GLOBALS['DB_NAME_OLD']}.Heste where kaaring = 'ja' and status != '{$Foel}' order by ID asc LIMIT 25");
 		while ($horse = $result->fetch_object()):
 			if ($horse->alder >= 4) {
 				?>
@@ -140,7 +140,7 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
     <h2>Wkr fejl</h2>
     <ul>
 		<?php
-		$result = $link_old->query("SELECT penge, stutteri, alder FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE penge < 0");
+		$result = $link_new->query("SELECT penge, stutteri, alder FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE penge < 0");
 		while ($user = $result->fetch_object()):
 			?>
 			<li>Bruger: <?= $user->stutteri; ?> har <?= $user->penge; ?> wkr.</li>
@@ -158,14 +158,14 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
         </style>
 		<?php
 		if (isset($_GET['put']) && isset($_GET['on'])) {
-			$new_thumb = $link_old->query("SELECT id, thumb, tegner FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '{$_GET['put']}' limit 1 ")->fetch_object();
+			$new_thumb = $link_new->query("SELECT id, thumb, tegner FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '{$_GET['put']}' limit 1 ")->fetch_object();
 			$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET thumb = '{$new_thumb->thumb}', tegner = '{$new_thumb->tegner}' WHERE id = '{$_GET['on']}'";
-			$link_old->query($sql);
+			$link_new->query($sql);
 		}
 //		if (isset($_GET['accept']) && isset($_GET['for'])) {
 //			$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET thumb = '{$_GET['accept']}' WHERE id = '{$_GET['for']}'";
 //			//			echo $sql;
-//			$link_old->query($sql);
+//			$link_new->query($sql);
 //		}
 		if (isset($_GET['no_rebirth'])) {
 			$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET genereres = '', genfodes = '' WHERE id = '{$_GET['no_rebirth']}'";
@@ -176,17 +176,17 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 				}
 				$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET genereres = '', genfodes = '', bruger = 'techhesten', kon = '{$kon}' WHERE id = '{$_GET['no_rebirth']}'";
 			}
-			$link_old->query($sql);
+			$link_new->query($sql);
 		}
-		$amount = ($link_old->query("SELECT count(id) AS number FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE (thumb = '/imgHorse/..' OR thumb = '') AND race <> '' and race <> '{$choose_race}' and status <> '{$Foel}' and unik = 'ja'")->fetch_object()->number);
+		$amount = ($link_new->query("SELECT count(id) AS number FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE (thumb = '/imgHorse/..' OR thumb = '') AND race <> '' and race <> '{$choose_race}' and status <> '{$Foel}' and unik = 'ja'")->fetch_object()->number);
 		echo "Unikke: {$amount} <br />";
 		?>
 		<h2>Unikke med thumb fejl, pr race.</h2>
 		<?php
-		$relevant_races = $link_old->query("SELECT DISTINCT race FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE (thumb = '/imgHorse/..' OR thumb = '') AND race <> '' and race <> '{$choose_race}' and status <> '{$Foel}' and unik = 'ja' AND date > '2015-01-01 00:00:00'");
+		$relevant_races = $link_new->query("SELECT DISTINCT race FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE (thumb = '/imgHorse/..' OR thumb = '') AND race <> '' and race <> '{$choose_race}' and status <> '{$Foel}' and unik = 'ja' AND date > '2015-01-01 00:00:00'");
 //		var_dump($relevant_races);
 		while ($single_race = $relevant_races->fetch_object()->race) {
-			echo '<br />' . mb_convert_encoding($single_race, 'UTF-8', 'latin1') . ': (' . ($link_old->query("SELECT count(id) AS amount FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE (thumb = '/imgHorse/..' OR thumb = '') AND race = '{$single_race}' and status <> '{$Foel}' and unik = 'ja' AND date > '2015-01-01 00:00:00'")->fetch_object()->amount) . ')';
+			echo '<br />' . $single_race . ': (' . ($link_new->query("SELECT count(id) AS amount FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE (thumb = '/imgHorse/..' OR thumb = '') AND race = '{$single_race}' and status <> '{$Foel}' and unik = 'ja' AND date > '2015-01-01 00:00:00'")->fetch_object()->amount) . ')';
 		}
 		?>
     </ul>    

@@ -85,18 +85,18 @@ if (filter_input(INPUT_POST, 'search_id')) {
 			$rebirth = filter_input(INPUT_POST, 'rebirth') == 'on' ? 'ja' : '';
 
 			$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET status = '{$status}', genfodes = '{$rebirth}', original = '{$original}', unik = '{$unique}', race = '{$race}', bruger = '{$user}', kon = '{$gender}', date = '{$target_date}', changedate = '{$target_date}', alder = '{$wanted_age}' WHERE id = {$id} LIMIT 1";
-			$link_old->query($sql);
+			$link_new->query($sql);
 		}
 
-		$result = $link_old->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$search_id} LIMIT 1");
+		$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$search_id} LIMIT 1");
 		while ($data = $result->fetch_object()) {
 			?>
 			<input type="hidden" name="search_id" value="<?= $data->id; ?>" />
 			<img style='float:left;margin-right:20px;margin-bottom: 60px;' src="http://files.<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/imgHorse/<?= $data->thumb; ?>" />
 			<span>ID:</span><?= $data->id; ?><br />
-			<span>Race:</span><input type="text" list="horse_races" name="horse_race" value="<?= mb_convert_encoding($data->race, 'UTF-8', 'latin1'); ?>" /><br />
-			<span>Bruger:</span><input type="text" list="user_names" name="user_name" value="<?= mb_convert_encoding($data->bruger, 'UTF-8', 'latin1'); ?>" /><br />
-			<span>Alder:</span><input type="number" name="age" value="<?= mb_convert_encoding($data->alder, 'UTF-8', 'latin1'); ?>" /><br />
+			<span>Race:</span><input type="text" list="horse_races" name="horse_race" value="<?= $data->race; ?>" /><br />
+			<span>Bruger:</span><input type="text" list="user_names" name="user_name" value="<?= $data->bruger; ?>" /><br />
+			<span>Alder:</span><input type="number" name="age" value="<?= $data->alder; ?>" /><br />
 			<span>Unik:</span><input type="checkbox" name="unique" <?= $data->unik == 'ja' ? 'checked' : ''; ?> /><br />
 			<span>Original:</span><input type="checkbox" name="original" <?= $data->original == 'ja' ? 'checked' : ''; ?>  /><br />
 			<span>Genfødes:</span><input type="checkbox" name="rebirth" <?= $data->genfodes == 'ja' ? 'checked' : ''; ?>  /><br />
@@ -107,8 +107,8 @@ if (filter_input(INPUT_POST, 'search_id')) {
 			</select><br />
 			<span>Status:</span><select name="status">
 				<option value='no-status'>Ingen status angivet</option>
-				<option value='død' <?= (mb_convert_encoding(strtolower($data->status), 'UTF-8', 'latin1') == 'død' ? 'selected' : ''); ?>>Død</option>
-				<option value='føl' <?= (mb_convert_encoding(strtolower($data->status), 'UTF-8', 'latin1') == 'føl' ? 'selected' : ''); ?>>Føl</option>
+				<option value='død' <?= (strtolower($data->status) == 'død' ? 'selected' : ''); ?>>Død</option>
+				<option value='føl' <?= (strtolower($data->status) == 'føl' ? 'selected' : ''); ?>>Føl</option>
 				<option value='hest' <?= (strtolower($data->status) == 'hest' ? 'selected' : ''); ?>>Hest</option>
 				<option value='avl' <?= (strtolower($data->status) == 'avl' ? 'selected' : ''); ?>>Avl</option>
 			</select>
@@ -120,17 +120,17 @@ if (filter_input(INPUT_POST, 'search_id')) {
 	</form>
 	<datalist id="horse_races">
 		<?php
-		$result = $link_old->query("SELECT hesterace FROM {$_GLOBALS['DB_NAME_OLD']}.Hesteracer");
+		$result = $link_new->query("SELECT hesterace FROM {$_GLOBALS['DB_NAME_OLD']}.Hesteracer");
 		while ($data = $result->fetch_object()) {
-			?><option value="<?= mb_convert_encoding($data->hesterace, 'UTF-8', 'latin1'); ?>" /><?php
+			?><option value="<?= $data->hesterace; ?>" /><?php
 		}
 		?>
 	</datalist>
 	<datalist id="user_names">
 		<?php
-		$result = $link_old->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere");
+		$result = $link_new->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere");
 		while ($data = $result->fetch_object()) {
-			?><option value="<?= mb_convert_encoding($data->stutteri, 'UTF-8', 'latin1'); ?>" /><?php
+			?><option value="<?= $data->stutteri; ?>" /><?php
 		}
 		?>
 	</datalist>

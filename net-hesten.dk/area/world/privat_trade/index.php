@@ -110,7 +110,7 @@ require "$basepath/global_modules/header.php";
 			if(!empty(private_trade::list_trade_offerings($attr))){
 				foreach (private_trade::list_trade_offerings($attr) as $trade) {
 					$trade_id = $trade['id'];
-					$buyer = mb_convert_encoding($link_old->query("SELECT stutteri FROM Brugere WHERE id = {$trade['buyer']}")->fetch_object()->stutteri, 'UTF-8', 'latin1');
+					$buyer = $link_new->query("SELECT stutteri FROM Brugere WHERE id = {$trade['buyer']}")->fetch_object()->stutteri;
 					$horse = $trade['horse_data'];
 					$gender = ((string)strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
 					$gender = ((string)strtolower($horse['gender']) === 'hingst') ? 'male' : $gender;
@@ -180,7 +180,7 @@ require "$basepath/global_modules/header.php";
 		if(!empty(private_trade::list_trade_offers($attr))){
 			foreach (private_trade::list_trade_offers($attr) as $trade) {
 				$trade_id = $trade['id'];
-				$seller = mb_convert_encoding($link_old->query("SELECT stutteri FROM Brugere WHERE id = {$trade['seller']}")->fetch_object()->stutteri, 'UTF-8', 'latin1');
+				$seller = $link_new->query("SELECT stutteri FROM Brugere WHERE id = {$trade['seller']}")->fetch_object()->stutteri;
 				$horse = $trade['horse_data'];
 				$gender = ((string)strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
 				$gender = ((string)strtolower($horse['gender']) === 'hingst') ? 'male' : $gender;

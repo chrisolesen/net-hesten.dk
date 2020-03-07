@@ -15,7 +15,7 @@ $offset = $page * $pr_page;
 
 if (isset($_GET['delete_user'])) {
 	$sql = "DELETE FROM Brugere WHERE id = {$_GET['delete_user']} LIMIT 1";
-	$result = $link_old->query($sql);
+	$result = $link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
 	die();
 }
@@ -113,7 +113,7 @@ if (isset($_GET['clear_account_view'])) {
 			. "ORDER BY timing.value ASC, user.id ASC "
 			. ""
 			. "";
-		$result = $link_old->query($sql);
+		$result = $link_new->query($sql);
 		$i = 0;
 		$ihorses = 0;
 		$iwkr = 0;
@@ -124,7 +124,7 @@ if (isset($_GET['clear_account_view'])) {
 			$sql = "SELECT count(id) AS amount FROM game_data_private_messages WHERE target = '{$data->id}' OR origin = '{$data->id}'";
 			$number_of_new_messages = $link_new->query($sql)->fetch_object()->amount;
 			$sql = "SELECT count(id) AS amount FROM Heste WHERE bruger = '{$data->stutteri}'";
-			$number_of_horses = $link_old->query($sql)->fetch_object()->amount;
+			$number_of_horses = $link_new->query($sql)->fetch_object()->amount;
 			$sql = "SELECT count(id) AS amount FROM game_data_chat_messages WHERE creator = '{$data->id}'";
 			$number_of_chat = $link_new->query($sql)->fetch_object()->amount;
 			++$i;
@@ -134,15 +134,15 @@ if (isset($_GET['clear_account_view'])) {
 					<i class='id'><?= $data->id; ?></i>
 				</span>
 				<span>
-					Stutteri: <i class='name'><?= mb_convert_encoding($data->stutteri, 'UTF-8', 'Latin1'); ?></i><br />
-					Navn: <?= mb_convert_encoding($data->navn, 'UTF-8', 'Latin1'); ?><br />
-					Mail: <?= mb_convert_encoding($data->email, 'UTF-8', 'Latin1'); ?>
+					Stutteri: <i class='name'><?= $data->stutteri, 'UTF-8', 'Latin1'); ?></i><br />
+					Navn: <?= $data->navn, 'UTF-8', 'Latin1'); ?><br />
+					Mail: <?= $data->email, 'UTF-8', 'Latin1'); ?>
 				</span>
 				<span class="wkr monospace"><?= number_dotter($data->penge); ?></span><?php $iwkr += $data->penge; ?>
 				<span class="monospace center_text">(<?= $number_of_new_messages; ?>)(<?= $number_of_chat ?>)</span>
 				<span class="monospace center_text"><?= $number_of_horses; ?></span><?php $ihorses += $number_of_horses; ?>
 				<span class="monospace center_text"><?= $number_of_konto; ?></span>
-				<?php /* <span><?= mb_convert_encoding($data->email, 'UTF-8', 'Latin1'); ?></span> */ ?>
+				<?php /* <span><?= $data->email, 'UTF-8', 'Latin1'); ?></span> */ ?>
 				<span class="monospace center_text">
 					<?php
 					if ($data->logindate > $data->last_online) {

@@ -21,20 +21,20 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
         //$competion_subdata->prize_id;
         if ($selected_id) {
             $thumb_data = $link_new->query("SELECT artists, image, race FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE id = {$selected_id} LIMIT 1")->fetch_object();
-            $artist = $link_old->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$thumb_data->artists} LIMIT 1")->fetch_object()->stutteri;
+            $artist = $link_new->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$thumb_data->artists} LIMIT 1")->fetch_object()->stutteri;
             if (!$artist) {
-                $artist = $link_old->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = 0 LIMIT 1")->fetch_object()->stutteri;
+                $artist = $link_new->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = 0 LIMIT 1")->fetch_object()->stutteri;
                 //exit('Kun en tegner lige nu tak.');
             }
            
             $thumb = '/imgHorse/' . $thumb_data->image;
             $race = $thumb_data->race;
 
-            $advantage = $link_old->query("SELECT egenskab FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
-            $disadvantage = $link_old->query("SELECT ulempe FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
-            $talent = $link_old->query("SELECT talent FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
+            $advantage = $link_new->query("SELECT egenskab FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
+            $disadvantage = $link_new->query("SELECT ulempe FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
+            $talent = $link_new->query("SELECT talent FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
 
-            $height_data = $link_old->query("SELECT lower, upper FROM {$_GLOBALS['DB_NAME_OLD']}.horse_height WHERE race = '{$race}' LIMIT 1")->fetch_object();
+            $height_data = $link_new->query("SELECT lower, upper FROM {$_GLOBALS['DB_NAME_OLD']}.horse_height WHERE race = '{$race}' LIMIT 1")->fetch_object();
             $height_lower = $height_data->lower;
             $height_upper = $height_data->upper;
             $height = mt_rand($height_lower, $height_upper);
@@ -91,7 +91,7 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
                     . ")";
 //					echo $sql;
 //					exit('test');
-                $link_old->query($sql);
+                $link_new->query($sql);
                 ?>
                 <a href="/admin/hestetegner/edit_horse.php?horse_id=<?= mysqli_insert_id($link_old); ?>">ID: <?= mysqli_insert_id($link_old); ?></a>
                 <?php

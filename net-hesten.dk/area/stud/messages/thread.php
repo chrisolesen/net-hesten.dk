@@ -37,7 +37,7 @@ private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => 
 	}
 </style>
 <header style="height:50px;"><a href="/area/stud/messages/">Oversigt</a>
-	<span class="write_to">Skriver med: <?= mb_convert_encoding(user::get_info(['user_id' => $_POST['send_to']])->username, 'UTF-8', 'latin1'); ?></span>
+	<span class="write_to">Skriver med: <?= user::get_info(['user_id' => $_POST['send_to']])->username; ?></span>
 	<div style="padding-top:5px;">
 		<a style="text-decoration:underline;" href="?send_to=<?= $_POST['send_to']; ?>&thread_page=1&thread=1">Tråd 1<?= (private_messages::get_new_messages_count(['user_id' => $_SESSION['user_id'], 'origin' => $_POST['send_to'], 'thread' => 1]) > 0 ? '[Ny]' : ''); ?></a>
 		<a style="text-decoration:underline;" href="?send_to=<?= $_POST['send_to']; ?>&thread_page=1&thread=2">Tråd 2<?= (private_messages::get_new_messages_count(['user_id' => $_SESSION['user_id'], 'origin' => $_POST['send_to'], 'thread' => 2]) > 0 ? '[Ny]' : ''); ?></a>
@@ -54,7 +54,7 @@ private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => 
 	?>
 			<li data-message_id="<?= $message->id; ?>" class="msg <?= $message->origin == $_SESSION['user_id'] ? 'mine' : 'theirs'; ?> status-<?= $message->status_code; ?>">
 				<div class="poster">
-					<span class="username"><?= mb_convert_encoding(user::get_info(['user_id' => $message->origin])->username, 'UTF-8', 'latin1'); ?>:</span> <?= $message->date; ?>
+					<span class="username"><?= user::get_info(['user_id' => $message->origin])->username; ?>:</span> <?= $message->date; ?>
 					<a href="/area/stud/messages/thread.php?delete_message=<?= $message->id; ?>&send_to=<?= $_POST['send_to']; ?>"><img class="delete_msg" src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/delete.png" height="20px" /></a>
 				</div>
 				<div class="msg"><?= str_replace(["\n", "\r"], ['<br />', ''], $message->message); ?></div>
