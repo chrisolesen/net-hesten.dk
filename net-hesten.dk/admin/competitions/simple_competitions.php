@@ -27,7 +27,7 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
                 //exit('Kun en tegner lige nu tak.');
             }
            
-            $thumb = '/imgHorse/' . $thumb_data->image;
+            $thumb = '//files'.HTTP_HOST.'/imgHorse/' . $thumb_data->image;
             $race = $thumb_data->race;
 
             $advantage = $link_new->query("SELECT egenskab FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;

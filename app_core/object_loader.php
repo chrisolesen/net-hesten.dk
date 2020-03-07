@@ -8,6 +8,7 @@
 
 $script_feedback = [];
 
+define('HTTP_HOST', filter_input(INPUT_SERVER, 'HTTP_HOST'));
 require_once "$basepath/app_core/db_conf.php";
 
 /* Load cache data */
