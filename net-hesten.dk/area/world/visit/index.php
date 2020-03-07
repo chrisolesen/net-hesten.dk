@@ -103,9 +103,9 @@ require "$basepath/global_modules/header.php";
 					</div>
 					<?php
 					if ($data->thumb) {
-						$stud_thumbnail = "https://files.net-hesten.dk/users/{$data->thumb}";
+						$stud_thumbnail = "//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/users/{$data->thumb}";
 					} else {
-						$stud_thumbnail = "https://files.net-hesten.dk/graphics/logo/default_logo.png";
+						$stud_thumbnail = "//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/graphics/logo/default_logo.png";
 					}
 					?>
 					<img style="max-width:175px;left: 105px;" src='<?= $stud_thumbnail; ?>' />

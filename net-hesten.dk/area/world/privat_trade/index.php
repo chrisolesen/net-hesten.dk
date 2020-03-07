@@ -70,7 +70,7 @@ require "$basepath/global_modules/header.php";
 							<button class='close_sell_window btn btn-danger'>Luk</button>
 						</form>
 					</div>
-					<img src='https://files.net-hesten.dk/<?= $horse['thumb']; ?>' />
+					<img src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $horse['thumb']; ?>' />
 				</div>
 				<?php
 
@@ -139,7 +139,7 @@ require "$basepath/global_modules/header.php";
 									<input type='submit' class='btn btn-danger compact_top_button' name='reject' value='Annuller' />
 								</form>
 							</div>
-							<img src='https://files.net-hesten.dk/<?= $horse['thumb']; ?>' />
+							<img src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $horse['thumb']; ?>' />
 						</div>
 							<?php
 
@@ -214,7 +214,7 @@ require "$basepath/global_modules/header.php";
 								<input type='submit' class='btn btn-danger compact_top_button' name='reject' value='Afvis' />
 							</form>
 						</div>
-						<img src='https://files.net-hesten.dk/<?= $horse['thumb']; ?>' />
+						<img src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $horse['thumb']; ?>' />
 					</div>
 						<?php
 

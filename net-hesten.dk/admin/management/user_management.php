@@ -187,9 +187,9 @@ if (isset($_POST['adjust_wkr'])) {
 				<span><?= mb_convert_encoding($data->email, 'UTF-8', 'Latin1'); ?><br /><a onclick="return confirm('Vil du virkelig nulstille koden til: <?= mb_convert_encoding($data->stutteri, 'UTF-8', 'Latin1'); ?> ?');" href="?action=admin_user_password_reset&user_id=<?= $data->id; ?>">Reset password</a></span>
 				<span class="rights monospace center_text">
 					<?php if (in_array('5', $rights_array)) { ?>
-						<a href="?page=<?= $page; ?>&action=remove_right_horse_artist&user_id=<?= $data->id; ?>" class="active make_artist"><img src="https://files.net-hesten.dk/graphics/artist.png" /></a>
+						<a href="?page=<?= $page; ?>&action=remove_right_horse_artist&user_id=<?= $data->id; ?>" class="active make_artist"><img src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/artist.png" /></a>
 					<?php } else { ?>
-						<a href="?page=<?= $page; ?>&action=grant_right_horse_artist&user_id=<?= $data->id; ?>" class="make_artist"><img src="https://files.net-hesten.dk/graphics/artist.png" /></a>
+						<a href="?page=<?= $page; ?>&action=grant_right_horse_artist&user_id=<?= $data->id; ?>" class="make_artist"><img src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/artist.png" /></a>
 					<?php } ?>
 				</span>
 				<span class="monospace center_text">

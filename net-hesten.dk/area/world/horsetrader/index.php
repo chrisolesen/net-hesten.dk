@@ -120,8 +120,8 @@ $horse_trader_page_offset = $horse_trader_page * $horses_pr_page;
 							</form>
 						<?php } ?>
 					</div>
-					<img src='https://files.net-hesten.dk<?= $horse->thumb; ?>' data-button-type='modal_activator' data-target='horze_extended_info' />
-					<img style='display: none;' class='zoom_img' src='https://files.net-hesten.dk/<?= $horse->thumb; ?>' />
+					<img src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $horse->thumb; ?>' data-button-type='modal_activator' data-target='horze_extended_info' />
+					<img style='display: none;' class='zoom_img' src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $horse->thumb; ?>' />
 				</div>
 				<?php
 			}

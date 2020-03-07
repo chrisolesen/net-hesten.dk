@@ -51,7 +51,7 @@ private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => 
 			<li data-message_id="<?= $message->id; ?>" class="msg <?= $message->origin == $_SESSION['user_id'] ? 'mine' : 'theirs'; ?> status-<?= $message->status_code; ?>">
 				<div class="poster">
 					<span class="username"><?= mb_convert_encoding(user::get_info(['user_id' => $message->origin])->username, 'UTF-8', 'latin1'); ?>:</span>	<?= $message->date; ?>
-					<a href="/area/chat/pb/thread.php?delete_message=<?= $message->id; ?>&send_to=<?= $_POST['send_to']; ?>"><img class="delete_msg" src="https://files.net-hesten.dk/graphics/delete.png" height="20px" /></a>
+					<a href="/area/chat/pb/thread.php?delete_message=<?= $message->id; ?>&send_to=<?= $_POST['send_to']; ?>"><img class="delete_msg" src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/delete.png" height="20px" /></a>
 				</div>
 				<div class="msg"><?= str_replace(["\n", "\r"], ['<br />', ''], $message->message); ?></div>
 			</li>

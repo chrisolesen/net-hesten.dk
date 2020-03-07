@@ -1,17 +1,5 @@
 #Database configurations 
 /app_core/db_conf.php
-#Graphics and font files
-/net-hesten.dk/font*
-/net-hesten.dk/favicon.ico
-/net-hesten.dk/style/graphics
-/files.net-hesten.dk/graphics/*
-!/files.net-hesten.dk/graphics/logo/
-/files.net-hesten.dk/graphics/logo/*
-!/files.net-hesten.dk/graphics/logo/default_logo.png
-/files.net-hesten.dk/scripts/*
-/files.net-hesten.dk/templates/*
-/files.net-hesten.dk/style/graphics/*
-/net-hesten.dk/admin/elements/fonts/*
 
 #Adminpanels
 

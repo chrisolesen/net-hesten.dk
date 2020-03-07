@@ -12,14 +12,14 @@ $admin = false;
 $public_page = true;
 require_once("{$basepath}/global_modules/header.php"); ?>
 
-<link href="https://files.net-hesten.dk/scripts/booklet/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv">
-<script src="https://files.net-hesten.dk/scripts/booklet/jquery.booklet.latest.min.js"></script>
+<link href="https://<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/scripts/booklet/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv">
+<script src="https://<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/scripts/booklet/jquery.booklet.latest.min.js"></script>
 <section>
 
 	<?php
 if ($_SESSION['logged_in'] == true) {
 	?>
-		<img id="booklet_opener" height="300" src="https://files.net-hesten.dk/graphics/magazines/forside_fun_facts_4.png" />
+		<img id="booklet_opener" height="300" src="https://<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/magazines/forside_fun_facts_4.png" />
 		<form action="" method="post">
 			<input class="btn btn-danger" type="submit" name="logout" value="Log ud" />
 		</form>

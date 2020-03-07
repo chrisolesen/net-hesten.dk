@@ -294,8 +294,8 @@ if (is_array(horses::get_all($attr))) {
 			$horse_data .= "<button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Sæt på græs</button>";
 		}
 		$horse_data .= "</div>";
-		$horse_data .= "<img src='https://files.net-hesten.dk/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
-		$horse_data .= "<img style='display: none;' class='zoom_img' src='https://files.net-hesten.dk/{$horse['thumb']}' />";
+		$horse_data .= "<img src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
+		$horse_data .= "<img style='display: none;' class='zoom_img' src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' />";
 		$horse_data .= "</div>";
 
 		$horse_tabs['idle_horses'][] = $horse_data;
@@ -347,9 +347,9 @@ if ($active_tab = filter_input(INPUT_GET, 'tab')) {
         <div class="image_block" style="height:130px;float:left;overflow: hidden;">
 			<?php
 			if ($user_info->thumb) {
-				$stud_thumbnail = "https://files.net-hesten.dk/users/{$user_info->thumb}";
+				$stud_thumbnail = "//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/users/{$user_info->thumb}";
 			} else {
-				$stud_thumbnail = "https://files.net-hesten.dk/graphics/logo/default_logo.png";
+				$stud_thumbnail = "//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/graphics/logo/default_logo.png";
 			}
 			?>
             <img style="float:left;margin-right: 2em;border-radius: 5px;max-width: 325px;max-height: 130px;" src="<?= $stud_thumbnail; ?>" />

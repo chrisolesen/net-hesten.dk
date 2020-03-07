@@ -109,7 +109,7 @@ if (filter_input(INPUT_POST, 'submit_edit')) {
 
 /* List templates */
 ?>
-<script src="https://files.net-hesten.dk/scripts/list.min.js" type="text/javascript"></script>
+<script src="https://<?= filter_input(INPUT_SERVER ,'HTTP_HOST');?>/scripts/list.min.js" type="text/javascript"></script>
 <section>
 	<header><h2 class="raised">Skabeloner</h2></header>
 	<form action="/admin/hestetegner/admin_templates.php" method="post" enctype="multipart/form-data">
@@ -122,7 +122,7 @@ if (filter_input(INPUT_POST, 'submit_edit')) {
 				$active_races = json_decode($data->suggested_races);
 				?>
 				<div>
-					<img style="max-height: 150px;float:left;margin-bottom: 125px;margin-right:20px;" src="https://files.net-hesten.dk/templates/<?= $data->image; ?>" />
+					<img style="max-height: 150px;float:left;margin-bottom: 125px;margin-right:20px;" src="https://<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/templates/<?= $data->image; ?>" />
 					<div style="height: 275px;float:left;margin-right:20px;" >
 						<label for="suggested_race">Racer:</label>
 						<select style="height:275px;" multiple id="suggested_race" name="suggested_race[]">
@@ -248,9 +248,9 @@ if (filter_input(INPUT_POST, 'submit_edit')) {
 				while ($data = $result->fetch_object()) {
 					?><li>
 						<i class="suggested_race"><?= $data->suggested_races; ?></i>
-						<img style="max-height: 150px;" src="https://files.net-hesten.dk/templates/<?= $data->image; ?>" />
+						<img style="max-height: 150px;" src="https://files.<?= filter_input(INPUT_SERVER ,'HTTP_HOST');?>/templates/<?= $data->image; ?>" />
 						<div>
-							<a href="https://files.net-hesten.dk/templates/<?= $data->image; ?>">Download</a>
+							<a href="https://files.<?= filter_input(INPUT_SERVER ,'HTTP_HOST');?>/templates/<?= $data->image; ?>">Download</a>
 							<a href="?edit_template=<?= $data->id; ?>">Edit</a>
 						</div>
 					</li><?php

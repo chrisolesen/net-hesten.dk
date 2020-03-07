@@ -37,7 +37,7 @@ if (filter_input(INPUT_GET, 'partake') == true) {
 			$competion_subdata = (object)json_decode($competion_data->data);
 			?>
 		<div class="drawing">
-			<img style="float:left;margin-right:20px;" src="https://files.net-hesten.dk/imgHorse/<?= $link_new->query("SELECT image FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE id = {$competion_subdata->prize_id}")->fetch_object()->image; ?>" />
+			<img style="float:left;margin-right:20px;" src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/imgHorse/<?= $link_new->query("SELECT image FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE id = {$competion_subdata->prize_id}")->fetch_object()->image; ?>" />
 			<div style="float:left;" class="competition_data">
 			<h2><?= $competion_data->competition_name; ?></h2>
 			<div><span>Race:</span> <?= $link_new->query("SELECT race FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE id = {$competion_subdata->prize_id}")->fetch_object()->race; ?></div>

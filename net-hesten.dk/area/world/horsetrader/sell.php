@@ -104,8 +104,8 @@ require "$basepath/global_modules/header.php";
 							</form>
 						<?php } ?>
 					</div>
-					<img src='https://files.net-hesten.dk<?= $horse->thumb; ?>' />
-					<img style='display: none;' class='zoom_img' src='https://files.net-hesten.dk/<?= $horse->thumb; ?>' />
+					<img src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $horse->thumb; ?>' />
+					<img style='display: none;' class='zoom_img' src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $horse->thumb; ?>' />
 				</div>
 				<?php
 			}

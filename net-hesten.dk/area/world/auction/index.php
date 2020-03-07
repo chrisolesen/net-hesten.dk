@@ -87,8 +87,8 @@ foreach (auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => 
 				<button class='close_sell_window btn btn-danger'>Luk</button>
 			</form>
 		</div>
-		<img src='https://files.net-hesten.dk/<?= $remote_data->thumb; ?>' data-button-type='modal_activator' data-target='horze_extended_info' />
-		<img style='display: none;' class='zoom_img' src='https://files.net-hesten.dk/<?= $remote_data->thumb; ?>' />
+		<img src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $remote_data->thumb; ?>' data-button-type='modal_activator' data-target='horze_extended_info' />
+		<img style='display: none;' class='zoom_img' src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $remote_data->thumb; ?>' />
 	</div>
 <?php
 	$current_auction = ob_get_contents();
@@ -174,7 +174,7 @@ ob_end_clean();
 									</script>
 								</form>
 						</div>
-						<img src='https://files.net-hesten.dk/<?= $horse['thumb']; ?>' />
+						<img src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $horse['thumb']; ?>' />
 					</div>
 			<?php
 				}
@@ -236,7 +236,7 @@ ob_end_clean();
 								<!--<span class='value'>Værdi: <?= number_dotter($remote_data->value); ?> <span class="wkr_symbol">wkr</span></span>-->
 								<span class='value'>Slut dato: <?= (new DateTime($auction_data_one[0]['end_date']))->format('d/m/Y'); ?> </span>
 							</div>
-							<img src='https://files.net-hesten.dk/<?= $remote_data->thumb; ?>' />
+							<img src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $remote_data->thumb; ?>' />
 						</div>
 				<?php
 					}

@@ -111,8 +111,8 @@ if (is_array(horses::get_all($attr))) {
 		$horse_data .= "<a href='https://net-hesten.dk/area/world/visit/visit.php?user={$owner_id}'><button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Ejes af {$owner_name}</button></a>";
         
         $horse_data .= "</div>";
-        $horse_data .= "<img src='https://files.net-hesten.dk/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
-        $horse_data .= "<img style='display: none;' class='zoom_img' src='https://files.net-hesten.dk/{$horse['thumb']}' />";
+        $horse_data .= "<img src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
+        $horse_data .= "<img style='display: none;' class='zoom_img' src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' />";
         $horse_data .= "</div>";
 
         $horse_tabs['idle_horses'][] = $horse_data;
