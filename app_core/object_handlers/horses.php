@@ -180,8 +180,7 @@ class horses {
 					. "ON contests.participant_id = heste.id AND contests.points IS NULL "
 					. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
 					. "ON breeding.horse_id = heste.id AND breeding.meta_key = 'breeding' "
-					. "WHERE heste.id > 400000 "
-					. "AND status != 'død' "
+					. "WHERE status != 'død' "
 					. (($attr['mode'] == 'search_all') ? "AND heste.talent != '' " : '' )
 					. (($attr['mode'] == 'search_all') ? "AND heste.egenskab != '' " : '')
 					. (($attr['mode'] == 'search_all') ? "AND heste.ulempe != '' " : '' )
