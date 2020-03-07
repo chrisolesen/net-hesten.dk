@@ -44,7 +44,7 @@ $today = date("d.m.y.G.i");
 $loop = 0;
 /* Limit 200 = stabil */
 $sql = "SELECT id, alder, bruger, navn, foersteplads, andenplads, tredieplads, kaaringer, pris, race, original, unik FROM Heste WHERE alder > 20 AND bruger != '{$Foelbox}' AND bruger != 'hestehandleren*' and bruger <> 'genfoedsel' AND status = 'hest' ORDER BY rand() LIMIT 175";
-$result = $link_old->query($sql);
+$result = $link_new->query($sql);
 $viable_horses = 0;
 $killed_amount = 0;
 while ($horse = $result->fetch_object()) {
@@ -67,8 +67,8 @@ while ($horse = $result->fetch_object()) {
         $tegn = array("&", '"', "'");
         $substitut = array("og", "&quot;", "&#039;");
 
-        $user = $link_old->query("SELECT id, penge, stutteri FROM Brugere WHERE stutteri = '{$horse->bruger}' LIMIT 1")->fetch_object();
-        $kids = $link_old->query("SELECT count(id) AS kids FROM Heste WHERE farid = {$horse->id} OR morid = {$horse->id}")->fetch_object()->kids;
+        $user = $link_new->query("SELECT id, penge, stutteri FROM Brugere WHERE stutteri = '{$horse->bruger}' LIMIT 1")->fetch_object();
+        $kids = $link_new->query("SELECT count(id) AS kids FROM Heste WHERE farid = {$horse->id} OR morid = {$horse->id}")->fetch_object()->kids;
 
         $claim = round(($horse->pris * 0.8), 0);
         $claim += ($horse->foersteplads * 5000);
@@ -108,13 +108,13 @@ while ($horse = $result->fetch_object()) {
         $message = str_replace($tegn, $substitut, $message);
         /* Sæt giv penge til brugeren */
         $sql = "UPDATE Brugere SET penge = (penge + {$claim}) WHERE id = {$user->id}";
-        $link_old->query($sql);
+        $link_new->query($sql);
         /* Insert to bank history */
         $saldo = $claim + $user->penge;
         
         /* Kill Horse */
         $sql = "UPDATE Heste SET status = '{$dead}', death_date = '{$date_now}' WHERE id = {$horse->id}";
-        $link_old->query($sql);
+        $link_new->query($sql);
         
         $utf_8_message = $message;
         $sql = "INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, 53432, {$user->id}, NOW(), '{$utf_8_message}' )";

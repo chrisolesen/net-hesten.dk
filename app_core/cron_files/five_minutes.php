@@ -41,7 +41,7 @@ if ($result) {
 		if ($data['object_type'] == 1) {
 			++$num_horses;
 			$sql = "UPDATE Heste AS h LEFT JOIN Brugere AS b ON b.id = '{$data['creator']}' SET h.bruger = b.stutteri WHERE h.id = {$data['object_id']} AND h.bruger = 'Auktionshuset'";
-			$link_old->query($sql);
+			$link_new->query($sql);
 			$sql = "UPDATE game_data_auctions AS a SET a.status_code = 2 WHERE a.id = {$data['id']}";
 			$link_new->query($sql);
 		}
@@ -77,7 +77,7 @@ if ($result) {
 		++$num_auctions;
 		if (!isset($user_id_name_array[$data['winner']])) {
 			$sql = "SELECT stutteri, penge AS money FROM Brugere WHERE id = {$data['winner']} LIMIT 1";
-			$user_query_result = $link_old->query($sql);
+			$user_query_result = $link_new->query($sql);
 			if ($user_query_result) {
 				$user_query_data = $user_query_result->fetch_assoc();
 				$user_id_name_array[$data['winner']] = [$user_query_data['stutteri'], $user_query_data['money']];
@@ -88,7 +88,7 @@ if ($result) {
 		}
 		if (!isset($user_id_name_array[$data['seller']])) {
 			$sql = "SELECT stutteri, penge AS money FROM Brugere WHERE id = {$data['seller']} LIMIT 1";
-			$user_query_result = $link_old->query($sql);
+			$user_query_result = $link_new->query($sql);
 			if ($user_query_result) {
 				$user_query_data = $user_query_result->fetch_assoc();
 				$user_id_name_array[$data['seller']] = [$user_query_data['stutteri'], $user_query_data['money']];
@@ -99,7 +99,7 @@ if ($result) {
 		}
 		$log_content .= PHP_EOL . "# Moving horse with ID {$data['object_id']} to user {$user_id_name_array[$data['winner']][0]} with ID {$data['winner']}.";
 		$sql = "UPDATE Heste SET bruger = '{$user_id_name_array[$data['winner']][0]}' WHERE id = {$data['object_id']} AND bruger = 'Auktionshuset'";
-		$link_old->query($sql);
+		$link_new->query($sql);
 		
 		$auction_fee = round(max(500, ($data['winning_amount'] * 0.005)), 0);
 		$earnings = $data['winning_amount'] - $auction_fee;
@@ -107,7 +107,7 @@ if ($result) {
 		
 		
 //		$sql = "UPDATE Brugere SET penge = (penge + {$earnings}) WHERE id = {$data['seller']}";
-//		$link_old->query($sql);
+//		$link_new->query($sql);
 		$sql = "UPDATE game_data_auctions SET status_code = 2 WHERE id = {$data['auction_id']}";
 		$link_new->query($sql);
 		$sql = "UPDATE game_data_auction_bids SET status_code = 6 WHERE auction = {$data['auction_id']} AND bid_date = '{$data['bid_date']}' AND creator = {$data['winner']}";

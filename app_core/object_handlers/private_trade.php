@@ -16,16 +16,16 @@ class private_trade
 		$horse_id = (int) $attr['horse_id'];
 		$price = (int) $attr['price'];
 		$seller_id = (int) $attr['seller_id'];
-		$recipient = $link_old->real_escape_string(mb_convert_encoding($attr['recipient'], 'latin1', 'UTF-8'));
-		$recipient_id = (int) $link_old->query("SELECT id FROM `Brugere` WHERE stutteri = '{$recipient}'")->fetch_object()->id;
+		$recipient = $link_new->real_escape_string(mb_convert_encoding($attr['recipient'], 'latin1', 'UTF-8'));
+		$recipient_id = (int) $link_new->query("SELECT id FROM `Brugere` WHERE stutteri = '{$recipient}'")->fetch_object()->id;
 		if (!is_numeric($recipient_id) || !$recipient_id) {
 			return false;
 		}
-		$horse_owner = "{$link_old->query("SELECT bruger FROM `Heste` WHERE id = '{$attr['horse_id']}'")->fetch_object()->bruger}";
+		$horse_owner = "{$link_new->query("SELECT bruger FROM `Heste` WHERE id = '{$attr['horse_id']}'")->fetch_object()->bruger}";
 		if (!$horse_owner) {
 			return false;
 		}
-		$horse_owner_id = $link_old->query("SELECT id FROM Brugere WHERE stutteri = '$horse_owner'")->fetch_object()->id;
+		$horse_owner_id = $link_new->query("SELECT id FROM Brugere WHERE stutteri = '$horse_owner'")->fetch_object()->id;
 		if (!$horse_owner_id || !is_numeric($horse_owner_id)) {
 			return false;
 		}
@@ -37,7 +37,7 @@ class private_trade
 				"VALUES " .
 				"($seller_id, $recipient_id, $horse_id, $price, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 1)"
 		);
-		$link_old->query("UPDATE Heste SET bruger = 'SystemPrivatHandel' WHERE id = $horse_id");
+		$link_new->query("UPDATE Heste SET bruger = 'SystemPrivatHandel' WHERE id = $horse_id");
 	}
 
 	public static function request_privat_trade($attr = [])
@@ -57,11 +57,11 @@ class private_trade
 		if (!is_numeric($recipient_id) || !$recipient_id) {
 			return false;
 		}
-		$horse_owner = "{$link_old->query("SELECT bruger FROM `Heste` WHERE id = '{$attr['horse_id']}'")->fetch_object()->bruger}";
+		$horse_owner = "{$link_new->query("SELECT bruger FROM `Heste` WHERE id = '{$attr['horse_id']}'")->fetch_object()->bruger}";
 		if (!$horse_owner) {
 			return false;
 		}
-		$horse_owner_id = $link_old->query("SELECT id FROM Brugere WHERE stutteri = '$horse_owner'")->fetch_object()->id;
+		$horse_owner_id = $link_new->query("SELECT id FROM Brugere WHERE stutteri = '$horse_owner'")->fetch_object()->id;
 		if (!$horse_owner_id || !is_numeric($horse_owner_id)) {
 			return false;
 		}
@@ -97,7 +97,7 @@ class private_trade
 			return false;
 		}
 
-		$recipient_object = $link_old->query("SELECT stutteri, penge FROM `Brugere` WHERE id = {$buyer_id}")->fetch_object();
+		$recipient_object = $link_new->query("SELECT stutteri, penge FROM `Brugere` WHERE id = {$buyer_id}")->fetch_object();
 		$recipient = $recipient_object->stutteri;
 		$recipient_money = $recipient_object->penge;
 
@@ -106,9 +106,9 @@ class private_trade
 		}
 
 		$link_new->query("UPDATE game_data_private_trade SET `status_code` = 2 WHERE id = $trade_id");
-		$link_old->query("UPDATE Heste SET bruger = '$recipient' WHERE id = $horse_id");
-		$link_old->query("UPDATE `Brugere` SET penge = penge + $price WHERE id = $seller_id");
-		$link_old->query("UPDATE `Brugere` SET penge = penge - $price WHERE id = $buyer_id");
+		$link_new->query("UPDATE Heste SET bruger = '$recipient' WHERE id = $horse_id");
+		$link_new->query("UPDATE `Brugere` SET penge = penge + $price WHERE id = $seller_id");
+		$link_new->query("UPDATE `Brugere` SET penge = penge - $price WHERE id = $buyer_id");
 	}
 
 	public static function reject_privat_trade($attr = [])
@@ -134,10 +134,10 @@ class private_trade
 			return false;
 		}
 
-		$recipient = $link_old->query("SELECT stutteri FROM `Brugere` WHERE id = {$seller_id}")->fetch_object()->stutteri;
+		$recipient = $link_new->query("SELECT stutteri FROM `Brugere` WHERE id = {$seller_id}")->fetch_object()->stutteri;
 
 		$link_new->query("UPDATE game_data_private_trade SET `status_code` = 3 WHERE id = $trade_id");
-		$link_old->query("UPDATE Heste SET bruger = '$recipient' WHERE id = $horse_id");
+		$link_new->query("UPDATE Heste SET bruger = '$recipient' WHERE id = $horse_id");
 	}
 
 	public static function list_trade_offerings($attr = [])

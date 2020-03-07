@@ -130,7 +130,7 @@ class user
 		global $link_old;
 		global $_GLOBALS;/*{$_GLOBALS['DB_NAME_NEW']}{$_GLOBALS['DB_NAME_OLD']}*/
 		foreach ($attr as $key => $value) {
-            $attr[$key] = $link_old->real_escape_string($value);
+            $attr[$key] = $link_new->real_escape_string($value);
         }
 		$mail_message_data = '<br />';
 		$mail_message_data .= 'Basis data:<br />';
@@ -222,7 +222,7 @@ class user
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-            $attr[$key] = $link_old->real_escape_string($value);
+            $attr[$key] = $link_new->real_escape_string($value);
         }
 
 		if ($attr['mode'] === 'username') {
@@ -234,7 +234,7 @@ class user
 		if ($attr['link_mode'] == 'new') {
 			$result = $link_new->query($sql)->fetch_object();
 		} else {
-			$result = $link_old->query($sql)->fetch_object();
+			$result = $link_new->query($sql)->fetch_object();
 		}
 		if ($result) {
 			return $result;
@@ -291,13 +291,13 @@ class user
 		}
 
 		$block_signup = false;
-		$db_user = $link_old->real_escape_string($attr['user']);
-		$db_email = $link_old->real_escape_string($attr['mail']);
-		if ($link_old->query("SELECT count(id) AS count_result FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE email = '{$db_email}' LIMIT 1")->fetch_object()->count_result > 0) {
+		$db_user = $link_new->real_escape_string($attr['user']);
+		$db_email = $link_new->real_escape_string($attr['mail']);
+		if ($link_new->query("SELECT count(id) AS count_result FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE email = '{$db_email}' LIMIT 1")->fetch_object()->count_result > 0) {
 			$return_data[] = ["Den valgte email '{$attr['mail']}', findes allerede.", 'warning'];
 			$block_signup = true;
 		}
-		if ($link_old->query("SELECT count(id) AS count_result FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$db_user}' LIMIT 1")->fetch_object()->count_result > 0) {
+		if ($link_new->query("SELECT count(id) AS count_result FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$db_user}' LIMIT 1")->fetch_object()->count_result > 0) {
 			$return_data[] = ["Det valgte stutterinavn '{$attr['user']}', findes allerede.", 'warning'];
 			$block_signup = true;
 		}
@@ -390,11 +390,11 @@ class user
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		$new_password = substr(md5(rand()), 0, 7);
-		$attr['mail'] = $link_old->real_escape_string(mb_convert_encoding($attr['mail'], 'latin1', 'UTF-8'));
-		$attr['user_id'] = $link_old->query("SELECT id FROM Brugere WHERE email = '{$attr['mail']}' LIMIT 1")->fetch_object()->id;
+		$attr['mail'] = $link_new->real_escape_string(mb_convert_encoding($attr['mail'], 'latin1', 'UTF-8'));
+		$attr['user_id'] = $link_new->query("SELECT id FROM Brugere WHERE email = '{$attr['mail']}' LIMIT 1")->fetch_object()->id;
 		if ($attr['user_id']) {
-			$user_name = mb_convert_encoding($link_old->query("SELECT stutteri AS username FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->username, 'UTF-8', 'latin1');
-			$user_mail = mb_convert_encoding($link_old->query("SELECT email AS mail FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->mail, 'UTF-8', 'latin1');
+			$user_name = mb_convert_encoding($link_new->query("SELECT stutteri AS username FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->username, 'UTF-8', 'latin1');
+			$user_mail = mb_convert_encoding($link_new->query("SELECT email AS mail FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->mail, 'UTF-8', 'latin1');
 
 			$salt = uniqid('', true);
 			$algo = '6';
@@ -403,7 +403,7 @@ class user
 
 			$password_hash = crypt(trim($new_password), $cryptSalt);
 			if ($password_hash) {
-				$link_old->query("UPDATE Brugere SET password = '{$password_hash}' WHERE id = {$attr['user_id']}");
+				$link_new->query("UPDATE Brugere SET password = '{$password_hash}' WHERE id = {$attr['user_id']}");
 			}
 
 			$mail_message = '<!DOCTYPE html>';
@@ -451,8 +451,8 @@ class user
 		}
 
 		$new_password = substr(md5(rand()), 0, 7);
-		$user_name = mb_convert_encoding($link_old->query("SELECT stutteri AS username FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->username, 'UTF-8', 'latin1');
-		$user_mail = mb_convert_encoding($link_old->query("SELECT email AS mail FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->mail, 'UTF-8', 'latin1');
+		$user_name = mb_convert_encoding($link_new->query("SELECT stutteri AS username FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->username, 'UTF-8', 'latin1');
+		$user_mail = mb_convert_encoding($link_new->query("SELECT email AS mail FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->mail, 'UTF-8', 'latin1');
 
 		$salt = uniqid('', true);
 		$algo = '6';
@@ -462,7 +462,7 @@ class user
 		$password_hash = crypt(trim($new_password), $cryptSalt);
 		if ($password_hash) {
 			/* Indsæt brugeren i anmodnings tabellen */
-			$link_old->query("UPDATE Brugere SET password = '{$password_hash}' WHERE id = {$attr['user_id']}");
+			$link_new->query("UPDATE Brugere SET password = '{$password_hash}' WHERE id = {$attr['user_id']}");
 		}
 
 		$mail_message = '<!DOCTYPE html>';

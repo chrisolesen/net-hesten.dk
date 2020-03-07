@@ -93,7 +93,7 @@ class auctions {
 		if ($attr['mode'] == 'buy_now') {
 			$bid_date = new DateTime('now');
 			$sql = "SELECT stutteri, penge FROM Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
-			$result = $link_old->query($sql);
+			$result = $link_new->query($sql);
 			if ($result) {
 				$data = $result->fetch_assoc();
 				$temp_user_data = ['money' => $data['penge'], 'username' => $data['stutteri']];
@@ -119,7 +119,7 @@ class auctions {
 				$link_new->query($sql);
 
 				$sql = "UPDATE Heste SET bruger = '{$temp_user_data['username']}' WHERE id = {$temp_auctions_data['object_id']} AND bruger = 'Auktionshuset'";
-				$link_old->query($sql);
+				$link_new->query($sql);
 				
 				/* TODO - update message */
 				accounting::add_entry(['amount' => $temp_auctions_data['instant_price'], 'line_text' => "Købt hest på auktion"]);
@@ -131,7 +131,7 @@ class auctions {
 				
 				/* Send besked til den ny ejer */
 				/*$sql = "INSERT INTO Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Du har vundet en auktion', '" . (mb_convert_encoding("Tillykke {$temp_user_data['username']}, du har købt en hest til køb nu pris.", 'latin1', 'UTF-8')) . "', 'Auktionshuset', '{$temp_user_data['username']}', 'Indbakke', NOW() )";
-				$link_old->query($sql);
+				$link_new->query($sql);
 */
 				/* indsæt besked i ny pb system */
 				$utf_8_username = mb_convert_encoding($temp_user_data['username'], 'UTF-8', 'latin1');
@@ -141,14 +141,14 @@ class auctions {
 
 
 				$sql = "SELECT stutteri, penge FROM Brugere WHERE id = {$temp_auctions_data['creator']} LIMIT 1";
-				$result = $link_old->query($sql);
+				$result = $link_new->query($sql);
 				if ($result) {
 					$data = $result->fetch_assoc();
 					$temp_seller_data = ['money' => $data['penge'], 'username' => $data['stutteri']];
 				}
 				/* Send besked til den gamle ejer */
 				/*$sql = "INSERT INTO Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Din auktion er slut', '" . (mb_convert_encoding("Tillykke {$temp_seller_data['username']}, det er lykkeds at sælge din hest på auktion til køb nu pris!", 'latin1', 'UTF-8')) . "', 'Auktionshuset', '{$temp_seller_data['username']}', 'Indbakke', NOW() )";
-				$link_old->query($sql);*/
+				$link_new->query($sql);*/
 				/* indsæt besked i ny pb system */
 //				$utf_8_username = mb_convert_encoding($temp_user_data['username'], 'UTF-8', 'latin1');
 //				$utf_8_message = $link_new->real_escape_string("Tillykke {$utf_8_username}, du har købt en hest til køb nu pris.");
@@ -188,7 +188,7 @@ class auctions {
 		if ($attr['mode'] == 'place_bid') {
 			$bid_date = new DateTime('now');
 			$sql = "SELECT stutteri, penge FROM Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
-			$result = $link_old->query($sql);
+			$result = $link_new->query($sql);
 			if ($result) {
 				$data = $result->fetch_assoc();
 				$temp_user_data = ['money' => $data['penge'], 'username' => $data['stutteri']];
@@ -395,7 +395,7 @@ class auctions {
 				if ($horse['id'] == ($attr['horse_id'])) {
 					/* Transfer horse to auctions user */
 					$sql = "UPDATE Heste SET bruger = 'Auktionshuset' WHERE id = '{$horse['id']}' AND bruger = '{$seller_user_name}'";
-					$result = $link_old->query($sql);
+					$result = $link_new->query($sql);
 					/* Insert horse into auctions table */
 					$sql = "INSERT INTO game_data_auctions (creator, status_code, object_id, object_type, minimum_price, instant_price, creation_date, end_date) "
 							. "VALUES ('{$attr['seller_id']}', '1', '{$attr['horse_id']}', '1', '{$attr['minimum_bid']}','{$attr['buy_now_price']}', NOW(), '{$attr['sell_date']} 17:00:00' )";

@@ -27,7 +27,7 @@ $loop = 0;
 //-----Find føl som er over 4 år-------------------------------------------------------------------
 
 $sql = "SELECT id FROM Heste WHERE bruger != '{$Foelbox}' and bruger != 'hestehandleren*' AND (status = '{$foel}' OR status = '{$Foel}') AND alder >= 4";
-$result = $link_old->query($sql);
+$result = $link_new->query($sql);
 $foel_amount = 0;
 $grow_up_amount = 0;
 while ($data = $result->fetch_assoc()) {
@@ -35,7 +35,7 @@ while ($data = $result->fetch_assoc()) {
 	++$foel_amount;
 
 	$sql = "SELECT id, bruger, alder, navn, race, pris, thumb, date FROM Heste WHERE id = '$foel_id' LIMIT 1";
-	$result_layer_two = $link_old->query($sql);
+	$result_layer_two = $link_new->query($sql);
 	$poalder = $result_layer_two->fetch_object();
 	if ($poalder) {
 		$sekunder = time() - strtotime($poalder->date);
@@ -59,14 +59,14 @@ while ($data = $result->fetch_assoc()) {
 			$tilskrevet = $nyalder - $poalder->alder;
 
 //------pluk en tilfældig thumb fra hestene i databasen-----------------------------------------
-			$thumb_data = $link_old->query("SELECT tegner, thumb FROM Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND race = '$nyrace' AND status != '{$Foel}' and status != '{$foel}' AND genfodes = 'ja' AND unik != 'ja' ORDER BY RAND() LIMIT 1 ");
+			$thumb_data = $link_new->query("SELECT tegner, thumb FROM Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND race = '$nyrace' AND status != '{$Foel}' and status != '{$foel}' AND genfodes = 'ja' AND unik != 'ja' ORDER BY RAND() LIMIT 1 ");
 			$rand_heste_thumb = $thumb_data->fetch_object();
 			if ($rand_heste_thumb) {
 //-----------SæT VARIABLER---------------------------------------
 				$tegner = $rand_heste_thumb->tegner;
 				$nythumb = $rand_heste_thumb->thumb;
 //-----------update thumb, penge, status og slet det gamle føl-billede-------------------------
-				$link_old->query("UPDATE Heste SET pris='$nypris', status='Hest', alder='$nyalder', date=NOW(), status_skift='$today', alder_skift='$today', tilskrevet='$tilskrevet', tegner='$tegner', thumb='$nythumb' WHERE id = '$nyid'");
+				$link_new->query("UPDATE Heste SET pris='$nypris', status='Hest', alder='$nyalder', date=NOW(), status_skift='$today', alder_skift='$today', tilskrevet='$tilskrevet', tegner='$tegner', thumb='$nythumb' WHERE id = '$nyid'");
 
 				$dims = '"';
 				$tegn = array("&", "$dims", "'");
@@ -75,7 +75,7 @@ while ($data = $result->fetch_assoc()) {
 				$horse_name = str_replace($tegn, $substitut, $nynavn);
 				$user_name = str_replace($tegn, $substitut, $nybruger);
 				if ($horse_name) {
-				//	$link_old->query("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Dit {$foel} $horse_name er blevet voksen','Tillykke $user_name :-)) <br>$horse_name er blevet 4 &aring;r, og er nu en voksen hest<br>Derfor er den steget 5000 wkr i v&aelig;rdi.<br><img src=/imgHorse/$nythumb>','admin@net-hesten','$user_name','Indbakke',now() )");
+				//	$link_new->query("INSERT into Postsystem (emne, besked, sender, modtager, mappe, date) VALUES ('Dit {$foel} $horse_name er blevet voksen','Tillykke $user_name :-)) <br>$horse_name er blevet 4 &aring;r, og er nu en voksen hest<br>Derfor er den steget 5000 wkr i v&aelig;rdi.<br><img src=/imgHorse/$nythumb>','admin@net-hesten','$user_name','Indbakke',now() )");
 				}
 			}
 		}

@@ -11,12 +11,12 @@ class horse_trader {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-            $attr[$key] = $link_old->real_escape_string($value);
+            $attr[$key] = $link_new->real_escape_string($value);
         }
 
 		$bid_date = new DateTime('now');
 		$sql = "SELECT stutteri, penge FROM Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
-		$result = $link_old->query($sql);
+		$result = $link_new->query($sql);
 		if ($result) {
 			$data = $result->fetch_assoc();
 			$temp_user_data = ['money' => $data['penge'], 'username' => $data['stutteri']];
@@ -48,7 +48,7 @@ class horse_trader {
 
 		if ($temp_user_data['money'] >= $temp_horse_data->value) {
 			$sql = "UPDATE Heste SET bruger = '{$temp_user_data['username']}' WHERE id = {$attr['horse_id']} AND bruger = 'hestehandleren'";
-			$link_old->query($sql);
+			$link_new->query($sql);
 			accounting::add_entry(['amount' => $temp_horse_data->value, 'line_text' => "HH: Købt hest: [{$attr['horse_id']}]"]);
 
 			$sql = "INSERT INTO user_data_timing (parent_id, name, value) VALUES ({$_SESSION['user_id']},'last_horse_trader_buy',NOW()) ON DUPLICATE KEY UPDATE value = NOW()";
@@ -70,12 +70,12 @@ class horse_trader {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-            $attr[$key] = $link_old->real_escape_string($value);
+            $attr[$key] = $link_new->real_escape_string($value);
         }
 
 		$bid_date = new DateTime('now');
 		$sql = "SELECT stutteri, penge FROM Brugere WHERE id = {$attr['seller_id']} LIMIT 1";
-		$result = $link_old->query($sql);
+		$result = $link_new->query($sql);
 		if ($result) {
 			$data = $result->fetch_assoc();
 			$temp_user_data = ['money' => $data['penge'], 'username' => $data['stutteri']];
@@ -95,7 +95,7 @@ class horse_trader {
 		accounting::add_entry(['amount' => $temp_horse_data->value, 'line_text' => "HH: Solgt hest: [{$attr['horse_id']}]", 'mode' => '+']);
 		
 		$sql = "UPDATE Heste SET bruger = 'hestehandleren' WHERE id = {$attr['horse_id']} AND bruger = '{$temp_user_data['username']}'";
-		$link_old->query($sql);
+		$link_new->query($sql);
 
 
 		return ["Du lige solgt din hest for {$sell_income} wkr, tillykke!", 'success'];

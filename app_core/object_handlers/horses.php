@@ -45,10 +45,10 @@ class horses {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
         foreach ($attr as $key => $value) {
-            $attr[$key] = $link_old->real_escape_string($value);
+            $attr[$key] = $link_new->real_escape_string($value);
         }
-		$target_horse_data = $link_old->query("SELECT * FROM Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
-		$horse_data = $link_old->query("SELECT * FROM Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
+		$target_horse_data = $link_new->query("SELECT * FROM Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
+		$horse_data = $link_new->query("SELECT * FROM Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
 		if (strtolower($horse_data->bruger) != strtolower($username)) {
 			return["Du ejer ikke den hest du forsøger at fole! {$horse_data->bruger} | {$username}", 'error'];
 		}
@@ -82,20 +82,20 @@ class horses {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
         foreach ($attr as $key => $value) {
-            $attr[$key] = $link_old->real_escape_string($value);
+            $attr[$key] = $link_new->real_escape_string($value);
         }
 		if (isset($attr['horse_id'])) {
 			$user_id = (int) $_SESSION['user_id'];
 			$username = mb_convert_encoding($_SESSION['username'], 'latin1', 'UTF-8');
 			$dead = 'død';
 			$graes_money = 'Græsningspenge';
-			$user = $link_old->query("SELECT id, penge, stutteri FROM Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
+			$user = $link_new->query("SELECT id, penge, stutteri FROM Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
 
 			$sql = "SELECT "
 					. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent, changedate "
 					. "FROM {$_GLOBALS['DB_NAME_OLD']}.Heste "
 					. "WHERE id = {$attr['horse_id']}";
-			$result = $link_old->query($sql);
+			$result = $link_new->query($sql);
 			while ($horse = $result->fetch_object()) {
 				$date_now = new DateTime('NOW');
 //				50 wkr time inden 14 timer ellers  500 wkr fra
@@ -107,7 +107,7 @@ class horses {
 						if ($durration->y > 0 || $durration->m > 0 || $durration->d > 0 || $durration->h > 13) {
 							/* Punish */
 							$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
-							$result = $link_old->query($sql);
+							$result = $link_new->query($sql);
 							return ["Din hest har stået for længe på græs!", 'warning'];
 						} else {
 							/* Pay */
@@ -117,7 +117,7 @@ class horses {
 								accounting::add_entry(['amount' => $payment, 'line_text' => "Græsning af hest", 'mode' => '+']);
 							}
 							$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
-							$result = $link_old->query($sql);
+							$result = $link_new->query($sql);
 							return ["Du lige tjent {$payment} wkr på græsning, godt arbejde!", 'success'];
 						}
 						return false;
@@ -138,7 +138,7 @@ class horses {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
         foreach ($attr as $key => $value) {
-            $attr[$key] = $link_old->real_escape_string($value);
+            $attr[$key] = $link_new->real_escape_string($value);
         }
 		if (isset($attr['user_name'])) {
 			$username = $attr['user_name'];
@@ -201,7 +201,7 @@ class horses {
 					. (isset($attr['offset']) ? "OFFSET {$attr['offset']} " : '')
 					. "";
 
-			$result = $link_old->query($sql);
+			$result = $link_new->query($sql);
 //			$result = $link_new->query($sql);
 			$i = 0;
 			if ($result) {
@@ -233,7 +233,7 @@ class horses {
 					. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent "
 					. "FROM Heste "
 					. "WHERE id = '{$attr['ID']}' ";
-			$result = $link_old->query($sql);
+			$result = $link_new->query($sql);
 			if ($data = $result->fetch_assoc()) {
 				foreach ($data as $key => $info) {
 					$return_data[$key] = mb_convert_encoding($info, 'UTF-8', 'latin1');
@@ -268,7 +268,7 @@ class horses {
 				. "talent,"
 				. "status "
 				. "FROM Heste WHERE id = {$horse_id} LIMIT 1";
-		$result = $link_old->query($sql);
+		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_assoc()) {
 				foreach ($data as $key => $value) {

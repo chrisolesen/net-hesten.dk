@@ -27,7 +27,7 @@ $loop = 0;
 
 
 $sql = "SELECT id, statuschangedate FROM Heste WHERE status = 'Avl' AND kon = 'Hingst' ORDER BY statuschangedate";
-$result = $link_old->query($sql);
+$result = $link_new->query($sql);
 $foel_amount = 0;
 $grow_up_amount = 0;
 $breeding_stallions = 0;
@@ -41,7 +41,7 @@ while ($data = $result->fetch_object()) {
 
 	if ($tid_tilbagex < 0) {
 		++$stallions_changed_status;
-		$link_old->query("UPDATE Heste SET status='Hest', status_skift = '$today' WHERE id = '{$data->id}'");
+		$link_new->query("UPDATE Heste SET status='Hest', status_skift = '$today' WHERE id = '{$data->id}'");
 	}
 }
 
@@ -54,7 +54,7 @@ file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_con
 //--------find hopper som skal fole----------------------------------------
 
 $sql = "SELECT id, bruger, navn, race, partnerid, thumb, statuschangedate FROM Heste WHERE status = 'Avl' AND kon = 'Hoppe' order by statuschangedate";
-$result = $link_old->query($sql);
+$result = $link_new->query($sql);
 $breeding_amount = 0;
 $born_amount = 0;
 $in_waiting = 0;
@@ -73,7 +73,7 @@ while ($output = $result->fetch_object()) {
 		}
 		++$born_amount;
 		$nybruger = $output->bruger;
-		$new_user_id = $link_old->query("SELECT id FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$nybruger}'")->fetch_object()->id;
+		$new_user_id = $link_new->query("SELECT id FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$nybruger}'")->fetch_object()->id;
 		$nyrace = $output->race;
 		$glnavn = $output->navn;
 		$glthumb = $output->thumb;
@@ -93,13 +93,13 @@ while ($output = $result->fetch_object()) {
 //-----test om heste skal have random højde i racens interval, ellers vælg fars og mors højde, afgør laveste og højeste værdi, generer en random højde mellem disse værdier---------------------------------
 
 		if (rand(1, 10) == 1) {
-			$lowest_height = $link_old->query("SELECT lower FROM horse_height WHERE race = '$output->race' LIMIT 1")->fetch_object()->lower;
-			$highest_height = $link_old->query("SELECT upper FROM horse_height WHERE race = '$output->race' LIMIT 1")->fetch_object()->upper;
+			$lowest_height = $link_new->query("SELECT lower FROM horse_height WHERE race = '$output->race' LIMIT 1")->fetch_object()->lower;
+			$highest_height = $link_new->query("SELECT upper FROM horse_height WHERE race = '$output->race' LIMIT 1")->fetch_object()->upper;
 			$child_height = rand($lowest_height, $highest_height);
 			$random_height = "ja";
 		} else {
-			$daddy_height = $link_old->query("SELECT height FROM Heste WHERE id = '$output->partnerid' LIMIT 1")->fetch_object();
-			$mommy_height = $link_old->query("SELECT height FROM Heste WHERE id = '$output->id' LIMIT 1")->fetch_object();
+			$daddy_height = $link_new->query("SELECT height FROM Heste WHERE id = '$output->partnerid' LIMIT 1")->fetch_object();
+			$mommy_height = $link_new->query("SELECT height FROM Heste WHERE id = '$output->id' LIMIT 1")->fetch_object();
 			$child_height = rand(min($daddy_height->height, $mommy_height->height), max($daddy_height->height, $mommy_height->height));
 			$random_height = "nej";
 		}
@@ -107,41 +107,41 @@ while ($output = $result->fetch_object()) {
 //-------------------Vælg tilfældig egenskab, ulempe og talent, rand bruges for arvelighed, gider ikke forklare det, det burde være let at gennemskue------------------------------
 		if (rand(1, 10) == 1) {
 			if (rand(1, 2) == 1) {
-				$egenskab = $link_old->query("SELECT Egenskab FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Egenskab;
+				$egenskab = $link_new->query("SELECT Egenskab FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Egenskab;
 			} else {
-				$egenskab = $link_old->query("SELECT Egenskab FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Egenskab;
+				$egenskab = $link_new->query("SELECT Egenskab FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Egenskab;
 			}
 		} else {
-			$egenskab = $link_old->query("SELECT Egenskab FROM horse_habits WHERE Egenskab != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Egenskab;
+			$egenskab = $link_new->query("SELECT Egenskab FROM horse_habits WHERE Egenskab != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Egenskab;
 		}
 		if ($egenskab == "") {
-			$egenskab = $link_old->query("SELECT Egenskab FROM horse_habits WHERE Egenskab != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Egenskab;
+			$egenskab = $link_new->query("SELECT Egenskab FROM horse_habits WHERE Egenskab != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Egenskab;
 		}
 
 		if (rand(1, 10) == 1) {
 			if (rand(1, 2) == 1) {
-				$ulempe = $link_old->query("SELECT Ulempe FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Ulempe;
+				$ulempe = $link_new->query("SELECT Ulempe FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Ulempe;
 			} else {
-				$ulempe = $link_old->query("SELECT Ulempe FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Ulempe;
+				$ulempe = $link_new->query("SELECT Ulempe FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Ulempe;
 			}
 		} else {
-			$ulempe = $link_old->query("SELECT Ulempe FROM horse_habits WHERE Ulempe != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Ulempe;
+			$ulempe = $link_new->query("SELECT Ulempe FROM horse_habits WHERE Ulempe != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Ulempe;
 		}
 		if ($ulempe == "") {
-			$ulempe = $link_old->query("SELECT Ulempe FROM horse_habits WHERE Ulempe != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Ulempe;
+			$ulempe = $link_new->query("SELECT Ulempe FROM horse_habits WHERE Ulempe != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Ulempe;
 		}
 
 		if (rand(1, 100) <= 50) {
 			if (rand(1, 2) == 1) {
-				$talent = $link_old->query("SELECT Talent FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Talent;
+				$talent = $link_new->query("SELECT Talent FROM Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Talent;
 			} else {
-				$talent = $link_old->query("SELECT Talent FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Talent;
+				$talent = $link_new->query("SELECT Talent FROM Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Talent;
 			}
 		} else {
-			$talent = $link_old->query("SELECT Talent FROM horse_habits WHERE Talent != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Talent;
+			$talent = $link_new->query("SELECT Talent FROM horse_habits WHERE Talent != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Talent;
 		}
 		if ($talent == "") {
-			$talent = $link_old->query("SELECT Talent FROM horse_habits WHERE Talent != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Talent;
+			$talent = $link_new->query("SELECT Talent FROM horse_habits WHERE Talent != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Talent;
 		}
 
 
@@ -149,13 +149,13 @@ while ($output = $result->fetch_object()) {
 
 //------pluk en tilfældig thumb fra føllene i Følkassen-----------------------------------------
 
-		$result_layer_three = $link_old->query("SELECT tegner, thumb FROM Heste WHERE bruger = '{$Foelbox}' AND race = '$nyrace' ORDER BY RAND() LIMIT 1");
+		$result_layer_three = $link_new->query("SELECT tegner, thumb FROM Heste WHERE bruger = '{$Foelbox}' AND race = '$nyrace' ORDER BY RAND() LIMIT 1");
 		$rand_thumb = $result_layer_three->fetch_object();
 		$nythumb = $rand_thumb->thumb;
 		$foltegner = $rand_thumb->tegner;
 //----------generer føllene og stil status tilbage til "Hest"----------------------------------------------
-		$link_old->query("INSERT into Heste (bruger, navn, race, kon, alder, beskrivelse, pris, foersteplads, andenplads, tredieplads, status, farid, morid, tegner, thumb, date, changedate, status_skift, alder_skift, height, random_height, egenskab, ulempe, talent) VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','6000','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
-		$link_old->query("UPDATE Heste SET status='Hest', status_skift=now() WHERE id = '$nyid'");
+		$link_new->query("INSERT into Heste (bruger, navn, race, kon, alder, beskrivelse, pris, foersteplads, andenplads, tredieplads, status, farid, morid, tegner, thumb, date, changedate, status_skift, alder_skift, height, random_height, egenskab, ulempe, talent) VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','6000','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
+		$link_new->query("UPDATE Heste SET status='Hest', status_skift=now() WHERE id = '$nyid'");
 
 
 //----------sender post til Postkassen"----------------------------------------------

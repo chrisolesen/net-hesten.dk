@@ -31,7 +31,7 @@ $today = date("d.m.y.G.i");
 
 
 /* Find all horses */
-$total_horses = $link_old->query("SELECT count(*) AS total FROM Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND status != '{$dead}' AND age_updated < '{$mysqli_date_target}'")->fetch_object()->total;
+$total_horses = $link_new->query("SELECT count(*) AS total FROM Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND status != '{$dead}' AND age_updated < '{$mysqli_date_target}'")->fetch_object()->total;
 
 $log_content = PHP_EOL . "# Found a total of {$total_horses} living target horses.";
 file_put_contents("app_core/cron_files/logs/cron_{$cron_interval}_{$date_now}", $log_content, FILE_APPEND);
@@ -46,7 +46,7 @@ $low = 0; /* Need aging */
 $debug = '';
 
 $sql = "SELECT * FROM Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND status != '{$Dead}' and status != '{$dead}' AND age_updated < '{$mysqli_date_target}' ORDER BY id ASC LIMIT {$limit_pr_run}";
-$result = $link_old->query($sql);
+$result = $link_new->query($sql);
 if ($result) {
 	while ($horse = $result->fetch_object()) {
 		++$processed_horses;
@@ -56,19 +56,19 @@ if ($result) {
 		if ($horse_target_age == $horse->alder) {
 			++$skipped;
 			/* Horse matches expected age, update touch date */
-			$link_old->query("UPDATE Heste SET age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
+			$link_new->query("UPDATE Heste SET age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
 			continue;
 		}
 		if ($horse_target_age > $horse->alder) {
 			++$low;
 			/* Update horse age */
-			$link_old->query("UPDATE Heste SET alder = '{$horse_target_age}', age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
+			$link_new->query("UPDATE Heste SET alder = '{$horse_target_age}', age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
 			continue;
 		}
 		if ($horse_target_age < $horse->alder) {
 			++$high;
 			/* Dont down age horses, so simply set age_updated */
-			$link_old->query("UPDATE Heste SET age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
+			$link_new->query("UPDATE Heste SET age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
 			continue;
 		}
 		
