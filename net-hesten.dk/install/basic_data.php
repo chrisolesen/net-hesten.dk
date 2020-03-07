@@ -80,7 +80,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         /* Insert horse type */
         $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` 
     (`race`, `image`, `status`, `date`, `allowed_gender`, `archived`, `artists`) VALUES 
-    ('Ghosts', 'Ghost_01.png', 22, NOW(), 1,0,0)";
+    ('Ghosts', 'ghost_horse.png', 22, NOW(), 1,0,0)";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
     }
@@ -92,7 +92,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         /* Insert horse type */
         $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` 
     (`race`, `image`, `status`, `date`, `allowed_gender`, `archived`, `artists`) VALUES 
-    ('Ghosts', 'ghost_foel.png', 22, NOW(), 1,0,0)";
+    ('Ghosts', 'ghost_foel.png', 26, NOW(), 1,0,0)";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
     }
