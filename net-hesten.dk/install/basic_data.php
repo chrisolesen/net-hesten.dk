@@ -35,7 +35,8 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         </form>
     <?php
     } else {
-        $user_id = $sth->execute()->fetch()->id;
+        $user_id = $sth->fetch()->id;
+        var_dump($user_id);
         /* Initialize admin privilegde */
         $sql = "SELECT `privilege_id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`privilege_types` WHERE `privilege_name` = 'global_admin' LIMIT 1";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -46,10 +47,12 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
             $sth_priv_insert->execute();
         }
         $priv_id = $sth->execute()->fetch()->privilege_id;
-
+        var_dump($priv_id);
+        
         $sql = "SELECT `start` FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` WHERE `user_id` = :user_id LIMIT 1";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute(['user_id' => $user_id]);
+        var_dump($sth);
         if (!$sth->rowCount()) {
             $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` 
             (`user_id`, `privilege_id`, `start`, `end`) VALUES (:user_id, :priv_id, NOW(), '0000-00-00 00:00:00')";
