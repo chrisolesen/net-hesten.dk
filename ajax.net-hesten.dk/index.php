@@ -3,6 +3,9 @@ session_start();
 
 $index_caller = true;
 require_once '../app_core/db_conf.php';
+if(!defined('HTTP_HOST')){
+	define('HTTP_HOST',filter_input(INPUT_SERVER,'HTTP_HOST'));
+}
 
 if (filter_input(INPUT_GET,'request') === 'feed_live_content') {
 	require './feed_live_content.php';
