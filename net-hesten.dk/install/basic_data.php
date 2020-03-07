@@ -68,11 +68,14 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
             $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` 
         (`race`, `image`, `status`, `date`, `allowed_gender`, `archived`, `artists`) VALUES 
         ('Ghosts', 'ghost_horse.png', 22, NOW(), 1,0,':user_id')";
+            echo $sql.'<br />';
             $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            var_dump($sth).'<br />';
             $sth->execute(['user_id' => $user_id]);
+            var_dump($sth).'<br />';
             echo "<br />Horse type added";
         }
-        
+
         $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` WHERE `image` = 'ghost_foel.png' LIMIT 1";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
@@ -81,8 +84,11 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
             $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` 
         (`race`, `image`, `status`, `date`, `allowed_gender`, `archived`, `artists`) VALUES 
         ('Ghosts', 'ghost_foel.png', 26, NOW(), 1,0,':user_id')";
+            echo $sql.'<br />';
             $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            var_dump($sth).'<br />';
             $sth->execute(['user_id' => $user_id]);
+            var_dump($sth).'<br />';
             echo "<br />Foel type added";
         }
     }
