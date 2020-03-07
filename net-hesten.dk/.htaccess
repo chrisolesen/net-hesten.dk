@@ -1,13 +1,7 @@
-RewriteEngine on
-#
+#Force SSL
+RewriteEngine On
 RewriteCond %{HTTPS} off
-RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
-
-RewriteCond %{HTTPS} on
-RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
-
-RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 
 # php -- BEGIN cPanel-generated handler, do not edit
