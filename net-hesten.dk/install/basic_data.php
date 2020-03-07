@@ -17,11 +17,9 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
     if (filter_input(INPUT_POST, 'install_action') === 'install_admin_user') {
         $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` 
     (`stutteri`, `password`, `date`, `penge`) VALUES (:user_name, :user_pass, NOW(), 1000000)";
-        $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute(['user_name' => filter_input(INPUT_POST, 'username'), 'user_pass' => cbc_pwhash(filter_input(INPUT_POST, 'password'))]);
     }
-
-
 
     $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` LIMIT 1";
     $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
@@ -36,6 +34,28 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
             <input type="submit" name="save_admin" />
         </form>
     <?php
+    } else {
+        $user_id = $sth->execute()->fetch()->id;
+        /* Initialize admin privilegde */
+        $sql = "SELECT `privilege_id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`privilege_types` WHERE `privilege_name` = 'global_admin' LIMIT 1";
+        $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth->execute();
+        if (!$sth->rowCount()) {
+            $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`privilege_types` (`privilege_name`) VALUES ('global_admin')";
+            $sth_priv_insert = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $sth_priv_insert->execute();
+        }
+        $priv_id = $sth->execute()->fetch()->privilege_id;
+
+        $sql = "SELECT `start` FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` WHERE `user_id` = :user_id LIMIT 1";
+        $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth->execute(['user_id' => $user_id]);
+        if (!$sth->rowCount()) {
+            $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` 
+            (`user_id`, `privilege_id`, `start`, `end`) VALUES (:user_id, :priv_id, NOW(), '0000-00-00 00:00:00')";
+            $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $sth->execute(['user_id' => $user_id, 'priv_id' => $priv_id]);
+        }
     }
     /* Initialize horse races */
     $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_races` LIMIT 1";
