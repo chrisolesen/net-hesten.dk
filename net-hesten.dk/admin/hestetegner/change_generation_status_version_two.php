@@ -249,7 +249,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			$disadvantage = $link_old->query("SELECT ulempe FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
 			$talent = $link_old->query("SELECT talent FROM {$_GLOBALS['DB_NAME_OLD']}.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
 
-			$height_data = $link_new->query("SELECT max_height, min_height FROM {$_GLOBALS['DB_NAME_OLD']}.horse_races WHERE name = '{$race}' LIMIT 1")->fetch_object();
+			$height_data = $link_new->query("SELECT max_height, min_height FROM {$_GLOBALS['DB_NAME_NEW']}.horse_races WHERE name = '{$race}' LIMIT 1")->fetch_object();
 			$height_lower = $height_data->lower;
 			$height_upper = $height_data->upper;
 			$height = mt_rand($height_lower, $height_upper);
