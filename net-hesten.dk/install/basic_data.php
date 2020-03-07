@@ -35,6 +35,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         </form>
     <?php
     } else {
+        echo "<br />Admin user setup correctly";
         $user_id = $sth->fetchObject()->id;
         /* Initialize admin privilegde */
         $sql = "SELECT `privilege_id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`privilege_types` WHERE `privilege_name` = 'global_admin' LIMIT 1";
@@ -46,7 +47,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
             $sth_priv_insert->execute();
         }
         $priv_id = $sth->fetchObject()->privilege_id;
-        
+
         $sql = "SELECT `start` FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` WHERE `user_id` = :user_id AND `privilege_id` = :priv_id LIMIT 1";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute(['user_id' => $user_id, 'priv_id' => $priv_id]);
@@ -55,6 +56,8 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
             (`user_id`, `privilege_id`, `start`, `end`) VALUES (:user_id, :priv_id, NOW(), '0000-00-00 00:00:00')";
             $sth = $GLOBALS['pdo_old']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
             $sth->execute(['user_id' => $user_id, 'priv_id' => $priv_id]);
+        } else {
+            echo "<br />Privilege Tables initialised";
         }
     }
     /* Initialize horse races */
