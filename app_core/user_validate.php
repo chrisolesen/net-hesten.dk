@@ -1,7 +1,7 @@
 <?php
 
-ini_set('session.cookie_domain', COOKIE_DOMAIN);
-session_start(['cookie_lifetime' => 172800, 'cookie_domain' => COOKIE_DOMAIN]);
+ini_set('session.cookie_domain', HTTP_HOST);
+session_start(['cookie_lifetime' => 172800, 'cookie_domain' => HTTP_HOST]);
 
 if (isset($_POST['password']) && isset($_POST['username'])) {
 

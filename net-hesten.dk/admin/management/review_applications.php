@@ -2,8 +2,7 @@
 $basepath = '../../..';
 require "$basepath/app_core/object_loader.php";
 require "$basepath/global_modules/header.php";
-?>
-<?php
+
 if (!is_array($_SESSION['rights']) || (!in_array('global_admin', $_SESSION['rights']) && !in_array('admin_users_all', $_SESSION['rights']))) {
 	ob_end_clean();
 	header('Location: /');
@@ -32,7 +31,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 		if ($test_old || $test_new) {
 			return [false, 'Stutteri navnet er optaget!, lav et afslag på brugeren hvor du beder dem finde et andet navn.'];
 		}
-		$link_new->query("INSERT INTO Brugere (stutteri, password, navn, email, penge, thumb, date) VALUES ('{$applicant->username}','{$applicant->password}','Ny bruger','{$applicant->email}','{$initial_wkr}','',now())", 'iso-8859-15', 'UTF-8'));
+		$link_new->query("INSERT INTO {$GLOBALS['DB_NAME_NEW']}.Brugere (stutteri, password, navn, email, penge, thumb, date) VALUES ('{$applicant->username}','{$applicant->password}','Ny bruger','{$applicant->email}','{$initial_wkr}','',now())");
 		$new_user_id = $link_old->insert_id;
 		$result = $link_new->query("INSERT INTO users (id, username, password, email, active_ip) VALUES ('{$new_user_id}', '{$applicant->username}','{$applicant->password}','{$applicant->email}','{$applicant->ip}')");
 		$new_user_id = $link_new->insert_id;
@@ -195,19 +194,22 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 		<li class="col_5">Dato:</li>
 		<?php
 		$result = $link_new->query("SELECT id, username, email, ip, message, date, verify_date FROM user_application ORDER BY date DESC");
-		while ($data = $result->fetch_object()) {
-			if ($data->message == 'Bruger oprettelse.' && $data->verify_date == null) {
-				continue;
-			}
+		if ($result) {
+			while ($data = $result->fetch_object()) {
+				if ($data->message == 'Bruger oprettelse.' && $data->verify_date == null) {
+					continue;
+				}
+
 		?>
-			<li class="col_1"><?= $data->username; ?></li>
-			<li class="col_2"><?= $data->email; ?></li>
-			<li class="col_3"><?= $data->ip; ?></li>
-			<li class="col_4"><?= $data->message; ?></li>
-			<li class="col_5"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></li>
-			<li class="col_6"><a href="?accept_application=<?= $data->id; ?>">Opret</a></li>
-			<li class="col_7"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>">Slet</a></li>
+				<li class="col_1"><?= $data->username; ?></li>
+				<li class="col_2"><?= $data->email; ?></li>
+				<li class="col_3"><?= $data->ip; ?></li>
+				<li class="col_4"><?= $data->message; ?></li>
+				<li class="col_5"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></li>
+				<li class="col_6"><a href="?accept_application=<?= $data->id; ?>">Opret</a></li>
+				<li class="col_7"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>">Slet</a></li>
 		<?php
+			}
 		}
 		?>
 	</ul>
