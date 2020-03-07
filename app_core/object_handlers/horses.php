@@ -47,8 +47,8 @@ class horses {
         foreach ($attr as $key => $value) {
             $attr[$key] = $link_new->real_escape_string($value);
         }
-		$target_horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
-		$horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
+		$target_horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
+		$horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
 		if (strtolower($horse_data->bruger) != strtolower($username)) {
 			return["Du ejer ikke den hest du forsøger at fole! {$horse_data->bruger} | {$username}", 'error'];
 		}
