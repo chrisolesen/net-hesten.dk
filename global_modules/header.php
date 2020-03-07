@@ -15,9 +15,9 @@ if ($_SESSION['logged_in'] == true) {
     <head>
         <meta charset="UTF-8" />
         <title id="page_title">Net-Hesten</title>
-        <link rel="stylesheet" href="https://files.net-hesten.dk/style/main.css?v=<?= time(); ?>" />
+        <link rel="stylesheet" href="https://files.<?= HTTP_HOST; ?>/style/main.css?v=<?= time(); ?>" />
 		<?php if ($_SESSION['settings']['list_style'] == 'compact') { ?>
-			<link rel="stylesheet" href="https://files.net-hesten.dk/style/horselists_compact_style.css?v=<?= time(); ?>" />
+			<link rel="stylesheet" href="https://files.<?= HTTP_HOST; ?>/style/horselists_compact_style.css?v=<?= time(); ?>" />
 		<?php }
 		?>
 		<?php if (isset($_GET['test_view'])) { ?>
@@ -34,7 +34,7 @@ if ($_SESSION['logged_in'] == true) {
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
-        <script src="https://files.net-hesten.dk/scripts/jquery.easing.1.3.js"></script>
+        <script src="//files.<?= HTTP_HOST; ?>/scripts/jquery.easing.1.3.js"></script>
         <script src="/scripts/jquery.nicescroll.min.js"></script>
 		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-zhaLg9HKxTxDljOPXpWHGn91XMDH+sYAWRSgvzHes290/ISyrNicGrd6BInTnx3L" crossorigin="anonymous" /> 
         <script>
@@ -69,10 +69,10 @@ if ($_SESSION['logged_in'] == true) {
 			});
 		</script>
 		<section id="top_banner" style="position: relative;">
-			<img src="https://files.net-hesten.dk/graphics/top_banner/two.png" style="position: absolute;top:50%;left:50%;transform:translateY(-50%) translateX(-50%);max-width: none;" height="200" width="1920" />
+			<img src="//files.<?= HTTP_HOST; ?>/graphics/top_banner/two.png" style="position: absolute;top:50%;left:50%;transform:translateY(-50%) translateX(-50%);max-width: none;" height="200" width="1920" />
 		</section>
 		<section id="top_menu">
-			<a href="/"><img src="https://files.net-hesten.dk/graphics/logo/logo_new.png" height="115" style="position:relative;top:5px;left:2em;height: 60px;" /></a>
+			<a href="/"><img src="//files.<?= HTTP_HOST; ?>/graphics/logo/logo_new.png" height="115" style="position:relative;top:5px;left:2em;height: 60px;" /></a>
 			<nav>
 				<a class="btn btn-menu" href="/area/stud/main/">Mit stutteri</a>
 				<a <?= (isset($_GET['blink_test']) ? 'data-animation="blink"' : ''); ?> id="chat-frame-activator" class="btn btn-info" href="javascript:void(0);" onclick="jQuery('#chat-frame').toggleClass('visible');">(<?= chat::get_online(['mode' => 'count', 'time_mode' => 'h', 'time_val' => '1']); ?>) Chat</a>	
