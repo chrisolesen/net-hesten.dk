@@ -14,11 +14,8 @@ CREATE TABLE `Brugere` (
   `admin` char(5) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `stutteri` (`stutteri`),
-  KEY `hestetegner` (`hestetegner`),
-  KEY `stutteri_2` (`stutteri`),
-  KEY `thumb` (`thumb`),
-  KEY `stutteri_3` (`stutteri`),
-  KEY `stutteri_4` (`stutteri`,`thumb`)
+  UNIQUE KEY `stutteri_UNIQUE` (`stutteri`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Chancen` (
@@ -77,23 +74,6 @@ CREATE TABLE `Heste` (
   KEY `bruger` (`bruger`),
   KEY `kon` (`kon`),
   KEY `status` (`status`),
-  KEY `thumb` (`thumb`),
-  KEY `staevne` (`staevne`),
-  KEY `kaaring` (`kaaring`),
-  KEY `original` (`original`),
-  KEY `genfodes` (`genfodes`),
-  KEY `unik` (`unik`),
-  KEY `id` (`id`,`bruger`,`navn`,`race`,`foersteplads`,`andenplads`,`tredieplads`,`kaaring`,`kaaringer`,`status`,`partnerid`,`farid`,`morid`,`salgsstatus`,`unik`),
-  KEY `navn` (`navn`),
-  KEY `race` (`race`),
-  KEY `andenplads` (`andenplads`),
-  KEY `pris` (`pris`),
-  KEY `alder` (`alder`),
-  KEY `foersteplads` (`foersteplads`),
-  KEY `tegner` (`tegner`),
-  KEY `original_2` (`original`),
-  KEY `thumb_2` (`thumb`),
-  KEY `statuschangedate` (`statuschangedate`),
   KEY `date` (`date`),
   KEY `morogfar` (`morid`,`farid`),
   KEY `morid` (`morid`),
