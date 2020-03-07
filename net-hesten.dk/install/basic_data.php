@@ -35,7 +35,10 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         </form>
     <?php
     } else {
-        $user_id = $sth->fetch()->id;
+        var_dump($sth);
+        $user_id = $sth->fetch();
+        var_dump($user_id);
+        $user_id = $sth->id;
         var_dump($user_id);
         /* Initialize admin privilegde */
         $sql = "SELECT `privilege_id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`privilege_types` WHERE `privilege_name` = 'global_admin' LIMIT 1";
