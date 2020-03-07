@@ -7,27 +7,27 @@ require "$basepath/global_modules/header.php";
 
 function find_next_user_filename($username) {
 	global $basepath;
-	if ($handle = opendir("$basepath/files.net-hesten.dk/users/")) {
+	if ($handle = opendir("$basepath/files.<?= HTTP_HOST; ?>/users/")) {
 		$found = false;
 		$num_dirs = 0;
 		while ($found != true) {
 			++$num_dirs;
 			$target_dir = str_replace(["/", "="], [""], base64_encode($num_dirs));
-			if (!is_dir("$basepath/files.net-hesten.dk/users/" . $target_dir)) {
-				mkdir("$basepath/files.net-hesten.dk/users/" . $target_dir);
+			if (!is_dir("$basepath/files.<?= HTTP_HOST; ?>/users/" . $target_dir)) {
+				mkdir("$basepath/files.<?= HTTP_HOST; ?>/users/" . $target_dir);
 			}
-			if (is_dir("$basepath/files.net-hesten.dk/users/" . $target_dir)) {
+			if (is_dir("$basepath/files.<?= HTTP_HOST; ?>/users/" . $target_dir)) {
 				$num_files = 1;
 				while ($num_files <= 250) {
 					++$num_files;
-					if (is_file("$basepath/files.net-hesten.dk/users/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($username)) . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
+					if (is_file("$basepath/files.<?= HTTP_HOST; ?>/users/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($username)) . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
 						continue;
-					} else if (is_file("$basepath/files.net-hesten.dk/users/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($username)) . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
+					} else if (is_file("$basepath/files.<?= HTTP_HOST; ?>/users/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($username)) . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
 						continue;
-					} else if (is_file("$basepath/files.net-hesten.dk/users/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($username)) . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
+					} else if (is_file("$basepath/files.<?= HTTP_HOST; ?>/users/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($username)) . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
 						continue;
 					} else {
-						return "$basepath/files.net-hesten.dk/users/{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($username)) . str_replace(["/", "="], [""], base64_encode($num_files));
+						return "$basepath/files.<?= HTTP_HOST; ?>/users/{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($username)) . str_replace(["/", "="], [""], base64_encode($num_files));
 					}
 				}
 			}
@@ -77,7 +77,7 @@ if (isset($_FILES['fileToUpload']) && empty($_POST['new_password']) && $_POST['y
 	} else {
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file . '.' . $imageFileType)) {
 			//			echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded. As {$target_file}.{$imageFileType}";
-			$file_path = str_replace("$basepath/files.net-hesten.dk/users/", '', "{$target_file}.{$imageFileType}");
+			$file_path = str_replace("$basepath/files.<?= HTTP_HOST; ?>/users/", '', "{$target_file}.{$imageFileType}");
 			$sql = "UPDATE Brugere SET thumb = '{$file_path}' WHERE id = {$_SESSION['user_id']}";
 			$link_new->query($sql);
 		} else {
@@ -511,7 +511,7 @@ if ($_SESSION['settings']['graes_confirmations'] == 'hide') {
 				jQuery('#put_horse_on_grass').removeClass('active');
 				jQuery("#put_horse_on_grass_form").ajaxSubmit(function () {
 					jQuery(caller).parent().parent().remove();
-					//					window.location.href = 'https://dev.net-hesten.dk/area/stud/main/?tab=idle_horses';
+					//					window.location.href = 'https://dev.<?= HTTP_HOST; ?>/area/stud/main/?tab=idle_horses';
 				});
 	<?php
 }
@@ -537,7 +537,7 @@ if ($_SESSION['settings']['graes_confirmations'] == 'hide') {
 			console.log(jQuery(caller).parent().parent().attr('data-horse-id'));
 			jQuery('#breed_horse__horse_id').attr('value', jQuery(caller).parent().parent().attr('data-horse-id'));
 			jQuery('#breed_horse__horse_id').val(jQuery(caller).parent().parent().attr('data-horse-id'));
-			jQuery.get({url: "https://ajax.net-hesten.dk/index.php?request=suggest_breed_targets&horse_id=" + jQuery(caller).parent().parent().attr('data-horse-id'), cache: false}).then(function (data) {
+			jQuery.get({url: "https://ajax.<?= HTTP_HOST; ?>/index.php?request=suggest_breed_targets&horse_id=" + jQuery(caller).parent().parent().attr('data-horse-id'), cache: false}).then(function (data) {
 				jQuery("#breed_targets_zone").html(data);
 				jQuery("#breed_horse input[type='submit']").attr('disabled', 'disabled');
 				jQuery('[data-type="potential_breed_target"]').each(function () {
@@ -586,7 +586,7 @@ if ($_SESSION['settings']['graes_confirmations'] == 'hide') {
 				jQuery('#put_horse_in_stable').removeClass('active');
 				jQuery("#put_horse_in_stable_form").ajaxSubmit(function () {
 					jQuery(caller).parent().parent().remove();
-					//					window.location.href = 'https://dev.net-hesten.dk/area/stud/main/?tab=horses_on_grass';
+					//					window.location.href = 'https://dev.<?= HTTP_HOST; ?>/area/stud/main/?tab=horses_on_grass';
 				});
 	<?php
 }
@@ -627,7 +627,7 @@ if ($_SESSION['settings']['graes_confirmations'] == 'hide') {
 							'horse_id': horse_id
 						},
 						crossDomain: true,
-						url: "https://ajax.net-hesten.dk/index.php",
+						url: "https://ajax.<?= HTTP_HOST; ?>/index.php",
 						cache: false
 					}).always(function (data) {
 						//                        console.log(data.status);
