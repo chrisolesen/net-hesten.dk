@@ -45,7 +45,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
             $sth_priv_insert = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
             $sth_priv_insert->execute();
         }
-        $priv_id = $sth->execute()->fetchObject()->privilege_id;
+        $priv_id = $sth->fetchObject()->privilege_id;
         
         $sql = "SELECT `start` FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` WHERE `user_id` = :user_id AND `privilege_id` = :priv_id LIMIT 1";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
