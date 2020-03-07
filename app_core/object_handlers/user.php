@@ -130,8 +130,8 @@ class user
 		global $link_new;
 		global $GLOBALS;/*{$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']}*/
 		foreach ($attr as $key => $value) {
-            $attr[$key] = $link_new->real_escape_string($value);
-        }
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
 		$mail_message_data = '<br />';
 		$mail_message_data .= 'Basis data:<br />';
 		$result = $link_new->query("SELECT id, stutteri, `password`, navn, email, alder, kon, beskrivelse, thumb FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_id']}");
@@ -222,8 +222,8 @@ class user
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-            $attr[$key] = $link_new->real_escape_string($value);
-        }
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
 
 		if ($attr['mode'] === 'username') {
 			$search_for = $attr['user_id'];
@@ -301,7 +301,7 @@ class user
 			$return_data[] = ["Det valgte stutterinavn '{$attr['user']}', findes allerede.", 'warning'];
 			$block_signup = true;
 		}
-		
+
 		if (strpos($attr['mail'], "'") || strpos($attr['mail'], '"') || strpos($attr['mail'], ' ')) {
 			$text_error = '<style>span.error_holder_text span { color:red;text-decoration:underline;}</style>'
 				. '<span class="error_holder_text">' . str_replace(
@@ -359,7 +359,7 @@ class user
 			$mail_message .= 'Du har anmodet om at blive oprettet som "' . trim($attr['user']) . '" på net-hesten.dk<br />';
 			$mail_message .= '<br />';
 			$mail_message .= 'Før du kan få et stutteri, skal du bekræfte, at du ejer den valgte mail konto.<br />';
-			$mail_message .= "Det gør du ved hjælp af dette <a href='https://net-hesten.dk/?action=verify_request_mail&verify_mail={$db_mail}&verify_key={$request_key}'>link</a><br />";
+			$mail_message .= "Det gør du ved hjælp af dette <a href='https://" . HTTP_HOST . "/?action=verify_request_mail&verify_mail={$db_mail}&verify_key={$request_key}'>link</a><br />";
 			$mail_message .= '<br />';
 			$mail_message .= "<b>Vigtigt:</b> Når du har bekræftet mailen, skal vi stadig manuelt godkende dit stutteri, vi gør altid dette hurtigst muligt, ofte næsten med det samme, og normalvis inden for 24 time.<br />";
 			$mail_message .= '<br />';
