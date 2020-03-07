@@ -12,7 +12,7 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
 }
 ?>
 <?php if (1 === 1) { ?>
-    <link rel="stylesheet" href="https://net-hesten.dk/area/chat/styles/version_two.css?v=<?= time(); ?>" />
+    <link rel="stylesheet" href="/area/chat/styles/version_two.css?v=<?= time(); ?>" />
     <link rel="stylesheet" href="/style/messages.css?v=<?= time(); ?>" />
     <style>
         body ul.message_list {
@@ -21,13 +21,13 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
     </style>
 <?php } else {
     ?>
-    <link rel="stylesheet" href="https://net-hesten.dk/area/chat/styles/main.css?v=<?= time(); ?>" />
+    <link rel="stylesheet" href="/area/chat/styles/main.css?v=<?= time(); ?>" />
 <?php }
 ?>
 
 <header>
-    <a href="https://net-hesten.dk/area/chat/pb/inbox.php">PB<small id="pb_message_count">(<?= private_messages::get_new_messages_count(['user_id' => $_SESSION['user_id']]); ?>)</small></a>&nbsp;|&nbsp;<a href="https://net-hesten.dk/area/chat/archive/">Arkiv</a>&nbsp;|&nbsp;<a href="https://net-hesten.dk/area/chat/online/">Spillere online (<?= chat::get_online(['mode' => 'count', 'time_mode' => 'h', 'time_val' => '1']); ?>)</a>
-    <?php if (in_array('global_admin', $_SESSION['rights'])) { ?> |&nbsp;<a href="https://net-hesten.dk/area/chat/vdh">VDH</a><?php } ?>
+    <a href="/area/chat/pb/inbox.php">PB<small id="pb_message_count">(<?= private_messages::get_new_messages_count(['user_id' => $_SESSION['user_id']]); ?>)</small></a>&nbsp;|&nbsp;<a href="/area/chat/archive/">Arkiv</a>&nbsp;|&nbsp;<a href="/area/chat/online/">Spillere online (<?= chat::get_online(['mode' => 'count', 'time_mode' => 'h', 'time_val' => '1']); ?>)</a>
+    <?php if (in_array('global_admin', $_SESSION['rights'])) { ?> |&nbsp;<a href="/area/chat/vdh">VDH</a><?php } ?>
     </header>
     <style>
         small {

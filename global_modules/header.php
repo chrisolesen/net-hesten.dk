@@ -61,7 +61,7 @@ if ($_SESSION['logged_in'] == true) {
     </head>
     <body>
 		<section id="chat-frame">
-			<iframe src="https://net-hesten.dk/area/chat/global/index.php?v=<?= time(); ?>"></iframe>
+			<iframe src="/chat/global/index.php?v=<?= time(); ?>"></iframe>
 		</section>
 		<script type="text/javascript">
 			jQuery("#chat_fullsize_toggle").click(function () {
