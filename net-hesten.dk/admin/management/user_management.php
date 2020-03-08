@@ -3,8 +3,7 @@ $basepath = '../../..';
 $responsive = true;
 require "$basepath/app_core/object_loader.php";
 require "$basepath/global_modules/header.php";
-?>
-<?php
+
 if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();
 	header('Location: /');
@@ -136,7 +135,6 @@ if (isset($_POST['adjust_wkr'])) {
 			<span>Login som</span>
 		</li>
 		<?php
-		//        $sql = "SELECT * FROM Brugere LIMIT $pr_page OFFSET $offset";
 		$sql = "SELECT id, stutteri, penge, navn, email, date FROM {$GLOBALS['DB_NAME_OLD']}.Brugere LIMIT $pr_page OFFSET $offset";
 		if (filter_input(INPUT_POST, 'search_id')) {
 			$search_id = (int) trim(filter_input(INPUT_POST, 'search_id'));
@@ -180,11 +178,11 @@ if (isset($_POST['adjust_wkr'])) {
 					<i class='id'><?= $data->id; ?></i>
 				</span>
 				<span>
-					<i class='name'><a style="text-decoration:underline;" href="https://net-hesten.dk/area/world/visit/visit.php?user=<?= $data->id; ?>"><?= $data->stutteri, 'UTF-8', 'Latin1'); ?></a></i><br />
-					<?= $data->navn, 'UTF-8', 'Latin1'); ?>
+					<i class='name'><a style="text-decoration:underline;" href="https://net-hesten.dk/area/world/visit/visit.php?user=<?= $data->id; ?>"><?= $data->stutteri; ?></a></i><br />
+					<?= $data->navn; ?>
 				</span>
 				<span class="wkr monospace"><a title="Alter WKR" data-lw-action="alter_wkr" href="javascript:void(0);"><?= number_dotter($data->penge); ?></a></span>
-				<span><?= $data->email, 'UTF-8', 'Latin1'); ?><br /><a onclick="return confirm('Vil du virkelig nulstille koden til: <?= $data->stutteri, 'UTF-8', 'Latin1'); ?> ?');" href="?action=admin_user_password_reset&user_id=<?= $data->id; ?>">Reset password</a></span>
+				<span><?= $data->email; ?><br /><a onclick="return confirm('Vil du virkelig nulstille koden til: <?= $data->stutteri; ?> ?');" href="?action=admin_user_password_reset&user_id=<?= $data->id; ?>">Reset password</a></span>
 				<span class="rights monospace center_text">
 					<?php if (in_array('5', $rights_array)) { ?>
 						<a href="?page=<?= $page; ?>&action=remove_right_horse_artist&user_id=<?= $data->id; ?>" class="active make_artist"><img src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/artist.png" /></a>
