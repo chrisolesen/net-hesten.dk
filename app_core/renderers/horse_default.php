@@ -1,5 +1,5 @@
 <?php
-function render_horse_object($horse)
+function render_horse_object($horse, $area)
 {
 
     $horse_is_at_competition = false;
@@ -55,7 +55,7 @@ function render_horse_object($horse)
     if ($horse['status'] == 'føl' || $horse['staevne'] == 'ja' || $horse['graesning'] == 'ja' || $gender == 'male' || $horse_is_at_competition || $horse['breed_date']) {
         $disallow_breeding = true;
     }
-    if (!$disallow_breeding) {
+    if (!$disallow_breeding && in_array($area, ['main_stud'])) {
         $horse_data .= "<button class='foel btn btn-info compact_top_button' data-button-type='modal_activator' data-target='breed_horse'>Avl</button>";
     }
     if ($horse['breed_date']) {
@@ -64,9 +64,9 @@ function render_horse_object($horse)
         $breed_date_target->add(new DateInterval('P40D'));
         $horse_data .= "<button style='pointer-events: none;' class='enter_graes btn compact_top_button'>Foler ca. {$breed_date_target->format('Y-m-d')}</button>";
     }
-    if ($horse['graesning'] == 'ja') {
+    if ($horse['graesning'] == 'ja' && in_array($area, ['main_stud'])) {
         $horse_data .= "<button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_in_stable'>Sæt i stald</button>";
-    } elseif ($horse['staevne'] != 'ja' && !$horse_is_at_competition) {
+    } elseif ($horse['staevne'] != 'ja' && !$horse_is_at_competition && in_array($area, ['main_stud'])) {
         $horse_data .= "<button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Sæt på græs</button>";
     }
     $horse_data .= "</div>";

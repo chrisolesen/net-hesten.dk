@@ -48,6 +48,7 @@ require "$basepath/global_modules/header.php";
 				$horses = horses::get_all(['user_name' => "{$_SESSION['username']}", 'limit' => '12', 'noorder' => true]);
 			}
 			foreach ($horses as $horse) {
+				/*
 				if ($horse['competition_id'] || $horse['status'] == 'avl' || $horse['breed_date']) {
 					continue;
 				}
@@ -79,7 +80,7 @@ require "$basepath/global_modules/header.php";
 						<?php if ($_SESSION['settings']['horse_trader_buy_confirmations'] == 'show') { ?>
 							<button class='open_sell_window btn btn-success compact_bottom_button'>Sælg</button>
 							<form action="/area/world/horsetrader/sell.php" method="post" class="action_popup buy_horse">
-								<?php /* code to place bid */ ?>
+								<?php /* code to place bid *//* ?>
 								<input type="hidden" name="action" value="sell_horse_to_trader" />
 								<input type="hidden" name="horse_id" value="<?= $horse->id; ?>" />
 								<?php if (filter_input(INPUT_POST, 'race') && !empty(filter_input(INPUT_POST, 'race'))) { ?>
@@ -110,7 +111,8 @@ require "$basepath/global_modules/header.php";
 					<img src='//files.<?= HTTP_HOST; ?>/<?= $horse->thumb; ?>' />
 					<img style='display: none;' class='zoom_img' src='//files.<?= HTTP_HOST; ?>/<?= $horse->thumb; ?>' />
 				</div>
-			<?php
+			<?php*/
+				echo render_horse_object($horse, 'horse_trader_sale');
 			}
 			?>
 		</div>

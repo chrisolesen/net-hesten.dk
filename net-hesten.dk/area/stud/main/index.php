@@ -306,7 +306,7 @@ if (is_array(horses::get_all($attr))) {
 		$amounts['foels'] = count($horse_tabs['foels']);
 		$amounts['foels_at_contest'] = count($horse_tabs['foels_at_contest']);
 */
-		$horse_array[] = render_horse_object($horse);
+		$horse_array[] = render_horse_object($horse, 'main_stud');
 	}
 }
 
