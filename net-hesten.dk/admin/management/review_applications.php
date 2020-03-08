@@ -25,17 +25,17 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 		if (!$applicant) {
 			return [false, 'Ansøgningen findes ikke!'];
 		}
-		$test_old = $link_new->query("SELECT stutteri FROM Brugere WHERE stutteri = '{$applicant->username}' LIMIT 1")->fetch_object();
+		$test_old = $link_new->query("SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$applicant->username}' LIMIT 1")->fetch_object();
 		$test_new = $link_new->query("SELECT username FROM users WHERE username = '{$applicant->username}' LIMIT 1")->fetch_object();
 		if ($test_old || $test_new) {
 			return [false, 'Stutteri navnet er optaget!, lav et afslag på brugeren hvor du beder dem finde et andet navn.'];
 		}
-		$link_new->query("INSERT INTO {$GLOBALS['DB_NAME_NEW']}.Brugere (stutteri, password, navn, email, penge, thumb, date) VALUES ('{$applicant->username}','{$applicant->password}','Ny bruger','{$applicant->email}','{$initial_wkr}','',now())");
+		$link_new->query("INSERT INTO {$GLOBALS['DB_NAME_OLD']}.Brugere (stutteri, password, navn, email, penge, thumb, date) VALUES ('{$applicant->username}','{$applicant->password}','{$applicant->name}','{$applicant->email}','{$initial_wkr}','',now())");
 		$new_user_id = $link_new->insert_id;
 		$result = $link_new->query("INSERT INTO users (id, username, password, email) VALUES ('{$new_user_id}', '{$applicant->username}','{$applicant->password}','{$applicant->email}')");
 		$new_user_id = $link_new->insert_id;
 		if (!$result) {
-			return [false, "Oprettelse af stutteriet fejlede, prøv igen, hvis fejlen forsætteer så kontakt Admin, og sig der var fejl i 'Insert to users for ID: {$applicant_id}'."];
+			return [false, "Oprettelse af stutteriet fejlede, prøv igen, hvis fejlen fortsætteer så kontakt Admin, og sig der var fejl i 'Insert to users for ID: {$applicant_id}'."];
 		}
 		/* Insert user meta data */
 		$result = $link_new->query("INSERT INTO user_data_numeric (parent_id, name, value, date) VALUES ('{$new_user_id}', 'wkr','{$initial_wkr}',now())");
