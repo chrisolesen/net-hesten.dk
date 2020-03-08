@@ -24,15 +24,15 @@ if (isset($_POST['adjust_wkr'])) {
 		$wkr = (int) substr($wkr, 1);
 	}
 
-	$user = $link_new->query("SELECT penge, stutteri FROM Brugere WHERE id = {$user_id} LIMIT 1")->fetch_object();
+	$user = $link_new->query("SELECT penge, stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$user_id} LIMIT 1")->fetch_object();
 
 	if (!$take) {
 		$saldo = (int) $user->penge + (int) $wkr;
-		$money_sql = "UPDATE Brugere SET penge = (penge + {$wkr}) WHERE id = {$user_id}";
+		$money_sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge + {$wkr}) WHERE id = {$user_id}";
 		//		$archive_sql = "INSERT INTO Konto (stutteri, tekst, transaktion, beloeb, saldo, date) VALUES ('{$user->stutteri}', '$reason', 'justering', '{$wkr}', '{$saldo}', NOW())";
 	} else {
 		$saldo = (int) $user->penge - (int) $wkr;
-		$money_sql = "UPDATE Brugere SET penge = (penge - {$wkr}) WHERE id = {$user_id}";
+		$money_sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge - {$wkr}) WHERE id = {$user_id}";
 		//		$archive_sql = "INSERT INTO Konto (stutteri, tekst, transaktion, beloeb, saldo, date) VALUES ('{$user->stutteri}', '$reason', 'justering', '-{$wkr}', '{$saldo}', NOW())";
 	}
 	$link_new->query($money_sql);
@@ -137,7 +137,7 @@ if (isset($_POST['adjust_wkr'])) {
 		</li>
 		<?php
 		//        $sql = "SELECT * FROM Brugere LIMIT $pr_page OFFSET $offset";
-		$sql = "SELECT id, stutteri, penge, navn, email, date FROM Brugere LIMIT $pr_page OFFSET $offset";
+		$sql = "SELECT id, stutteri, penge, navn, email, date FROM {$GLOBALS['DB_NAME_OLD']}.Brugere LIMIT $pr_page OFFSET $offset";
 		if (filter_input(INPUT_POST, 'search_id')) {
 			$search_id = (int) trim(filter_input(INPUT_POST, 'search_id'));
 			$_SESSION['user_list_search_type'] = 'id';
@@ -153,14 +153,14 @@ if (isset($_POST['adjust_wkr'])) {
 			unset($_SESSION['user_list_search']);
 		}
 		if ($_SESSION['user_list_search_type'] === 'id') {
-			$sql = "SELECT id, stutteri, penge, navn, email, date FROM Brugere WHERE id = {$_SESSION['user_list_search']} LIMIT $pr_page OFFSET $offset";
+			$sql = "SELECT id, stutteri, penge, navn, email, date FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_list_search']} LIMIT $pr_page OFFSET $offset";
 		}
 
 		if ($_SESSION['user_list_search_type'] === 'name') {
 			if (strpos($_SESSION['user_list_search'], '@')) {
-				$sql = "SELECT id, stutteri, penge, navn, email, date FROM Brugere WHERE email LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
+				$sql = "SELECT id, stutteri, penge, navn, email, date FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE email LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
 			} else {
-				$sql = "SELECT id, stutteri, penge, navn, email, date FROM Brugere WHERE stutteri LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
+				$sql = "SELECT id, stutteri, penge, navn, email, date FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
 			}
 		}
 		$result = $link_new->query($sql);
