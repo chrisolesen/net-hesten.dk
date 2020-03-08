@@ -112,7 +112,7 @@ require "$basepath/global_modules/header.php";
 					<img style='display: none;' class='zoom_img' src='//files.<?= HTTP_HOST; ?>/<?= $horse->thumb; ?>' />
 				</div>
 			<?php*/
-				echo render_horse_object($horse, 'horse_trader_sale');
+				echo render_horse_object($horse, 'horse_trader_sell');
 			}
 			?>
 		</div>
