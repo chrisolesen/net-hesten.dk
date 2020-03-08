@@ -47,15 +47,15 @@ private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => 
 	<?php
 	if ($messages = private_messages::get_messages(['user_id' => $_SESSION['user_id'], 'other_user' => $_POST['send_to'], 'thread' => $_POST['thread'], 'page' => $pb_thread_page, 'limit' => 75])) {
 		foreach ($messages as $message) {
-			?>
+	?>
 			<li data-message_id="<?= $message->id; ?>" class="msg <?= $message->origin == $_SESSION['user_id'] ? 'mine' : 'theirs'; ?> status-<?= $message->status_code; ?>">
 				<div class="poster">
-					<span class="username"><?= user::get_info(['user_id' => $message->origin])->username; ?>:</span>	<?= $message->date; ?>
-					<a href="/area/chat/pb/thread.php?delete_message=<?= $message->id; ?>&send_to=<?= $_POST['send_to']; ?>"><img class="delete_msg" src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/delete.png" height="20px" /></a>
+					<span class="username"><?= user::get_info(['user_id' => $message->origin])->username; ?>:</span> <?= $message->date; ?>
+					<a href="/area/chat/pb/thread.php?delete_message=<?= $message->id; ?>&send_to=<?= $_POST['send_to']; ?>"><img class="delete_msg" src="//files.<?= HTTP_HOST; ?>/graphics/delete.png" height="20px" /></a>
 				</div>
 				<div class="msg"><?= str_replace(["\n", "\r"], ['<br />', ''], $message->message); ?></div>
 			</li>
-			<?php
+	<?php
 		}
 	}
 	?>
@@ -64,40 +64,39 @@ private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => 
 	.mine.status-17 {
 		border-left-color: blue;
 	}
+
 	.mine.status-17 {
 		border-left-color: red;
 	}
 </style>
 <div class="new_message">
-    <form action="/area/chat/pb/thread.php" method="post">
+	<form action="/area/chat/pb/thread.php" method="post">
 		<input name="action" value="post_private_message" type="hidden" />
 		<input name="send_to" value="<?= $_POST['send_to']; ?>" type="hidden" />
 		<input name="thread" value="<?= $_POST['thread']; ?>" type="hidden" />
-        <textarea name="message_text" placeholder="Ny besked"></textarea>
-        <input class="btn btn-green" type="submit" name="send_message" value="Send Besked" />
-    </form>
+		<textarea name="message_text" placeholder="Ny besked"></textarea>
+		<input class="btn btn-green" type="submit" name="send_message" value="Send Besked" />
+	</form>
 	<div class="result">
 
 	</div>
 	<datalist id="usernames">
-	</datalist> 
+	</datalist>
 </div>
 <script type="text/javascript">
-
 	// iOS Hover Event Class Fix
 	if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) {
-		$(".horse_square").click(function () {
+		$(".horse_square").click(function() {
 			// Update '.change-this-class' to the class of your menu
 			// Leave this empty, that's the magic sauce
 		});
 	}
 	if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i))) {
-		$(".icon-vcard").click(function () {
+		$(".icon-vcard").click(function() {
 			// Update '.change-this-class' to the class of your menu
 			// Leave this empty, that's the magic sauce
 		});
 	}
-
 </script>
 <?php
 require "$basepath/net-hesten.dk/area/chat/elements/footer.php";

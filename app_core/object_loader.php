@@ -34,6 +34,7 @@ require "$basepath/app_core/object_handlers/user.php";
 require "$basepath/app_core/object_handlers/artist_center.php";
 require "$basepath/app_core/object_handlers/competitions.php";
 require "$basepath/app_core/object_handlers/horse_list_filters.php";
+require "$basepath/app_core/renderers/loader.php";
 
 require_once "$basepath/app_core/user_validate.php";
 
