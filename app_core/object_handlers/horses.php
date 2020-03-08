@@ -3,8 +3,7 @@
 class horses {
 
 	public static function put_on_grass($attr = []) {
-		global $link_new;
-		global $GLOBALS; /* {$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']} */
+		global $link_new; /* {$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']} */
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -37,8 +36,6 @@ class horses {
 		$username = $_SESSION['username'];
 
 		global $link_new;
-		global $link_new;
-		global $GLOBALS;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -73,8 +70,7 @@ class horses {
 	}
 
 	public static function put_horse_in_stable($attr = []) {
-		global $link_new;
-		global $GLOBALS; /* {$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']} */
+		global $link_new; /* {$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']} */
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -129,8 +125,6 @@ class horses {
 
 	public static function get_all($attr = []) {
 		global $link_new;
-		global $link_new;
-		global $GLOBALS;
 		$return_data = [];
 		$defaults = ['mode' => 'auction'];
 		foreach ($defaults as $key => $value) {
@@ -141,8 +135,6 @@ class horses {
         }
 		if (isset($attr['user_name'])) {
 			$username = $attr['user_name'];
-			$dead = 'død';
-			$ø = 'ø';
 
 			$sql = "SELECT "
 					. "heste.foersteplads AS gold_medal, "
@@ -200,7 +192,6 @@ class horses {
 					. "";
 
 			$result = $link_new->query($sql);
-//			$result = $link_new->query($sql);
 			$i = 0;
 			if ($result) {
 				while ($data = $result->fetch_assoc()) {
@@ -217,7 +208,6 @@ class horses {
 
 	public static function get_one($attr = []) {
 		global $link_new;
-		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -229,7 +219,7 @@ class horses {
 		if (isset($attr['ID'])) {
 			$sql = "SELECT "
 					. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent "
-					. "FROM {$GLOBALS['DB_NAME_NEW']}.Heste "
+					. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste "
 					. "WHERE id = '{$attr['ID']}' ";
 			$result = $link_new->query($sql);
 			if ($data = $result->fetch_assoc()) {
@@ -246,7 +236,6 @@ class horses {
 	/* /portal/bridge.php recreation */
 
 	public static function bridge_get($horse_id) {
-		global $link_new;
 		global $link_new;
 		$horse_id = mysqli_real_escape_string($link_new, $horse_id);
 //	 , graesning, staevne, kaaring, 
@@ -265,7 +254,7 @@ class horses {
 				. "ulempe, "
 				. "talent,"
 				. "status "
-				. "FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = {$horse_id} LIMIT 1";
+				. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$horse_id} LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_assoc()) {
