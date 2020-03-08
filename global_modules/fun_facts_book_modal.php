@@ -138,7 +138,7 @@
 				<h3>WKR statistikker</h3>
 
 				<?php
-				$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE logindate != '0000-00-00 00:00:00'");
+				$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere");
 				$i = 0;
 				$rige = 0;
 				$wealthy = 0;
