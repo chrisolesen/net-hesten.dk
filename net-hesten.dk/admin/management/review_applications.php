@@ -170,24 +170,24 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 	</style>
 	<div class="applicant_grid">
 		<div class="grid_header_wrapper">
-			<li class="grid_item">Stutteri navn</li>
-			<li class="grid_item">Email</li>
-			<li class="grid_item">Besked:</li>
-			<li class="grid_item">Dato:</li>
-			<li class="grid_item"></li>
-			<li class="grid_item"></li>
+			<div class="grid_item">Stutteri navn</div>
+			<div class="grid_item">Email</div>
+			<div class="grid_item">Besked:</div>
+			<div class="grid_item">Dato:</div>
+			<div class="grid_item"></div>
+			<div class="grid_item"></div>
 		</div>
 		<?php
-		$result = $link_new->query("SELECT id, username, email, ip, message, date, verify_date FROM user_application ORDER BY verify_date DESC");
+		$result = $link_new->query("SELECT id, username, email, message, date, verify_date FROM user_application ORDER BY verify_date DESC");
 		if ($result) {
 			while ($data = $result->fetch_object()) {
 		?>
-				<li class="grid_item"><?= $data->username; ?></li>
-				<li class="grid_item"><?= $data->email; ?></li>
-				<li class="grid_item"><?= $data->message; ?></li>
-				<li class="grid_item"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></li>
-				<li class="grid_item"><a href="?accept_application=<?= $data->id; ?>">Opret</a></li>
-				<li class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>">Slet</a></li>
+				<div class="grid_item"><?= $data->username; ?></div>
+				<div class="grid_item"><?= $data->email; ?></div>
+				<div class="grid_item"><?= $data->message; ?></div>
+				<div class="grid_item"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></div>
+				<div class="grid_item"><a href="?accept_application=<?= $data->id; ?>">Opret</a></div>
+				<div class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>">Slet</a></div>
 		<?php
 			}
 		}
