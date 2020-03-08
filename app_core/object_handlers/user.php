@@ -211,7 +211,6 @@ class user
 	public static function get_info($attr = [])
 	{
 		global $link_new;
-		global $link_new;
 		global $GLOBALS;/*{$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']}*/
 		if (!isset($attr['user_id'])) {
 			return false;
@@ -246,7 +245,6 @@ class user
 	public static function update_membership_request($attr = [])
 	{
 		global $link_new;
-		global $link_new;
 
 		$return_data = [];
 		$defaults = [];
@@ -256,11 +254,10 @@ class user
 		if ($attr['action'] == 'verify_request_mail') {
 			$db_mail = $link_new->real_escape_string(trim($attr['mail']));
 			$db_key = $link_new->real_escape_string(trim($attr['key']));
-			$db_ip = $link_new->real_escape_string(filter_input(INPUT_SERVER, 'REMOTE_ADDR'));
 			$request = $link_new->query("SELECT verify_date, id, count(id) AS result_count FROM user_application WHERE email = '{$db_mail}' AND verify_request_key = '{$db_key}' LIMIT 1")->fetch_object();
 			if ($request && $request->result_count > 0) {
 				if ($request->verify_date == NULL) {
-					$link_new->query("UPDATE user_application SET verify_date = NOW(), verify_ip = '{$db_ip}' WHERE email = '{$db_mail}' AND verify_request_key = '{$db_key}' LIMIT 1");
+					$link_new->query("UPDATE user_application SET verify_date = NOW() WHERE email = '{$db_mail}' AND verify_request_key = '{$db_key}' LIMIT 1");
 					$return_data[] = ["Din anmodning er nu verificeret, vi skal stadig godkende den manuelt.", 'success'];
 					/* indsæt besked i ny pb system */
 					$utf_8_message = "Der er en ny bruger ansøgning, der afventer godkendelse.";
@@ -337,7 +334,6 @@ class user
 			$db_name = $link_new->real_escape_string(trim($attr['name']));
 			$db_mail = $link_new->real_escape_string(trim($attr['mail']));
 			$db_user = $link_new->real_escape_string(trim($attr['user']));
-			$db_ip = $link_new->real_escape_string(filter_input(INPUT_SERVER, 'REMOTE_ADDR'));
 			$request_key = uniqid('', true);
 
 
@@ -349,7 +345,7 @@ class user
 			$password_hash = crypt(trim($attr['pass']), $cryptSalt);
 			if ($password_hash) {
 				/* Indsæt brugeren i anmodnings tabellen */
-				$link_new->query("INSERT INTO user_application (username, email, password, ip, message, date, verify_request_key, name) VALUES ('{$db_user}', '{$db_mail}', '{$password_hash}', '{$db_ip}', 'Bruger oprettelse.', NOW(), '{$request_key}', '{$db_name}')");
+				$link_new->query("INSERT INTO user_application (username, email, password, message, date, verify_request_key, name) VALUES ('{$db_user}', '{$db_mail}', '{$password_hash}', 'Bruger oprettelse.', NOW(), '{$request_key}', '{$db_name}')");
 			}
 
 			$mail_message = '<!DOCTYPE html>';

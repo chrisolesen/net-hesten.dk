@@ -17,12 +17,11 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 	function insert_applicant($applicant_id)
 	{
 		global $link_new;
-		global $link_old;
 		$initial_wkr = 50000;
 		/**
 		 *  Approve applicant
 		 * * */
-		$applicant = $link_new->query("SELECT * FROM user_application WHERE id = $applicant_id LIMIT 1")->fetch_object();
+		$applicant = $link_new->query("SELECT * FROM user_application WHERE id = {$applicant_id} LIMIT 1")->fetch_object();
 		if (!$applicant) {
 			return [false, 'Ansøgningen findes ikke!'];
 		}
@@ -32,11 +31,11 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 			return [false, 'Stutteri navnet er optaget!, lav et afslag på brugeren hvor du beder dem finde et andet navn.'];
 		}
 		$link_new->query("INSERT INTO {$GLOBALS['DB_NAME_NEW']}.Brugere (stutteri, password, navn, email, penge, thumb, date) VALUES ('{$applicant->username}','{$applicant->password}','Ny bruger','{$applicant->email}','{$initial_wkr}','',now())");
-		$new_user_id = $link_old->insert_id;
-		$result = $link_new->query("INSERT INTO users (id, username, password, email, active_ip) VALUES ('{$new_user_id}', '{$applicant->username}','{$applicant->password}','{$applicant->email}','{$applicant->ip}')");
+		$new_user_id = $link_new->insert_id;
+		$result = $link_new->query("INSERT INTO users (id, username, password, email) VALUES ('{$new_user_id}', '{$applicant->username}','{$applicant->password}','{$applicant->email}')");
 		$new_user_id = $link_new->insert_id;
 		if (!$result) {
-			return [false, "Oprettelse af stutteriet fejlede, prøv igen, hvis fejlen forsætteer så kontakt Admin, og sig der var fejl i 'Insert to users for ID: $applicant_id'."];
+			return [false, "Oprettelse af stutteriet fejlede, prøv igen, hvis fejlen forsætteer så kontakt Admin, og sig der var fejl i 'Insert to users for ID: {$applicant_id}'."];
 		}
 		/* Insert user meta data */
 		$result = $link_new->query("INSERT INTO user_data_numeric (parent_id, name, value, date) VALUES ('{$new_user_id}', 'wkr','{$initial_wkr}',now())");
@@ -144,75 +143,56 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 	<h1>Ansøgere</h1>
 	<a class="btn btn-info" href="/admin/">Tilbage</a>
 	<style>
-		ul:after {
-			content: "";
-			display: block;
-			clear: both;
+		.applicant_grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr) 160px 75px 75px;
+			grid-gap: 2px;
 		}
 
-		li {
-			float: left;
-			/* display: inline-block; */
+		.grid_item {
 			padding: 0 5px;
 			line-height: 36px;
 			border-bottom: 1px #000 solid;
 			text-align: center;
 		}
 
-		.col_1 {
-			clear: left;
-			width: 250px;
+		.grid_item {
+			padding: 5px;
 		}
 
-		.col_2 {
-			width: 250px;
+		.grid_header_wrapper {
+			display: contents;
 		}
 
-		.col_3 {
-			width: 110px;
-			padding-right: 0;
-		}
-
-		.col_4 {
-			width: 250px;
-		}
-
-		.col_5 {
-			width: 160px;
-		}
-
-		.col_6,
-		.col_7 {
-			width: 50px;
+		.grid_header_wrapper>.grid_item {
+			background: rgba(255, 255, 255, 0.1);
 		}
 	</style>
-	<ul>
-		<li class="col_1">Stutteri navn</li>
-		<li class="col_2">Email</li>
-		<li class="ip_col">&nbsp;</li>
-		<li class="col_4">Besked:</li>
-		<li class="col_5">Dato:</li>
+	<div class="applicant_grid">
+		<div class="grid_header_wrapper">
+			<li class="grid_item">Stutteri navn</li>
+			<li class="grid_item">Email</li>
+			<li class="grid_item">Besked:</li>
+			<li class="grid_item">Dato:</li>
+			<li class="grid_item"></li>
+			<li class="grid_item"></li>
+		</div>
 		<?php
-		$result = $link_new->query("SELECT id, username, email, ip, message, date, verify_date FROM user_application ORDER BY date DESC");
+		$result = $link_new->query("SELECT id, username, email, ip, message, date, verify_date FROM user_application ORDER BY verify_date DESC");
 		if ($result) {
 			while ($data = $result->fetch_object()) {
-				if ($data->message == 'Bruger oprettelse.' && $data->verify_date == null) {
-					continue;
-				}
-
 		?>
-				<li class="col_1"><?= $data->username; ?></li>
-				<li class="col_2"><?= $data->email; ?></li>
-				<li class="col_3"><?= $data->ip; ?></li>
-				<li class="col_4"><?= $data->message; ?></li>
-				<li class="col_5"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></li>
-				<li class="col_6"><a href="?accept_application=<?= $data->id; ?>">Opret</a></li>
-				<li class="col_7"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>">Slet</a></li>
+				<li class="grid_item"><?= $data->username; ?></li>
+				<li class="grid_item"><?= $data->email; ?></li>
+				<li class="grid_item"><?= $data->message; ?></li>
+				<li class="grid_item"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></li>
+				<li class="grid_item"><a href="?accept_application=<?= $data->id; ?>">Opret</a></li>
+				<li class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>">Slet</a></li>
 		<?php
 			}
 		}
 		?>
-	</ul>
+	</div>
 </section>
 <?php
 require "$basepath/global_modules/footer.php";
