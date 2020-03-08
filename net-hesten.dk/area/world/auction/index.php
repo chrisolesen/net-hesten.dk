@@ -87,8 +87,8 @@ foreach (auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => 
 				<button class='close_sell_window btn btn-danger'>Luk</button>
 			</form>
 		</div>
-		<img src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $remote_data->thumb; ?>' data-button-type='modal_activator' data-target='horze_extended_info' />
-		<img style='display: none;' class='zoom_img' src='//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/<?= $remote_data->thumb; ?>' />
+		<img src='//files.<?= HTTP_HOST;?>/<?= $remote_data->thumb; ?>' data-button-type='modal_activator' data-target='horze_extended_info' />
+		<img style='display: none;' class='zoom_img' src='//files.<?= HTTP_HOST;?>/<?= $remote_data->thumb; ?>' />
 	</div>
 <?php
 	$current_auction = ob_get_contents();
