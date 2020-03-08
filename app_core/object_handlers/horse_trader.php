@@ -91,7 +91,7 @@ class horse_trader {
 
 		$sell_income = ($temp_horse_data->value * 0.9);
 
-		accounting::add_entry(['amount' => $temp_horse_data->value, 'line_text' => "HH: Solgt hest: [{$attr['horse_id']}]", 'mode' => '+']);
+		accounting::add_entry(['amount' => $sell_income, 'line_text' => "HH: Solgt hest: [{$attr['horse_id']}]", 'mode' => '+']);
 		
 		$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = 'hestehandleren' WHERE id = {$attr['horse_id']} AND bruger = '{$temp_user_data['username']}'";
 		$link_new->query($sql);

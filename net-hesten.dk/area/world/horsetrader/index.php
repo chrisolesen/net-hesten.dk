@@ -30,7 +30,6 @@ $horse_trader_page_offset = $horse_trader_page * $horses_pr_page;
 					<h1>Hestehandleren - køb heste</h1>
 				</header>
 				<?php if ($filtered == true) { ?>
-
 					<div class="page_selector">
 						<span class="btn">Side: <?= $horse_trader_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?horse_trader_page=<?= $horse_trader_page - 1; ?>">Forrige side</a>&nbsp;<a class="btn btn-info" href="?horse_trader_page=<?= $horse_trader_page + 1; ?>">Næste side</a>
 					</div>
@@ -42,10 +41,10 @@ $horse_trader_page_offset = $horse_trader_page * $horses_pr_page;
 				<a class="btn btn-info" style="line-height: 30px;" data-button-type='modal_activator' data-target='filter_horses'>Filtre</a>
 				<div style="font-size: 0.75em;line-height: 15px;">
 					<div>
-						Unikke: <?= $link_new->query("SELECT COUNT(id) AS antal FROM Heste WHERE bruger = 'hestehandleren' AND unik = 'ja' AND status <> '{$GLOBALS['latin_one']['dead']}'")->fetch_object()->antal; ?>
+						Unikke: <?= $link_new->query("SELECT COUNT(id) AS antal FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = 'hestehandleren' AND unik = 'ja' AND status <> 'død'")->fetch_object()->antal; ?>
 					</div>
 					<div>
-						Originale: <?= $link_new->query("SELECT COUNT(id) AS antal FROM Heste WHERE bruger = 'hestehandleren' AND original = 'ja' AND status <> '{$GLOBALS['latin_one']['dead']}'")->fetch_object()->antal; ?>
+						Originale: <?= $link_new->query("SELECT COUNT(id) AS antal FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = 'hestehandleren' AND original = 'ja' AND status <> 'død'")->fetch_object()->antal; ?>
 					</div>
 				</div>
 			</div>

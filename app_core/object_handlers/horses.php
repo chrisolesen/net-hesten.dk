@@ -175,7 +175,7 @@ class horses {
 					. (($attr['mode'] == 'search_all') ? "AND heste.talent != '' " : '' )
 					. (($attr['mode'] == 'search_all') ? "AND heste.egenskab != '' " : '')
 					. (($attr['mode'] == 'search_all') ? "AND heste.ulempe != '' " : '' )
-					. (($attr['mode'] !== 'search_all') ? "AND bruger = '{$username}' " : "AND bruger <> 'genfoedsel' AND bruger <> 'carsten' AND bruger <> 'hestehandleren*' and bruger <> 'følkassen' ")
+					. (($attr['mode'] !== 'search_all') ? "AND bruger = '{$username}' " : "AND bruger NOT IN ('genfoedsel','carsten','hestehandleren*','følkassen') ")
 					. (($attr['mode'] !== 'search_all') ? '' : "AND thumb <> '/imgHorse/..' AND pris <> ''")
 					. (($attr['mode'] == 'auction') ? "AND staevne != 'ja' " : '')
 					. (($attr['mode'] == 'auction') ? "AND kaaring != 'ja' " : '')
