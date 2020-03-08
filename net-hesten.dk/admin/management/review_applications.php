@@ -159,6 +159,12 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 		.grid_item {
 			padding: 5px;
 		}
+		.grid_item.verified {
+			color:darkgoldenrod;
+		}
+		.grid_item.unverified {
+			color:darkred;
+		}
 
 		.grid_header_wrapper {
 			display: contents;
@@ -185,7 +191,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 				<div class="grid_item"><?= $data->username; ?></div>
 				<div class="grid_item"><?= $data->email; ?></div>
 				<div class="grid_item"><?= $data->message; ?></div>
-				<div class="grid_item"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></div>
+				<div class="grid_item <?= ($data->verify_date != null ? 'verified' : 'unverified'); ?>"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></div>
 				<div class="grid_item"><a href="?accept_application=<?= $data->id; ?>">Opret</a></div>
 				<div class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>">Slet</a></div>
 		<?php
