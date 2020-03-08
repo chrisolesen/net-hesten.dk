@@ -74,7 +74,6 @@ class horses {
 
 	public static function put_horse_in_stable($attr = []) {
 		global $link_new;
-		global $link_new;
 		global $GLOBALS; /* {$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']} */
 		$return_data = [];
 		$defaults = [];
@@ -89,7 +88,7 @@ class horses {
 			$username = $_SESSION['username'];
 			$dead = 'død';
 			$graes_money = 'Græsningspenge';
-			$user = $link_new->query("SELECT id, penge, stutteri FROM Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
+			$user = $link_new->query("SELECT id, penge, stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
 
 			$sql = "SELECT "
 					. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent, changedate "
