@@ -47,12 +47,8 @@ require_once ("{$basepath}/global_modules/header.php"); ?>
 		<p>
 			Både som forælder og som medlem på siden, kan man altid sende en e-mail til admin@net-hesten.dk hvis man har spørgsmål, klager eller bekymringer.
 		</p>
-
 		<p>
-			Læs om os eller bedøm os på <a href="http://www.trustpilot.dk/review/www.net-hesten.dk" target="_blank">Trustpilot</a>
-		</p>
-		<p>
-			Følg os på <a href="https://www.facebook.com/pages/wwwNet-hestendk/309524410017?fref=ts" target="_blank">Facebook</a>
+			Følg os på <a href="https://www.facebook.com/Nethesten/" target="_blank">Facebook</a>
 		</p>
 	</div>
 </section>
