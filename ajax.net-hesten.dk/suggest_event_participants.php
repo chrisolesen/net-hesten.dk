@@ -24,12 +24,12 @@ if (stripos(' ' . $limits . ' ', 'races')) {
 	$real_limit .= ")";
 }
 $user_id = filter_input(INPUT_GET, 'user_id');
-$stutteri = $link_old->query("SELECT stutteri FROM `Brugere` WHERE `id` = {$user_id}")->fetch_object()->stutteri;
+$stutteri = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = {$user_id}")->fetch_object()->stutteri;
 
 $dead = 'død';
 
-$result = $link_old->query("SELECT id, navn, bruger, alder, thumb, egenskab, ulempe, talent, race "
-		. "FROM Heste AS heste "
+$result = $link_new->query("SELECT id, navn, bruger, alder, thumb, egenskab, ulempe, talent, race "
+		. "FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS heste "
 		. "LEFT JOIN {$_GLOBALS['DB_NAME_NEW']}.game_data_competition_participants AS contests "
 		. "ON contests.participant_id = heste.id AND contests.points IS NULL "
 		. "LEFT JOIN {$_GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
