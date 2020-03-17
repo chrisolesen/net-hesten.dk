@@ -31,18 +31,18 @@ require "$basepath/global_modules/header.php";
 		display: block;
 	}
 
-	.compact_bottom_button {
-		opacity: 1;
-		display: block;
-		background: none;
+	body .horse_object .compact_bottom_button {
+		opacity: 1 !important;
+		display: block !important;
+		background: none !important;
 		top: initial !important;
 		bottom: 0 !important;
 		right: 6px !important;
 	}
-	.compact_top_button {
-		opacity: 1;
-		display: block;
-		background: none;
+	body .horse_object .compact_top_button {
+		opacity: 1 !important;
+		display: block !important;
+		background: none !important;
 		top: 0 !important;
 		bottom: initial !important;
 		right: 6px !important;
