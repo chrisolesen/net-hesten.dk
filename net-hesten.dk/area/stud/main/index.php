@@ -389,10 +389,12 @@ ob_start();
 				<option value="da_DK" <?= ($_SESSION['settings']['user_language'] == 'da_DK' ? 'selected' : ''); ?>>Dansk</option>
 				<option value="en_US" <?= ($_SESSION['settings']['user_language'] == 'en_US' ? 'selected' : ''); ?>>English</option>
 			</select>
+			<br />
 			<input type="submit" class="btn btn-success" value="Gem" name="submit">
 			<br />
 			<br />
 			<h3>Advancerede:</h3>
+			<br />
 			<input type="submit" class="btn btn-success" value="Tilsend kopi af persondata" name="send_personal_data">
 			<?php if (is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['rights'])) { ?>
 			<?php }
