@@ -379,17 +379,17 @@ ob_start();
 				<option value="standard" <?= ($_SESSION['settings']['display_width'] == 'full' ? 'selected' : ''); ?>>Fuld bredde</option>
 				<option value="slim" <?= ($_SESSION['settings']['display_width'] == 'slim' ? 'selected' : ''); ?>>Smal visning</option>
 			</select>
-			
-			<h3 style="margin-bottom: 0.5em;">Notifikationer</h3>
-			<div style="line-height: 20px;font-size:16px;">Vis Græsnings bekræftelser: <input style="height: 1em;" type="checkbox" name="graes_confirmations" <?= ($_SESSION['settings']['graes_confirmations'] == 'show' ? 'checked="checked"' : ''); ?> /></div>
-			<div style="line-height: 20px;font-size:16px;">Vis bekræftelser i hestehandleren: <input style="height: 1em;" type="checkbox" name="horse_trader_buy_confirmations" <?= ($_SESSION['settings']['horse_trader_buy_confirmations'] == 'show' ? 'checked="checked"' : ''); ?> /></div>
-			<h3 style="margin-bottom: 0.5em;">Valg:</h3>
-			<div style="line-height: 20px;font-size:16px;">Man må byde på alle mine heste: <input style="height: 1em;" type="checkbox" name="accept_offers" <?= ($_SESSION['settings']['accept_offers'] == 'accept' ? 'checked="checked"' : ''); ?> /></div>
 			<label class="fifty_p" for="user_language">Vælg sprog:</label>
 			<select class="fifty_p" name="user_language" id="user_language">
 				<option value="da_DK" <?= ($_SESSION['settings']['user_language'] == 'da_DK' ? 'selected' : ''); ?>>Dansk</option>
 				<option value="en_US" <?= ($_SESSION['settings']['user_language'] == 'en_US' ? 'selected' : ''); ?>>English</option>
 			</select>
+			<br />
+			<h3 style="margin-bottom: 0.5em;">Notifikationer</h3>
+			<div style="line-height: 20px;font-size:16px;">Vis Græsnings bekræftelser: <input style="height: 1em;" type="checkbox" name="graes_confirmations" <?= ($_SESSION['settings']['graes_confirmations'] == 'show' ? 'checked="checked"' : ''); ?> /></div>
+			<div style="line-height: 20px;font-size:16px;">Vis bekræftelser i hestehandleren: <input style="height: 1em;" type="checkbox" name="horse_trader_buy_confirmations" <?= ($_SESSION['settings']['horse_trader_buy_confirmations'] == 'show' ? 'checked="checked"' : ''); ?> /></div>
+			<h3 style="margin-bottom: 0.5em;">Valg:</h3>
+			<div style="line-height: 20px;font-size:16px;">Man må byde på alle mine heste: <input style="height: 1em;" type="checkbox" name="accept_offers" <?= ($_SESSION['settings']['accept_offers'] == 'accept' ? 'checked="checked"' : ''); ?> /></div>
 			<br />
 			<input type="submit" class="btn btn-success" value="Gem" name="submit">
 			<br />
