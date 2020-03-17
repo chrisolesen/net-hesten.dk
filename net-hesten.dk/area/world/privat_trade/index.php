@@ -137,12 +137,47 @@ require "$basepath/global_modules/header.php";
 									</div>
 								</div>
 								<span class='value hide_on_compact'>Værdi: <?= number_dotter($horse['value']); ?> <span class="wkr_symbol">wkr</span></span>
-								<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
-									<input type="hidden" name="action" value="reject_privat_trade" />
-									<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
-									<input type="hidden" name="action" value="reject_privat_trade" />
-									<input type=' submit' class='btn btn-danger compact_top_button' name='reject' value='Annuller' />
-								</form>
+								<?php if ($trade['buyer'] == $_SESSION['user_id'] && $trade['status_code'] == 44) { ?>
+									<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
+										<input type="hidden" name="action" value="reject_privat_trade" />
+										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
+										<input type='submit' class='btn btn-danger compact_top_button' name='reject' value='Annuller Anmodning' />
+									</form>
+								<?php } ?>
+								<?php if ($trade['buyer'] == $_SESSION['user_id'] && $trade['status_code'] == 38) { ?>
+									<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
+										<input type="hidden" name="action" value="reject_privat_trade" />
+										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
+										<input type="hidden" name="rejector_id" value="<?= $_SESSION['user_id']; ?>" />
+										<input type='submit' class='btn btn-danger compact_top_button' name='reject' value='Afvis Tilbud' />
+									</form>
+									<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
+										<input type="hidden" name="action" value="accept_privat_trade" />
+										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
+										<input type="hidden" name="buyer_id" value="<?= $_SESSION['user_id']; ?>" />
+										<input type='submit' class='btn btn-danger compact_top_button' name='accept' value='Accepter Tilbud' />
+									</form>
+								<?php } ?>
+								<?php if ($trade['seller'] == $_SESSION['user_id'] && $trade['status_code'] == 44) { ?>
+									<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
+										<input type="hidden" name="action" value="reject_privat_trade" />
+										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
+										<input type='submit' class='btn btn-danger compact_top_button' name='reject' value='Afvis Anmodning' />
+									</form>
+									<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
+										<input type="hidden" name="action" value="accept_privat_trade" />
+										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
+										<input type="hidden" name="buyer_id" value="<?= $_SESSION['user_id']; ?>" />
+										<input type='submit' class='btn btn-danger compact_top_button' name='accept' value='Accepter Anmodning' />
+									</form>
+								<?php } ?>
+								<?php if ($trade['seller'] == $_SESSION['user_id'] && $trade['status_code'] == 38) { ?>
+									<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
+										<input type="hidden" name="action" value="reject_privat_trade" />
+										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
+										<input type='submit' class='btn btn-danger compact_top_button' name='reject' value='Annuller Tilbud' />
+									</form>
+								<?php } ?>
 							</div>
 							<img src='//files.<?= HTTP_HOST; ?>/<?= $horse['thumb']; ?>' />
 						</div>
