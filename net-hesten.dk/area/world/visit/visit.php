@@ -93,30 +93,23 @@ foreach (horses::get_all($attr) as $horse) {
 	$horse_data .= "</div>";
 	$horse_data .= "</div>";
 
-
 	if ($horse['breed_date']) {
-
 		$breed_date_target = new DateTime($horse['breed_date']);
 		$breed_date_target->add(new DateInterval('P40D'));
 		$horse_data .= "<button style='pointer-events: none;' class='enter_graes btn compact_top_button'>Foler ca. {$breed_date_target->format('Y-m-d')}</button>";
 	}
 
-	if (in_array('tech_admin', $_SESSION['rights'])) {
-
-		$horse_data .= "<button data-button-type='modal_activator' data-target='unprovoked_bid' class='enter_graes btn btn-info compact_bottom_button'>Byd på hesten</button>";
-	}
+	$horse_data .= "<button data-button-type='modal_activator' data-target='unprovoked_bid' class='enter_graes btn btn-info compact_bottom_button'>Byd på hesten</button>";
 
 	$horse_data .= "</div>";
-	$horse_data .= "<img src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
-	$horse_data .= "<img style='display: none;' class='zoom_img' src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' />";
+	$horse_data .= "<img src='//files." . HTTP_HOST . "/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
+	$horse_data .= "<img style='display: none;' class='zoom_img' src='//files." . HTTP_HOST . "/{$horse['thumb']}' />";
 	$horse_data .= "</div>";
-
 
 	$horse_tabs['idle_horses'][] = $horse_data;
 }
 ?>
 <style>
-
 	.tabs {
 		margin-top: 1em;
 	}
@@ -124,28 +117,27 @@ foreach (horses::get_all($attr) as $horse) {
 	.foel {
 		position: absolute;
 		bottom: 45px;
-		right:12px;
+		right: 12px;
 	}
 
 	.enter_graes {
 		position: absolute;
 		bottom: 12px;
-		right:12px;
+		right: 12px;
 	}
 
-	.horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square {
+	.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square {
 		display: none;
 	}
-
 </style>
 <section>
 	<div style="float:left;width: 650px;">
 		<div class="image_block" style="height:130px;float:left;overflow: hidden;">
 			<?php
 			if ($visit_user_info->thumb) {
-				$stud_thumbnail = "//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/users/{$visit_user_info->thumb}";
+				$stud_thumbnail = "//files." . HTTP_HOST . "/users/{$visit_user_info->thumb}";
 			} else {
-				$stud_thumbnail = "//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/graphics/logo/default_logo.png";
+				$stud_thumbnail = "//files." . HTTP_HOST . "/graphics/logo/default_logo.png";
 			}
 			?>
 			<img style="float:left;margin-right: 2em;border-radius: 5px;max-width: 325px;max-height: 130px;" src="<?= $stud_thumbnail; ?>" />
@@ -167,7 +159,10 @@ ob_start();
 ?>
 <style>
 	.fifty_p {
-		width: 50%;float: left;line-height: 25px;margin-bottom: 5px;
+		width: 50%;
+		float: left;
+		line-height: 25px;
+		margin-bottom: 5px;
 	}
 </style>
 <div id="filter_horses" class="modal">
@@ -192,5 +187,4 @@ ob_end_clean();
 /* Define modal - end */
 ?>
 <?php
-require_once ("{$basepath}/global_modules/footer.php");
-
+require_once("{$basepath}/global_modules/footer.php");

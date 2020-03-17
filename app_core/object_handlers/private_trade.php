@@ -6,13 +6,12 @@ class private_trade
 	public static function offer_privat_trade($attr = [])
 	{
 		global $link_new;
-		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
-
+ 
 		$horse_id = (int) $attr['horse_id'];
 		$price = (int) $attr['price'];
 		$seller_id = (int) $attr['seller_id'];
@@ -40,9 +39,8 @@ class private_trade
 		$link_new->query("UPDATE Heste SET bruger = 'SystemPrivatHandel' WHERE id = $horse_id");
 	}
 
-	public static function request_privat_trade($attr = [])
+	public static function request_private_trade($attr = [])
 	{
-		global $link_new;
 		global $link_new;
 		$return_data = [];
 		$defaults = [];
@@ -50,34 +48,30 @@ class private_trade
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 
-		$price = (int) $attr['price'];
+		$bid_amount = (int) $attr['bid_amount'];
+		$requester_id = (int) $attr['requester_id'];
 		$horse_id = (int) $attr['horse_id'];
-		$seller_id = (int) $attr['seller_id'];
-		$recipient_id = (int) $attr['recipient_id'];
-		if (!is_numeric($recipient_id) || !$recipient_id) {
+		if (!is_numeric($requester_id) || !$requester_id) {
 			return false;
 		}
-		$horse_owner = "{$link_new->query("SELECT bruger FROM `Heste` WHERE id = '{$attr['horse_id']}'")->fetch_object()->bruger}";
+		$horse_owner = "{$link_new->query("SELECT bruger FROM `Heste` WHERE id = '{$horse_id}'")->fetch_object()->bruger}";
 		if (!$horse_owner) {
 			return false;
 		}
-		$horse_owner_id = $link_new->query("SELECT id FROM Brugere WHERE stutteri = '$horse_owner'")->fetch_object()->id;
+		$horse_owner_id = $link_new->query("SELECT id FROM Brugere WHERE stutteri = '{$horse_owner}'")->fetch_object()->id;
 		if (!$horse_owner_id || !is_numeric($horse_owner_id)) {
 			return false;
 		}
-		if (!($horse_owner_id == $seller_id)) {
-			return false;
-		}
+		/* TODO: Withdraw money from requester up front */
 		$link_new->query(
 			"INSERT INTO game_data_private_trade (seller, buyer, horse_id, price, creation_date, end_date, status_code) " .
 				"VALUES " .
-				"($seller_id, $recipient_id, $horse_id, $price, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 4)"
+				"($horse_owner_id, $requester_id, $horse_id, $bid_amount, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 44)"
 		);
 	}
 
 	public static function accept_privat_trade($attr = [])
 	{
-		global $link_new;
 		global $link_new;
 		$return_data = [];
 		$defaults = [];
@@ -114,7 +108,6 @@ class private_trade
 	public static function reject_privat_trade($attr = [])
 	{
 		global $link_new;
-		global $link_new;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -142,7 +135,6 @@ class private_trade
 
 	public static function list_trade_offerings($attr = [])
 	{
-		global $link_new;
 		global $link_new;
 		global $GLOBALS;
 		$return_data = [];
@@ -200,7 +192,6 @@ class private_trade
 
 	public static function list_trade_offers($attr = [])
 	{
-		global $link_new;
 		global $link_new;
 		global $GLOBALS;
 		$return_data = [];

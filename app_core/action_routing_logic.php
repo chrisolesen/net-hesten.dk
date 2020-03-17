@@ -90,7 +90,14 @@ if (filter_input(INPUT_POST, 'action') == 'reject_privat_trade') {
 		'trade_id' => filter_input(INPUT_POST, 'trade_id'),
 		'rejector_id' => $_SESSION['user_id']
 	]);
-}
+} 
+if (filter_input(INPUT_POST, 'action') == 'request_private_trade') {
+	private_trade::request_private_trade([
+		'horse_id' => filter_input(INPUT_POST, 'horse_id'),
+		'bid_amount' => filter_input(INPUT_POST, 'bid_amount'),
+		'requester_id' => $_SESSION['user_id']
+	]);
+} 
 
 /* Horse Trader */
 if (filter_input(INPUT_POST, 'action') == 'buy_horse_from_trader') {
