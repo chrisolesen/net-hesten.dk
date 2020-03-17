@@ -43,7 +43,7 @@ require "$basepath/global_modules/header.php";
 		opacity: 1 !important;
 		display: block !important;
 		background: none !important;
-		top: 0 !important;
+		top: 5px !important;
 		bottom: initial !important;
 		right: 6px !important;
 	}
@@ -172,7 +172,7 @@ require "$basepath/global_modules/header.php";
 										<input type="hidden" name="action" value="accept_privat_trade" />
 										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
 										<input type="hidden" name="buyer_id" value="<?= $_SESSION['user_id']; ?>" />
-										<input type='submit' class='btn btn-succsss' name='accept' value='Accepter Tilbud' />
+										<input type='submit' class='btn btn-success' name='accept' value='Accepter Tilbud' />
 									</form>
 								<?php } ?>
 								<?php if ($trade['seller'] == $_SESSION['user_id'] && $trade['status_code'] == 44) { ?>
@@ -185,7 +185,7 @@ require "$basepath/global_modules/header.php";
 										<input type="hidden" name="action" value="accept_privat_trade" />
 										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
 										<input type="hidden" name="buyer_id" value="<?= $_SESSION['user_id']; ?>" />
-										<input type='submit' class='btn btn-succsss' name='accept' value='Accepter Anmodning' />
+										<input type='submit' class='btn btn-success' name='accept' value='Accepter Anmodning' />
 									</form>
 								<?php } ?>
 								<?php if ($trade['seller'] == $_SESSION['user_id'] && $trade['status_code'] == 38) { ?>
