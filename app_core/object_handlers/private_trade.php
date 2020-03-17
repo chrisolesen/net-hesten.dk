@@ -11,20 +11,20 @@ class private_trade
 		foreach ($defaults as $key => $value) {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
- 
+
 		$horse_id = (int) $attr['horse_id'];
 		$price = (int) $attr['price'];
 		$seller_id = (int) $attr['seller_id'];
 		$recipient = $link_new->real_escape_string($attr['recipient']);
-		$recipient_id = (int) $link_new->query("SELECT id FROM `Brugere` WHERE stutteri = '{$recipient}'")->fetch_object()->id;
+		$recipient_id = (int) $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE stutteri = '{$recipient}'")->fetch_object()->id;
 		if (!is_numeric($recipient_id) || !$recipient_id) {
 			return false;
 		}
-		$horse_owner = "{$link_new->query("SELECT bruger FROM `Heste` WHERE id = '{$attr['horse_id']}'")->fetch_object()->bruger}";
+		$horse_owner = $link_new->query("SELECT bruger FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE id = '{$attr['horse_id']}'")->fetch_object()->bruger;
 		if (!$horse_owner) {
 			return false;
 		}
-		$horse_owner_id = $link_new->query("SELECT id FROM Brugere WHERE stutteri = '$horse_owner'")->fetch_object()->id;
+		$horse_owner_id = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE stutteri = '{$horse_owner}'")->fetch_object()->id;
 		if (!$horse_owner_id || !is_numeric($horse_owner_id)) {
 			return false;
 		}
@@ -36,13 +36,12 @@ class private_trade
 				"VALUES " .
 				"($seller_id, $recipient_id, $horse_id, $price, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 1)"
 		);
-		$link_new->query("UPDATE Heste SET bruger = 'SystemPrivatHandel' WHERE id = $horse_id");
+		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET bruger = 'SystemPrivatHandel' WHERE id = {$horse_id}");
 	}
 
 	public static function request_private_trade($attr = [])
 	{
 		global $link_new;
-		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
 			isset($attr[$key]) ?: $attr[$key] = $value;
@@ -54,17 +53,17 @@ class private_trade
 		if (!is_numeric($requester_id) || !$requester_id) {
 			return false;
 		}
-		$horse_owner = "{$link_new->query("SELECT bruger FROM `Heste` WHERE id = '{$horse_id}'")->fetch_object()->bruger}";
+		$horse_owner = $link_new->query("SELECT bruger FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE id = '{$horse_id}'")->fetch_object()->bruger;
 		if (!$horse_owner) {
 			return false;
 		}
-		$horse_owner_id = $link_new->query("SELECT id FROM Brugere WHERE stutteri = '{$horse_owner}'")->fetch_object()->id;
+		$horse_owner_id = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE stutteri = '{$horse_owner}'")->fetch_object()->id;
 		if (!$horse_owner_id || !is_numeric($horse_owner_id)) {
 			return false;
 		}
 		/* TODO: Withdraw money from requester up front */
 		$link_new->query(
-			"INSERT INTO game_data_private_trade (seller, buyer, horse_id, price, creation_date, end_date, status_code) " .
+			"INSERT INTO `game_data_private_trade` (seller, buyer, horse_id, price, creation_date, end_date, status_code) " .
 				"VALUES " .
 				"($horse_owner_id, $requester_id, $horse_id, $bid_amount, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 44)"
 		);
@@ -81,7 +80,7 @@ class private_trade
 
 		$trade_id = (int) $attr['trade_id'];
 		$acceptor_id = $attr['buyer_id'];
-		$trade_object = $link_new->query("SELECT * FROM game_data_private_trade WHERE id = $trade_id")->fetch_object();
+		$trade_object = $link_new->query("SELECT * FROM `game_data_private_trade` WHERE id = $trade_id")->fetch_object();
 		$buyer_id = $trade_object->buyer;
 		$seller_id = $trade_object->seller;
 		$horse_id = $trade_object->horse_id;
