@@ -251,7 +251,7 @@ class horse_list_filters {
 				<select name="filter_artist" id="filter_artist">
 					<option value="all" <?= ($user_filter_data[$attr['zone']]['artist'] == 'all') ? 'selected' : ''; ?>>Alle Tegnere</option>
 					<?php
-					$artists = $link_new->query("SELECT DISTINCT users.stutteri AS name, users.id AS user_id FROM {$GLOBALS['DB_NAME_NEW']}.Heste AS horses LEFT JOIN Brugere AS users ON users.stutteri = horses.tegner WHERE status <> '{$dead}' ORDER BY users.stutteri ASC");
+					$artists = $link_new->query("SELECT DISTINCT users.stutteri AS name, users.id AS user_id FROM {$GLOBALS['DB_NAME_OLD']}.Heste AS horses LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere AS users ON users.stutteri = horses.tegner WHERE status <> '{$dead}' ORDER BY users.stutteri ASC");
 					if ($artists) {
 						while ($artist = $artists->fetch_object()) {
 							if ($artist->name == '') {
