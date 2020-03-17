@@ -384,8 +384,8 @@ ob_start();
 			<div style="line-height: 20px;font-size:16px;">Vis bekræftelser i hestehandleren: <input style="height: 1em;" type="checkbox" name="horse_trader_buy_confirmations" <?= ($_SESSION['settings']['horse_trader_buy_confirmations'] == 'show' ? 'checked="checked"' : ''); ?> /></div>
 			<h3 style="margin-bottom: 0.5em;">Valg:</h3>
 			<div style="line-height: 20px;font-size:16px;">Man må byde på alle mine heste: <input style="height: 1em;" type="checkbox" name="accept_offers" <?= ($_SESSION['settings']['accept_offers'] == 'accept' ? 'checked="checked"' : ''); ?> /></div>
-			<label class="fifty_p" for="display_width">Vælg sprog:</label>
-			<select class="fifty_p" name="display_width" id="display_width">
+			<label class="fifty_p" for="user_language">Vælg sprog:</label>
+			<select class="fifty_p" name="user_language" id="user_language">
 				<option value="da_DK" <?= ($_SESSION['settings']['user_language'] == 'da_DK' ? 'selected' : ''); ?>>Dansk</option>
 				<option value="en_US" <?= ($_SESSION['settings']['user_language'] == 'en_US' ? 'selected' : ''); ?>>English</option>
 			</select>
