@@ -35,8 +35,7 @@ require "$basepath/global_modules/header.php";
 	<nav>
 		<ul style="padding: 1em 0;">
 			<li class="btn btn-info" data-target="your-horses">Dine Heste</li>
-			<li class="btn btn-info" data-target="your-sells">Dine Salg</li>
-			<li class="btn btn-info" data-target="your-offers">Dine Tilbud</li>
+			<li class="btn btn-info" data-target="your-sells">Handler</li>
 		</ul>
 	</nav>
 	<section data-zone="your-horses">

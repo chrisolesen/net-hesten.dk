@@ -34,7 +34,7 @@ class private_trade
 		$link_new->query(
 			"INSERT INTO game_data_private_trade (seller, buyer, horse_id, price, creation_date, end_date, status_code) " .
 				"VALUES " .
-				"($seller_id, $recipient_id, $horse_id, $price, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 1)"
+				"($seller_id, $recipient_id, $horse_id, $price, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 34)"
 		);
 		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET bruger = 'SystemPrivatHandel' WHERE id = {$horse_id}");
 	}
@@ -146,7 +146,7 @@ class private_trade
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 		if (isset($attr['user_name'])) {
-			$offers = $link_new->query("SELECT * FROM game_data_private_trade WHERE `seller` = {$attr['user_id']} OR `buyer` = {$attr['user_id']}) AND `status_code` IN (44,38) ");
+			$offers = $link_new->query("SELECT * FROM game_data_private_trade WHERE (`seller` = {$attr['user_id']} OR `buyer` = {$attr['user_id']}) AND `status_code` IN (44,38) ");
 			if ($offers) {
 				$i = 0;
 				while ($data = $offers->fetch_assoc()) {
