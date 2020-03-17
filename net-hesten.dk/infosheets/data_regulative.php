@@ -97,7 +97,6 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 
 		<h3>Hvem deler vi dine data med</h3>
 		<ul>
-			<li><a href="#hosting_provider">Hosting udbyder</a></li>
 			<li><a href="#owners">Ejerne</a></li>
 			<li><a href="#police">Politiet</a></li>
 			<li><a href="#share_facebook">Facebook</a></li>
@@ -154,14 +153,6 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 		<p>På den måde gemmer vi aldrig jeres rigtige kode nogen steder.</p>
 
 		<h1>Hvem deler vi dine data med</h1>
-
-		<h2 id="hosting_provider">Hosting udbyder</h2>
-		<p>Alt data der findes på net-hesten.dk og dens undersider samt mailkonti, er hostet ved <a href="https://hosting4real.net/">Hosting4Real</a> som er fuldt <a href="https://hosting4real.net/datapolitik">GDPR-kompatible</a></p>
-		<p>Vi har valgt at outsource vores hosting, da det er et fag helt for sig selv, at holde en server sikker, og korrekt håndtering af data, ligger os meget nært</p>
-		<p>Hosting4Real, er valgt for deres kompetancer, og faglige excellence. De er endvidere Europæisk funderet og derfor under samme strenge love og regler som os.</p>
-		<p>Så vi og I kan være trykke ved, at alt data er håndteret af anstændige mennesker.</p>
-		<p>Vi deler ikke din persondata med andre firmaer.</p>
-		<p>Vi benytter f.eks. IKKE google analytics og lignende statistic programmer.</p>
 
 		<h2 id="owners">Ejerne</h2>
 		<p>Stutteri TækHesten styres af Chris Olesen: <br /> &bullet;&nbsp;<a href="https://www.facebook.com/chris.olesen1">Facebook</a> &bullet;&nbsp;<a href="https://www.linkedin.com/in/chrisolesen1/">LinkedIN</a></p>
