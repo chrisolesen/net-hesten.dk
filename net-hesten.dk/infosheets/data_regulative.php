@@ -107,19 +107,16 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 
 		<h2 id="access">Adgang til vores oplysninger på dig</h2>
 
-		<p>Du har krav på, at få adgang til, de oplysninger vi har på dig.</p>
-		<p>Dette gøres helt konkret ved at gå ind på "mit stutteri" og trykke "indstillinger" trykke "advancerede" og herefter klikke "tilsend kopi af persondata"</p>
-		<p>Du vil nu modtage en mail, med en kopi af alt hvad vi har på din brugers ID, processen er fuldt automatisk, og der er ikke noget der udelades.</p>
-		<p>Vi bliver ikke adviceret om din anmodning, da du alligevel altid har ret til at få alt, så der er ingen grund til, at vi skal gennemgå det manuelt.</p>
-		<p>Så hvis du ikke har modtaget mailen inden for anstændig tid, så prøv gerne igen, eller send en mail til tech@net-hesten.dk så kigger vi på hvad der kan være galt.</p>
+		<p>Du har mulighed for at se de data vi har gemt.</p>
+		<p>Det gøres ved at gå ind på "mit stutteri" og trykke "indstillinger" trykke "advancerede" og herefter klikke "tilsend kopi af persondata", herefter bliver det sent til din mail.</p>
+		<p>Processen er automatisk, så hvis du ikke modtager mailen, kan du prøve igen, eller sende en mail til tech@net-hesten.dk, så for du det manuelt tilsendt.</p>
 
 		<h2 id="deletion">Få slettet oplysninger om dig</h2>
 		<p>Du har ret til at få slette oplysninger om din person, som du ikke ønsker vi har.</p>
 		<p>Du kan selv slette f.eks. dit navn, ved at rette det på din profil.</p>
-		<p>Men alt data vi opbevarer, opbevares af en <a href="#reasons">specifik grund</a>, hvorfor langt de fleste ting, kun kan slette i forbindelse med, at vi så også sletter din bruger.</p>
-		<p>Det er naturligvis din fulde ret. Hvis du ønsker det, skal du blot sende en mail til tech@net-hesten.dk, og orrienterer om, at du ikke længere ønsker at være bruger på net-hesten.</p>
+		<p>Der er en del data, vi kun kan slette ved helt at slette din bruger.</p>
+		<p>Hvis du ønsker det, skal du blot sende en mail til tech@net-hesten.dk, og orrienterer om, at du ikke længere ønsker at være bruger på net-hesten.</p>
 		<p>Herefter, vil vi hurtigst muligt, få slettet alt data om dig, og du vil modtage en endelig bekræftelse på at dette er sket.</p>
-		<p>I forbindelse med en sletning, vil en kopi blive opbevaret særskilt fra spillet, i 1 måned, dette sker af hensyn til, at passe på vores andre brugere, hvis det skulle nå at vise sig <a href="#necessary">nødvendigt</a>.</p>
 
 		<h1 id="what_data">Hvilke data har vi på dig</h1>
 
