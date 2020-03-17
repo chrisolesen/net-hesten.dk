@@ -68,7 +68,7 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 	<nav>
 		<ul style="padding: 1em 0;">
 			<li class="btn btn-info" data-target="your-horses">Dine Heste</li>
-			<li class="btn btn-info" data-target="your-sells">Handler</li>
+			<li class="btn btn-info" data-target="your-trades">Handler</li>
 		</ul>
 	</nav>
 	<section data-zone="your-horses">
@@ -130,13 +130,13 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 			?>
 		</div>
 	</section>
-	<section data-zone="your-sells">
+	<section data-zone="your-trades">
 		<div data-section-type="info_square">
 			<header>
 				<h1>Handler</h1>
 			</header>
 			<div class="page_selector">
-				<span class="btn">Side: <?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>&tab=your-sells">Forrige side</a>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>&tab=your-sells">Næste side</a>
+				<span class="btn">Side: <?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>&tab=your-trades">Forrige side</a>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>&tab=your-trades">Næste side</a>
 			</div>
 			<a class="btn btn-info" style="line-height: 30px;" data-button-type='modal_activator' data-target='filter_your_horses'>Filtre</a>
 		</div>
@@ -235,18 +235,13 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 <script type="text/javascript">
 	<?php if (!empty(private_trade::list_trade_offers($attr))) {	?>
 		jQuery(document).ready(function() {
-			jQuery('[data-zone="your-offers"]').addClass('visible');
+			jQuery('[data-zone="your-trades"]').addClass('visible');
 		});
 	<?php	} else {	?>
 		jQuery(document).ready(function() {
 			jQuery('[data-zone="your-horses"]').addClass('visible');
 		});
 	<?php	}	?>
-	<?php if (filter_input(INPUT_GET, 'tab') === 'other-auctions') { ?>
-		jQuery(document).ready(function() {
-			jQuery('[data-target="other-auctions"]').click();
-		});
-	<?php	} 	?>
 	<?php if (filter_input(INPUT_GET, 'tab') === 'your-horses') { ?>
 		jQuery(document).ready(function() {
 			jQuery('[data-target="your-horses"]').click();
