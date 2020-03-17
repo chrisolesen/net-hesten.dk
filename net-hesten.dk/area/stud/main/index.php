@@ -178,8 +178,9 @@ if (isset($_POST['your_name']) && $_POST['your_name'] !== $user_info->name) {
 	$link_new->query("UPDATE Brugere SET navn = '{$new_name}' WHERE id = {$_SESSION['user_id']}");
 }
 if (isset($_POST['user_language']) && $_POST['user_language'] !== $_SESSION['settings']['user_language']) {
-	$user_language = $link_new->real_escape_string($_POST['user_language']);
-	$link_new->query("UPDATE user_data_varchar SET value = '{$user_language}', date = NOW() WHERE parent_id = {$_SESSION['user_id']} AND name = 'user_language'");
+	$new_value = $link_new->real_escape_string($_POST['user_language']);
+	$link_new->query("UPDATE user_data_varchar SET value = '{$new_value}', date = NOW() WHERE parent_id = {$_SESSION['user_id']} AND name = 'user_language'");
+	$_SESSION['settings']['user_language'] = $new_value;
 }
 $your_horses_page = max(0, (int) filter_input(INPUT_GET, 'your_horses_page'));
 $horses_pr_page = 10;
