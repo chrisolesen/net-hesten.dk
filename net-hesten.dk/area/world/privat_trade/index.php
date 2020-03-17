@@ -43,14 +43,20 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 	}
 
 	body .horse_object form.compact_bottom_button input,
-	body .horse_object form.compact_top_button input{
+	body .horse_object form.compact_top_button input {
 		margin-bottom: 0;
 	}
+
 	body .horse_object form.compact_bottom_button,
 	body .horse_object form.compact_top_button {
+		top: initial;
 		background: none !important;
 		padding: 0;
 		margin: 0;
+	}
+
+	body .horse_object form.compact_top_button {
+		bottom: 57px !important;
 	}
 
 	body .horse_object .compact_top_button {
