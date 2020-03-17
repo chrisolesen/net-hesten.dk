@@ -4,6 +4,12 @@ $title = 'Privat handel';
 require "$basepath/app_core/object_loader.php";
 require "$basepath/global_modules/header.php";
 
+$horses_pr_page = (int) filter_input(INPUT_GET, 'horses_pr_page') ?: 45;
+
+$your_horses_page = (int) filter_input(INPUT_GET, 'your_horses_page') ?: 0;
+$your_horses_page = max($your_horses_page, 0);
+$your_horses_page_offset = $your_horses_page * $horses_pr_page;
+
 ?>
 <style>
 	.tabs section {
@@ -39,6 +45,7 @@ require "$basepath/global_modules/header.php";
 		bottom: 0 !important;
 		right: 6px !important;
 	}
+
 	body .horse_object .compact_top_button {
 		opacity: 1 !important;
 		display: block !important;
@@ -67,7 +74,6 @@ require "$basepath/global_modules/header.php";
 				<a class="btn btn-info" style="line-height: 30px;" data-button-type='modal_activator' data-target='filter_your_horses'>Filtre</a>
 			</div>
 			<?php
-			$horses_pr_page = 50;
 			$attr = ['user_name' => $_SESSION['username'], 'offset' => $your_horses_page_offset, 'limit' => $horses_pr_page];
 			if ($filter_id = filter_input(INPUT_POST, 'id_filter')) {
 				$attr = ['user_name' => $_SESSION['username'], 'id_filter' => $filter_id];
