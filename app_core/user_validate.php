@@ -85,6 +85,13 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 				$_SESSION['settings']['horse_trader_buy_confirmations'] = 'show';
 			}
 
+			$user_language = $link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'user_language' LIMIT 1")->fetch_object()->value;
+			$_SESSION['settings']['user_language'] = $user_language;
+			if (!$user_language) {
+				$link_new->query("INSERT INTO user_data_varchar (parent_id, value, name, date) VALUES ({$data['id']}, 'da_DK', 'user_language', NOW())");
+				$_SESSION['settings']['user_language'] = 'da_DK';
+			}
+
 			/* data upgrade block - end */
 
 			$_SESSION['logged_in'] = true;
