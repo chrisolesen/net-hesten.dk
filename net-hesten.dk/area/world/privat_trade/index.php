@@ -102,7 +102,7 @@ require "$basepath/global_modules/header.php";
 	<section data-zone="your-sells">
 		<div data-section-type="info_square">
 			<header>
-				<h1>Dine Salg</h1>
+				<h1>Handler</h1>
 			</header>
 			<div class="page_selector">
 				<span class="btn">Side: <?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>&tab=your-sells">Forrige side</a>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>&tab=your-sells">Næste side</a>
@@ -113,8 +113,8 @@ require "$basepath/global_modules/header.php";
 			<ul>
 				<?php
 				$attr = ['user_name' => $_SESSION['username'], 'user_id' => $_SESSION['user_id']];
-				if (!empty(private_trade::list_trade_offerings($attr))) {
-					foreach (private_trade::list_trade_offerings($attr) as $trade) {
+				if (!empty(private_trade::list_trade_offers($attr))) {
+					foreach (private_trade::list_trade_offers($attr) as $trade) {
 						$trade_id = $trade['id'];
 						$buyer = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$trade['buyer']}")->fetch_object()->stutteri;
 						$horse = $trade['horse_data'];
@@ -139,80 +139,11 @@ require "$basepath/global_modules/header.php";
 								</div>
 								<span class='value hide_on_compact'>Værdi: <?= number_dotter($horse['value']); ?> <span class="wkr_symbol">wkr</span></span>
 								<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
-								<input type="hidden" name="action" value="reject_privat_trade" />
+									<input type="hidden" name="action" value="reject_privat_trade" />
 									<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
 									<input type="hidden" name="action" value="reject_privat_trade" />
 									<input type=' submit' class='btn btn-danger compact_top_button' name='reject' value='Annuller' />
 								</form>
-							</div>
-							<img src='//files.<?= HTTP_HOST; ?>/<?= $horse['thumb']; ?>' />
-						</div>
-				<?php
-					}
-				}
-				?>
-			</ul>
-		</div>
-	</section>
-	<section data-zone="your-offers">
-		<div data-section-type="info_square">
-			<header>
-				<h1>Dine Tilbud</h1>
-			</header>
-			<div class="page_selector">
-				<span class="btn">Side: <?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>&tab=your-offers">Forrige side</a>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>&tab=your-offers">Næste side</a>
-			</div>
-			<a class="btn btn-info" style="line-height: 30px;" data-button-type='modal_activator' data-target='filter_your_horses'>Filtre</a>
-		</div>
-		<div>
-			<ul>
-				<?php
-				$attr = ['user_name' => $_SESSION['username'], 'user_id' => $_SESSION['user_id']];
-				if (!empty(private_trade::list_trade_offers($attr))) {
-					foreach (private_trade::list_trade_offers($attr) as $trade) {
-						$trade_id = $trade['id'];
-						$seller = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$trade['seller']}")->fetch_object()->stutteri;
-						$horse = $trade['horse_data'];
-						$gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
-						$gender = ((string) strtolower($horse['gender']) === 'hingst') ? 'male' : $gender;
-						$gender = ((string) $gender === '') ? 'error' : $gender;
-				?>
-						<div class="horse_square horse_object <?= $gender; ?>" style="z-index:3;">
-							<div class="info">
-								<span class="name"><?= $horse['name']; ?></span>
-								<i class='gender <?= "icon-{$gender}-1"; ?>'></i>
-								<div class='horse_vcard'>
-									<i class='icon-vcard'></i>
-									<div class='extended_info'>
-										<span class='type_age'><?= ($horse['unik'] == 'ja' ? '<span class="unique">Unik</span>' : ($horse['original'] == 'ja' ? '<span class="original">Original</span>' : '')); ?> <?= $horse['race']; ?>: <?= $horse['age']; ?> år</span>
-										<span class='horse_id'>ID: <?= $horse['id']; ?></span><br /><br />
-										<span class='ability'>Sælger: <?= $seller; ?></span><br />
-										<span class='talent'>Pris: <?= number_dotter($trade['price']); ?> <span class="wkr_symbol">wkr</span></span><br /><br />
-										<span class='artist'>Tegner: <?= $horse['artist']; ?></span>
-										<span class='value hide_on_standard'>Værdi: <?= number_dotter($horse['value']); ?> <span class="wkr_symbol">wkr</span></span>
-									</div>
-								</div>
-								<span class='value hide_on_compact'>Værdi: <?= number_dotter($horse['value']); ?> <span class="wkr_symbol">wkr</span></span>
-								<?php if ($seller !== $_SESSION['username']) { ?>
-									<form action="" method="post" class="compact_bottom_button" style="opacity:1;display:block;background:none;top:6px;right:6px !important;">
-										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
-										<input type="hidden" name="action" value="accept_privat_trade" />
-										<input type='submit' class='btn btn-success compact_bottom_button' name='accept' value='Accepter' />
-									</form>
-									<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
-										<input type="hidden" name="action" value="reject_privat_trade" />
-										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
-										<input type="hidden" name="action" value="reject_privat_trade" />
-										<input type='submit' class='btn btn-danger compact_top_button' name='reject' value='Afvis' />
-									</form>
-								<?php } else { ?>
-									<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
-										<input type="hidden" name="action" value="reject_privat_trade" />
-										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
-										<input type="hidden" name="action" value="reject_privat_trade" />
-										<input type='submit' class='btn btn-danger compact_top_button' name='reject' value='Annuller' />
-									</form>
-								<?php } ?>
 							</div>
 							<img src='//files.<?= HTTP_HOST; ?>/<?= $horse['thumb']; ?>' />
 						</div>
@@ -239,10 +170,6 @@ require "$basepath/global_modules/header.php";
 	<?php if (!empty(private_trade::list_trade_offers($attr))) {	?>
 		jQuery(document).ready(function() {
 			jQuery('[data-zone="your-offers"]').addClass('visible');
-		});
-	<?php	} else if (!empty(private_trade::list_trade_offerings($attr))) {	?>
-		jQuery(document).ready(function() {
-			jQuery('[data-zone="your-sells"]').addClass('visible');
 		});
 	<?php	} else {	?>
 		jQuery(document).ready(function() {

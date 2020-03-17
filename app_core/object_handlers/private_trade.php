@@ -90,7 +90,7 @@ class private_trade
 			return false;
 		}
 
-		$recipient_object = $link_new->query("SELECT stutteri, penge FROM `Brugere` WHERE id = {$buyer_id}")->fetch_object();
+		$recipient_object = $link_new->query("SELECT stutteri, penge FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$buyer_id}")->fetch_object();
 		$recipient = $recipient_object->stutteri;
 		$recipient_money = $recipient_object->penge;
 
@@ -99,9 +99,9 @@ class private_trade
 		}
 
 		$link_new->query("UPDATE game_data_private_trade SET `status_code` = 2 WHERE id = $trade_id");
-		$link_new->query("UPDATE Heste SET bruger = '$recipient' WHERE id = $horse_id");
-		$link_new->query("UPDATE `Brugere` SET penge = penge + $price WHERE id = $seller_id");
-		$link_new->query("UPDATE `Brugere` SET penge = penge - $price WHERE id = $buyer_id");
+		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '$recipient' WHERE id = $horse_id");
+		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET penge = penge + $price WHERE id = $seller_id");
+		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET penge = penge - $price WHERE id = $buyer_id");
 	}
 
 	public static function reject_privat_trade($attr = [])
@@ -126,67 +126,10 @@ class private_trade
 			return false;
 		}
 
-		$recipient = $link_new->query("SELECT stutteri FROM `Brugere` WHERE id = {$seller_id}")->fetch_object()->stutteri;
+		$recipient = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$seller_id}")->fetch_object()->stutteri;
 
 		$link_new->query("UPDATE game_data_private_trade SET `status_code` = 3 WHERE id = $trade_id");
-		$link_new->query("UPDATE Heste SET bruger = '$recipient' WHERE id = $horse_id");
-	}
-
-	public static function list_trade_offerings($attr = [])
-	{
-		global $link_new;
-		global $GLOBALS;
-		$return_data = [];
-		$defaults = [];
-
-		foreach ($defaults as $key => $value) {
-			isset($attr[$key]) ?: $attr[$key] = $value;
-		}
-		foreach ($attr as $key => $value) {
-			$attr[$key] = $link_new->real_escape_string($value);
-		}
-		if (isset($attr['user_name'])) {
-			$offers = $link_new->query("SELECT * FROM game_data_private_trade WHERE `seller` = {$attr['user_id']} AND `status_code` = 1 ");
-			if ($offers) {
-				$i = 0;
-				while ($data = $offers->fetch_assoc()) {
-					foreach ($data as $key => $info) {
-						if ($key == 'horse_id') {
-							$horse_datas = $link_new->query(
-								"SELECT " .
-									"heste.id, "
-									. "heste.navn AS name, "
-									. "heste.race, "
-									. "heste.kon AS gender, "
-									. "heste.alder AS age, "
-									. "heste.pris AS value, "
-									. "heste.original, "
-									. "heste.unik, "
-									. "heste.tegner AS artist, "
-									. "heste.thumb, "
-									. "heste.egenskab, "
-									. "heste.ulempe, "
-									. "heste.talent "
-									. "FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS heste WHERE id = $info"
-							);
-							$show_horse_data = [];
-							while ($horse_data = $horse_datas->fetch_assoc()) {
-								foreach ($horse_data as $key => $info) {
-									$show_horse_data[$key] = $info;
-								}
-							}
-							$return_data[$i][$key] = $info;
-							$return_data[$i]['horse_data'] = $show_horse_data;
-						} else {
-							$return_data[$i][$key] = $info;
-						}
-					}
-					++$i;
-				}
-				return $return_data;
-			}
-		}
-		return false;
+		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '$recipient' WHERE id = $horse_id");
 	}
 
 	public static function list_trade_offers($attr = [])
@@ -203,7 +146,7 @@ class private_trade
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 		if (isset($attr['user_name'])) {
-			$offers = $link_new->query("SELECT * FROM game_data_private_trade WHERE `buyer` = {$attr['user_id']} AND `status_code` = 1 ");
+			$offers = $link_new->query("SELECT * FROM game_data_private_trade WHERE `seller` = {$attr['user_id']} OR `buyer` = {$attr['user_id']}) AND `status_code` IN (44,38) ");
 			if ($offers) {
 				$i = 0;
 				while ($data = $offers->fetch_assoc()) {
