@@ -40,19 +40,22 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 	body .horse_object .compact_bottom_button {
 		opacity: 1 !important;
 		display: block !important;
+	}
+
+	body .horse_object form.compact_bottom_button input,
+	body .horse_object form.compact_top_button input{
+		margin-bottom: 0;
+	}
+	body .horse_object form.compact_bottom_button,
+	body .horse_object form.compact_top_button {
 		background: none !important;
-		top: initial !important;
-		bottom: 0 !important;
-		right: 6px !important;
+		padding: 0;
+		margin: 0;
 	}
 
 	body .horse_object .compact_top_button {
 		opacity: 1 !important;
 		display: block !important;
-		background: none !important;
-		top: 5px !important;
-		bottom: initial !important;
-		right: 6px !important;
 	}
 </style>
 <section class="tabs">
