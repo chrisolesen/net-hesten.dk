@@ -116,7 +116,7 @@ require "$basepath/global_modules/header.php";
 				if (!empty(private_trade::list_trade_offerings($attr))) {
 					foreach (private_trade::list_trade_offerings($attr) as $trade) {
 						$trade_id = $trade['id'];
-						$buyer = $link_new->query("SELECT stutteri FROM Brugere WHERE id = {$trade['buyer']}")->fetch_object()->stutteri;
+						$buyer = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$trade['buyer']}")->fetch_object()->stutteri;
 						$horse = $trade['horse_data'];
 						$gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
 						$gender = ((string) strtolower($horse['gender']) === 'hingst') ? 'male' : $gender;
@@ -137,7 +137,7 @@ require "$basepath/global_modules/header.php";
 										<span class='value hide_on_standard'>Værdi: <?= number_dotter($horse['value']); ?> <span class="wkr_symbol">wkr</span></span>
 									</div>
 								</div>
-								<span class='value hide_on_compact''>Værdi: <?= number_dotter($horse['value']); ?> <span class="wkr_symbol">wkr</span></span>
+								<span class='value hide_on_compact'>Værdi: <?= number_dotter($horse['value']); ?> <span class="wkr_symbol">wkr</span></span>
 								<form action="" method="post" class="compact_top_button" style="opacity:1;display:block;background:none;top:initial;bottom:0 !important;right:6px !important;">
 								<input type="hidden" name="action" value="reject_privat_trade" />
 									<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
@@ -171,7 +171,7 @@ require "$basepath/global_modules/header.php";
 				if (!empty(private_trade::list_trade_offers($attr))) {
 					foreach (private_trade::list_trade_offers($attr) as $trade) {
 						$trade_id = $trade['id'];
-						$seller = $link_new->query("SELECT stutteri FROM Brugere WHERE id = {$trade['seller']}")->fetch_object()->stutteri;
+						$seller = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$trade['seller']}")->fetch_object()->stutteri;
 						$horse = $trade['horse_data'];
 						$gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
 						$gender = ((string) strtolower($horse['gender']) === 'hingst') ? 'male' : $gender;
