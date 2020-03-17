@@ -1,36 +1,40 @@
 <?php
- /* Mit Stutteri */
+/* Mit Stutteri */
 $basepath = '../../../..';
 $title = 'Stutteri';
 require "$basepath/app_core/object_loader.php";
 require "$basepath/global_modules/header.php";
 
 
-$search_horses_page = max(0, (int)filter_input(INPUT_GET, 'search_horses_page'));
+$search_horses_page = max(0, (int) filter_input(INPUT_GET, 'search_horses_page'));
 $horses_pr_page = 10;
 ?>
 <?php $user_info = user::get_info(['user_id' => $_SESSION['user_id']]); ?>
 <?php $dead = 'død'; ?>
 <style>
     .tabs {
-		margin-top: 1em;
-	}
-	[data-button-type="zone_activator"] {
-		margin-bottom: 5px;
-	}
-	.foel {
-		position: absolute;
-		bottom: 45px;
-		right:12px;
-	}
-	.enter_graes {
-		position: absolute;
-		bottom: 12px;
-		right:12px;
-	}
-	.horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square + .horse_square {
-		display: none;
-	}
+        margin-top: 1em;
+    }
+
+    [data-button-type="zone_activator"] {
+        margin-bottom: 5px;
+    }
+
+    .foel {
+        position: absolute;
+        bottom: 45px;
+        right: 12px;
+    }
+
+    .enter_graes {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+    }
+
+    .horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square+.horse_square {
+        display: none;
+    }
 </style>
 <?php
 $horse_array = [];
@@ -49,14 +53,15 @@ if (is_array(horses::get_all($attr))) {
         if ($horse['competition_id']) {
             $horse_is_at_competition = true;
         }
-        $gender = ((string)strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
-        $gender = ((string)strtolower($horse['gender']) === 'hingst') ? 'male' : $gender;
-        $gender = ((string)$gender === '') ? 'error' : $gender;
+        $gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
+        $gender = ((string) strtolower($horse['gender']) === 'hingst') ? 'male' : $gender;
+        $gender = ((string) $gender === '') ? 'error' : $gender;
         $extended_info = '';
-		if (in_array('tech_admin', $_SESSION['rights'])) { }
-		$owner_id = $link_new->query("SELECT id FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$horse['owner_name']}' LIMIT 1")->fetch_object()->id;
-		$owner_name = $horse['owner_name'];
-		$extended_info = [
+        if (in_array('tech_admin', $_SESSION['rights'])) {
+        }
+        $owner_id = $link_new->query("SELECT id FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$horse['owner_name']}' LIMIT 1")->fetch_object()->id;
+        $owner_name = $horse['owner_name'];
+        $extended_info = [
             'name' => $horse['name'],
             'age' => $horse['age'],
             'gender' => $horse['gender'],
@@ -64,8 +69,8 @@ if (is_array(horses::get_all($attr))) {
             'artist' => $horse['artist'],
             'id' => $horse['id'],
             'value' => $horse['value'],
-			'owner_name' => $owner_name,
-			'owner_id' => $owner_id,
+            'owner_name' => $owner_name,
+            'owner_id' => $owner_id,
             'talent' => $horse['talent'],
             'ulempe' => $horse['ulempe'],
             'egenskab' => $horse['egenskab'],
@@ -100,19 +105,19 @@ if (is_array(horses::get_all($attr))) {
         $horse_data .= "<span class='value'>Værdi: " . number_dotter($horse['value']) . ' <span class="wkr_symbol">wkr</span></span>';
         $horse_data .= "</div>";
         $horse_data .= "</div>";
-		
-		
+
+
         if ($horse['breed_date']) {
 
             $breed_date_target = new DateTime($horse['breed_date']);
             $breed_date_target->add(new DateInterval('P40D'));
             $horse_data .= "<button style='pointer-events: none;' class='enter_graes btn compact_top_button'>Foler ca. {$breed_date_target->format('Y-m-d')}</button>";
-		}
-		$horse_data .= "<a href='https://net-hesten.dk/area/world/visit/visit.php?user={$owner_id}'><button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Ejes af {$owner_name}</button></a>";
-        
+        }
+        $horse_data .= "<a href='https://" . HTTP_HOST . "/area/world/visit/visit.php?user={$owner_id}'><button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Ejes af {$owner_name}</button></a>";
+
         $horse_data .= "</div>";
-        $horse_data .= "<img src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
-        $horse_data .= "<img style='display: none;' class='zoom_img' src='//".filter_input(INPUT_SERVER ,'HTTP_HOST')."/{$horse['thumb']}' />";
+        $horse_data .= "<img src='//files." . HTTP_HOST . "/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
+        $horse_data .= "<img style='display: none;' class='zoom_img' src='//files." . HTTP_HOST . "/{$horse['thumb']}' />";
         $horse_data .= "</div>";
 
         $horse_tabs['idle_horses'][] = $horse_data;
@@ -126,7 +131,9 @@ if (is_array(horses::get_all($attr))) {
     $amounts['foels'] = count($horse_tabs['foels']);
     $amounts['foels_at_contest'] = count($horse_tabs['foels_at_contest']);
     foreach ($amounts as $list => $amount) {
-        if ($amount > 10) { } else { }
+        if ($amount > 10) {
+        } else {
+        }
     }
 } else {
     $amounts['idle_horses'] = 0;
@@ -179,35 +186,38 @@ if ($active_tab = filter_input(INPUT_GET, 'tab')) {
     </section>
 </section>
 <script>
-    jQuery(document).ready(function () {
-<?php if (!isset($_GET['tab'])) { ?>
-			jQuery('[data-target="idle_horses"]').click();
-<?php 
-} else { ?>
-			jQuery('[data-target="<?= $_GET['tab']; ?>"]').click();
-<?php 
-} ?>
-	});
-	jQuery('[data-button-type="zone_activator"]').each(function () {
-		jQuery(this).click(function () {
-			jQuery('.tabs > section').removeClass('visible');
-			jQuery('.tabs > section[data-zone="' + jQuery(this).attr('data-target') + '"]').addClass('visible');
-		});
-	});</script>
+    jQuery(document).ready(function() {
+        <?php if (!isset($_GET['tab'])) { ?>
+            jQuery('[data-target="idle_horses"]').click();
+        <?php
+        } else { ?>
+            jQuery('[data-target="<?= $_GET['tab']; ?>"]').click();
+        <?php
+        } ?>
+    });
+    jQuery('[data-button-type="zone_activator"]').each(function() {
+        jQuery(this).click(function() {
+            jQuery('.tabs > section').removeClass('visible');
+            jQuery('.tabs > section[data-zone="' + jQuery(this).attr('data-target') + '"]').addClass('visible');
+        });
+    });
+</script>
 <?php
- /* Define modal - start */
+/* Define modal - start */
 ob_start();
 ?>
 <style>
     .fifty_p {
-		width: 50%;float: left;line-height: 25px;margin-bottom: 5px;
-	}
+        width: 50%;
+        float: left;
+        line-height: 25px;
+        margin-bottom: 5px;
+    }
 </style>
 <div id="filter_horses" class="modal">
     <script>
-        function filter_horses(caller) {
-		}
-	</script>
+        function filter_horses(caller) {}
+    </script>
     <style>
     </style>
     <div class="shadow"></div>
@@ -228,7 +238,7 @@ ob_start();
             jQuery('#horze_extended_info .race').html(horse_data.race);
             jQuery('#horze_extended_info .artist').html(horse_data.artist);
             jQuery('#horze_extended_info .value').html(horse_data.value);
-            jQuery('#horze_extended_info .owner_name').html('<a href="https://net-hesten.dk/area/world/visit/visit.php?user='+horse_data.owner_id+'">'+horse_data.owner_name+'</a>');
+            jQuery('#horze_extended_info .owner_name').html('<a href="https://net-hesten.dk/area/world/visit/visit.php?user=' + horse_data.owner_id + '">' + horse_data.owner_name + '</a>');
             jQuery('#horze_extended_info .talent').html(horse_data.talent);
             jQuery('#horze_extended_info .ulempe').html(horse_data.ulempe);
             jQuery('#horze_extended_info .egenskab').html(horse_data.egenskab);
