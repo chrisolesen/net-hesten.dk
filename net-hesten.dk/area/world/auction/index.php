@@ -110,9 +110,7 @@ ob_end_clean();
 		<ul style="padding: 1em 0;">
 			<li class="btn btn-info" data-target="your-horses">Dine Heste</li>
 			<li class="btn btn-info" data-target="your-bids">Dine Bud</li>
-			<!--<li class="btn btn-info" data-target="your-auctions">Dine Auktioner</li>-->
 			<li class="btn btn-info" data-target="other-auctions">Auktionshuset</li>
-			<!--<li data-target=""><a href="http://m.net-hesten.dk/area/world/auction/?test_style=true">Prøv en anden visning</a></li>-->
 			<a class="btn btn-info" href="/area/world/auction/">Opdater lister</a>
 		</ul>
 	</nav>
