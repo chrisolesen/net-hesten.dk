@@ -199,7 +199,7 @@ class auctions
 					return ["Denne auktion er desværre slut.", 'error'];
 				}
 
-				$minimum_bid = max($auction_data['minimum_price'], ($auction_data['highest_bid'] * 1.01));
+				$minimum_bid = max($auction_data['minimum_price'], round($auction_data['highest_bid'] * 1.01));
 				if (!($attr['bid_amount'] >= $minimum_bid)) {
 					return ["Dit bud er for lavt, mindste bud på denne auktion er {$minimum_bid}.", 'warning'];
 				}

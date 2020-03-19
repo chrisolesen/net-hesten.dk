@@ -50,7 +50,7 @@ foreach (auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => 
 					<?php
 					} else {
 					?>
-						<span class='talent' style="opacity:0.7;">Mindste bud: <?= number_dotter(max($auction['minimum_price'], $remote_data->value, ($max_bid['bid_amount'] + 2500), ($max_bid['bid_amount'] * 1.01))); ?><span class="wkr_symbol">wkr</span></span>
+						<span class='talent' style="opacity:0.7;">Mindste bud: <?= number_dotter(max($auction['minimum_price'], $remote_data->value, round($max_bid['bid_amount'] * 1.01))); ?><span class="wkr_symbol">wkr</span></span>
 					<?php
 					}
 					?>
@@ -78,7 +78,7 @@ foreach (auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => 
 				<?php /* code to place bid */ ?>
 				<input type="hidden" name="action" value="bid_on_auction" />
 				<input type="hidden" name="auction_id" value="<?= $auction['id']; ?>" />
-				<div>Mindste bud:<br /><?= number_dotter(max($auction['minimum_price'], $remote_data->value, ($max_bid['bid_amount'] * 1.01))); ?> <span class="wkr_symbol">wkr</span><br /><br /></div>
+				<div>Mindste bud:<br /><?= number_dotter(max($auction['minimum_price'], $remote_data->value, round($max_bid['bid_amount'] * 1.01))); ?> <span class="wkr_symbol">wkr</span><br /><br /></div>
 				<input type='text' class='raised' name='bid_amount' placeholder="Angiv dit bud" />
 				<input type='submit' class='btn btn-success' name='place_bid' value='Byd' onclick="return confirm('Er du sikker på at du vil byde ' + jQuery(this).parent().find('[name=\'bid_amount\']').val() + ' wkr for denne hest?');" />
 				<?php if ($auction['instant_price'] >= $remote_data->value) { ?>
