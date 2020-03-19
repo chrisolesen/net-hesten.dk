@@ -63,7 +63,7 @@ if (filter_input(INPUT_POST, 'action') === 'put_on_auction') {
 	]);
 }
 if (filter_input(INPUT_POST, 'action') == 'bid_on_auction') {
-	auctions::place_bid([
+	$script_feedback[] = auctions::place_bid([
 		'auction_id' => filter_input(INPUT_POST, 'auction_id'),
 		'bid_amount' => filter_input(INPUT_POST, 'bid_amount'),
 		'mode' => (filter_input(INPUT_POST, 'buy_now') ? 'buy_now' : 'place_bid')

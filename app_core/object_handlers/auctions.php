@@ -91,6 +91,14 @@ class auctions
 		}
 
 		$auction_data = ($link_new->query("SELECT id, object_id, creator, status_code, minimum_price, instant_price, highest_bidder, highest_bid, end_date FROM game_data_auctions WHERE id = {$attr['auction_id']} AND status_code = 1 LIMIT 1"))->fetch_assoc();
+		if(!$auction_data['highest_bidder'] ){
+			$auction_data['highest_bidder'] = null;
+		}
+		if(!$auction_data['highest_bid'] ){
+			$auction_data['highest_bid'] = null;
+		}
+		
+		
 		if ($auction_data) {
 
 			if ($attr['mode'] == 'buy_now') {
