@@ -90,14 +90,13 @@ class auctions
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 
-		$auction_data = ($link_new->query("SELECT id, object_id, creator, status_code, minimum_price, instant_price, highest_bidder, highest_bid, end_date FROM game_data_auctions WHERE id = {$attr['auction_id']} AND status_code = 1 LIMIT 1"))->fetch_assoc();
+		$auction_data = ($link_new->query("SELECT id, object_id, creator, status_code, minimum_price, instant_price, highest_bidder, highest_bid, end_date FROM {$GLOBALS['DB_NAME_NEW']}.game_data_auctions WHERE id = {$attr['auction_id']} AND status_code = 1 LIMIT 1"))->fetch_assoc();
 		if(!$auction_data['highest_bidder'] ){
 			$auction_data['highest_bidder'] = null;
 		}
 		if(!$auction_data['highest_bid'] ){
 			$auction_data['highest_bid'] = null;
 		}
-		return var_export($auction_data,true);
 		
 		
 		if ($auction_data) {
@@ -183,6 +182,7 @@ class auctions
 					return ["Du har ikke penge nok til at købe denne auktion, du har {$temp_user_data['money']}, men du skal bruge {$temp_auctions_data['instant_price']}", 'warning'];
 				}
 			}
+
 			if ($attr['mode'] == 'place_bid') {
 				$bid_date = new DateTime('now');
 				$sql = "SELECT stutteri, penge FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
@@ -205,7 +205,7 @@ class auctions
 					return ["Dit bud er for lavt, mindste bud på denne auktion er {$minimum_bid}.", 'warning'];
 				}
 
-				$link_new->query("UPDATE game_data_auctions SET highest_bidder = {$_SESSION['user_id']}, highest_bid = {$attr['bid_amount']} WHERE highest_bidder = {$auction_data['highest_bidder']} AND highest_bid = {$auction_data['highest_bid']} AND id = {$attr['auction_id']} AND status_code = 1 LIMIT 1");
+				$link_new->query("UPDATE game_data_auctions SET highest_bidder = {$_SESSION['user_id']}, highest_bid = {$attr['bid_amount']} WHERE highest_bidder IN ({$auction_data['highest_bidder']},NULL) AND highest_bid IN ({$auction_data['highest_bid']},NULL) AND id = {$attr['auction_id']} AND status_code = 1 LIMIT 1");
 
 				if (mysqli_affected_rows($link_new) != 0) {
 					$link_new->query("UPDATE game_data_auction_bids SET status_code = 5 WHERE bid_amount = {$auction_data['highest_bid']} AND creator = {$auction_data['highest_bidder']} AND auction = {$auction_data['id']}");
@@ -216,7 +216,7 @@ class auctions
 						. "(17, 52745, {$auction_data['highest_bidder']}, NOW(), 'Du er desvære blevet overbudt på en auktion på hesten med ID:{$auction_data['object_id']} , pengene {$data['bid_amount']}wkr er returneret til din konto.')";
 					$link_new->query($sql);
 					accounting::add_entry(['amount' => $auction_data['highest_bid'], 'line_text' => "Overbudt på auktion", 'mode' => '+', 'user_id' => $auction_data['highest_bidder']]);
-					accounting::add_entry(['amount' => $data['bid_amount'], 'line_text' => "Bud på auktion"]);
+					accounting::add_entry(['amount' => $attr['bid_amount'], 'line_text' => "Bud på auktion"]);
 					return ["Dit bud er registreret.", 'success'];
 				}
 			}
