@@ -20,13 +20,8 @@ $mysql_database_new = DB_NAME_NEW;
 $GLOBALS['DB_NAME_OLD'] = DB_NAME_OLD;
 $GLOBALS['DB_NAME_NEW'] = DB_NAME_NEW;
 
-$GLOBALS['hidden_system_users'] = $GLOBALS['hidden_system_users'];
-$GLOBALS['hidden_system_users_sql'] = $GLOBALS['hidden_system_users_sql'];
-$GLOBALS['DB_NAME_OLD'] = DB_NAME_OLD;
-$GLOBALS['DB_NAME_NEW'] = DB_NAME_NEW;
-
 $link_new = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME_NEW, DB_PORT);
 $link_new->set_charset('utf8');
 $link_new->query("SET time_zone = 'Europe/Copenhagen'");
 
-$GLOBALS['pdo_new'] = new PDO("mysql:host=$mysql_host;dbname=$mysql_database_new;charset=utf8;", $mysql_user, $mysql_password);
+$GLOBALS['pdo_new'] = new PDO("mysql:host={$mysql_host};dbname={$mysql_database_new};charset=utf8;", $mysql_user, $mysql_password);

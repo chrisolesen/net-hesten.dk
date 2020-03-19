@@ -5,7 +5,6 @@ class accounting {
     public static function get_account_total($attr = []) {
 
         global $link_new;
-        global $GLOBALS; 
         $return_data = [];
         $defaults = ['user_id' => (int) $_SESSION['user_id']];
 
@@ -24,7 +23,6 @@ class accounting {
     public static function fetch_entries($attr = []) {
 
         global $link_new;
-        global $GLOBALS;
         $return_data = [];
         $defaults = ['user_id' => (int) $_SESSION['user_id']];
 
@@ -57,7 +55,6 @@ class accounting {
     public static function add_entry($attr = []) {
 
         global $link_new;
-        global $GLOBALS; 
         $return_data = [];
         $defaults = [
             'mode' => '-'
