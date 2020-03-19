@@ -256,14 +256,13 @@ $selected_race = substr($_GET['race'], 1, -1);
 
 			$gender = (mt_rand(1, 2) === 1 ? 'Hingst' : 'Hoppe');
 			require_once "{$basepath}/app_core/cron_files/data_collections/generation_horse_names.php";
-			shuffle($boys_names);
-			shuffle($girls_names);
 			if ($gender === 'Hingst') {
+				shuffle($boys_names);
 				$name = $boys_names[0];
 			} else {
+				shuffle($girls_names);
 				$name = $girls_names[0];
 			}
-			$name = $name;
 
 			date_default_timezone_set('Europe/Copenhagen');
 			$current_date = new DateTime('now');
@@ -286,41 +285,30 @@ $selected_race = substr($_GET['race'], 1, -1);
 
 
 			if ($artist && $thumb && $advantage && $disadvantage && $talent) {
-				$sql = "INSERT INTO {$_GLOBALS['DB_NAME_OLD']}.Heste " . PHP_EOL
-					. '(' . PHP_EOL
-					. 'bruger, status, alder, pris, beskrivelse, ' . PHP_EOL
-					. 'foersteplads, andenplads, tredieplads, ' . PHP_EOL
-					. 'statuschangedate, date, changedate, status_skift, alder_skift, ' . PHP_EOL
-					. 'navn, kon, ' . PHP_EOL
-					. 'race, tegner, thumb, height, egenskab, ulempe, talent, ' . PHP_EOL
-					. 'farid, morid, random_height' . PHP_EOL
-					. ')' . PHP_EOL
-					. ' VALUES ' . PHP_EOL
-					. '(' . PHP_EOL
-					. "'net-hesten', '{$horse_birth_status}', $generation_age, 15000, '', " . PHP_EOL
-					. '0, 0, 0, ' . PHP_EOL
-					. "'00-00-00 00:00:00', '{$target_date}','{$target_date}', NOW(), NOW(), " . PHP_EOL
-					. "'{$name}', '{$gender}', " . PHP_EOL
-					. "'{$race}', ' {$artist}', '{$thumb}', {$height}, '{$advantage}', '{$disadvantage}', '{$talent}', " . PHP_EOL
-					. "'', '', 'nej'" . PHP_EOL
+				$sql = "INSERT INTO {$_GLOBALS['DB_NAME_OLD']}.Heste " 
+					. '(' 
+					. 'bruger, status, alder, pris, beskrivelse, '
+					. 'foersteplads, andenplads, tredieplads, ' 
+					. 'statuschangedate, date, changedate, status_skift, alder_skift, ' 
+					. 'navn, kon, ' 
+					. 'race, tegner, thumb, height, egenskab, ulempe, talent, ' 
+					. 'farid, morid, random_height'
+					. ')' 
+					. ' VALUES ' 
+					. '(' 
+					. "'net-hesten', '{$horse_birth_status}', $generation_age, 15000, '', " 
+					. '0, 0, 0, ' 
+					. "'00-00-00 00:00:00', '{$target_date}','{$target_date}', NOW(), NOW(), " 
+					. "'{$name}', '{$gender}', " 
+					. "'{$race}', ' {$artist}', '{$thumb}', {$height}, '{$advantage}', '{$disadvantage}', '{$talent}', " 
+					. "'', '', 'nej'" 
 					. ")";
-//					echo $sql;
-//					exit('test');
 				$link_new->query($sql);
 				?>
-					<a href="/admin/hestetegner/edit_horse.php?horse_id=<?= mysqli_insert_id($link_old); ?>"><?= mysqli_insert_id($link_old); ?></a>
+					<a href="/admin/hestetegner/edit_horse.php?horse_id=<?= mysqli_insert_id($link_new); ?>"><?= mysqli_insert_id($link_new); ?></a>
 					<?php
-				$error = $link_old->error;
+				$error = $link_new->error;
 
-
-				$tech_mail_message .= "Artist/Thumb: {$artist} // {$thumb}" . PHP_EOL;
-				$tech_mail_message .= "Race/kon: {$race}/{$gender}" . PHP_EOL;
-				$tech_mail_message .= "Egenskab/Ulempe/Talent: {$advantage}/{$disadvantage}/{$talent}" . PHP_EOL;
-				$tech_mail_message .= "Navn: {$name}" . PHP_EOL;
-				$tech_mail_message .= "" . PHP_EOL;
-				$tech_mail_message .= "" . PHP_EOL;
-				++$generated_horses;
-				mail('tech@net-hesten.dk', 'generation test', $tech_mail_message);
 			}
 		}
 	}
