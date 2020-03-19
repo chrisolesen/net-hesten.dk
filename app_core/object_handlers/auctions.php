@@ -133,12 +133,13 @@ class auctions
 						$link_new->query($sql);
 						accounting::add_entry(['amount' => $auction_data['highest_bid'], 'line_text' => "Overbudt på auktion", 'mode' => '+', 'user_id' => $auction_data['highest_bidder']]);
 					}
-					
+
 					$link_new->query("INSERT INTO game_data_auction_bids (creator, auction, bid_amount, bid_date, status_code) VALUES ({$_SESSION['user_id']}, {$attr['auction_id']}, {$auction_data['instant_price']}, '{$bid_date->format('Y-m-d H:i:s')}', 4)");
 					accounting::add_entry(['amount' => $attr['instant_price'], 'line_text' => "Købt hest på auktion"]);
 					/*grant to creator and ship to buyer */
 					accounting::add_entry(['amount' => $auction_data['instant_price'], 'line_text' => "Din hest er solgt på auktion", 'mode' => '+', 'user_id' => $auction_data['creator']]);
-					
+					horses::change_owner(['new_owner' => $_SESSION['user_id'], 'old_owner' => 'Auktionshuset', 'horse_id' => $auction_data['object_id']]);
+
 					return ["Dit bud er registreret.", 'success'];
 				}
 			}
@@ -291,7 +292,7 @@ class auctions
 			foreach ($horses as $horse) {
 				if ($horse['id'] == ($attr['horse_id'])) {
 					/* Transfer horse to auctions user */
-					$sql = "UPDATE Heste SET {$GLOBALS['DB_NAME_OLD']}.bruger = 'Auktionshuset' WHERE id = '{$horse['id']}' AND bruger = '{$seller_user_name}'";
+					$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = 'Auktionshuset' WHERE id = '{$horse['id']}' AND bruger = '{$seller_user_name}'";
 					$result = $link_new->query($sql);
 					/* Insert horse into auctions table */
 					$sql = "INSERT INTO game_data_auctions (creator, status_code, object_id, object_type, minimum_price, instant_price, creation_date, end_date) "

@@ -76,7 +76,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`horse_habits` LIMIT 1";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
-        if (!$sth->rowCount()) { 
+        if (!$sth->rowCount()) {
             /* Insert horse habit type */
             $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`horse_habits` 
         (`egenskab`, `ulempe`, `talent`) VALUES 
@@ -102,3 +102,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
 </body>
 
 </html>
+<!-- 
+INSERT INTO `praktisk_dev_nethest_old`.`Brugere` (`id`, `stutteri`, `navn`, `penge`,`email`, `date`) VALUES (5, 'SystemPrivatHandel', 'Privat Hestehandler', 0,'sph@', NOW()); 
+INSERT INTO `praktisk_dev_nethest_old`.`Brugere` (`id`, `stutteri`, `navn`, `email`, `penge`, `date`) VALUES (4, 'Auktionshuset', 'Auktionshuset', 'ah@',0, NOW());
+-->
