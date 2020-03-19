@@ -141,7 +141,7 @@ class auctions
 					accounting::add_entry(['amount' => $auction_fee, 'line_text' => "Auktionshus gebyr", 'user_id' => $auction_data['creator']]);
 									
 					
-					accounting::add_entry(['user_id' => $_SESSION['user_id'], 'amount' => (int) $attr['instant_price'], 'line_text' => "Kbt hest på auktion"]);
+					accounting::add_entry(['amount' => $auction_data['instant_price'], 'line_text' => "Købt hest på auktion"]);
 					horses::change_owner(['new_owner' => $_SESSION['user_id'], 'old_owner' => 'Auktionshuset', 'horse_id' => $auction_data['object_id']]);
 					$link_new->query("UPDATE game_data_auctions SET status_code = 2 WHERE  id = {$attr['auction_id']} AND status_code = 1 LIMIT 1");
 
