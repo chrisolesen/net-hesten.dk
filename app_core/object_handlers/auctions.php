@@ -60,16 +60,15 @@ class auctions
 		}
 		$sql = ''
 			. 'SELECT '
-			. 'bid_amount, '
-			. 'creator '
-			. 'FROM game_data_auction_bids '
-			. "WHERE (status_code = 4 OR status_code = 6) AND auction = {$attr['auction_id']} "
-			. "ORDER BY bid_amount DESC LIMIT 1";
+			. 'highest_bid, '
+			. 'highest_bidder '
+			. 'FROM game_data_auctions '
+			. "WHERE id = {$attr['auction_id']} ";
 
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_assoc()) {
-				$return_data = ['bid_amount' => $data['bid_amount'], 'creator' => $data['creator']];
+				$return_data = ['bid_amount' => $data['highest_bid'], 'creator' => $data['highest_bidder']];
 			}
 			return $return_data;
 		} else {
@@ -91,14 +90,14 @@ class auctions
 		}
 
 		$auction_data = ($link_new->query("SELECT id, object_id, creator, status_code, minimum_price, instant_price, highest_bidder, highest_bid, end_date FROM {$GLOBALS['DB_NAME_NEW']}.game_data_auctions WHERE id = {$attr['auction_id']} AND status_code = 1 LIMIT 1"))->fetch_assoc();
-		if(!$auction_data['highest_bidder'] ){
+		if (!$auction_data['highest_bidder']) {
 			$auction_data['highest_bidder'] = null;
 		}
-		if(!$auction_data['highest_bid'] ){
+		if (!$auction_data['highest_bid']) {
 			$auction_data['highest_bid'] = null;
 		}
-		
-		
+
+
 		if ($auction_data) {
 
 			if ($attr['mode'] == 'buy_now') {
@@ -205,7 +204,11 @@ class auctions
 					return ["Dit bud er for lavt, mindste bud på denne auktion er {$minimum_bid}.", 'warning'];
 				}
 
-				$link_new->query("UPDATE game_data_auctions SET highest_bidder = {$_SESSION['user_id']}, highest_bid = {$attr['bid_amount']} WHERE highest_bidder IN ({$auction_data['highest_bidder']},NULL) AND highest_bid IN ({$auction_data['highest_bid']},NULL) AND id = {$attr['auction_id']} AND status_code = 1 LIMIT 1");
+				if (is_null($auction_data['highest_bid'])) {
+					$link_new->query("UPDATE game_data_auctions SET highest_bidder = {$_SESSION['user_id']}, highest_bid = {$attr['bid_amount']} WHERE  id = {$attr['auction_id']} AND status_code = 1 LIMIT 1");
+				} else {
+					$link_new->query("UPDATE game_data_auctions SET highest_bidder = {$_SESSION['user_id']}, highest_bid = {$attr['bid_amount']} WHERE highest_bidder = {$auction_data['highest_bidder']} AND highest_bid = {$auction_data['highest_bid']} AND id = {$attr['auction_id']} AND status_code = 1 LIMIT 1");
+				}
 
 				if (mysqli_affected_rows($link_new) != 0) {
 					$link_new->query("UPDATE game_data_auction_bids SET status_code = 5 WHERE bid_amount = {$auction_data['highest_bid']} AND creator = {$auction_data['highest_bidder']} AND auction = {$auction_data['id']}");
