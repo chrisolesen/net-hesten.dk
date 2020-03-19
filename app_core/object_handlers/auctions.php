@@ -135,12 +135,17 @@ class auctions
 					}
 
 					$link_new->query("INSERT INTO game_data_auction_bids (creator, auction, bid_amount, bid_date, status_code) VALUES ({$_SESSION['user_id']}, {$attr['auction_id']}, {$auction_data['instant_price']}, '{$bid_date->format('Y-m-d H:i:s')}', 4)");
-					accounting::add_entry(['amount' => $attr['instant_price'], 'line_text' => "Købt hest på auktion"]);
-					/*grant to creator and ship to buyer */
+					
+					$auction_fee = round(max(500, ($attr['instant_price'] * 0.005)), 0);
 					accounting::add_entry(['amount' => $auction_data['instant_price'], 'line_text' => "Din hest er solgt på auktion", 'mode' => '+', 'user_id' => $auction_data['creator']]);
+					accounting::add_entry(['amount' => $auction_fee, 'line_text' => "Auktionshus gebyr", 'user_id' => $auction_data['creator']]);
+									
+					
+					accounting::add_entry(['user_id' => $_SESSION['user_id'], 'amount' => $attr['instant_price'], 'line_text' => "Købt hest på auktion"]);
 					horses::change_owner(['new_owner' => $_SESSION['user_id'], 'old_owner' => 'Auktionshuset', 'horse_id' => $auction_data['object_id']]);
+					$link_new->query("UPDATE game_data_auctions SET status_code = 2 WHERE  id = {$attr['auction_id']} AND status_code = 1 LIMIT 1");
 
-					return ["Dit bud er registreret.", 'success'];
+					return ["Du har købt hesten.", 'success'];
 				}
 			}
 
