@@ -230,11 +230,7 @@ class user
 		} else {
 			$sql = "SELECT stutteri AS username, thumb, penge AS money, id, navn AS name FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = '{$attr['user_id']}' LIMIT 1";
 		}
-		if ($attr['link_mode'] == 'new') {
-			$result = $link_new->query($sql)->fetch_object();
-		} else {
-			$result = $link_new->query($sql)->fetch_object();
-		}
+		$result = $link_new->query($sql)->fetch_object();
 		if ($result) {
 			return $result;
 		} else {

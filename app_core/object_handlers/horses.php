@@ -308,10 +308,10 @@ class horses
 			return ['Kritisk fejl: #hco_2, prøv igen eller kontakt en admin evt. på admin@net-hesten.dk', 'error'];
 		}
 		if (is_numeric($attr['old_owner'])) {
-			$attr['old_owner'] = (user::get_info(['user_id' => $attr['old_owner']]))->stutteri;
+			$attr['old_owner'] = (user::get_info(['user_id' => $attr['old_owner']]))->username;
 		}
 		if (is_numeric($attr['new_owner'])) {
-			$attr['new_owner'] = (user::get_info(['user_id' => $attr['new_owner']]))->stutteri;
+			$attr['new_owner'] = (user::get_info(['user_id' => $attr['new_owner']]))->username;
 		}
 
 		$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = '{$attr['new_owner']}' WHERE bruger = '{$attr['old_owner']}' AND id = {$attr['horse_id']} LIMIT 1");
