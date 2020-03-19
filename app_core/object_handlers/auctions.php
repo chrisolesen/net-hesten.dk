@@ -97,6 +97,7 @@ class auctions
 		if(!$auction_data['highest_bid'] ){
 			$auction_data['highest_bid'] = null;
 		}
+		return var_export($auction_data,true);
 		
 		
 		if ($auction_data) {
