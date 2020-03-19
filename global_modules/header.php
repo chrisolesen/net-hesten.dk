@@ -57,6 +57,10 @@ if ($_SESSION['logged_in'] == true) {
 				background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
 				background-size: 20px 20px;
 			}
+			/* temp fix */
+			.btn {
+				font-family:'Merienda One', cursive !important;
+			}
 		</style>
     </head>
     <body>

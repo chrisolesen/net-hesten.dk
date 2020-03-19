@@ -23,21 +23,11 @@ if (isset($_POST['adjust_wkr'])) {
 		$wkr = (int) substr($wkr, 1);
 	}
 
-	$user = $link_new->query("SELECT penge, stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$user_id} LIMIT 1")->fetch_object();
-
 	if (!$take) {
-		$saldo = (int) $user->penge + (int) $wkr;
-		$money_sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge + {$wkr}) WHERE id = {$user_id}";
-		//		$archive_sql = "INSERT INTO Konto (stutteri, tekst, transaktion, beloeb, saldo, date) VALUES ('{$user->stutteri}', '$reason', 'justering', '{$wkr}', '{$saldo}', NOW())";
+		accounting::add_entry(['amount' => $wkr, 'line_text' => "{$reason}", 'mode' => '+', 'user_id' => $user_id]);
 	} else {
-		$saldo = (int) $user->penge - (int) $wkr;
-		$money_sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge - {$wkr}) WHERE id = {$user_id}";
-		//		$archive_sql = "INSERT INTO Konto (stutteri, tekst, transaktion, beloeb, saldo, date) VALUES ('{$user->stutteri}', '$reason', 'justering', '-{$wkr}', '{$saldo}', NOW())";
+		accounting::add_entry(['amount' => $wkr, 'line_text' => "{$reason}", 'user_id' => $user_id]);
 	}
-	$link_new->query($money_sql);
-	//	$link_new->query($archive_sql);
-	//	echo $money_sql . '<br />';
-	//	echo $archive_sql;
 }
 ?>
 <section>
@@ -185,9 +175,9 @@ if (isset($_POST['adjust_wkr'])) {
 				<span><?= $data->email; ?><br /><a onclick="return confirm('Vil du virkelig nulstille koden til: <?= $data->stutteri; ?> ?');" href="?action=admin_user_password_reset&user_id=<?= $data->id; ?>">Reset password</a></span>
 				<span class="rights monospace center_text">
 					<?php if (in_array('5', $rights_array)) { ?>
-						<a href="?page=<?= $page; ?>&action=remove_right_horse_artist&user_id=<?= $data->id; ?>" class="active make_artist"><img src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/artist.png" /></a>
+						<a href="?page=<?= $page; ?>&action=remove_right_horse_artist&user_id=<?= $data->id; ?>" class="active make_artist"><img src="//<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/graphics/artist.png" /></a>
 					<?php } else { ?>
-						<a href="?page=<?= $page; ?>&action=grant_right_horse_artist&user_id=<?= $data->id; ?>" class="make_artist"><img src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/artist.png" /></a>
+						<a href="?page=<?= $page; ?>&action=grant_right_horse_artist&user_id=<?= $data->id; ?>" class="make_artist"><img src="//<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/graphics/artist.png" /></a>
 					<?php } ?>
 				</span>
 				<span class="monospace center_text">
