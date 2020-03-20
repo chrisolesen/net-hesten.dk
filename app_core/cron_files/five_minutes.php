@@ -12,7 +12,7 @@ $cron_interval = 'five_minutes';
 $log_content = PHP_EOL . PHP_EOL . '#######################################################'
 		. PHP_EOL . '# Five minutes cron started at ' . $time_now
 		. PHP_EOL . '# Checking for ended auctions. ';
-file_put_contents("app_core/cron_files/logs/cron_five_minutes_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_five_minutes_{$date_now}", $log_content, FILE_APPEND);
 
 include_once "{$basepath}app_core/cron_files/functions/get_older.php";
 
@@ -49,7 +49,7 @@ if ($result) {
 }
 $log_content .= PHP_EOL . "# {$num_auctions} Auctions had no bids.";
 $log_content .= PHP_EOL . "# {$num_horses} Horses returned to owners.";
-file_put_contents("app_core/cron_files/logs/cron_five_minutes_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_five_minutes_{$date_now}", $log_content, FILE_APPEND);
 
 $five_in_past = $current_date->sub(new DateInterval('PT5M'));
 
@@ -131,10 +131,10 @@ if ($result) {
 }
 $log_content .= PHP_EOL . "# Found $num_auctions finished auctions.";
 
-file_put_contents("app_core/cron_files/logs/cron_five_minutes_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_five_minutes_{$date_now}", $log_content, FILE_APPEND);
 
 
 $log_content = ''
 		. PHP_EOL . '# Cron compleated its run. '
 		. PHP_EOL . '#######################################################' . PHP_EOL;
-file_put_contents("app_core/cron_files/logs/cron_five_minutes_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_five_minutes_{$date_now}", $log_content, FILE_APPEND);
