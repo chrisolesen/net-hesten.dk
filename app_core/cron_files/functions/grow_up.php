@@ -1,7 +1,5 @@
 <?php
 
-$basepath = '';
-
 if (!isset($time_now)) {
 	date_default_timezone_set('Europe/Copenhagen');
 	$current_date = new DateTime('now');
@@ -10,7 +8,7 @@ if (!isset($time_now)) {
 }
 
 $log_content = PHP_EOL . '# Checking for foals, that are ready, to grow up.';
-file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
 
 require_once "{$basepath}app_core/db_conf.php";
 
@@ -26,7 +24,7 @@ $loop = 0;
 //----------------------------------------------------------------------------------------------------
 //-----Find føl som er over 4 år-------------------------------------------------------------------
 
-$sql = "SELECT id FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE bruger != '{$Foelbox}' and bruger != 'hestehandleren*' AND (status = '{$foel}' OR status = '{$Foel}') AND alder >= 4";
+$sql = "SELECT id FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger != 'Følkassen' and bruger != 'hestehandleren*' AND status = 'føl' AND alder >= 4";
 $result = $link_new->query($sql);
 $foel_amount = 0;
 $grow_up_amount = 0;
@@ -34,7 +32,7 @@ while ($data = $result->fetch_assoc()) {
 	$foel_id = $data['id'];
 	++$foel_amount;
 
-	$sql = "SELECT id, bruger, alder, navn, race, pris, thumb, date FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$foel_id' LIMIT 1";
+	$sql = "SELECT id, bruger, alder, navn, race, pris, thumb, date FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$foel_id' LIMIT 1";
 	$result_layer_two = $link_new->query($sql);
 	$poalder = $result_layer_two->fetch_object();
 	if ($poalder) {
@@ -59,14 +57,14 @@ while ($data = $result->fetch_assoc()) {
 			$tilskrevet = $nyalder - $poalder->alder;
 
 //------pluk en tilfældig thumb fra hestene i databasen-----------------------------------------
-			$thumb_data = $link_new->query("SELECT tegner, thumb FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND race = '$nyrace' AND status != '{$Foel}' and status != '{$foel}' AND genfodes = 'ja' AND unik != 'ja' ORDER BY RAND() LIMIT 1 ");
+			$thumb_data = $link_new->query("SELECT tegner, thumb FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND race = '$nyrace' AND status != 'føl' AND genfodes = 'ja' AND unik != 'ja' ORDER BY RAND() LIMIT 1 ");
 			$rand_heste_thumb = $thumb_data->fetch_object();
 			if ($rand_heste_thumb) {
 //-----------SæT VARIABLER---------------------------------------
 				$tegner = $rand_heste_thumb->tegner;
 				$nythumb = $rand_heste_thumb->thumb;
 //-----------update thumb, penge, status og slet det gamle føl-billede-------------------------
-				$link_new->query("UPDATE Heste SET pris='$nypris', status='Hest', alder='$nyalder', date=NOW(), status_skift='$today', alder_skift='$today', tilskrevet='$tilskrevet', tegner='$tegner', thumb='$nythumb' WHERE id = '$nyid'");
+				$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET pris='$nypris', status='Hest', alder='$nyalder', date=NOW(), status_skift='$today', alder_skift='$today', tegner='$tegner', thumb='$nythumb' WHERE id = '$nyid'");
 
 				$dims = '"';
 				$tegn = array("&", "$dims", "'");
@@ -84,5 +82,5 @@ while ($data = $result->fetch_assoc()) {
 $log_content = PHP_EOL . '#'
 		. PHP_EOL . "# Found {$foel_amount} foels in total."
 		. PHP_EOL . "# Found {$grow_up_amount} that were ready to grow up.";
-file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
 

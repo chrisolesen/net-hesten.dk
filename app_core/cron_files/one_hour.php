@@ -1,6 +1,9 @@
 <?php
+
+chdir(dirname(__FILE__));
+$basepath = '../../';
+
 define('cron_by', 'one_hour');
-$basepath = '/home/praktisk/';
 
 date_default_timezone_set('Europe/Copenhagen');
 $current_date = new DateTime('now');
@@ -9,7 +12,7 @@ $time_now = $current_date->format('H:i:s');
 
 $log_content = PHP_EOL . PHP_EOL . '#######################################################'
 	. PHP_EOL . '# One hour cron started at ' . $time_now;
-file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
 
 include_once "{$basepath}app_core/cron_files/functions/die.php";
 include_once "{$basepath}app_core/cron_files/functions/grow_up.php";

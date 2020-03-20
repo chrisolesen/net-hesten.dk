@@ -1,7 +1,5 @@
 <?php
 
-$basepath = '';
-
 if (!isset($time_now)) {
 	date_default_timezone_set('Europe/Copenhagen');
 	$current_date = new DateTime('now');
@@ -10,7 +8,7 @@ if (!isset($time_now)) {
 }
 
 $log_content = PHP_EOL . '# Checking for foals, that are ready, to be born.';
-file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
 
 require_once "{$basepath}app_core/db_conf.php";
 
@@ -26,7 +24,7 @@ $loop = 0;
 //--------find hingste som skal stilles tilbage til "hest"----------------------------------------
 
 
-$sql = "SELECT id, statuschangedate FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE status = 'Avl' AND kon = 'Hingst' ORDER BY statuschangedate";
+$sql = "SELECT id, statuschangedate FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE status = 'Avl' AND kon = 'Hingst' ORDER BY statuschangedate";
 $result = $link_new->query($sql);
 $foel_amount = 0;
 $grow_up_amount = 0;
@@ -47,13 +45,13 @@ while ($data = $result->fetch_object()) {
 
 $log_content = PHP_EOL . "# Found {$breeding_stallions} breeding stallions."
 		. PHP_EOL . "# Found {$stallions_changed_status} where ready to change status.";
-file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
 
 
 
 //--------find hopper som skal fole----------------------------------------
 
-$sql = "SELECT id, bruger, navn, race, partnerid, thumb, statuschangedate FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE status = 'Avl' AND kon = 'Hoppe' order by statuschangedate";
+$sql = "SELECT id, bruger, navn, race, partnerid, thumb, statuschangedate FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE status = 'Avl' AND kon = 'Hoppe' order by statuschangedate";
 $result = $link_new->query($sql);
 $breeding_amount = 0;
 $born_amount = 0;
@@ -98,8 +96,8 @@ while ($output = $result->fetch_object()) {
 			$child_height = rand($lowest_height, $highest_height);
 			$random_height = "ja";
 		} else {
-			$daddy_height = $link_new->query("SELECT height FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$output->partnerid' LIMIT 1")->fetch_object();
-			$mommy_height = $link_new->query("SELECT height FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$output->id' LIMIT 1")->fetch_object();
+			$daddy_height = $link_new->query("SELECT height FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$output->partnerid' LIMIT 1")->fetch_object();
+			$mommy_height = $link_new->query("SELECT height FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$output->id' LIMIT 1")->fetch_object();
 			$child_height = rand(min($daddy_height->height, $mommy_height->height), max($daddy_height->height, $mommy_height->height));
 			$random_height = "nej";
 		}
@@ -107,9 +105,9 @@ while ($output = $result->fetch_object()) {
 //-------------------Vælg tilfældig egenskab, ulempe og talent, rand bruges for arvelighed, gider ikke forklare det, det burde være let at gennemskue------------------------------
 		if (rand(1, 10) == 1) {
 			if (rand(1, 2) == 1) {
-				$egenskab = $link_new->query("SELECT Egenskab FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Egenskab;
+				$egenskab = $link_new->query("SELECT Egenskab FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Egenskab;
 			} else {
-				$egenskab = $link_new->query("SELECT Egenskab FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Egenskab;
+				$egenskab = $link_new->query("SELECT Egenskab FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Egenskab;
 			}
 		} else {
 			$egenskab = $link_new->query("SELECT Egenskab FROM horse_habits WHERE Egenskab != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Egenskab;
@@ -120,9 +118,9 @@ while ($output = $result->fetch_object()) {
 
 		if (rand(1, 10) == 1) {
 			if (rand(1, 2) == 1) {
-				$ulempe = $link_new->query("SELECT Ulempe FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Ulempe;
+				$ulempe = $link_new->query("SELECT Ulempe FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Ulempe;
 			} else {
-				$ulempe = $link_new->query("SELECT Ulempe FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Ulempe;
+				$ulempe = $link_new->query("SELECT Ulempe FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Ulempe;
 			}
 		} else {
 			$ulempe = $link_new->query("SELECT Ulempe FROM horse_habits WHERE Ulempe != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Ulempe;
@@ -133,9 +131,9 @@ while ($output = $result->fetch_object()) {
 
 		if (rand(1, 100) <= 50) {
 			if (rand(1, 2) == 1) {
-				$talent = $link_new->query("SELECT Talent FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Talent;
+				$talent = $link_new->query("SELECT Talent FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$farid' LIMIT 1")->fetch_object()->Talent;
 			} else {
-				$talent = $link_new->query("SELECT Talent FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Talent;
+				$talent = $link_new->query("SELECT Talent FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$morid' LIMIT 1")->fetch_object()->Talent;
 			}
 		} else {
 			$talent = $link_new->query("SELECT Talent FROM horse_habits WHERE Talent != '' ORDER BY RAND() LIMIT 1")->fetch_object()->Talent;
@@ -149,12 +147,12 @@ while ($output = $result->fetch_object()) {
 
 //------pluk en tilfældig thumb fra føllene i Følkassen-----------------------------------------
 
-		$result_layer_three = $link_new->query("SELECT tegner, thumb FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE bruger = '{$Foelbox}' AND race = '$nyrace' ORDER BY RAND() LIMIT 1");
+		$result_layer_three = $link_new->query("SELECT tegner, thumb FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = '{$Foelbox}' AND race = '$nyrace' ORDER BY RAND() LIMIT 1");
 		$rand_thumb = $result_layer_three->fetch_object();
 		$nythumb = $rand_thumb->thumb;
 		$foltegner = $rand_thumb->tegner;
 //----------generer føllene og stil status tilbage til "Hest"----------------------------------------------
-		$link_new->query("INSERT into Heste (bruger, navn, race, kon, alder, beskrivelse, pris, foersteplads, andenplads, tredieplads, status, farid, morid, tegner, thumb, date, changedate, status_skift, alder_skift, height, random_height, egenskab, ulempe, talent) VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','6000','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
+		$link_new->query("INSERT INTO Heste (bruger, navn, race, kon, alder, beskrivelse, pris, foersteplads, andenplads, tredieplads, status, farid, morid, tegner, thumb, date, changedate, status_skift, alder_skift, height, random_height, egenskab, ulempe, talent) VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','6000','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
 		$link_new->query("UPDATE Heste SET status='Hest', status_skift=now() WHERE id = '$nyid'");
 
 
@@ -178,4 +176,4 @@ while ($output = $result->fetch_object()) {
 $log_content = PHP_EOL . "# Found {$breeding_amount} breeding horsies."
 		. PHP_EOL . "# {$born_amount} gave birth."
 		. PHP_EOL . "# {$in_waiting} had to wait.";
-file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
