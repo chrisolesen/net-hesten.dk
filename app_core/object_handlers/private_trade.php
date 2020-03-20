@@ -34,7 +34,7 @@ class private_trade
 		$link_new->query(
 			"INSERT INTO game_data_private_trade (seller, buyer, horse_id, price, creation_date, end_date, status_code) " .
 				"VALUES " .
-				"($seller_id, $recipient_id, $horse_id, $price, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 34)"
+				"($seller_id, $recipient_id, $horse_id, $price, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 38)"
 		);
 		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET bruger = 'SystemPrivatHandel' WHERE id = {$horse_id}");
 	}
@@ -91,6 +91,10 @@ class private_trade
 		$horse_id = $trade_object->horse_id;
 		$price = $trade_object->price;
 
+		if (!in_array($trade_object->status_code, [38, 44])) {
+			return false;
+		}
+
 		if ($buyer_id !== $acceptor_id) {
 			return false;
 		}
@@ -122,6 +126,10 @@ class private_trade
 		$trade_id = (int) $attr['trade_id'];
 		$rejector_id = $attr['rejector_id'];
 		$trade_object = $link_new->query("SELECT * FROM game_data_private_trade WHERE id = $trade_id")->fetch_object();
+
+		if (!in_array($trade_object->status_code, [38, 44])) {
+			return false;
+		}
 		$buyer_id = $trade_object->buyer;
 		$seller_id = $trade_object->seller;
 		$horse_id = $trade_object->horse_id;
@@ -145,7 +153,6 @@ class private_trade
 	public static function list_trade_offers($attr = [])
 	{
 		global $link_new;
-		global $GLOBALS;
 		$return_data = [];
 		$defaults = [];
 
