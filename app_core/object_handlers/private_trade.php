@@ -100,20 +100,21 @@ class private_trade
 		$recipient = $recipient_object->stutteri;
 		$recipient_money = $recipient_object->penge;
 
+		$owner_id = horses::get_owner($horse_id);
 
-		if (horses::get_owner($horse_id) == $seller_id) {
+		if ($owner_id == $seller_id) {
 			/* The trade was a request and is already paid for */
 			if ($seller_id !== $acceptor_id) {
-				return ["Det kun sælgeren der kan accepterer en anmodning.", 'error'];
+				return ["Det kun sælgeren der kan accepterer en anmodning {$owner_id}|{$seller_id}|{$buyer_id}|{$acceptor_id}.", 'error'];
 			}
 		} else {
 			/* The trade was an offer */
 			if ($recipient_money < $price) {
-				return false;
+				return ["Du har ikke råd til at accepterer tilbudet.", 'error'];
 			}
 			accounting::add_entry(['amount' => $price, 'line_text' => "Privat handel", 'user_id' => $buyer_id]);
 			if ($buyer_id !== $acceptor_id) {
-				return ["Det kun køberen der kan accepterer et tilbud.", 'error'];
+				return ["Det kun køberen der kan accepterer et tilbud {$owner_id}|{$seller_id}|{$buyer_id}|{$acceptor_id}.", 'error'];
 			}
 		}
 
@@ -149,7 +150,9 @@ class private_trade
 			return false;
 		}
 
-		if (horses::get_owner($horse_id) == $seller_id) {
+		$owner_id = horses::get_owner($horse_id);
+
+		if ($owner_id == $seller_id) {
 			/* The trade was a request - not an offer - repay the requestor */
 			accounting::add_entry(['amount' => $price, 'line_text' => "Privat handel", 'mode' => '+', 'user_id' => $buyer_id]);
 		}
