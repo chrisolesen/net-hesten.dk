@@ -95,8 +95,16 @@ class private_trade
 			return false;
 		}
 
-		if ($buyer_id !== $acceptor_id) {
-			return false;
+		if (horses::get_owner($horse_id) == $seller_id) {
+			/* The trade was a request */
+			if ($seller_id !== $acceptor_id) {
+				return false;
+			}
+		} else {
+			/* The trade was an offer */
+			if ($buyer_id !== $acceptor_id) {
+				return false;
+			}
 		}
 
 		$recipient_object = $link_new->query("SELECT stutteri, penge FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$buyer_id}")->fetch_object();
