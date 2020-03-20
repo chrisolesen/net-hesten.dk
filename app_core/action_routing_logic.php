@@ -72,7 +72,7 @@ if (filter_input(INPUT_POST, 'action') == 'bid_on_auction') {
 
 /* Privat trade */
 if (filter_input(INPUT_POST, 'action') === 'offer_privat_trade') {
-	private_trade::offer_privat_trade([
+	$script_feedback[] = private_trade::offer_privat_trade([
 		'horse_id' => filter_input(INPUT_POST, 'horse_id'),
 		'price' => filter_input(INPUT_POST, 'price'),
 		'recipient' => filter_input(INPUT_POST, 'recipient'),
@@ -80,17 +80,17 @@ if (filter_input(INPUT_POST, 'action') === 'offer_privat_trade') {
 	]);
 }
 if (filter_input(INPUT_POST, 'action') == 'accept_privat_trade') {
-	private_trade::accept_privat_trade([
+	$script_feedback[] = private_trade::accept_privat_trade([
 		'trade_id' => filter_input(INPUT_POST, 'trade_id')
 	]);
 }
 if (filter_input(INPUT_POST, 'action') == 'reject_privat_trade') {
-	private_trade::reject_privat_trade([
+	$script_feedback[] = private_trade::reject_privat_trade([
 		'trade_id' => filter_input(INPUT_POST, 'trade_id')
 	]);
 } 
 if (filter_input(INPUT_POST, 'action') == 'request_private_trade') {
-	private_trade::request_private_trade([
+	$script_feedback[] = private_trade::request_private_trade([
 		'horse_id' => filter_input(INPUT_POST, 'horse_id'),
 		'bid_amount' => filter_input(INPUT_POST, 'bid_amount'),
 		'requester_id' => $_SESSION['user_id']

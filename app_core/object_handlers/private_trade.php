@@ -95,30 +95,31 @@ class private_trade
 			return false;
 		}
 
-		if (horses::get_owner($horse_id) == $seller_id) {
-			/* The trade was a request */
-			if ($seller_id !== $acceptor_id) {
-				return false;
-			}
-		} else {
-			/* The trade was an offer */
-			if ($buyer_id !== $acceptor_id) {
-				return false;
-			}
-		}
 
 		$recipient_object = $link_new->query("SELECT stutteri, penge FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$buyer_id}")->fetch_object();
 		$recipient = $recipient_object->stutteri;
 		$recipient_money = $recipient_object->penge;
 
-		if ($recipient_money < $price) {
-			return false;
+
+		if (horses::get_owner($horse_id) == $seller_id) {
+			/* The trade was a request and is already paid for */
+			if ($seller_id !== $acceptor_id) {
+				return ["Det kun sælgeren der kan accepterer en anmodning.", 'error'];
+			}
+		} else {
+			/* The trade was an offer */
+			if ($recipient_money < $price) {
+				return false;
+			}
+			accounting::add_entry(['amount' => $price, 'line_text' => "Privat handel", 'user_id' => $buyer_id]);
+			if ($buyer_id !== $acceptor_id) {
+				return ["Det kun køberen der kan accepterer et tilbud.", 'error'];
+			}
 		}
 
 		$link_new->query("UPDATE game_data_private_trade SET `status_code` = 2 WHERE id = $trade_id");
 		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '$recipient' WHERE id = $horse_id");
 
-		accounting::add_entry(['amount' => $price, 'line_text' => "Privat handel", 'user_id' => $buyer_id,]);
 		accounting::add_entry(['amount' => $price, 'line_text' => "Privat handel", 'mode' => '+', 'user_id' => $seller_id]);
 	}
 
