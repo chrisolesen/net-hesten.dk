@@ -249,7 +249,7 @@ class horses
 		foreach ($attr as $key => $value) {
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
-		if (isset($attr['ID'])) {
+		if (isset($attr['horse_id'])) {
 			$result = ($link_new->query("SELECT bruger AS username FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '{$attr['ID']}' LIMIT 1"));
 			if ($data = $result->fetch_object()) {
 				return (user::get_info(['mode' => 'username', 'user_id' => $data->username]))->id;
