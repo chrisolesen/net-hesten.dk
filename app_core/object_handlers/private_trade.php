@@ -155,11 +155,13 @@ class private_trade
 		if ($owner_id == $seller_id) {
 			/* The trade was a request - not an offer - repay the requestor */
 			accounting::add_entry(['amount' => $price, 'line_text' => "Privat handel", 'mode' => '+', 'user_id' => $buyer_id]);
+		} else {
+			/* The trade was an offer - return the horse to it's owner */
+			$recipient = $link_new->query("SELECT stutteri AS username FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$seller_id}")->fetch_object()->username;
+			$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '$recipient' WHERE id = $horse_id");
 		}
-		$recipient = $link_new->query("SELECT stutteri AS username FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$seller_id}")->fetch_object()->username;
 
 		$link_new->query("UPDATE game_data_private_trade SET `status_code` = 3 WHERE id = $trade_id");
-		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '$recipient' WHERE id = $horse_id");
 	}
 
 	public static function list_trade_offers($attr = [])
