@@ -1,7 +1,7 @@
 <?php
 
 //exit();
-$basepath = '/home/praktisk/';
+$basepath = '../../';
 
 date_default_timezone_set('Europe/Copenhagen');
 $current_date = new DateTime('now');
