@@ -211,12 +211,11 @@ class user
 	public static function get_info($attr = [])
 	{
 		global $link_new;
-		global $GLOBALS;/*{$GLOBALS['DB_NAME_NEW']}{$GLOBALS['DB_NAME_OLD']}*/
 		if (!isset($attr['user_id'])) {
 			return false;
 		}
 		$return_data = [];
-		$defaults = ['link_mode' => 'old'];
+		$defaults = [];
 		foreach ($defaults as $key => $value) {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}

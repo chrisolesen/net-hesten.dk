@@ -238,6 +238,26 @@ class horses
 		return false;
 	}
 
+	public static function get_owner($attr = [])
+	{
+		global $link_new;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+		if (isset($attr['ID'])) {
+			$result = ($link_new->query("SELECT bruger AS username FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '{$attr['ID']}' LIMIT 1"));
+			if ($data = $result->fetch_object()) {
+				return (user::get_info(['mode' => 'username', 'user_id' => $data->username]))->id;
+			}
+		}
+		return false;
+	}
+
 	/* Temporary function */
 	/* /portal/bridge.php recreation */
 

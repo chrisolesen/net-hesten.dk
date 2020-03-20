@@ -53,20 +53,25 @@ class private_trade
 		if (!is_numeric($requester_id) || !$requester_id) {
 			return false;
 		}
-		$horse_owner = $link_new->query("SELECT bruger FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE id = '{$horse_id}'")->fetch_object()->bruger;
-		if (!$horse_owner) {
-			return false;
+		if ((user::get_info(['user_id' => $requester_id]))->money > $bid_amount) {
+			$horse_owner = $link_new->query("SELECT bruger AS user FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE id = '{$horse_id}'")->fetch_object()->user;
+			if (!$horse_owner) {
+				return false;
+			}
+			$horse_owner_id = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE stutteri = '{$horse_owner}'")->fetch_object()->id;
+			if (!$horse_owner_id || !is_numeric($horse_owner_id)) {
+				return false;
+			}
+
+			accounting::add_entry(['amount' => $bid_amount, 'line_text' => "Anmodet om privat handel"]);
+
+
+			$link_new->query(
+				"INSERT INTO `game_data_private_trade` (seller, buyer, horse_id, price, creation_date, end_date, status_code) " .
+					"VALUES " .
+					"({$horse_owner_id}, {$requester_id}, {$horse_id}, {$bid_amount}, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 44)"
+			);
 		}
-		$horse_owner_id = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE stutteri = '{$horse_owner}'")->fetch_object()->id;
-		if (!$horse_owner_id || !is_numeric($horse_owner_id)) {
-			return false;
-		}
-		/* TODO: Withdraw money from requester up front */
-		$link_new->query(
-			"INSERT INTO `game_data_private_trade` (seller, buyer, horse_id, price, creation_date, end_date, status_code) " .
-				"VALUES " .
-				"($horse_owner_id, $requester_id, $horse_id, $bid_amount, NOW(), DATE_ADD(NOW(), INTERVAL 7 DAY), 44)"
-		);
 	}
 
 	public static function accept_privat_trade($attr = [])
@@ -100,8 +105,9 @@ class private_trade
 
 		$link_new->query("UPDATE game_data_private_trade SET `status_code` = 2 WHERE id = $trade_id");
 		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '$recipient' WHERE id = $horse_id");
-		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET penge = penge + $price WHERE id = $seller_id");
-		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET penge = penge - $price WHERE id = $buyer_id");
+
+		accounting::add_entry(['amount' => $price, 'line_text' => "Privat handel", 'user_id' => $buyer_id,]);
+		accounting::add_entry(['amount' => $price, 'line_text' => "Privat handel", 'mode' => '+', 'user_id' => $seller_id]);
 	}
 
 	public static function reject_privat_trade($attr = [])
@@ -126,7 +132,11 @@ class private_trade
 			return false;
 		}
 
-		$recipient = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$seller_id}")->fetch_object()->stutteri;
+		if (horses::get_owner($horse_id) == $seller_id) {
+			/* The trade was a request - not an offer - repay the requestor */
+			accounting::add_entry(['amount' => $price, 'line_text' => "Privat handel", 'mode' => '+', 'user_id' => $buyer_id]);
+		}
+		$recipient = $link_new->query("SELECT stutteri AS username FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$seller_id}")->fetch_object()->username;
 
 		$link_new->query("UPDATE game_data_private_trade SET `status_code` = 3 WHERE id = $trade_id");
 		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '$recipient' WHERE id = $horse_id");
