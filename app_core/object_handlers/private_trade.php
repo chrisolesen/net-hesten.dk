@@ -84,7 +84,7 @@ class private_trade
 		}
 
 		$trade_id = (int) $attr['trade_id'];
-		$acceptor_id = $attr['buyer_id'];
+		$acceptor_id = $_SESSION['user_id'];
 		$trade_object = $link_new->query("SELECT * FROM `game_data_private_trade` WHERE id = $trade_id")->fetch_object();
 		$buyer_id = $trade_object->buyer;
 		$seller_id = $trade_object->seller;
@@ -132,7 +132,7 @@ class private_trade
 		}
 
 		$trade_id = (int) $attr['trade_id'];
-		$rejector_id = $attr['rejector_id'];
+		$rejector_id = $_SESSION['user_id'];
 		$trade_object = $link_new->query("SELECT * FROM game_data_private_trade WHERE id = $trade_id")->fetch_object();
 
 		if (!in_array($trade_object->status_code, [38, 44])) {

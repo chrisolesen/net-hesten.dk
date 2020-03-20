@@ -146,7 +146,7 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 				$attr = ['user_name' => $_SESSION['username'], 'user_id' => $_SESSION['user_id']];
 				if (!empty(private_trade::list_trade_offers($attr))) {
 					foreach (private_trade::list_trade_offers($attr) as $trade) {
-						$trade_id = $trade['id'];
+						$trade_id = $trade['id']; 
 						$buyer = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$trade['buyer']}")->fetch_object()->stutteri;
 						$horse = $trade['horse_data'];
 						$gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
@@ -180,13 +180,11 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 									<form action="" method="post" class="compact_top_button">
 										<input type="hidden" name="action" value="reject_privat_trade" />
 										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
-										<input type="hidden" name="rejector_id" value="<?= $_SESSION['user_id']; ?>" />
 										<input type='submit' class='btn btn-danger' name='reject' value='Afvis Tilbud' />
 									</form>
 									<form action="" method="post" class="compact_bottom_button">
 										<input type="hidden" name="action" value="accept_privat_trade" />
 										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
-										<input type="hidden" name="buyer_id" value="<?= $_SESSION['user_id']; ?>" />
 										<input type='submit' class='btn btn-success' name='accept' value='Accepter Tilbud' />
 									</form>
 								<?php } ?>
@@ -199,7 +197,6 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 									<form action="" method="post" class="compact_bottom_button">
 										<input type="hidden" name="action" value="accept_privat_trade" />
 										<input type="hidden" name="trade_id" value="<?= $trade_id; ?>" />
-										<input type="hidden" name="buyer_id" value="<?= $_SESSION['user_id']; ?>" />
 										<input type='submit' class='btn btn-success' name='accept' value='Accepter Anmodning' />
 									</form>
 								<?php } ?>

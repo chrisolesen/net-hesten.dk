@@ -81,14 +81,12 @@ if (filter_input(INPUT_POST, 'action') === 'offer_privat_trade') {
 }
 if (filter_input(INPUT_POST, 'action') == 'accept_privat_trade') {
 	private_trade::accept_privat_trade([
-		'trade_id' => filter_input(INPUT_POST, 'trade_id'),
-		'buyer_id' => $_SESSION['user_id']
+		'trade_id' => filter_input(INPUT_POST, 'trade_id')
 	]);
 }
 if (filter_input(INPUT_POST, 'action') == 'reject_privat_trade') {
 	private_trade::reject_privat_trade([
-		'trade_id' => filter_input(INPUT_POST, 'trade_id'),
-		'rejector_id' => $_SESSION['user_id']
+		'trade_id' => filter_input(INPUT_POST, 'trade_id')
 	]);
 } 
 if (filter_input(INPUT_POST, 'action') == 'request_private_trade') {
