@@ -1,4 +1,4 @@
-<div id="forgot_password" class="modal">
+<div id="forgot_password" class="modal"><?php /* */ ?>
 	<script>
 		function forgot_password(caller) {
 
@@ -12,7 +12,6 @@
 			height: 1em;
 		}
 		#forgot_password label {
-			display: inline-block;
 			margin-right: 1em;
 			height: 30px;
 			line-height: 30px;
@@ -23,7 +22,6 @@
 		#forgot_password label + input {
 			line-height: 30px;
 			height: 30px;
-			display: inline-block;
 			float: left;
 		}
 		#forgot_password form div + div {

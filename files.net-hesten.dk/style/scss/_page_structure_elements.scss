@@ -1,0 +1,120 @@
+// out: false
+
+[data-section-type="competition"],
+[data-section-type="page_title"],
+[data-section-type="info_square"] {
+	/*float:right;*/
+	/*width: calc(320px - 1em);*/
+	/*margin-left: 1em;*/
+	display: inline-block;
+	height: 260px;
+	width: 360px;
+	color:white;
+	padding: calc(17px + 0.5rem);
+	position: relative;
+	background: rgba(146, 186, 106, 1);
+	overflow:hidden; 
+	margin-bottom: 10px;
+	header {
+		margin-bottom: $content_spacing;
+	}
+	&:before {
+		content:"";
+		position: absolute;
+		z-index: 2;
+		top:5px;
+		left:5px;
+		bottom:5px;
+		right:5px;
+		pointer-events: none !important;
+		border: 1px #dfebd3 solid;
+	}
+	&:after {
+		content:"";
+		position: absolute;
+		z-index: 2;
+		top:9px;
+		left:9px;
+		bottom:9px;
+		right:9px;
+		pointer-events: none !important;
+		border: 2px #dfebd3 solid;
+	}
+}
+
+
+
+[data-section-type="page_title"]	 {
+	display: block;
+	float:none;
+	width: 100%;
+	height:80px;
+	br {
+		display: none !important;
+	}
+	> * {
+		margin-left: 0 !important;
+		margin-right: 10px  !important;
+		display: inline-block !important;
+		position: static;
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+		height: 30px !important;
+		line-height: 23px;
+		float: left;
+	}
+	.page_selector {
+
+	}
+}
+[data-section-type="tab-content"] {
+	width:100%; 
+}
+[data-section-type="right-side"] + [data-section-type="tab-content"] {
+	width: calc(100% - 300px);
+	float:right;
+	padding-right: 10px;
+}
+[data-section-type="right-side"]{
+	width: 300px;
+	float:right;
+	[data-section-type="info_square"] {
+		height: auto;
+	}
+}
+
+
+[data-section-type="object_square"] {
+	overflow: visible;
+	width: 100%;
+	display: block;
+	float:none;
+	height: 100px;
+	position:relative;
+	z-index: initial;
+	border: 1px solid transparent; 
+	padding:20px;
+	background: $box_shadow_bg_color; 
+	&:before {
+		content:"";
+		position: absolute;
+		z-index: 2;
+		top:5px;
+		left:5px;
+		bottom:5px;
+		right:5px;
+		pointer-events: none !important;
+		border: 1px #dfebd3 solid;
+	}
+	&:after {
+		content:"";
+		position: absolute;
+		z-index: 2;
+		top:9px;
+		left:9px;
+		bottom:9px;
+		right:9px;
+		pointer-events: none !important;
+		border: 2px #dfebd3 solid;
+	}
+}

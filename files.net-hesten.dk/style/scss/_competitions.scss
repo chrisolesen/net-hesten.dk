@@ -1,0 +1,33 @@
+// out: false
+
+[data-section-type="competition"] {
+	padding:17px;
+	width: calc(25% - 10px);
+	display:inline-block;
+	overflow:hidden;
+	height: 300px;
+	/*margin: 0 5px;*/
+	/*float:left;*/
+	position:relative;
+	.competition_description {
+		padding: 0 0 0 70px;
+		position:relative;
+		height:150px;
+		img {
+			top:0; 
+			left:0;
+			position: absolute;
+		}
+	}
+	.signup {
+		position: absolute;
+		right:11px;
+		bottom:11px;
+	}
+	.signed_up {
+		line-height: 28px;
+		position: absolute;
+		left:17px;
+		bottom:11px;
+	}
+}
