@@ -338,11 +338,13 @@ if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
 			. "AND old.id NOT IN ({$_GLOBALS['hidden_system_users_sql']}) "
 			. "ORDER BY old.stutteri";
 		$result = $link_new->query($sql);
+
 		if($result){
 		while ($data = $result->fetch_object()) {
 		?>
 			<option value='<?= $data->username; ?>' /><?php
 													}}
+
 														?>
 	</datalist>
 <?php }
