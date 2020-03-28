@@ -331,11 +331,11 @@ if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
 	<datalist id="active_usernames">
 		<?php
 		$sql = 'SELECT old.stutteri AS username '
-			. "FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere AS old "
+			. "FROM {$GLOBALS['DB_NAME_OLD']}.Brugere AS old "
 			. 'LEFT JOIN user_data_timing AS last_active '
 			. 'ON last_active.parent_id = old.id AND last_active.name = "last_active" '
 			. "WHERE last_active.value > '{$target_date} 00:00:00' "
-			. "AND old.id NOT IN ({$_GLOBALS['hidden_system_users_sql']}) "
+			. "AND old.id NOT IN ({$GLOBALS['hidden_system_users_sql']}) "
 			. "ORDER BY old.stutteri";
 		$result = $link_new->query($sql);
 		if($result){

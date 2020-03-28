@@ -75,8 +75,8 @@ LIMIT 1;
         </li>
 		<?php
 //        $sql = "SELECT * FROM Brugere LIMIT $pr_page OFFSET $offset";
-		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, user.IP, user.logindate FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere AS user "
-				. "LEFT JOIN {$_GLOBALS['DB_NAME_NEW']}.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
+		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, user.IP, user.logindate FROM {$GLOBALS['DB_NAME_OLD']}.Brugere AS user "
+				. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
 				. "WHERE user.logindate < '2018-02-26 00:00:00' AND user.date < '2018-02-26 00:00:00' AND timing.value < '2018-02-26 00:00:00' "
 				. "ORDER BY user.logindate ASC, timing.value ASC, user.id ASC "
 				. ""
@@ -86,7 +86,7 @@ LIMIT 1;
 		$ihorses = 0;
 		$iwkr = 0;
 		while ($data = $result->fetch_object()) {
-			if (in_array($data->id, $_GLOBALS['hidden_system_users'])) {
+			if (in_array($data->id, $GLOBALS['hidden_system_users'])) {
 				continue;
 			}
 			$sql = "SELECT count(id) AS amount FROM game_data_private_messages WHERE target = '{$data->id}' OR origin = '{$data->id}'";

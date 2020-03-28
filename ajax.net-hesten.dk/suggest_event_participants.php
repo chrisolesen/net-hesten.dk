@@ -30,9 +30,9 @@ $dead = 'død';
 
 $result = $link_new->query("SELECT id, navn, bruger, alder, thumb, egenskab, ulempe, talent, race "
 		. "FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS heste "
-		. "LEFT JOIN {$_GLOBALS['DB_NAME_NEW']}.game_data_competition_participants AS contests "
+		. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.game_data_competition_participants AS contests "
 		. "ON contests.participant_id = heste.id AND contests.points IS NULL "
-		. "LEFT JOIN {$_GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
+		. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
 		. "ON breeding.horse_id = heste.id AND breeding.meta_key = 'breeding' "
 		. "WHERE breeding.meta_value IS NULL AND competition_id IS NULL AND bruger = '{$stutteri}' AND staevne = '' AND STATUS <> '{$dead}' AND graesning = '' AND alder < 20  {$real_limit} {$only_foels} ORDER BY rand() LIMIT 4");
 $return_data = '';

@@ -20,15 +20,15 @@ if (isset($_GET['delete_user'])) {
 	die();
 }
 if (isset($_GET['confiscate_horses'])) {
-	$sql = "SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_GET['confiscate_horses']} LIMIT 1";
+	$sql = "SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_GET['confiscate_horses']} LIMIT 1";
 	$temp_stud = $link_new->query($sql)->fetch_object()->stutteri;
-	$sql = "UPDATE {$_GLOBALS['DB_NAME_OLD']}.Heste SET bruger = 'Dyreværnet' WHERE bruger = '{$temp_stud}'";
+	$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = 'Dyreværnet' WHERE bruger = '{$temp_stud}'";
 	$link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
 	die();
 }
 if (isset($_GET['clear_pb'])) {
-	$sql = "DELETE FROM game_data_private_messages WHERE target = {$_GET['clear_pb']} AND origin IN ({$_GLOBALS['hidden_system_users_sql']})";
+	$sql = "DELETE FROM game_data_private_messages WHERE target = {$_GET['clear_pb']} AND origin IN ({$GLOBALS['hidden_system_users_sql']})";
 	$link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
 	die();
@@ -41,9 +41,9 @@ if (isset($_GET['reasign_chat'])) {
 	die();
 }
 if (isset($_GET['clear_account_view'])) {
-	$sql = "SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_GET['clear_account_view']} LIMIT 1";
+	$sql = "SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_GET['clear_account_view']} LIMIT 1";
 	$temp_stud = $link_new->query($sql)->fetch_object()->stutteri;
-	/*$sql = "DELETE FROM {$_GLOBALS['DB_NAME_OLD']}.Konto WHERE stutteri = '{$temp_stud}'";
+	/*$sql = "DELETE FROM {$GLOBALS['DB_NAME_OLD']}.Konto WHERE stutteri = '{$temp_stud}'";
 	$result = $link_new->query($sql);*/
 	header('Location: /admin/management/user_cleanup.php');
 	die();
@@ -107,8 +107,8 @@ if (isset($_GET['clear_account_view'])) {
 		</li>
 		<?php
 		//        $sql = "SELECT * FROM Brugere LIMIT $pr_page OFFSET $offset";
-		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere AS user "
-			. "LEFT JOIN {$_GLOBALS['DB_NAME_NEW']}.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
+		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, FROM {$GLOBALS['DB_NAME_OLD']}.Brugere AS user "
+			. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
 			. "WHERE user.date < '2018-02-26 00:00:00' AND timing.value < '2018-02-26 00:00:00' "
 			. "ORDER BY timing.value ASC, user.id ASC "
 			. ""
@@ -118,7 +118,7 @@ if (isset($_GET['clear_account_view'])) {
 		$ihorses = 0;
 		$iwkr = 0;
 		while ($data = $result->fetch_object()) {
-			if (in_array($data->id, $_GLOBALS['hidden_system_users'])) {
+			if (in_array($data->id, $GLOBALS['hidden_system_users'])) {
 				continue;
 			}
 			$sql = "SELECT count(id) AS amount FROM game_data_private_messages WHERE target = '{$data->id}' OR origin = '{$data->id}'";

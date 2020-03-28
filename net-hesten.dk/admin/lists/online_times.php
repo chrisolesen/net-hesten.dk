@@ -31,10 +31,10 @@ foreach ($intervals as $interval) {
     $start = $interval['start'];
     $end = $interval['end'];
     echo $start . ' -> ' . $end . '<br /><br />';
-    $players = $link_new->query("SELECT user_id, SUM(TIME_TO_SEC(TIMEDIFF(end, start))) AS duration FROM {$_GLOBALS['DB_NAME_NEW']}.user_data_sessions WHERE start > '{$start}' and start < '{$end}' GROUP BY user_id ORDER BY (SUM(TIME_TO_SEC(TIMEDIFF(end, start)))) DESC LIMIT 20");
+    $players = $link_new->query("SELECT user_id, SUM(TIME_TO_SEC(TIMEDIFF(end, start))) AS duration FROM {$GLOBALS['DB_NAME_NEW']}.user_data_sessions WHERE start > '{$start}' and start < '{$end}' GROUP BY user_id ORDER BY (SUM(TIME_TO_SEC(TIMEDIFF(end, start)))) DESC LIMIT 20");
     while ($player = $players->fetch_object()) {
         $duration = round((1 / 60 / 60) * ((int) $player->duration));
-        echo $link_new->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$player->user_id} LIMIT 1")->fetch_object()->stutteri . ': ' . $duration . ' Timer<br />';
+        echo $link_new->query("SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$player->user_id} LIMIT 1")->fetch_object()->stutteri . ': ' . $duration . ' Timer<br />';
     }
     echo "<br /><br />";
 }

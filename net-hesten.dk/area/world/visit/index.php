@@ -15,7 +15,7 @@ require "$basepath/global_modules/header.php";
 			$target_date_display = $target_date->format('d/m/Y');
 			$target_date = $target_date->format('Y-m-d');
 			$number_of_users = $link_new->query("SELECT count(old.id) AS amount "
-				. "FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere AS old "
+				. "FROM {$GLOBALS['DB_NAME_OLD']}.Brugere AS old "
 				. "LEFT JOIN user_data_timing AS last_active "
 				. "ON last_active.parent_id = old.id AND last_active.name = 'last_active' "
 				. "WHERE last_active.value > '{$target_date} 00:00:00' ")->fetch_object()->amount;
@@ -47,11 +47,11 @@ require "$basepath/global_modules/header.php";
 			// WHEN deal_id > 5 THEN Rand() + 5 //so that the value is between 5 and 6
 			$offset = $page * $pr_page;
 			$sql = 'SELECT old.stutteri AS username, old.thumb, old.penge AS money, old.id, old.navn AS name, last_active.value AS last_online '
-				. "FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere AS old "
+				. "FROM {$GLOBALS['DB_NAME_OLD']}.Brugere AS old "
 				. 'LEFT JOIN user_data_timing AS last_active '
 				. 'ON last_active.parent_id = old.id AND last_active.name = "last_active" '
 				. "WHERE last_active.value > '{$target_date} 00:00:00' "
-				. "AND old.id NOT IN ({$_GLOBALS['hidden_system_users_sql']}) "
+				. "AND old.id NOT IN ({$GLOBALS['hidden_system_users_sql']}) "
 				. (($filter_username = filter_input(INPUT_POST, 'visit_search_stud')) ? "AND old.stutteri LIKE '%{$filter_username}%' " : '')
 				. " {$order_by} "
 				. "LIMIT {$pr_page} OFFSET {$offset}";
@@ -92,7 +92,7 @@ require "$basepath/global_modules/header.php";
 						<span class="name">
 							<span style="font-weight:bold;" class="<?= $user_style; ?>"><?= $data->username; ?></span><br />
 							<span>Penge: <?= number_dotter($data->money); ?> <span class="wkr_symbol">wkr</span></span><br />
-							<span>Heste: <?= $link_new->query("SELECT count(id) AS amount FROM {$_GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = '{$data->username}' AND status <> 'død'")->fetch_object()->amount; ?></span>
+							<span>Heste: <?= $link_new->query("SELECT count(id) AS amount FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = '{$data->username}' AND status <> 'død'")->fetch_object()->amount; ?></span>
 							<!--<span>Værdi: <?= number_dotter($data->id); ?> <span class="wkr_symbol">wkr</span></span>-->
 						</span>
 						<div style="position:absolute;left:300px;top:20px;max-height: 70px;">

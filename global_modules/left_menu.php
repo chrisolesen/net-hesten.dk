@@ -19,9 +19,9 @@
 		<?php if (in_array('tech_admin', $_SESSION['rights'])) { ?>
 			<a><img src="https://files.<?= HTTP_HOST; ?>/graphics/blank.png"></a>
 			<?php
-			$competition_data = $link_new->query("SELECT id FROM {$_GLOBALS['DB_NAME_NEW']}.game_data_simple_competition WHERE startdate < NOW() ORDER BY startdate DESC LIMIT 1")->fetch_object();
+			$competition_data = $link_new->query("SELECT id FROM {$GLOBALS['DB_NAME_NEW']}.game_data_simple_competition WHERE startdate < NOW() ORDER BY startdate DESC LIMIT 1")->fetch_object();
 			$partaking = false;
-			$partaking = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_NEW']}.game_data_simple_competition_participants WHERE competition_id = {$competition_data->id} AND participant_id = {$_SESSION['user_id']}");
+			$partaking = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.game_data_simple_competition_participants WHERE competition_id = {$competition_data->id} AND participant_id = {$_SESSION['user_id']}");
 			?>
 			<a <?php if (!$partaking->fetch_object()) {
 					echo 'message_status=""';

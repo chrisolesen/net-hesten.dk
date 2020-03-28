@@ -68,7 +68,7 @@ $types = [];
 			} else {
 				$style = '';
 			}
-			$user_name_artist = $link_new->query("SELECT stutteri FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = " . $submission['artist'])->fetch_object()->stutteri;
+			$user_name_artist = $link_new->query("SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = " . $submission['artist'])->fetch_object()->stutteri;
 			?>
 			<tr <?= $style; ?>>
 				<td><div><img height="200px" src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/horses/artist_submissions/<?= $submission['image']; ?>" /></div></td>
