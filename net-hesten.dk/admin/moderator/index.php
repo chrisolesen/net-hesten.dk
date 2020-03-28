@@ -56,9 +56,9 @@ while ($data = $result->fetch_assoc()) {
 	if ($data['nyhedsbrev'] == 'ja') {
 		++$nyhedsbrev;
 	}
-	if (($data['penge'], 'UTF-8', 'iso-8859-15') > $richest_wkr)) {
+	if (($data['penge'] > $richest_wkr)) {
 		$richest_wkr = $data['penge'];
-		$richest = $data['stutteri'], 'UTF-8', 'iso-8859-15');
+		$richest = $data['stutteri'];
 	}
 
 	if ($data['penge'] >= 100000000) {
