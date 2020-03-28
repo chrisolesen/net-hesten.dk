@@ -1,9 +1,5 @@
 <?php
 
-if (!isset($basepath)) {
-    $basepath = '';
-}
-
 if (!isset($time_now)) {
     date_default_timezone_set('Europe/Copenhagen');
     $current_date = new DateTime('now');
@@ -43,7 +39,7 @@ $years = 'år';
 $today = date("d.m.y.G.i");
 $loop = 0;
 /* Limit 200 = stabil */
-$sql = "SELECT id, alder, bruger, navn, foersteplads, andenplads, tredieplads, kaaringer, pris, race, original, unik FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE alder > 20 AND bruger != '{$Foelbox}' AND bruger != 'hestehandleren*' and bruger <> 'genfoedsel' AND status = 'hest' ORDER BY rand() LIMIT 175";
+
 $result = $link_new->query($sql);
 $viable_horses = 0;
 $killed_amount = 0;
@@ -67,8 +63,7 @@ while ($horse = $result->fetch_object()) {
         $tegn = array("&", '"', "'");
         $substitut = array("og", "&quot;", "&#039;");
 
-        $user = $link_new->query("SELECT id, penge, stutteri FROM Brugere WHERE stutteri = '{$horse->bruger}' LIMIT 1")->fetch_object();
-        $kids = $link_new->query("SELECT count(id) AS kids FROM {$GLOBALS['DB_NAME_NEW']}.Heste WHERE farid = {$horse->id} OR morid = {$horse->id}")->fetch_object()->kids;
+
 
         $claim = round(($horse->pris * 0.8), 0);
         $claim += ($horse->foersteplads * 5000);
@@ -107,8 +102,7 @@ while ($horse = $result->fetch_object()) {
         $message .= "Vi håber, du har haft mange gode stunder med {$horse_name}.";
         $message = str_replace($tegn, $substitut, $message);
         /* Sæt giv penge til brugeren */
-        $sql = "UPDATE Brugere SET penge = (penge + {$claim}) WHERE id = {$user->id}";
-        $link_new->query($sql);
+
         /* Insert to bank history */
         $saldo = $claim + $user->penge;
         
