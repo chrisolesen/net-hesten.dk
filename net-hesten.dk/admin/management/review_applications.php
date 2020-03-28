@@ -184,7 +184,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 			<div class="grid_item"></div>
 		</div>
 		<?php
-		$result = $link_new->query("SELECT id, username, email, message, date, verify_date FROM user_application ORDER BY verify_date DESC");
+		$result = $link_new->query("SELECT id, username, email, message, date, verify_date FROM user_application ORDER BY verify_date, date DESC");
 		if ($result) {
 			while ($data = $result->fetch_object()) {
 		?>
