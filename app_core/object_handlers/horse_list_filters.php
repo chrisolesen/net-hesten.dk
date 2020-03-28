@@ -96,7 +96,6 @@ class horse_list_filters
 	public static function render_filter_settings($attr = [])
 	{
 		global $link_new;
-		global $link_new;
 		global $cached_races;
 
 		$dead = 'død';
@@ -227,8 +226,7 @@ class horse_list_filters
 				</label>
 				<select name="filter_age_min" id="filter_age_min">
 					<?php for ($value = 0; $value <= 18; $value++) { ?>
-						<option <?= ($user_filter_data[$attr['zone']]['age_min'] == $value) ? 'selected' : ''; ?> value="<?= $value; ?>">
-							<?= $value; ?> år</option>
+						<option <?= ($user_filter_data[$attr['zone']]['age_min'] == $value) ? 'selected' : ''; ?> value="<?= $value; ?>"><?= $value; ?> år</option>
 					<?php }
 					?>
 				</select>
@@ -237,8 +235,7 @@ class horse_list_filters
 				</label>
 				<select name="filter_age_max" id="filter_age_max">
 					<?php for ($value = 0; $value <= 16; $value++) { ?>
-						<option <?= ($user_filter_data[$attr['zone']]['age_max'] == $value) ? 'selected' : ''; ?> value="<?= $value; ?>">
-							<?= $value; ?> år</option>
+						<option <?= ($user_filter_data[$attr['zone']]['age_max'] == $value) ? 'selected' : ''; ?> value="<?= $value; ?>"><?= $value; ?> år</option>
 					<?php }
 					?>
 					<option <?= ($user_filter_data[$attr['zone']]['age_max'] == 'any' || !isset($user_filter_data[$attr['zone']]['age_max'])) ? 'selected' : ''; ?> value="any">Alle</option>
@@ -258,9 +255,7 @@ class horse_list_filters
 								continue;
 							}
 					?>
-							<option value="<?= $artist->name; ?>" <?= ($user_filter_data[$attr['zone']]['artist'] == $artist->name) ? 'selected' : ''; ?>>
-								<?= $artist->name; ?>
-							</option>
+							<option value="<?= $artist->name; ?>" <?= ($user_filter_data[$attr['zone']]['artist'] == $artist->name) ? 'selected' : ''; ?>><?= $artist->name; ?></option>
 					<?php
 						}
 					}
@@ -377,7 +372,7 @@ class horse_list_filters
 			}
 		}
 
-		if (!empty($user_filter_data[$attr['zone']]['name'])) {
+		if (!empty($user_filter_data[$attr['zone']]['name']) && $user_filter_data[$attr['zone']]['name'] != '') {
 
 			$return_data .= " AND navn LIKE '%{$user_filter_data[$attr['zone']]['name']}%' ";
 		}
