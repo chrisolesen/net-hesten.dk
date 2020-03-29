@@ -62,8 +62,8 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 			//-----test om heste skal have random højde i racens interval, ellers vælg fars og mors højde, afgør laveste og højeste værdi, generer en random højde mellem disse værdier---------------------------------
 
 			if (rand(1, 10) == 1) {
-				$lowest_height = $link_new->query("SELECT lower FROM horse_height WHERE race = '$latin_race' LIMIT 1")->fetch_object()->lower;
-				$highest_height = $link_new->query("SELECT upper FROM horse_height WHERE race = '$latin_race' LIMIT 1")->fetch_object()->upper;
+				$lowest_height = $link_new->query("SELECT lower FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_height WHERE race = '$latin_race' LIMIT 1")->fetch_object()->lower;
+				$highest_height = $link_new->query("SELECT upper FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_height WHERE race = '$latin_race' LIMIT 1")->fetch_object()->upper;
 				$child_height = rand($lowest_height, $highest_height);
 				$random_height = "ja";
 			} else {
