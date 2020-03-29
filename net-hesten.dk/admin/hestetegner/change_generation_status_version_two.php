@@ -349,7 +349,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 		 */
 		?>
 			<li title="Type ID: <?= $data->id; ?>" data-horse-thumb="<?= $data->image; ?>" class="<?= in_array($data->status, [21, 22, 23, 26]) ? 'rebirth' : ''; ?> <?php /*= in_array($data->status, [20, 22, 26]) ? 'generation' : ''; */ ?> <?= in_array($data->status, [19, 23]) ? 'unique' : ''; ?>">
-				<img src="https://files.<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/imgHorse/<?= $data->image; ?>" />
+				<img src="//files.<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/imgHorse/<?= $data->image; ?>" />
 				<?php if( !in_array($data->status, [19, 23]) || (in_array($data->status, [19, 23]) && $amount == 0)){ ?>
 				<a class="generate_one btn btn-info" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=generate_one&id=<?= $data->id; ?>&type=<?= $_GET['type']; ?>">Lav én</a>
 				<?php } ?>

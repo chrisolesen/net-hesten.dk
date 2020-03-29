@@ -248,9 +248,9 @@ if (filter_input(INPUT_POST, 'submit_edit')) {
 				while ($data = $result->fetch_object()) {
 					?><li>
 						<i class="suggested_race"><?= $data->suggested_races; ?></i>
-						<img style="max-height: 150px;" src="https://files.<?= filter_input(INPUT_SERVER ,'HTTP_HOST');?>/templates/<?= $data->image; ?>" />
+						<img style="max-height: 150px;" src="//files.<?= filter_input(INPUT_SERVER ,'HTTP_HOST');?>/templates/<?= $data->image; ?>" />
 						<div>
-							<a href="https://files.<?= filter_input(INPUT_SERVER ,'HTTP_HOST');?>/templates/<?= $data->image; ?>">Download</a>
+							<a href="//files.<?= filter_input(INPUT_SERVER ,'HTTP_HOST');?>/templates/<?= $data->image; ?>">Download</a>
 							<a href="?edit_template=<?= $data->id; ?>">Edit</a>
 						</div>
 					</li><?php

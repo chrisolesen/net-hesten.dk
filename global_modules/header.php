@@ -15,9 +15,9 @@ if ($_SESSION['logged_in'] == true) {
     <head>
         <meta charset="UTF-8" />
         <title id="page_title">Net-Hesten</title>
-        <link rel="stylesheet" href="https://files.<?= HTTP_HOST; ?>/style/main.css?v=<?= time(); ?>" />
+        <link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/main.css?v=<?= time(); ?>" />
 		<?php if ($_SESSION['settings']['list_style'] == 'compact') { ?>
-			<link rel="stylesheet" href="https://files.<?= HTTP_HOST; ?>/style/horselists_compact_style.css?v=<?= time(); ?>" />
+			<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/horselists_compact_style.css?v=<?= time(); ?>" />
 		<?php }
 		?>
 		<?php if (isset($_GET['test_view'])) { ?>
@@ -30,9 +30,9 @@ if ($_SESSION['logged_in'] == true) {
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 		<link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet"> 
         <link rel="stylesheet" href="/style/font-awesome.min.css" />
-		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
         <script src="//files.<?= HTTP_HOST; ?>/scripts/jquery.easing.1.3.js"></script>
         <script src="/scripts/jquery.nicescroll.min.js"></script>

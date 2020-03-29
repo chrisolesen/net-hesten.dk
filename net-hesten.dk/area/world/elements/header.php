@@ -12,12 +12,12 @@ user::register_session(['user_id' => $_SESSION['user_id']]);
 <html>
     <head>
         <meta charset="UTF-8" />
-		<!--<script type="text/javascript" src="http://files.net-hesten.dk/scripts/snowstorm.js"></script>-->
+		<!--<script type="text/javascript" src="//files.net-hesten.dk/scripts/snowstorm.js"></script>-->
         <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,600' rel='stylesheet' type='text/css'>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="/style/font-awesome.min.css" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="/admin/style/main.css" />
 		<?php if (filter_input(INPUT_GET, 'iframe_mode')) { ?>
 			<link rel="stylesheet" href="/style/iframe.css" />

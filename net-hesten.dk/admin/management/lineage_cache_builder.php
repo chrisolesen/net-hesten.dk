@@ -23,7 +23,7 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 		function horse_linage(caller) {
 			horse_id = jQuery(caller).attr('data-horse-id');
 			jQuery.get({
-				url: "https://ajax.net-hesten.dk/index.php?request=fecth_linage&horse_id=" + horse_id,
+				url: "//ajax.net-hesten.dk/index.php?request=fecth_linage&horse_id=" + horse_id,
 				cache: false
 			}).then(function(data) {
 				linage_data = false;

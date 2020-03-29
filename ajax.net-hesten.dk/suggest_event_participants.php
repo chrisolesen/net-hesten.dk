@@ -39,7 +39,7 @@ $return_data = '';
 while ($data = $result->fetch_object()) {
 
 	$return_data .= "<li style='cursor:pointer;padding:5px;clear:both;display:block;line-height:20px;' data-horse_id='{$data->id}' data-type='potential_breed_target'>"
-			. " <img style = 'float:left;margin-right:10px;' src = 'https://files.net-hesten.dk/{$data->thumb}' height = '100px' />"
+			. " <img style = 'float:left;margin-right:10px;' src = '//files.net-hesten.dk/{$data->thumb}' height = '100px' />"
 			. mb_convert_encoding(" <div>{$data->race}</div>  ", 'UTF-8', 'latin1')
 			. mb_convert_encoding(" <div>{$data->navn}  ", 'UTF-8', 'latin1') . " ({$data->alder}år)</div>"
 			. mb_convert_encoding(" <div>{$data->egenskab}</div>  ", 'UTF-8', 'latin1')

@@ -180,7 +180,7 @@
 
 			</div>
 		</div>
-		<div style="height:100%;width:100%;background: url('https://files.<?= HTTP_HOST; ?>/graphics/magazines/forside_fun_facts_4.png') no-repeat;">
+		<div style="height:100%;width:100%;background: url('//files.<?= HTTP_HOST; ?>/graphics/magazines/forside_fun_facts_4.png') no-repeat;">
 		</div>
 	</div>
 </div>

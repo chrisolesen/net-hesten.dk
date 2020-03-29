@@ -442,7 +442,7 @@ ob_start();
 			jQuery('#breed_horse__horse_id').attr('value', jQuery(caller).parent().parent().attr('data-horse-id'));
 			jQuery('#breed_horse__horse_id').val(jQuery(caller).parent().parent().attr('data-horse-id'));
 			jQuery.get({
-				url: "https://ajax.<?= HTTP_HOST; ?>/index.php?request=suggest_breed_targets&horse_id=" + jQuery(caller).parent().parent().attr('data-horse-id'),
+				url: "//ajax.<?= HTTP_HOST; ?>/index.php?request=suggest_breed_targets&horse_id=" + jQuery(caller).parent().parent().attr('data-horse-id'),
 				cache: false
 			}).then(function(data) {
 				jQuery("#breed_targets_zone").html(data);
@@ -534,7 +534,7 @@ ob_start();
 							'horse_id': horse_id
 						},
 						crossDomain: true,
-						url: "https://ajax.<?= HTTP_HOST; ?>/index.php",
+						url: "//ajax.<?= HTTP_HOST; ?>/index.php",
 						cache: false
 					}).always(function(data) {
 						//                        console.log(data.status);

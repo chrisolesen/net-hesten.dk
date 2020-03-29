@@ -2,7 +2,7 @@
     <script>
         function horse_linage(caller) {
             horse_id = jQuery(caller).attr('data-horse-id');
-            jQuery.get({url: "https://ajax.<?= HTTP_HOST; ?>/index.php?request=fecth_linage&horse_id=" + horse_id, cache: false}).then(function (data) {
+            jQuery.get({url: "//ajax.<?= HTTP_HOST; ?>/index.php?request=fecth_linage&horse_id=" + horse_id, cache: false}).then(function (data) {
                 linage_data = false;
                 jQuery("#horse_linage .children, #horse_linage .self").html('');
                 jQuery("#horse_linage .father a img,#horse_linage .mother a img").attr('src', '');
@@ -13,7 +13,7 @@
                 linage_data = JSON.parse(data);
 
                 jQuery(".linage_display_zone").html(data);
-                path = 'https://files.<?= HTTP_HOST; ?>';
+                path = '//files.<?= HTTP_HOST; ?>';
                 if (linage_data.hasOwnProperty('parents')) {
                     jQuery("#horse_linage .parents .father .name").html(linage_data.parents.father.name + '<br />' + linage_data.parents.father.id);
                     jQuery("#horse_linage .parents .mother .name").html(linage_data.parents.mother.name + '<br />' + linage_data.parents.mother.id);
@@ -34,7 +34,7 @@
                         horse_square += '<i class="gender_icon fa fa-' + gender_icon + ' fa-2x" style="color:black;display:block;"></i>';
                         horse_square += "<a data-button-type='modal_activator' data-target='horse_linage' " +
                                 "data-horse-id='" + this.id + "' >" +
-                                "<img src='https://files.<?= HTTP_HOST; ?>" + this.image + "'/></a>";
+                                "<img src='//files.<?= HTTP_HOST; ?>" + this.image + "'/></a>";
                         horse_square += "<div class='name'>" + this.name + '<br />' + this.id + '</div>';
                         horse_square += '</div>';
                         jQuery("#horse_linage .children").append(horse_square);
@@ -49,7 +49,7 @@
                 horse_square = '';
                 horse_square += '<i class="gender_icon fa fa-' + gender_icon + ' fa-2x" style="color:black;display:block;"></i>';
                 horse_square += "";
-                horse_square += "<img src='https://files.<?= HTTP_HOST; ?>" + linage_data.self.image + "'/>";
+                horse_square += "<img src='//files.<?= HTTP_HOST; ?>" + linage_data.self.image + "'/>";
                 horse_square += "<div class='name'>" + linage_data.self.name + '<br />' + linage_data.self.id + '</div>';
                 jQuery("#horse_linage .self").append(horse_square);
             });

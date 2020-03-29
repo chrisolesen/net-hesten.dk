@@ -92,7 +92,7 @@ if (filter_input(INPUT_POST, 'search_id')) {
 		while ($data = $result->fetch_object()) {
 			?>
 			<input type="hidden" name="search_id" value="<?= $data->id; ?>" />
-			<img style='float:left;margin-right:20px;margin-bottom: 60px;' src="http://files.<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/imgHorse/<?= $data->thumb; ?>" />
+			<img style='float:left;margin-right:20px;margin-bottom: 60px;' src="//files.<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/imgHorse/<?= $data->thumb; ?>" />
 			<span>ID:</span><?= $data->id; ?><br />
 			<span>Race:</span><input type="text" list="horse_races" name="horse_race" value="<?= $data->race; ?>" /><br />
 			<span>Bruger:</span><input type="text" list="user_names" name="user_name" value="<?= $data->bruger; ?>" /><br />

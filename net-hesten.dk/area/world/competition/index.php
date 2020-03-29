@@ -107,7 +107,7 @@ require "$basepath/global_modules/header.php";
 			jQuery('#signup_horse__event_id').attr('value', jQuery(caller).attr('date-event-id'));
 
 
-			jQuery.get({url: "https://ajax.net-hesten.dk/index.php?user_id=<?= $_SESSION['user_id']; ?>&request=suggest_event_participants&limits=" + jQuery(caller).attr('data-limits'), cache: false}).then(function (data) {
+			jQuery.get({url: "//ajax.net-hesten.dk/index.php?user_id=<?= $_SESSION['user_id']; ?>&request=suggest_event_participants&limits=" + jQuery(caller).attr('data-limits'), cache: false}).then(function (data) {
 				jQuery("#signup_targets_zone").html(data);
 				jQuery("#signup_horse input[type='submit']").attr('disabled', 'disabled');
 				jQuery('[data-type="potential_breed_target"]').each(function () {
@@ -122,7 +122,7 @@ require "$basepath/global_modules/header.php";
 					});
 				});
 			});
-			//			jQuery("#breed_targets_zone").html(jQuery.get("https://ajax.net-hesten.dk/index.php?request=suggest_breed_targets&horse_id=" + jQuery(caller).parent().parent().attr('data-horse-id')));
+			//			jQuery("#breed_targets_zone").html(jQuery.get("//ajax.net-hesten.dk/index.php?request=suggest_breed_targets&horse_id=" + jQuery(caller).parent().parent().attr('data-horse-id')));
 		}
 	</script>
 	<style>

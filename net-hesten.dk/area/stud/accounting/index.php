@@ -286,7 +286,7 @@ ob_start();
 							'horse_id': horse_id
 						},
 						crossDomain: true,
-						url: "https://ajax.net-hesten.dk/index.php",
+						url: "//ajax.net-hesten.dk/index.php",
 						cache: false
 					});
 					jQuery(this).parent().attr('data-object-edit-state', 'animating');
