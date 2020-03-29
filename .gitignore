@@ -10,3 +10,6 @@
 /net-hesten.dk/admin/hestetegner/move_to_types/index.php
 /net-hesten.dk/admin/hestetegner/parsing/index.php
 /net-hesten.dk/admin/hestetegner/template_handling.php
+
+#htaccess
+/net-hesten.dk/.htaccess
