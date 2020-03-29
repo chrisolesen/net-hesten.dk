@@ -219,7 +219,7 @@ $attr = ['user_name' => $_SESSION['username'], 'mode' => 'your_stud'];
 if ($filter_id = filter_input(INPUT_POST, 'id_filter')) {
 	$attr = ['user_name' => $_SESSION['username'], 'id_filter' => $filter_id, 'mode' => 'your_stud'];
 }
-$attr['custom_filter'] .= horse_list_filters::get_filter_string(['zone' => "home"]);
+$attr['custom_filter'] = horse_list_filters::get_filter_string(['zone' => "home"]);
 
 $offset = $your_horses_page * $horses_pr_page;
 $limit = ($your_horses_page * $horses_pr_page) + $horses_pr_page;

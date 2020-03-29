@@ -88,7 +88,7 @@
 </style>
 
 <?php
-if ($_SESSION['settings']['banner_size'] == 'hide' || $force_banner_off) {
+if ($_SESSION['settings']['banner_size'] == 'hide' || ($force_banner_off ?? false)) {
 ?>
 	<style>
 		#top_banner {
@@ -339,13 +339,14 @@ if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
 			. "ORDER BY old.stutteri";
 		$result = $link_new->query($sql);
 
-		if($result){
-		while ($data = $result->fetch_object()) {
+		if ($result) {
+			while ($data = $result->fetch_object()) {
 		?>
-			<option value='<?= $data->username; ?>' /><?php
-													}}
+				<option value='<?= $data->username; ?>' /><?php
+														}
+													}
 
-														?>
+															?>
 	</datalist>
 <?php }
 ?>

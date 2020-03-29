@@ -9,7 +9,7 @@ class horse_list_filters
 		global $_POST;
 
 		$return_data = [];
-		$defaults = [];
+		$defaults = ['reset_all_filters' => false];
 		foreach ($defaults as $key => $value) {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
@@ -61,7 +61,7 @@ class horse_list_filters
 
 
 			$filter_data[$target_zone]['races'] = [];
-			$races = $_POST['races'];
+			$races = ($_POST['races'] ?? false);
 			if (is_array($races)) {
 
 				foreach ($races as $race) {
@@ -139,7 +139,13 @@ class horse_list_filters
 		$result = $link_new->query($sql);
 		if ($result) {
 			$user_filter_data = unserialize($result->fetch_object()->value);
-			if (!is_array($user_filter_data[$attr['zone']]['races'])) {
+			if (!is_array($user_filter_data)) {
+				$user_filter_data[$attr['zone']] = [];
+			}
+			if (!isset($user_filter_data[$attr['zone']])) {
+				$user_filter_data[$attr['zone']] = [];
+			}
+			if (!isset($user_filter_data[$attr['zone']]['races'])) {
 				$user_filter_data[$attr['zone']]['races'] = [];
 			}
 		} else {
@@ -202,7 +208,7 @@ class horse_list_filters
 					<label for="filter_name">
 						Navn
 					</label>
-					<input type="text" name="filter_name" id="filter_name" value="<?= $user_filter_data[$attr['zone']]['name']; ?>" />
+					<input type="text" name="filter_name" id="filter_name" value="<?= ($user_filter_data[$attr['zone']]['name'] ?? ''); ?>" />
 				</div>
 			<?php }
 			?>
@@ -215,8 +221,8 @@ class horse_list_filters
 				</label>
 				<select name="gender" id="filter_gender">
 					<option value="">Alle Køn</option>
-					<option value="mare" <?= ($user_filter_data[$attr['zone']]['gender'] == 'mare') ? 'selected' : ''; ?>>Hoppe</option>
-					<option value="stallion" <?= ($user_filter_data[$attr['zone']]['gender'] == 'stallion') ? 'selected' : ''; ?>>Hingst</option>
+					<option value="mare" <?= (($user_filter_data[$attr['zone']]['gender'] ?? false) == 'mare') ? 'selected' : ''; ?>>Hoppe</option>
+					<option value="stallion" <?= (($user_filter_data[$attr['zone']]['gender'] ?? false) == 'stallion') ? 'selected' : ''; ?>>Hingst</option>
 				</select>
 			</div>
 			<!--<div class="filter_line"><span class="name">Alder</span></div>-->
@@ -226,7 +232,7 @@ class horse_list_filters
 				</label>
 				<select name="filter_age_min" id="filter_age_min">
 					<?php for ($value = 0; $value <= 18; $value++) { ?>
-						<option <?= ($user_filter_data[$attr['zone']]['age_min'] == $value) ? 'selected' : ''; ?> value="<?= $value; ?>"><?= $value; ?> år</option>
+						<option <?= (($user_filter_data[$attr['zone']]['age_min'] ?? false) == $value) ? 'selected' : ''; ?> value="<?= $value; ?>"><?= $value; ?> år</option>
 					<?php }
 					?>
 				</select>
@@ -235,10 +241,10 @@ class horse_list_filters
 				</label>
 				<select name="filter_age_max" id="filter_age_max">
 					<?php for ($value = 0; $value <= 16; $value++) { ?>
-						<option <?= ($user_filter_data[$attr['zone']]['age_max'] == $value) ? 'selected' : ''; ?> value="<?= $value; ?>"><?= $value; ?> år</option>
+						<option <?= (($user_filter_data[$attr['zone']]['age_max'] ?? false) == $value) ? 'selected' : ''; ?> value="<?= $value; ?>"><?= $value; ?> år</option>
 					<?php }
 					?>
-					<option <?= ($user_filter_data[$attr['zone']]['age_max'] == 'any' || !isset($user_filter_data[$attr['zone']]['age_max'])) ? 'selected' : ''; ?> value="any">Alle</option>
+					<option <?= (($user_filter_data[$attr['zone']]['age_max'] ?? false) == 'any' || !isset($user_filter_data[$attr['zone']]['age_max'])) ? 'selected' : ''; ?> value="any">Alle</option>
 				</select>
 			</div>
 			<div class="filter_line">
@@ -246,9 +252,9 @@ class horse_list_filters
 					Tegner
 				</label>
 				<select name="filter_artist" id="filter_artist">
-					<option value="all" <?= ($user_filter_data[$attr['zone']]['artist'] == 'all') ? 'selected' : ''; ?>>Alle Tegnere</option>
+					<option value="all" <?= (($user_filter_data[$attr['zone']]['artist'] ?? false) == 'all') ? 'selected' : ''; ?>>Alle Tegnere</option>
 					<?php
-					$artists = $link_new->query("SELECT DISTINCT users.stutteri AS name, users.id AS user_id FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS horses LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere AS users ON users.stutteri = horses.tegner WHERE status <> '{$dead}' ORDER BY users.stutteri ASC");
+					$artists = $link_new->query("SELECT DISTINCT users.stutteri AS name, users.id AS user_id FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS horses LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS users ON users.stutteri = horses.tegner WHERE status <> '{$dead}' ORDER BY users.stutteri ASC");
 					if ($artists) {
 						while ($artist = $artists->fetch_object()) {
 							if ($artist->name == '') {
@@ -268,10 +274,10 @@ class horse_list_filters
 						Type
 					</label>
 					<select name="filter_type" id="filter_type">
-						<option value="all" <?= ($user_filter_data[$attr['zone']]['filter_type'] == 'all') ? 'selected' : ''; ?>>Alle typer</option>
-						<option value="unique" <?= ($user_filter_data[$attr['zone']]['filter_type'] == 'unique') ? 'selected' : ''; ?>>Unik</option>
-						<option value="original" <?= ($user_filter_data[$attr['zone']]['filter_type'] == 'original') ? 'selected' : ''; ?>>Original (ikke unik)</option>
-						<option value="normal" <?= ($user_filter_data[$attr['zone']]['filter_type'] == 'normal') ? 'selected' : ''; ?>>Normal</option>
+						<option value="all" <?= (($user_filter_data[$attr['zone']]['filter_type'] ?? false) == 'all') ? 'selected' : ''; ?>>Alle typer</option>
+						<option value="unique" <?= (($user_filter_data[$attr['zone']]['filter_type'] ?? false) == 'unique') ? 'selected' : ''; ?>>Unik</option>
+						<option value="original" <?= (($user_filter_data[$attr['zone']]['filter_type'] ?? false) == 'original') ? 'selected' : ''; ?>>Original (ikke unik)</option>
+						<option value="normal" <?= (($user_filter_data[$attr['zone']]['filter_type'] ?? false) == 'normal') ? 'selected' : ''; ?>>Normal</option>
 					</select>
 				</div>
 			<?php }
@@ -282,14 +288,14 @@ class horse_list_filters
 						Status
 					</label>
 					<select name="filter_status" id="filter_status">
-						<option value="all_horses" <?= ($user_filter_data[$attr['zone']]['filter_status'] == 'all_horses') ? 'selected' : ''; ?>>Alle heste</option>
-						<option value="idle_horses" <?= ($user_filter_data[$attr['zone']]['filter_status'] == 'idle_horses') ? 'selected' : ''; ?>>Hest i stald</option>
-						<option value="horses_on_grass" <?= ($user_filter_data[$attr['zone']]['filter_status'] == 'horses_on_grass') ? 'selected' : ''; ?>>Heste på græs</option>
-						<option value="breeding_horses" <?= ($user_filter_data[$attr['zone']]['filter_status'] == 'breeding_horses') ? 'selected' : ''; ?>>Heste i avl</option>
-						<option value="horses_at_contest" <?= ($user_filter_data[$attr['zone']]['filter_status'] == 'horses_at_contest') ? 'selected' : ''; ?>>Heste til stævner</option>
-						<option value="foels" <?= ($user_filter_data[$attr['zone']]['filter_status'] == 'foels') ? 'selected' : ''; ?>>Føl</option>
-						<option value="foels_at_contest" <?= ($user_filter_data[$attr['zone']]['filter_status'] == 'foels_at_contest') ? 'selected' : ''; ?>>Føl til kåring</option>
-						<option value="unbred_mares" <?= ($user_filter_data[$attr['zone']]['filter_status'] == 'unbred_mares') ? 'selected' : ''; ?>>Ufolede hopper</option>
+						<option value="all_horses" <?= (($user_filter_data[$attr['zone']]['filter_status'] ?? false) == 'all_horses') ? 'selected' : ''; ?>>Alle heste</option>
+						<option value="idle_horses" <?= (($user_filter_data[$attr['zone']]['filter_status'] ?? false) == 'idle_horses') ? 'selected' : ''; ?>>Hest i stald</option>
+						<option value="horses_on_grass" <?= (($user_filter_data[$attr['zone']]['filter_status'] ?? false) == 'horses_on_grass') ? 'selected' : ''; ?>>Heste på græs</option>
+						<option value="breeding_horses" <?= (($user_filter_data[$attr['zone']]['filter_status'] ?? false) == 'breeding_horses') ? 'selected' : ''; ?>>Heste i avl</option>
+						<option value="horses_at_contest" <?= (($user_filter_data[$attr['zone']]['filter_status'] ?? false) == 'horses_at_contest') ? 'selected' : ''; ?>>Heste til stævner</option>
+						<option value="foels" <?= (($user_filter_data[$attr['zone']]['filter_status'] ?? false) == 'foels') ? 'selected' : ''; ?>>Føl</option>
+						<option value="foels_at_contest" <?= (($user_filter_data[$attr['zone']]['filter_status'] ?? false) == 'foels_at_contest') ? 'selected' : ''; ?>>Føl til kåring</option>
+						<option value="unbred_mares" <?= (($user_filter_data[$attr['zone']]['filter_status'] ?? false) == 'unbred_mares') ? 'selected' : ''; ?>>Ufolede hopper</option>
 					</select>
 				</div>
 			<?php }
@@ -334,83 +340,84 @@ class horse_list_filters
 			return ['Kritisk fejl: Dit stutteri kunne ikke findes, prøv igen eller kontakt en admin evt. på admin@net-hesten.dk', 'error'];
 		}
 
-
-		if (!empty($user_filter_data[$attr['zone']]['races'] && !in_array('all', $user_filter_data[$attr['zone']]['races']))) {
-			$races = '';
-			foreach ($user_filter_data[$attr['zone']]['races'] as $race_id) {
-				$race_name = $cached_races[(int) $race_id]['name'];
-				//				$race_name = $cached_races[(int) $race_id]['name'];
-				$races .= "'{$race_name}',";
+		if (isset($user_filter_data[$attr['zone']])) {
+			if (!empty($user_filter_data[$attr['zone']]['races'] && !in_array('all', $user_filter_data[$attr['zone']]['races']))) {
+				$races = '';
+				foreach ($user_filter_data[$attr['zone']]['races'] as $race_id) {
+					$race_name = $cached_races[(int) $race_id]['name'];
+					//				$race_name = $cached_races[(int) $race_id]['name'];
+					$races .= "'{$race_name}',";
+				}
+				$return_data .= " AND race IN ({$races}'') ";
 			}
-			$return_data .= " AND race IN ({$races}'') ";
-		}
 
-		if ($user_filter_data[$attr['zone']]['gender']) {
-			if ($user_filter_data[$attr['zone']]['gender'] == 'mare') {
-				$return_data .= " AND kon = 'hoppe' ";
-			} else {
-				$return_data .= " AND kon = 'hingst' ";
+			if ($user_filter_data[$attr['zone']]['gender']) {
+				if ($user_filter_data[$attr['zone']]['gender'] == 'mare') {
+					$return_data .= " AND kon = 'hoppe' ";
+				} else {
+					$return_data .= " AND kon = 'hingst' ";
+				}
 			}
-		}
 
-		if ($user_filter_data[$attr['zone']]['age_min']) {
-			$return_data .= " AND CAST(alder AS UNSIGNED) >= {$user_filter_data[$attr['zone']]['age_min']} ";
-		}
-		if ($user_filter_data[$attr['zone']]['age_max']) {
-			if ($user_filter_data[$attr['zone']]['age_max'] == 'any') {
-			} else {
-
-				$return_data .= " AND CAST(alder AS UNSIGNED) <= {$user_filter_data[$attr['zone']]['age_max']} ";
+			if ($user_filter_data[$attr['zone']]['age_min']) {
+				$return_data .= " AND CAST(alder AS UNSIGNED) >= {$user_filter_data[$attr['zone']]['age_min']} ";
 			}
-		}
+			if ($user_filter_data[$attr['zone']]['age_max']) {
+				if ($user_filter_data[$attr['zone']]['age_max'] == 'any') {
+				} else {
 
-		if ($user_filter_data[$attr['zone']]['artist']) {
-			if ($user_filter_data[$attr['zone']]['artist'] == 'all') {
-			} else {
-				$artist_for_db = $user_filter_data[$attr['zone']]['artist'];
-				$return_data .= " AND tegner = '{$artist_for_db}' ";
+					$return_data .= " AND CAST(alder AS UNSIGNED) <= {$user_filter_data[$attr['zone']]['age_max']} ";
+				}
 			}
-		}
 
-		if (!empty($user_filter_data[$attr['zone']]['name']) && $user_filter_data[$attr['zone']]['name'] != '') {
-
-			$return_data .= " AND navn LIKE '%{$user_filter_data[$attr['zone']]['name']}%' ";
-		}
-
-		if ($user_filter_data[$attr['zone']]['filter_type'] && $user_filter_data[$attr['zone']]['filter_type'] != 'any') {
-			if ($user_filter_data[$attr['zone']]['filter_type'] == 'unique') {
-				$return_data .= " AND unik = 'ja' ";
-			} elseif ($user_filter_data[$attr['zone']]['filter_type'] == 'original') {
-				$return_data .= " AND original = 'ja' AND unik <> 'ja' ";
-			} elseif ($user_filter_data[$attr['zone']]['filter_type'] == 'normal') {
-				$return_data .= " AND original <> 'ja' AND unik <> 'ja' ";
+			if ($user_filter_data[$attr['zone']]['artist']) {
+				if ($user_filter_data[$attr['zone']]['artist'] == 'all') {
+				} else {
+					$artist_for_db = $user_filter_data[$attr['zone']]['artist'];
+					$return_data .= " AND tegner = '{$artist_for_db}' ";
+				}
 			}
-		}
 
-		if ($user_filter_data[$attr['zone']]['filter_status'] && $user_filter_data[$attr['zone']]['filter_status'] != 'all_horses') {
+			if (!empty($user_filter_data[$attr['zone']]['name']) && $user_filter_data[$attr['zone']]['name'] != '') {
 
-			$foel = 'føl';
-
-			if ($user_filter_data[$attr['zone']]['filter_status'] == 'idle_horses') {
-				$return_data .= " AND graesning != 'ja' AND staevne <> 'ja' AND status <> 'avl' AND status <> '{$foel}' AND kaaring <> 'ja' AND competition_id IS NULL ";
-			} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'horses_on_grass') {
-				$return_data .= ' AND graesning = "ja" ';
-			} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'breeding_horses') {
-				$return_data .= ' AND ( status = "avl" OR breeding.meta_value IS NOT NULL ) ';
-			} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'horses_at_contest') {
-				$return_data .= ' AND STATUS = "hest" AND competition_id IS NOT NULL ';
-			} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'foels') {
-				$return_data .= " AND status = '{$foel}' ";
-			} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'foels_at_contest') {
-				$return_data .= " AND status = '{$foel}' AND competition_id IS NOT NULL ";
-			} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'unbred_mares') {
-				$return_data .= " AND kon = 'hoppe' AND breeding.meta_value IS NULL ";
+				$return_data .= " AND navn LIKE '%{$user_filter_data[$attr['zone']]['name']}%' ";
 			}
-		}
+
+			if ($user_filter_data[$attr['zone']]['filter_type'] && $user_filter_data[$attr['zone']]['filter_type'] != 'any') {
+				if ($user_filter_data[$attr['zone']]['filter_type'] == 'unique') {
+					$return_data .= " AND unik = 'ja' ";
+				} elseif ($user_filter_data[$attr['zone']]['filter_type'] == 'original') {
+					$return_data .= " AND original = 'ja' AND unik <> 'ja' ";
+				} elseif ($user_filter_data[$attr['zone']]['filter_type'] == 'normal') {
+					$return_data .= " AND original <> 'ja' AND unik <> 'ja' ";
+				}
+			}
+
+			if ($user_filter_data[$attr['zone']]['filter_status'] && $user_filter_data[$attr['zone']]['filter_status'] != 'all_horses') {
+
+				$foel = 'føl';
+
+				if ($user_filter_data[$attr['zone']]['filter_status'] == 'idle_horses') {
+					$return_data .= " AND graesning != 'ja' AND staevne <> 'ja' AND status <> 'avl' AND status <> '{$foel}' AND kaaring <> 'ja' AND competition_id IS NULL ";
+				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'horses_on_grass') {
+					$return_data .= ' AND graesning = "ja" ';
+				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'breeding_horses') {
+					$return_data .= ' AND ( status = "avl" OR breeding.meta_value IS NOT NULL ) ';
+				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'horses_at_contest') {
+					$return_data .= ' AND STATUS = "hest" AND competition_id IS NOT NULL ';
+				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'foels') {
+					$return_data .= " AND status = '{$foel}' ";
+				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'foels_at_contest') {
+					$return_data .= " AND status = '{$foel}' AND competition_id IS NOT NULL ";
+				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'unbred_mares') {
+					$return_data .= " AND kon = 'hoppe' AND breeding.meta_value IS NULL ";
+				}
+			}
 
 
-		if ($user_filter_data[$attr['zone']]['id']) {
-			$return_data = " AND id = '{$user_filter_data[$attr['zone']]['id']}' ";
+			if ($user_filter_data[$attr['zone']]['id']) {
+				$return_data = " AND id = '{$user_filter_data[$attr['zone']]['id']}' ";
+			}
 		}
 		return $return_data;
 	}

@@ -16,7 +16,6 @@ require_once "$basepath/app_core/db_conf.php";
 include "$basepath/files.net-hesten.dk/cache_data/list_of_races.php"; /* $cached_races */
 include "$basepath/files.net-hesten.dk/cache_data/latin_one_strings.php";
 require "$basepath/app_core/functions/number_dotter.php";
-require "$basepath/app_core/functions/session_value.php";
 require "$basepath/app_core/functions/array_sorter.php";
 require "$basepath/app_core/functions/url_exists.php";
 require "$basepath/app_core/functions/months_ago.php";
