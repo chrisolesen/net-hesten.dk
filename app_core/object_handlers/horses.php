@@ -136,8 +136,12 @@ class horses
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-			$attr[$key] = $link_new->real_escape_string($value);
+			/* custom filter is pre sanitized */
+			if ($key != 'custom_filter') {
+				$attr[$key] = $link_new->real_escape_string($value);
+			}
 		}
+
 		if (isset($attr['user_name'])) {
 			$username = $attr['user_name'];
 

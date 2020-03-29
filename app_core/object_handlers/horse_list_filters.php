@@ -37,27 +37,27 @@ class horse_list_filters
 
 			if (filter_input(INPUT_POST, 'filter_age_min') && filter_input(INPUT_POST, 'filter_age_max')) {
 				if (filter_input(INPUT_POST, 'filter_age_max') !== 'any') {
-					$filter_data[$target_zone]['age_min'] = min(filter_input(INPUT_POST, 'filter_age_min'), filter_input(INPUT_POST, 'filter_age_max'));
-					$filter_data[$target_zone]['age_max'] = max(filter_input(INPUT_POST, 'filter_age_min'), filter_input(INPUT_POST, 'filter_age_max'));
+					$filter_data[$target_zone]['age_min'] = min((int) filter_input(INPUT_POST, 'filter_age_min'), (int) filter_input(INPUT_POST, 'filter_age_max'));
+					$filter_data[$target_zone]['age_max'] = max((int) filter_input(INPUT_POST, 'filter_age_min'), (int) filter_input(INPUT_POST, 'filter_age_max'));
 				} else {
-					$filter_data[$target_zone]['age_min'] = filter_input(INPUT_POST, 'filter_age_min');
-					$filter_data[$target_zone]['age_max'] = filter_input(INPUT_POST, 'filter_age_max');
+					$filter_data[$target_zone]['age_min'] = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'filter_age_min'));
+					$filter_data[$target_zone]['age_max'] = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'filter_age_max'));
 				}
 			} else {
 				if (filter_input(INPUT_POST, 'filter_age_min')) {
-					$filter_data[$target_zone]['age_min'] = filter_input(INPUT_POST, 'filter_age_min');
+					$filter_data[$target_zone]['age_min'] = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'filter_age_min'));
 					$filter_data[$target_zone]['age_max'] = 16;
 				}
 				if (filter_input(INPUT_POST, 'filter_age_max')) {
 					$filter_data[$target_zone]['age_min'] = 0;
-					$filter_data[$target_zone]['age_max'] = filter_input(INPUT_POST, 'filter_age_max');
+					$filter_data[$target_zone]['age_max'] = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'filter_age_max'));
 				}
 			}
 
-			$filter_data[$target_zone]['name'] = filter_input(INPUT_POST, 'filter_name');
-			$filter_data[$target_zone]['id'] = filter_input(INPUT_POST, 'id');
-			$filter_data[$target_zone]['gender'] = filter_input(INPUT_POST, 'gender');
-			$filter_data[$target_zone]['artist'] = filter_input(INPUT_POST, 'filter_artist');
+			$filter_data[$target_zone]['name'] = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'filter_name'));
+			$filter_data[$target_zone]['id'] = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'id'));
+			$filter_data[$target_zone]['gender'] = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'gender'));
+			$filter_data[$target_zone]['artist'] = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'filter_artist'));
 
 
 			$filter_data[$target_zone]['races'] = [];
@@ -65,16 +65,16 @@ class horse_list_filters
 			if (is_array($races)) {
 
 				foreach ($races as $race) {
-					$filter_data[$target_zone]['races'][] = $race;
+					$filter_data[$target_zone]['races'][] = str_replace(['"', "'"], ['', ''], $race);
 				}
 			}
-			if ($filter_type = filter_input(INPUT_POST, 'filter_type')) {
+			if ($filter_type = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'filter_type'))) {
 				$filter_data[$target_zone]['filter_type'] = $filter_type;
 			} else {
 				$filter_data[$target_zone]['filter_type'] = 'any';
 			}
 
-			if ($filter_status = filter_input(INPUT_POST, 'filter_status')) {
+			if ($filter_status = str_replace(['"', "'"], ['', ''], filter_input(INPUT_POST, 'filter_status'))) {
 				$filter_data[$target_zone]['filter_status'] = $filter_status;
 			} else {
 				$filter_data[$target_zone]['filter_status'] = 'all_horses';
