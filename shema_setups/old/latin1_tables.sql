@@ -10,7 +10,7 @@ CREATE TABLE `Brugere` (
   `beskrivelse` text NOT NULL,
   `penge` bigint(20) NOT NULL,
   `thumb` varchar(50) NOT NULL,
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date` datetime NOT NULL DEFAULT NOW(),
   `admin` char(5) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `stutteri` (`stutteri`),
@@ -23,8 +23,8 @@ CREATE TABLE `Chancen` (
   `chancetekst` text NOT NULL,
   `penge` varchar(20) NOT NULL,
   `thumb` varchar(50) NOT NULL,
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `changedate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date` datetime NOT NULL DEFAULT NOW(),
+  `changedate` datetime NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -55,9 +55,9 @@ CREATE TABLE `Heste` (
   `unik` varchar(4) NOT NULL,
   `tegner` varchar(50) NOT NULL,
   `thumb` varchar(100) NOT NULL,
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `changedate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `statuschangedate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date` datetime NOT NULL DEFAULT NOW(),
+  `changedate` datetime NOT NULL DEFAULT NOW(),
+  `statuschangedate` datetime NOT NULL DEFAULT NOW(),
   `saelger` text NOT NULL,
   `salgs_dato` text NOT NULL,
   `alder_skift` text NOT NULL,
@@ -69,7 +69,7 @@ CREATE TABLE `Heste` (
   `egenskab` varchar(100) NOT NULL,
   `ulempe` varchar(100) NOT NULL,
   `talent` varchar(100) NOT NULL,
-  `age_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `age_updated` datetime NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`id`),
   KEY `bruger` (`bruger`),
   KEY `kon` (`kon`),
@@ -83,7 +83,7 @@ CREATE TABLE `Heste` (
 CREATE TABLE `Hesteracer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `hesterace` varchar(50) NOT NULL,
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date` datetime NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`id`),
   KEY `hesterace` (`hesterace`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -25,3 +25,6 @@ $link_new->set_charset('utf8');
 $link_new->query("SET time_zone = 'Europe/Copenhagen'");
 
 $GLOBALS['pdo_new'] = new PDO("mysql:host={$mysql_host};dbname={$mysql_database_new};charset=utf8;", $mysql_user, $mysql_password);
+
+/* Only used for install */
+$GLOBALS['pdo_old'] = new PDO("mysql:host={$mysql_host};dbname={$mysql_database_old};charset=utf8;", $mysql_user, $mysql_password);
