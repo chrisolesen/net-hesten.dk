@@ -5,21 +5,23 @@ require_once "{$basepath}/app_core/db_conf.php";
 require_once "{$basepath}/app_core/object_loader.php";
 require_once "{$basepath}/app_core/user_validate.php";
 
-user::register_timing(['user_id' => $_SESSION['user_id'], 'key' => 'last_active']);
-user::register_session(['user_id' => $_SESSION['user_id']]);
+if (is_numeric(($_SESSION['user_id'] ?? false))) {
+	user::register_timing(['user_id' => $_SESSION['user_id'], 'key' => 'last_active']);
+	user::register_session(['user_id' => $_SESSION['user_id']]);
+}
 
 $admin = false;
 $public_page = true;
 require_once("{$basepath}/global_modules/header.php"); ?>
 
-<link href="https://files.<?= HTTP_HOST; ?>/scripts/booklet/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv">
-<script src="https://files.<?= HTTP_HOST; ?>/scripts/booklet/jquery.booklet.latest.min.js"></script>
+<link href="//files.<?= HTTP_HOST; ?>/scripts/booklet/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv">
+<script src="//files.<?= HTTP_HOST; ?>/scripts/booklet/jquery.booklet.latest.min.js"></script>
 <section>
 
 	<?php
-	if ($_SESSION['logged_in'] == true) {
+	if (($_SESSION['logged_in'] ?? false) == true) {
 	?>
-		<img id="booklet_opener" height="300" src="https://files.<?= HTTP_HOST; ?>/graphics/magazines/forside_fun_facts_4.png" />
+		<img id="booklet_opener" height="300" src="//files.<?= HTTP_HOST; ?>/graphics/magazines/forside_fun_facts_4.png" />
 		<form action="" method="post">
 			<input class="btn btn-danger" type="submit" name="logout" value="Log ud" />
 		</form>

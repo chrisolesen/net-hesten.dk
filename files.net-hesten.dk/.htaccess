@@ -4,7 +4,7 @@ RewriteBase /
 #RewriteMap imgfiles txt:/horserewritemap.txt
 #RewriteCond ^/imgHorse/Ghost_01.png$
 RewriteRule "imgHorse/(.*)" "horses/imgs/$1"
-#RewriteRule "imgHorse/(.*?\.png)" "http://files.net-hesten.dk/horses/htaccess_img_handler.php?image=$1"
+#RewriteRule "imgHorse/(.*?\.png)" "//files.net-hesten.dk/horses/htaccess_img_handler.php?image=$1"
 #RewriteRule "^/imgHorse/(.*)" "/../files.net-hesten.dk/horses/imgs/${imgsfromfiles:$1|/imgHorse/$1}" [PT]
 </IfModule>  
 

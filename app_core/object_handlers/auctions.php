@@ -89,7 +89,7 @@ class auctions
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 
-		$auction_data = ($link_new->query("SELECT id, object_id, creator, status_code, minimum_price, instant_price, highest_bidder, highest_bid, end_date FROM {$GLOBALS['DB_NAME_NEW']}.game_data_auctions WHERE id = {$attr['auction_id']} AND status_code = 1 LIMIT 1"))->fetch_assoc();
+		$auction_data = ($link_new->query("SELECT id, object_id, creator, status_code, minimum_price, instant_price, highest_bidder, highest_bid, end_date FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_auctions WHERE id = {$attr['auction_id']} AND status_code = 1 LIMIT 1"))->fetch_assoc();
 		if (!$auction_data['highest_bidder']) {
 			$auction_data['highest_bidder'] = null;
 		}
@@ -102,7 +102,7 @@ class auctions
 
 			if ($attr['mode'] == 'buy_now') {
 				$bid_date = new DateTime('now');
-				$sql = "SELECT stutteri, penge FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
+				$sql = "SELECT stutteri, penge FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
 				$result = $link_new->query($sql);
 				if ($result) {
 					$data = $result->fetch_assoc();
@@ -148,7 +148,7 @@ class auctions
 
 			if ($attr['mode'] == 'place_bid') {
 				$bid_date = new DateTime('now');
-				$sql = "SELECT stutteri, penge FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
+				$sql = "SELECT stutteri, penge FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
 				$result = $link_new->query($sql);
 				if ($result) {
 					$data = $result->fetch_assoc();
@@ -294,7 +294,7 @@ class auctions
 			foreach ($horses as $horse) {
 				if ($horse['id'] == ($attr['horse_id'])) {
 					/* Transfer horse to auctions user */
-					$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = 'Auktionshuset' WHERE id = '{$horse['id']}' AND bruger = '{$seller_user_name}'";
+					$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = 'Auktionshuset' WHERE id = '{$horse['id']}' AND bruger = '{$seller_user_name}'";
 					$result = $link_new->query($sql);
 					/* Insert horse into auctions table */
 					$sql = "INSERT INTO game_data_auctions (creator, status_code, object_id, object_type, minimum_price, instant_price, creation_date, end_date) "

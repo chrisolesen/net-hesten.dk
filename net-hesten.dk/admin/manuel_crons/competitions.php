@@ -18,7 +18,7 @@ if (isset($_GET['make'])) {
 		$allowed_races = '';
 	} else {
 		$allowed_races = '';
-		$sql = "SELECT id FROM {$GLOBALS['DB_NAME_NEW']}.horse_races WHERE ID < 103 ORDER BY RAND() LIMIT 2";
+		$sql = "SELECT id FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_races WHERE ID < 103 ORDER BY RAND() LIMIT 2";
 		$result = $link_new->query($sql);
 		while ($data = $result->fetch_object()) {
 			$allowed_races .= "{$data->id},";
@@ -151,7 +151,7 @@ if ($end_competition_id = filter_input(INPUT_GET, 'end_competition')) {
 			//	30 competition_ongoing
 			//	31 competition_ended
 			//	32 competition_in_que
-			$sql = "SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.game_data_competitions WHERE status_code <> 31 ORDER BY start_date DESC, id DESC";
+			$sql = "SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_competitions WHERE status_code <> 31 ORDER BY start_date DESC, id DESC";
 			$result = $link_new->query($sql);
 			while ($data = $result->fetch_object()) {
 			?>

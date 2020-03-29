@@ -25,7 +25,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 		if (!$applicant) {
 			return [false, 'Ansøgningen findes ikke!'];
 		}
-		$test_old = $link_new->query("SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$applicant->username}' LIMIT 1")->fetch_object();
+		$test_old = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE stutteri = '{$applicant->username}' LIMIT 1")->fetch_object();
 		$test_new = $link_new->query("SELECT username FROM users WHERE username = '{$applicant->username}' LIMIT 1")->fetch_object();
 		if ($test_old || $test_new) {
 			return [false, 'Stutteri navnet er optaget!, lav et afslag på brugeren hvor du beder dem finde et andet navn.'];

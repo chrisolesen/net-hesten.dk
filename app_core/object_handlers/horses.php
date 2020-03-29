@@ -18,12 +18,12 @@ class horses
 			$user_id = (int) $_SESSION['user_id'];
 			$sql = "SELECT "
 				. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent, changedate "
-				. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste "
+				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste "
 				. "WHERE id = {$attr['horse_id']}";
 			$result = $link_new->query($sql);
 			while ($data = $result->fetch_object()) {
 				if (strtolower($data->owner_name) == strtolower($_SESSION['username'])) {
-					$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET graesning = 'ja', changedate = NOW() WHERE id = {$attr['horse_id']}";
+					$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET graesning = 'ja', changedate = NOW() WHERE id = {$attr['horse_id']}";
 					$result = $link_new->query($sql);
 					return ["Hesten er nu sat på græs, husk at hente den ind, inden 14 timer.", 'success'];
 				} else {
@@ -47,8 +47,8 @@ class horses
 		foreach ($attr as $key => $value) {
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
-		$target_horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
-		$horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
+		$target_horse_data = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
+		$horse_data = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
 		if (strtolower($horse_data->bruger) != strtolower($username)) {
 			return ["Du ejer ikke den hest du forsøger at fole! {$horse_data->bruger} | {$username}", 'error'];
 		}
@@ -88,11 +88,11 @@ class horses
 			$username = $_SESSION['username'];
 			$dead = 'død';
 			$graes_money = 'Græsningspenge';
-			$user = $link_new->query("SELECT id, penge, stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
+			$user = $link_new->query("SELECT id, penge, stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
 
 			$sql = "SELECT "
 				. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent, changedate "
-				. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste "
+				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste "
 				. "WHERE id = {$attr['horse_id']}";
 			$result = $link_new->query($sql);
 			while ($horse = $result->fetch_object()) {
@@ -105,7 +105,7 @@ class horses
 						$durration = $date_now->diff($date_then);
 						if ($durration->y > 0 || $durration->m > 0 || $durration->d > 0 || $durration->h > 13) {
 							/* Punish */
-							$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
+							$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
 							$result = $link_new->query($sql);
 							return ["Din hest har stået for længe på græs!", 'warning'];
 						} else {
@@ -115,7 +115,7 @@ class horses
 							if ($payment > 0) {
 								accounting::add_entry(['amount' => $payment, 'line_text' => "Græsning af hest", 'mode' => '+']);
 							}
-							$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
+							$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
 							$result = $link_new->query($sql);
 							return ["Du lige tjent {$payment} wkr på græsning, godt arbejde!", 'success'];
 						}
@@ -136,8 +136,12 @@ class horses
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-			$attr[$key] = $link_new->real_escape_string($value);
+			/* custom filter is pre sanitized */
+			if ($key != 'custom_filter') {
+				$attr[$key] = $link_new->real_escape_string($value);
+			}
 		}
+
 		if (isset($attr['user_name'])) {
 			$username = $attr['user_name'];
 
@@ -171,10 +175,10 @@ class horses
 				. "contests.points, "
 				. "breeding.meta_value AS breed_partner, "
 				. "breeding.meta_date AS breed_date "
-				. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste AS heste "
-				. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.game_data_competition_participants AS contests "
+				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS heste "
+				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_competition_participants AS contests "
 				. "ON contests.participant_id = heste.id AND contests.points IS NULL "
-				. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
+				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.horse_metadata AS breeding "
 				. "ON breeding.horse_id = heste.id AND breeding.meta_key = 'breeding' "
 				. "WHERE status != 'død' "
 				. (($attr['mode'] == 'search_all') ? "AND heste.talent != '' " : '')
@@ -225,7 +229,7 @@ class horses
 		if (isset($attr['ID'])) {
 			$sql = "SELECT "
 				. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent "
-				. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste "
+				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste "
 				. "WHERE id = '{$attr['ID']}' ";
 			$result = $link_new->query($sql);
 			if ($data = $result->fetch_assoc()) {
@@ -250,7 +254,7 @@ class horses
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 		if (isset($attr['horse_id'])) {
-			$result = ($link_new->query("SELECT bruger AS username FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '{$attr['horse_id']}' LIMIT 1"));
+			$result = ($link_new->query("SELECT bruger AS username FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = '{$attr['horse_id']}' LIMIT 1"));
 			if ($data = $result->fetch_object()) {
 				return (user::get_info(['mode' => 'username', 'user_id' => $data->username]))->id;
 			}
@@ -281,7 +285,7 @@ class horses
 			. "ulempe, "
 			. "talent,"
 			. "status "
-			. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$horse_id} LIMIT 1";
+			. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = {$horse_id} LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_assoc()) {
@@ -334,6 +338,6 @@ class horses
 			$attr['new_owner'] = (user::get_info(['user_id' => $attr['new_owner']]))->username;
 		}
 
-		$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = '{$attr['new_owner']}' WHERE bruger = '{$attr['old_owner']}' AND id = {$attr['horse_id']} LIMIT 1");
+		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '{$attr['new_owner']}' WHERE bruger = '{$attr['old_owner']}' AND id = {$attr['horse_id']} LIMIT 1");
 	}
 }

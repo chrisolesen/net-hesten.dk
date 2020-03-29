@@ -144,7 +144,7 @@ foreach (horses::get_all($attr) as $horse) {
 		</div>
 		<span class="label">Stutterinavn:</span><span id="visited_name"><?= $visit_user_info->username; ?></span><br />
 		<span class="label">Navn:</span><?= $visit_user_info->name; ?><br />
-		<span class="label">Antal heste:</span><?= number_dotter($link_new->query("SELECT count(id) AS amount FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = '{$visit_user_info->username}' AND status <> 'død'")->fetch_object()->amount); ?><br />
+		<span class="label">Antal heste:</span><?= number_dotter($link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = '{$visit_user_info->username}' AND status <> 'død'")->fetch_object()->amount); ?><br />
 		<span class="label">Penge:</span><span class="user_money_pool"><?= number_dotter($visit_user_info->money); ?></span> <span class="wkr_symbol dev_test_effect">wkr</span><br />
 		<br />
 	</div>

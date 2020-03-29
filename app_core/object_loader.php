@@ -9,16 +9,17 @@
 $script_feedback = [];
 
 define('HTTP_HOST', filter_input(INPUT_SERVER, 'HTTP_HOST'));
+mb_internal_encoding('UTF-8');
 require_once "$basepath/app_core/db_conf.php";
 
 /* Load cache data */
 include "$basepath/files.net-hesten.dk/cache_data/list_of_races.php"; /* $cached_races */
 include "$basepath/files.net-hesten.dk/cache_data/latin_one_strings.php";
 require "$basepath/app_core/functions/number_dotter.php";
+require "$basepath/app_core/functions/array_sorter.php";
 require "$basepath/app_core/functions/url_exists.php";
 require "$basepath/app_core/functions/months_ago.php";
 require "$basepath/app_core/functions/mailer.php";
-require "$basepath/app_core/functions/array_sorter.php";
 /* Load order sensitive object handlers */
 require "$basepath/app_core/object_handlers/private_messages.php";
 require "$basepath/app_core/object_handlers/accounting.php";

@@ -125,7 +125,7 @@ if (isset($_POST['adjust_wkr'])) {
 			<span>Login som</span>
 		</li>
 		<?php
-		$sql = "SELECT id, stutteri, penge, navn, email, date FROM {$GLOBALS['DB_NAME_OLD']}.Brugere LIMIT $pr_page OFFSET $offset";
+		$sql = "SELECT id, stutteri, penge, navn, email, date FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere LIMIT $pr_page OFFSET $offset";
 		if (filter_input(INPUT_POST, 'search_id')) {
 			$search_id = (int) trim(filter_input(INPUT_POST, 'search_id'));
 			$_SESSION['user_list_search_type'] = 'id';
@@ -141,14 +141,14 @@ if (isset($_POST['adjust_wkr'])) {
 			unset($_SESSION['user_list_search']);
 		}
 		if ($_SESSION['user_list_search_type'] === 'id') {
-			$sql = "SELECT id, stutteri, penge, navn, email, date FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_list_search']} LIMIT $pr_page OFFSET $offset";
+			$sql = "SELECT id, stutteri, penge, navn, email, date FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_SESSION['user_list_search']} LIMIT $pr_page OFFSET $offset";
 		}
 
 		if ($_SESSION['user_list_search_type'] === 'name') {
 			if (strpos($_SESSION['user_list_search'], '@')) {
-				$sql = "SELECT id, stutteri, penge, navn, email, date FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE email LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
+				$sql = "SELECT id, stutteri, penge, navn, email, date FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE email LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
 			} else {
-				$sql = "SELECT id, stutteri, penge, navn, email, date FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
+				$sql = "SELECT id, stutteri, penge, navn, email, date FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE stutteri LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
 			}
 		}
 		$result = $link_new->query($sql);

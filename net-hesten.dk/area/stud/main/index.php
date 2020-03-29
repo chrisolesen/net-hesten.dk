@@ -219,7 +219,7 @@ $attr = ['user_name' => $_SESSION['username'], 'mode' => 'your_stud'];
 if ($filter_id = filter_input(INPUT_POST, 'id_filter')) {
 	$attr = ['user_name' => $_SESSION['username'], 'id_filter' => $filter_id, 'mode' => 'your_stud'];
 }
-$attr['custom_filter'] .= horse_list_filters::get_filter_string(['zone' => "home"]);
+$attr['custom_filter'] = horse_list_filters::get_filter_string(['zone' => "home"]);
 
 $offset = $your_horses_page * $horses_pr_page;
 $limit = ($your_horses_page * $horses_pr_page) + $horses_pr_page;
@@ -253,7 +253,7 @@ $amount_active_selection = count($horse_array);
 		<span class="label">Navn:</span>
 		<?= $user_info->name; ?><br />
 		<span class="label">Antal heste:</span>
-		<?= number_dotter($link_new->query("SELECT count(id) AS amount FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = '{$user_info->username}' AND status <> '{$dead}'")->fetch_object()->amount); ?> <span style="font-variant: small-caps;font-size: 0.7em;">(
+		<?= number_dotter($link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = '{$user_info->username}' AND status <> '{$dead}'")->fetch_object()->amount); ?> <span style="font-variant: small-caps;font-size: 0.7em;">(
 			<?= number_dotter($amount_active_selection) . ($amount_active_selection >= 100 ? '+' : ''); ?>)</span><br />
 		<span class="label">Penge:</span><span class="user_money_pool">
 			<?= number_dotter($user_info->money); ?></span> <span class="wkr_symbol dev_test_effect">wkr</span><br />
@@ -442,7 +442,7 @@ ob_start();
 			jQuery('#breed_horse__horse_id').attr('value', jQuery(caller).parent().parent().attr('data-horse-id'));
 			jQuery('#breed_horse__horse_id').val(jQuery(caller).parent().parent().attr('data-horse-id'));
 			jQuery.get({
-				url: "https://ajax.<?= HTTP_HOST; ?>/index.php?request=suggest_breed_targets&horse_id=" + jQuery(caller).parent().parent().attr('data-horse-id'),
+				url: "//ajax.<?= HTTP_HOST; ?>/index.php?request=suggest_breed_targets&horse_id=" + jQuery(caller).parent().parent().attr('data-horse-id'),
 				cache: false
 			}).then(function(data) {
 				jQuery("#breed_targets_zone").html(data);
@@ -534,7 +534,7 @@ ob_start();
 							'horse_id': horse_id
 						},
 						crossDomain: true,
-						url: "https://ajax.<?= HTTP_HOST; ?>/index.php",
+						url: "//ajax.<?= HTTP_HOST; ?>/index.php",
 						cache: false
 					}).always(function(data) {
 						//                        console.log(data.status);

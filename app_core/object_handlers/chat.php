@@ -50,7 +50,7 @@ class chat
 			return $link_new->query("SELECT count(parent_id) AS amount FROM user_data_timing WHERE name = 'last_online_chat' AND value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode})")->fetch_object()->amount;
 		}
 		$user_id = (int)$attr['user_id'];
-		$sql = "SELECT old.id AS userid, old.stutteri AS username, new.value AS time FROM user_data_timing AS new LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere AS old ON old.id = new.parent_id WHERE new.name = 'last_online_chat' AND new.value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode}) ORDER BY new.value DESC";
+		$sql = "SELECT old.id AS userid, old.stutteri AS username, new.value AS time FROM user_data_timing AS new LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS old ON old.id = new.parent_id WHERE new.name = 'last_online_chat' AND new.value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode}) ORDER BY new.value DESC";
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_object()) {

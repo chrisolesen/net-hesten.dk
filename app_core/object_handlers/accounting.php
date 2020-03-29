@@ -15,7 +15,7 @@ class accounting {
         foreach ($attr as $key => $value) {
             $attr[$key] = $link_new->real_escape_string($value);
         }
-        $money = ($link_new->query("SELECT penge AS money FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
+        $money = ($link_new->query("SELECT penge AS money FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
 
         return $money;
     }
@@ -71,15 +71,15 @@ class accounting {
             $attr[$key] = $link_new->real_escape_string($value);
         }
         /* Fetch current money */
-        $money = ($link_new->query("SELECT penge AS money FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
+        $money = ($link_new->query("SELECT penge AS money FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
         $attr['meta_data']['operator'] = $attr['mode'];
 
         /* Update user money */
         if ($attr['mode'] === '+') {
-            $sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge + {$attr['amount']}) WHERE id = {$attr['user_id']} ";
+            $sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET penge = (penge + {$attr['amount']}) WHERE id = {$attr['user_id']} ";
             $attr['meta_data']['line_total'] = $money + $attr['amount'];
         } else {
-            $sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge - {$attr['amount']}) WHERE id = {$attr['user_id']} ";
+            $sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET penge = (penge - {$attr['amount']}) WHERE id = {$attr['user_id']} ";
             $attr['meta_data']['line_total'] = $money - $attr['amount'];
         }
         $link_new->query($sql);

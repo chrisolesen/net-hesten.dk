@@ -88,7 +88,7 @@
 </style>
 
 <?php
-if ($_SESSION['settings']['banner_size'] == 'hide' || $force_banner_off) {
+if ($_SESSION['settings']['banner_size'] == 'hide' || ($force_banner_off ?? false)) {
 ?>
 	<style>
 		#top_banner {
@@ -223,14 +223,16 @@ if (isset($modals)) {
 		echo $modal;
 	}
 }
-if (in_array(strtolower($title), ['visit'])) {
-	require_once("{$basepath}/global_modules/modals/unprovoked_bid.php");
-}
-if (in_array(strtolower($title), ['auktioner', 'stutteri', 'hestehandleren', 'visit'])) {
-	require_once("{$basepath}/global_modules/modals/horze_extended_info.php");
-}
-if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
-	require_once("{$basepath}/global_modules/modals/horse_linage.php");
+if (isset($title)) {
+	if (in_array(strtolower($title), ['visit'])) {
+		require_once("{$basepath}/global_modules/modals/unprovoked_bid.php");
+	}
+	if (in_array(strtolower($title), ['auktioner', 'stutteri', 'hestehandleren', 'visit'])) {
+		require_once("{$basepath}/global_modules/modals/horze_extended_info.php");
+	}
+	if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
+		require_once("{$basepath}/global_modules/modals/horse_linage.php");
+	}
 }
 ?>
 <script>
@@ -293,7 +295,7 @@ if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
 		blinker = {};
 
 		function check_new_messages() {
-			$.get("https://ajax.net-hesten.dk/index.php?request=feed_live_content&user_id=" + <?= $_SESSION['user_id']; ?>, function(data) {
+			$.get("//ajax.net-hesten.dk/index.php?request=feed_live_content&user_id=" + <?= $_SESSION['user_id']; ?>, function(data) {
 				blinker_data = JSON.parse(data);
 
 				$("#chat-frame-activator").attr('message_status', blinker_data.main_chat);
@@ -331,7 +333,7 @@ if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
 	<datalist id="active_usernames">
 		<?php
 		$sql = 'SELECT old.stutteri AS username '
-			. "FROM {$GLOBALS['DB_NAME_OLD']}.Brugere AS old "
+			. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS old "
 			. 'LEFT JOIN user_data_timing AS last_active '
 			. 'ON last_active.parent_id = old.id AND last_active.name = "last_active" '
 			. "WHERE last_active.value > '{$target_date} 00:00:00' "
@@ -339,13 +341,14 @@ if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
 			. "ORDER BY old.stutteri";
 		$result = $link_new->query($sql);
 
-		if($result){
-		while ($data = $result->fetch_object()) {
+		if ($result) {
+			while ($data = $result->fetch_object()) {
 		?>
-			<option value='<?= $data->username; ?>' /><?php
-													}}
+				<option value='<?= $data->username; ?>' /><?php
+														}
+													}
 
-														?>
+															?>
 	</datalist>
 <?php }
 ?>

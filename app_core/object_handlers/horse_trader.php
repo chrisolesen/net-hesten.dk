@@ -15,7 +15,7 @@ class horse_trader {
         }
 
 		$bid_date = new DateTime('now');
-		$sql = "SELECT stutteri, penge FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
+		$sql = "SELECT stutteri, penge FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			$data = $result->fetch_assoc();
@@ -47,7 +47,7 @@ class horse_trader {
 		}
 
 		if ($temp_user_data['money'] >= $temp_horse_data->value) {
-			$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = '{$temp_user_data['username']}' WHERE id = {$attr['horse_id']} AND bruger = 'hestehandleren'";
+			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '{$temp_user_data['username']}' WHERE id = {$attr['horse_id']} AND bruger = 'hestehandleren'";
 			$link_new->query($sql);
 			accounting::add_entry(['amount' => $temp_horse_data->value, 'line_text' => "HH: Købt hest: [{$attr['horse_id']}]"]);
 
@@ -73,7 +73,7 @@ class horse_trader {
         }
 
 		$bid_date = new DateTime('now');
-		$sql = "SELECT stutteri, penge FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['seller_id']} LIMIT 1";
+		$sql = "SELECT stutteri, penge FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$attr['seller_id']} LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			$data = $result->fetch_assoc();
@@ -93,7 +93,7 @@ class horse_trader {
 
 		accounting::add_entry(['amount' => $sell_income, 'line_text' => "HH: Solgt hest: [{$attr['horse_id']}]", 'mode' => '+']);
 		
-		$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = 'hestehandleren' WHERE id = {$attr['horse_id']} AND bruger = '{$temp_user_data['username']}'";
+		$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = 'hestehandleren' WHERE id = {$attr['horse_id']} AND bruger = '{$temp_user_data['username']}'";
 		$link_new->query($sql);
 
 

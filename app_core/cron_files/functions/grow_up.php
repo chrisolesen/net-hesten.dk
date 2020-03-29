@@ -24,7 +24,7 @@ $loop = 0;
 //----------------------------------------------------------------------------------------------------
 //-----Find føl som er over 4 år-------------------------------------------------------------------
 
-$sql = "SELECT id FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger != 'Følkassen' and bruger != 'hestehandleren*' AND status = 'føl' AND alder >= 4";
+$sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger != 'Følkassen' and bruger != 'hestehandleren*' AND status = 'føl' AND alder >= 4";
 $result = $link_new->query($sql);
 $foel_amount = 0;
 $grow_up_amount = 0;
@@ -32,7 +32,7 @@ while ($data = $result->fetch_assoc()) {
 	$foel_id = $data['id'];
 	++$foel_amount;
 
-	$sql = "SELECT id, bruger, alder, navn, race, pris, thumb, date FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '$foel_id' LIMIT 1";
+	$sql = "SELECT id, bruger, alder, navn, race, pris, thumb, date FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = '$foel_id' LIMIT 1";
 	$result_layer_two = $link_new->query($sql);
 	$poalder = $result_layer_two->fetch_object();
 	if ($poalder) {
@@ -57,14 +57,14 @@ while ($data = $result->fetch_assoc()) {
 			$tilskrevet = $nyalder - $poalder->alder;
 
 //------pluk en tilfældig thumb fra hestene i databasen-----------------------------------------
-			$thumb_data = $link_new->query("SELECT tegner, thumb FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND race = '$nyrace' AND status != 'føl' AND genfodes = 'ja' AND unik != 'ja' ORDER BY RAND() LIMIT 1 ");
+			$thumb_data = $link_new->query("SELECT tegner, thumb FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND race = '$nyrace' AND status != 'føl' AND genfodes = 'ja' AND unik != 'ja' ORDER BY RAND() LIMIT 1 ");
 			$rand_heste_thumb = $thumb_data->fetch_object();
 			if ($rand_heste_thumb) {
 //-----------SæT VARIABLER---------------------------------------
 				$tegner = $rand_heste_thumb->tegner;
 				$nythumb = $rand_heste_thumb->thumb;
 //-----------update thumb, penge, status og slet det gamle føl-billede-------------------------
-				$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET pris='$nypris', status='Hest', alder='$nyalder', date=NOW(), status_skift='$today', alder_skift='$today', tegner='$tegner', thumb='$nythumb' WHERE id = '$nyid'");
+				$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET pris='$nypris', status='Hest', alder='$nyalder', date=NOW(), status_skift='$today', alder_skift='$today', tegner='$tegner', thumb='$nythumb' WHERE id = '$nyid'");
 
 				$dims = '"';
 				$tegn = array("&", "$dims", "'");

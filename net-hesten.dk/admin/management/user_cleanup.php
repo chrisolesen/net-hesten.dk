@@ -20,9 +20,9 @@ if (isset($_GET['delete_user'])) {
 	die();
 }
 if (isset($_GET['confiscate_horses'])) {
-	$sql = "SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_GET['confiscate_horses']} LIMIT 1";
+	$sql = "SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_GET['confiscate_horses']} LIMIT 1";
 	$temp_stud = $link_new->query($sql)->fetch_object()->stutteri;
-	$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = 'Dyreværnet' WHERE bruger = '{$temp_stud}'";
+	$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = 'Dyreværnet' WHERE bruger = '{$temp_stud}'";
 	$link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
 	die();
@@ -41,9 +41,9 @@ if (isset($_GET['reasign_chat'])) {
 	die();
 }
 if (isset($_GET['clear_account_view'])) {
-	$sql = "SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_GET['clear_account_view']} LIMIT 1";
+	$sql = "SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_GET['clear_account_view']} LIMIT 1";
 	$temp_stud = $link_new->query($sql)->fetch_object()->stutteri;
-	/*$sql = "DELETE FROM {$GLOBALS['DB_NAME_OLD']}.Konto WHERE stutteri = '{$temp_stud}'";
+	/*$sql = "DELETE FROM `{$GLOBALS['DB_NAME_OLD']}`.Konto WHERE stutteri = '{$temp_stud}'";
 	$result = $link_new->query($sql);*/
 	header('Location: /admin/management/user_cleanup.php');
 	die();
@@ -107,8 +107,8 @@ if (isset($_GET['clear_account_view'])) {
 		</li>
 		<?php
 		//        $sql = "SELECT * FROM Brugere LIMIT $pr_page OFFSET $offset";
-		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, FROM {$GLOBALS['DB_NAME_OLD']}.Brugere AS user "
-			. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
+		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS user "
+			. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
 			. "WHERE user.date < '2018-02-26 00:00:00' AND timing.value < '2018-02-26 00:00:00' "
 			. "ORDER BY timing.value ASC, user.id ASC "
 			. ""
@@ -134,9 +134,9 @@ if (isset($_GET['clear_account_view'])) {
 					<i class='id'><?= $data->id; ?></i>
 				</span>
 				<span>
-					Stutteri: <i class='name'><?= $data->stutteri, 'UTF-8', 'Latin1'); ?></i><br />
-					Navn: <?= $data->navn, 'UTF-8', 'Latin1'); ?><br />
-					Mail: <?= $data->email, 'UTF-8', 'Latin1'); ?>
+					Stutteri: <i class='name'><?= $data->stutteri; ?></i><br />
+					Navn: <?= $data->navn; ?><br />
+					Mail: <?= $data->email; ?>
 				</span>
 				<span class="wkr monospace"><?= number_dotter($data->penge); ?></span><?php $iwkr += $data->penge; ?>
 				<span class="monospace center_text">(<?= $number_of_new_messages; ?>)(<?= $number_of_chat ?>)</span>

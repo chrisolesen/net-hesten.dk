@@ -30,16 +30,16 @@ $dead = 'død';
 
 $result = $link_new->query("SELECT id, navn, bruger, alder, thumb, egenskab, ulempe, talent, race "
 		. "FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS heste "
-		. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.game_data_competition_participants AS contests "
+		. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_competition_participants AS contests "
 		. "ON contests.participant_id = heste.id AND contests.points IS NULL "
-		. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
+		. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.horse_metadata AS breeding "
 		. "ON breeding.horse_id = heste.id AND breeding.meta_key = 'breeding' "
 		. "WHERE breeding.meta_value IS NULL AND competition_id IS NULL AND bruger = '{$stutteri}' AND staevne = '' AND STATUS <> '{$dead}' AND graesning = '' AND alder < 20  {$real_limit} {$only_foels} ORDER BY rand() LIMIT 4");
 $return_data = '';
 while ($data = $result->fetch_object()) {
 
 	$return_data .= "<li style='cursor:pointer;padding:5px;clear:both;display:block;line-height:20px;' data-horse_id='{$data->id}' data-type='potential_breed_target'>"
-			. " <img style = 'float:left;margin-right:10px;' src = 'https://files.net-hesten.dk/{$data->thumb}' height = '100px' />"
+			. " <img style = 'float:left;margin-right:10px;' src = '//files.net-hesten.dk/{$data->thumb}' height = '100px' />"
 			. mb_convert_encoding(" <div>{$data->race}</div>  ", 'UTF-8', 'latin1')
 			. mb_convert_encoding(" <div>{$data->navn}  ", 'UTF-8', 'latin1') . " ({$data->alder}år)</div>"
 			. mb_convert_encoding(" <div>{$data->egenskab}</div>  ", 'UTF-8', 'latin1')

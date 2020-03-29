@@ -12,29 +12,29 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 
 if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
     if ($competition_id = filter_input(INPUT_GET, 's_com_id')) {
-        $winner = $link_new->query("SELECT participant_id AS winner FROM {$GLOBALS['DB_NAME_NEW']}.game_data_simple_competition_participants where competition_id = {$competition_id} ORDER BY rand() limit 1")->fetch_object()->winner;
+        $winner = $link_new->query("SELECT participant_id AS winner FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition_participants where competition_id = {$competition_id} ORDER BY rand() limit 1")->fetch_object()->winner;
         
-        $link_new->query("UPDATE {$GLOBALS['DB_NAME_NEW']}.game_data_simple_competition SET winner = {$winner}, status_code = 43 WHERE id = {$competition_id}");
+        $link_new->query("UPDATE `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition SET winner = {$winner}, status_code = 43 WHERE id = {$competition_id}");
 
-        $selected_id =((object)json_decode( $link_new->query("SELECT data FROM {$GLOBALS['DB_NAME_NEW']}.game_data_simple_competition WHERE id = {$competition_id}")->fetch_object()->data))->prize_id;
+        $selected_id =((object)json_decode( $link_new->query("SELECT data FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition WHERE id = {$competition_id}")->fetch_object()->data))->prize_id;
 
         //$competion_subdata->prize_id;
         if ($selected_id) {
-            $thumb_data = $link_new->query("SELECT artists, image, race FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE id = {$selected_id} LIMIT 1")->fetch_object();
-            $artist = $link_new->query("SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$thumb_data->artists} LIMIT 1")->fetch_object()->stutteri;
+            $thumb_data = $link_new->query("SELECT artists, image, race FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_types WHERE id = {$selected_id} LIMIT 1")->fetch_object();
+            $artist = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$thumb_data->artists} LIMIT 1")->fetch_object()->stutteri;
             if (!$artist) {
-                $artist = $link_new->query("SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = 0 LIMIT 1")->fetch_object()->stutteri;
+                $artist = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = 0 LIMIT 1")->fetch_object()->stutteri;
                 //exit('Kun en tegner lige nu tak.');
             }
            
             $thumb = '//files'.HTTP_HOST.'/imgHorse/' . $thumb_data->image;
             $race = $thumb_data->race;
 
-            $advantage = $link_new->query("SELECT egenskab FROM {$GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
-            $disadvantage = $link_new->query("SELECT ulempe FROM {$GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
-            $talent = $link_new->query("SELECT talent FROM {$GLOBALS['DB_NAME_OLD']}.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
+            $advantage = $link_new->query("SELECT egenskab FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
+            $disadvantage = $link_new->query("SELECT ulempe FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
+            $talent = $link_new->query("SELECT talent FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
 
-            $height_data = $link_new->query("SELECT lower, upper FROM {$GLOBALS['DB_NAME_OLD']}.horse_height WHERE race = '{$race}' LIMIT 1")->fetch_object();
+            $height_data = $link_new->query("SELECT lower, upper FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_height WHERE race = '{$race}' LIMIT 1")->fetch_object();
             $height_lower = $height_data->lower;
             $height_upper = $height_data->upper;
             $height = mt_rand($height_lower, $height_upper);
@@ -124,14 +124,14 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
     <h1>Lodtræknings Admin</h1>
     <a class="btn btn-info" href="/admin/competitions/">Tilbage</a>
     <ol>
-    <?php $competitions = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.game_data_simple_competition");
+    <?php $competitions = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition");
     while ($competition = $competitions->fetch_object()) {
         $competion_subdata = (object)json_decode($competion_data->data);
         //$competion_subdata->prize_id;
         ?>
         <li style="border-bottom:1px dashed #333;">
         <?= ($competition->status_code == 42 ? '<span style="color:green;">Live</span>' : ''); ?>
-        <?= $link_new->query("SELECT count(competition_id) as amount FROM {$GLOBALS['DB_NAME_NEW']}.game_data_simple_competition_participants WHERE competition_id = {$competition->id}")->fetch_object()->amount; ?> Deltagere - 
+        <?= $link_new->query("SELECT count(competition_id) as amount FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition_participants WHERE competition_id = {$competition->id}")->fetch_object()->amount; ?> Deltagere - 
         <?= $competition->competition_name; ?>
         <?php if ($competition->status_code == 42) { ?>
         <a style="color:red;" href="?do=end_simple_competition&s_com_id=<?= $competition->id; ?>">Afslut</a>

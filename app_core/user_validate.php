@@ -2,18 +2,17 @@
 
 ini_set('session.cookie_domain', HTTP_HOST);
 session_start(['cookie_lifetime' => 172800, 'cookie_domain' => HTTP_HOST]);
-
 if (isset($_POST['password']) && isset($_POST['username'])) {
-
-	$username = strtolower($_POST['username']);
+	
+	$username = mb_strtolower($_POST['username']);
 	$password = $_POST['password'];
 	$username = filter_var($username, FILTER_SANITIZE_STRING);
 	$username = mysqli_real_escape_string($link_new, $username);
 
 	if (strpos($username, '@')) {
-		$result = $link_new->query("SELECT email, id, stutteri, password, hestetegner, penge, navn FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE email = '$username'");
+		$result = $link_new->query("SELECT email, id, stutteri, password, hestetegner, penge, navn FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE email = '$username'");
 	} else {
-		$result = $link_new->query("SELECT email, id, stutteri, password, hestetegner, penge, navn FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '$username'");
+		$result = $link_new->query("SELECT email, id, stutteri, password, hestetegner, penge, navn FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE stutteri = '$username'");
 	}
 
 	$num_rows = $result->num_rows;

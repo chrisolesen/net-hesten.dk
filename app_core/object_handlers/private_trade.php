@@ -198,7 +198,7 @@ class private_trade
 									. "heste.egenskab, "
 									. "heste.ulempe, "
 									. "heste.talent "
-									. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste AS heste WHERE id = $info"
+									. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS heste WHERE id = $info"
 							);
 							$show_horse_data = [];
 							while ($horse_data = $horse_datas->fetch_assoc()) {

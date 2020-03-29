@@ -1,13 +1,13 @@
 <?php
-
-if (is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['rights']) && filter_input(INPUT_GET, 'action') === 'impersonate') {
+if (in_array('global_admin', ($_SESSION['rights'] ?? [])) && filter_input(INPUT_GET, 'action') === 'impersonate') {
+	/*if (in_array('global_admin', session_value(['name' => 'rights', 'mode' => 'array'])) && filter_input(INPUT_GET, 'action') === 'impersonate') {*/
 
 	$_SESSION['impersonator_id'] = $_SESSION['user_id'];
 	$_SESSION['impersonator_username'] = $_SESSION['username'];
 	$_SESSION['impersonator_email'] = $_SESSION['email'];
 	$impersonate_id = (int) filter_input(INPUT_GET, 'user_id');
 
-	$result = $link_new->query("SELECT email, id, stutteri, hestetegner, penge, navn FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$impersonate_id}");
+	$result = $link_new->query("SELECT email, id, stutteri, hestetegner, penge, navn FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$impersonate_id}");
 
 	$num_rows = $result->num_rows;
 	while ($data = $result->fetch_assoc()) {

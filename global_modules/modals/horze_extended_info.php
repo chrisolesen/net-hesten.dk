@@ -8,7 +8,7 @@
                     'horse_id': jQuery(caller).parent().attr('data-horse-id')
                 },
                 crossDomain: true,
-                url: "https://ajax.<?= HTTP_HOST; ?>/index.php",
+                url: "//ajax.<?= HTTP_HOST; ?>/index.php",
                 cache: false
             }).always(function(data) {
                 horse_data = data.horse_data;
