@@ -10,27 +10,31 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_adm
 }
 ?>
 <style>
-.admin_panel .btn.btn-info {
-	margin-bottom:0.5em;
-	display:block;
-	width:260px;
-}
+	.admin_panel .btn.btn-info {
+		margin-bottom: 0.5em;
+		display: block;
+		width: 260px;
+	}
 </style>
 <section class="admin_panel">
 	<h1>Manuelle Cron</h1>
-    <a class="btn btn-info" href="/admin/">Tilbage</a>
+	<a class="btn btn-info" href="/admin/">Tilbage</a>
 	<?php
 	if (in_array('global_admin', $_SESSION['rights']) || in_array('tech_admin', $_SESSION['rights'])) {
-		?>
+	?>
 		<a class="btn btn-info" href="/admin/manuel_crons/competitions.php">Stævner</a>
+	<?php
+	}
+	if (in_array('global_admin', $_SESSION['rights']) || in_array('tech_admin', $_SESSION['rights']) || in_array('site_helper', $_SESSION['rights'])) {
+	?>
 		<a class="btn btn-info" href="/admin/manuel_crons/breeding.php">Avl</a>
-		<?php
+	<?php
 	}
 	?>
 	<?php
 	if (in_array('tech_admin', $_SESSION['rights'])) {
-		?>
-		<?php
+	?>
+	<?php
 	}
 	?>
 </section>

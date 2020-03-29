@@ -52,7 +52,7 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('admin_panel_acc
 	?>
 	<h2>Teknik Paneler</h2>
 	<?php
-	if (in_array('global_admin', $_SESSION['rights'])) {
+	if (in_array('global_admin', $_SESSION['rights']) || in_array('site_helper', $_SESSION['rights'])) {
 	?>
 		<a class="btn btn-info" href="/admin/manuel_crons/index.php">Manuelle Cron</a>
 	<?php
