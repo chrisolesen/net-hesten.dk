@@ -14,7 +14,7 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
     if ($competition_id = filter_input(INPUT_GET, 's_com_id')) {
         $winner = $link_new->query("SELECT participant_id AS winner FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition_participants where competition_id = {$competition_id} ORDER BY rand() limit 1")->fetch_object()->winner;
         
-        $link_new->query("UPDATE {$GLOBALS['DB_NAME_NEW']}.game_data_simple_competition SET winner = {$winner}, status_code = 43 WHERE id = {$competition_id}");
+        $link_new->query("UPDATE `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition SET winner = {$winner}, status_code = 43 WHERE id = {$competition_id}");
 
         $selected_id =((object)json_decode( $link_new->query("SELECT data FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition WHERE id = {$competition_id}")->fetch_object()->data))->prize_id;
 

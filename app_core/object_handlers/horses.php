@@ -23,7 +23,7 @@ class horses
 			$result = $link_new->query($sql);
 			while ($data = $result->fetch_object()) {
 				if (strtolower($data->owner_name) == strtolower($_SESSION['username'])) {
-					$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET graesning = 'ja', changedate = NOW() WHERE id = {$attr['horse_id']}";
+					$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET graesning = 'ja', changedate = NOW() WHERE id = {$attr['horse_id']}";
 					$result = $link_new->query($sql);
 					return ["Hesten er nu sat på græs, husk at hente den ind, inden 14 timer.", 'success'];
 				} else {
@@ -105,7 +105,7 @@ class horses
 						$durration = $date_now->diff($date_then);
 						if ($durration->y > 0 || $durration->m > 0 || $durration->d > 0 || $durration->h > 13) {
 							/* Punish */
-							$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
+							$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
 							$result = $link_new->query($sql);
 							return ["Din hest har stået for længe på græs!", 'warning'];
 						} else {
@@ -115,7 +115,7 @@ class horses
 							if ($payment > 0) {
 								accounting::add_entry(['amount' => $payment, 'line_text' => "Græsning af hest", 'mode' => '+']);
 							}
-							$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
+							$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
 							$result = $link_new->query($sql);
 							return ["Du lige tjent {$payment} wkr på græsning, godt arbejde!", 'success'];
 						}
@@ -172,9 +172,9 @@ class horses
 				. "breeding.meta_value AS breed_partner, "
 				. "breeding.meta_date AS breed_date "
 				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS heste "
-				. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.game_data_competition_participants AS contests "
+				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_competition_participants AS contests "
 				. "ON contests.participant_id = heste.id AND contests.points IS NULL "
-				. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
+				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.horse_metadata AS breeding "
 				. "ON breeding.horse_id = heste.id AND breeding.meta_key = 'breeding' "
 				. "WHERE status != 'død' "
 				. (($attr['mode'] == 'search_all') ? "AND heste.talent != '' " : '')
@@ -334,6 +334,6 @@ class horses
 			$attr['new_owner'] = (user::get_info(['user_id' => $attr['new_owner']]))->username;
 		}
 
-		$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = '{$attr['new_owner']}' WHERE bruger = '{$attr['old_owner']}' AND id = {$attr['horse_id']} LIMIT 1");
+		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '{$attr['new_owner']}' WHERE bruger = '{$attr['old_owner']}' AND id = {$attr['horse_id']} LIMIT 1");
 	}
 }

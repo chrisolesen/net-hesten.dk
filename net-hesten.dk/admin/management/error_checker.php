@@ -15,7 +15,7 @@ $dead = 'død';
 $choose_race = '*Vælg race*';
 $errors = [];
 if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
-	$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET kaaring = '' WHERE kaaring = 'ja' AND status != '{$Foel}'";
+	$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET kaaring = '' WHERE kaaring = 'ja' AND status != '{$Foel}'";
 	$link_new->query($sql);
 }
 ?>
@@ -91,7 +91,7 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 						exit();
 					}
 					$suggested_sql === '' ? $suggested_sql = "update game_data_auction_bids SET status_code = 6 where creator = {$related_bids->creator} and bid_date = '{$related_bids->bid_date}' LIMIT 1" : '';
-					$verifying_sql = "SELECT h.id as HesteID, h.bruger, b.stutteri, b.id AS BrugerID FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste h LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere b ON h.bruger = b.stutteri WHERE h.id = {$related_bids->object_id} LIMIT 1";
+					$verifying_sql = "SELECT h.id as HesteID, h.bruger, b.stutteri, b.id AS BrugerID FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste h LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere b ON h.bruger = b.stutteri WHERE h.id = {$related_bids->object_id} LIMIT 1";
 					/* Auto Verify */
 //                    $link_new->query($verifying_sql)->fetch_object();
 
@@ -159,22 +159,22 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 		<?php
 		if (isset($_GET['put']) && isset($_GET['on'])) {
 			$new_thumb = $link_new->query("SELECT id, thumb, tegner FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = '{$_GET['put']}' limit 1 ")->fetch_object();
-			$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET thumb = '{$new_thumb->thumb}', tegner = '{$new_thumb->tegner}' WHERE id = '{$_GET['on']}'";
+			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET thumb = '{$new_thumb->thumb}', tegner = '{$new_thumb->tegner}' WHERE id = '{$_GET['on']}'";
 			$link_new->query($sql);
 		}
 //		if (isset($_GET['accept']) && isset($_GET['for'])) {
-//			$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET thumb = '{$_GET['accept']}' WHERE id = '{$_GET['for']}'";
+//			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET thumb = '{$_GET['accept']}' WHERE id = '{$_GET['for']}'";
 //			//			echo $sql;
 //			$link_new->query($sql);
 //		}
 		if (isset($_GET['no_rebirth'])) {
-			$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET genereres = '', genfodes = '' WHERE id = '{$_GET['no_rebirth']}'";
+			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET genereres = '', genfodes = '' WHERE id = '{$_GET['no_rebirth']}'";
 			if ($_GET['foel'] == 'true') {
 				$kon = 'Hoppe';
 				if (rand(1, 3) >= 2) {
 					$kon = 'Hingst';
 				}
-				$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET genereres = '', genfodes = '', bruger = 'techhesten', kon = '{$kon}' WHERE id = '{$_GET['no_rebirth']}'";
+				$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET genereres = '', genfodes = '', bruger = 'techhesten', kon = '{$kon}' WHERE id = '{$_GET['no_rebirth']}'";
 			}
 			$link_new->query($sql);
 		}

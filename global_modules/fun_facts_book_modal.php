@@ -119,9 +119,9 @@
 				}
 				$auction_data = $link_new->query("SELECT count(bids.bid_date) AS amount, heste.race AS race " .
 					"FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_auction_bids AS bids " .
-					"LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.game_data_auctions AS ah on ah.id = bids.auction " .
-					"LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Heste AS heste on heste.id = ah.object_id " .
-					"LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere AS brugere on brugere.id = bids.creator " .
+					"LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_auctions AS ah on ah.id = bids.auction " .
+					"LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Heste AS heste on heste.id = ah.object_id " .
+					"LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS brugere on brugere.id = bids.creator " .
 					"WHERE bids.bid_date > '{$year_last}-{$month_last}-01 00:00:00' " .
 					"AND bids.bid_date < '{$year_now}-{$month_now}-01 00:00:00' " .
 					"GROUP BY heste.race " .

@@ -64,7 +64,7 @@ while ($data = $result->fetch_assoc()) {
 				$tegner = $rand_heste_thumb->tegner;
 				$nythumb = $rand_heste_thumb->thumb;
 //-----------update thumb, penge, status og slet det gamle føl-billede-------------------------
-				$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET pris='$nypris', status='Hest', alder='$nyalder', date=NOW(), status_skift='$today', alder_skift='$today', tegner='$tegner', thumb='$nythumb' WHERE id = '$nyid'");
+				$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET pris='$nypris', status='Hest', alder='$nyalder', date=NOW(), status_skift='$today', alder_skift='$today', tegner='$tegner', thumb='$nythumb' WHERE id = '$nyid'");
 
 				$dims = '"';
 				$tegn = array("&", "$dims", "'");

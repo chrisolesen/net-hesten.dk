@@ -47,7 +47,7 @@ require "$basepath/global_modules/header.php";
 	</li>
 	<?php
 //	Så "skjul mit navn" / "skjul mit beløb men behold plads på listen" / "skjul navn og beløb"
-	$donors = $link_new->query("SELECT user.id AS id, user.stutteri AS user, sum(payment.price) AS amount, MAX(payment.date) AS last_date FROM `{$GLOBALS['DB_NAME_OLD']}`.PaypalPayment AS payment LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere AS user ON user.id = payment.stud_id WHERE payment.date > '2015-08-01 00:00:00' GROUP BY payment.stud_id ORDER BY amount DESC, last_date DESC");
+	$donors = $link_new->query("SELECT user.id AS id, user.stutteri AS user, sum(payment.price) AS amount, MAX(payment.date) AS last_date FROM `{$GLOBALS['DB_NAME_OLD']}`.PaypalPayment AS payment LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS user ON user.id = payment.stud_id WHERE payment.date > '2015-08-01 00:00:00' GROUP BY payment.stud_id ORDER BY amount DESC, last_date DESC");
 	$donors_formatted = [];
 	while ($donor = $donors->fetch_object()) {
 //		$last_active = $link_new->query("SELECT end FROM netchw_db1.user_data_sessions WHERE user_id = {$donor->id} ORDER BY end LIMIT 1")->fetch_object()->end;

@@ -22,7 +22,7 @@ if (isset($_GET['delete_user'])) {
 if (isset($_GET['confiscate_horses'])) {
 	$sql = "SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_GET['confiscate_horses']} LIMIT 1";
 	$temp_stud = $link_new->query($sql)->fetch_object()->stutteri;
-	$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = 'Dyreværnet' WHERE bruger = '{$temp_stud}'";
+	$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = 'Dyreværnet' WHERE bruger = '{$temp_stud}'";
 	$link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
 	die();
@@ -108,7 +108,7 @@ if (isset($_GET['clear_account_view'])) {
 		<?php
 		//        $sql = "SELECT * FROM Brugere LIMIT $pr_page OFFSET $offset";
 		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS user "
-			. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
+			. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
 			. "WHERE user.date < '2018-02-26 00:00:00' AND timing.value < '2018-02-26 00:00:00' "
 			. "ORDER BY timing.value ASC, user.id ASC "
 			. ""

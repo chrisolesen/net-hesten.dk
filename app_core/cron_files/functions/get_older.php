@@ -54,19 +54,19 @@ if ($result) {
 		if ($horse_target_age == $horse->alder) {
 			++$skipped;
 			/* Horse matches expected age, update touch date */
-			$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
+			$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
 			continue;
 		}
 		if ($horse_target_age > $horse->alder) {
 			++$low;
 			/* Update horse age */
-			$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET alder = '{$horse_target_age}', age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
+			$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET alder = '{$horse_target_age}', age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
 			continue;
 		}
 		if ($horse_target_age < $horse->alder) {
 			++$high;
 			/* Dont down age horses, so simply set age_updated */
-			$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
+			$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET age_updated = '{$mysqli_date_now}' WHERE id = '{$horse->id}'");
 			continue;
 		}
 		

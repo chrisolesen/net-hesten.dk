@@ -76,10 +76,10 @@ class accounting {
 
         /* Update user money */
         if ($attr['mode'] === '+') {
-            $sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge + {$attr['amount']}) WHERE id = {$attr['user_id']} ";
+            $sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET penge = (penge + {$attr['amount']}) WHERE id = {$attr['user_id']} ";
             $attr['meta_data']['line_total'] = $money + $attr['amount'];
         } else {
-            $sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Brugere SET penge = (penge - {$attr['amount']}) WHERE id = {$attr['user_id']} ";
+            $sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET penge = (penge - {$attr['amount']}) WHERE id = {$attr['user_id']} ";
             $attr['meta_data']['line_total'] = $money - $attr['amount'];
         }
         $link_new->query($sql);

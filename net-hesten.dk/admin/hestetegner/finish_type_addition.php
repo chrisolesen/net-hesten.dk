@@ -69,7 +69,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			$artist = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE stutteri = '{$latin_1_name}' LIMIT 1")->fetch_object()->id;
 			if ($artist && in_array((int) $status, [22, 26, 19, 25, 24]) && $race && is_numeric($id)) {
 
-				$sql = "UPDATE {$GLOBALS['DB_NAME_NEW']}.horse_types SET artists = '{$artist}', status = {$status}, race = '{$race}' WHERE id = {$id}";
+				$sql = "UPDATE `{$GLOBALS['DB_NAME_NEW']}`.horse_types SET artists = '{$artist}', status = {$status}, race = '{$race}' WHERE id = {$id}";
 //				echo $sql;
 				$link_new->query($sql);
 			}

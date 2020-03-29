@@ -294,7 +294,7 @@ class auctions
 			foreach ($horses as $horse) {
 				if ($horse['id'] == ($attr['horse_id'])) {
 					/* Transfer horse to auctions user */
-					$sql = "UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET bruger = 'Auktionshuset' WHERE id = '{$horse['id']}' AND bruger = '{$seller_user_name}'";
+					$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = 'Auktionshuset' WHERE id = '{$horse['id']}' AND bruger = '{$seller_user_name}'";
 					$result = $link_new->query($sql);
 					/* Insert horse into auctions table */
 					$sql = "INSERT INTO game_data_auctions (creator, status_code, object_id, object_type, minimum_price, instant_price, creation_date, end_date) "

@@ -83,7 +83,7 @@ while ($competition_data = $competition_result->fetch_object()) {
 					$utf_8_message = "<b>Tilykke {$data->uname}</b>,<br /><br /> Din hest {$data->hname} har vundet {$medal} i {$competition->name}. ({$competition->end_date})<br /><br />Du har fået {$price_money}wkr og din hest er steget med {$value_add} i værdi.<br /><br /><b>Med venlig hilsen</b><br />Konkurrencestyrelsen";
 
 					$origin = 53844; /* Konkurrencestyrelsen */
-					$link_new->query("UPDATE {$GLOBALS['DB_NAME_OLD']}.Heste SET pris = (pris + {$value_add}) WHERE id = {$data->hid}");
+					$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET pris = (pris + {$value_add}) WHERE id = {$data->hid}");
 
 					accounting::add_entry(['amount' => $price_money, 'line_text' => "{$medal} medalje i stævne til [{$data->hid}]", 'mode' => '+', 'user_id' => $data->uid]);
 					$link_new->query("INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, {$origin}, {$data->uid}, NOW(), '{$utf_8_message}' )");

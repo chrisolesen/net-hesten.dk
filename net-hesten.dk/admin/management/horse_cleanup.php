@@ -76,7 +76,7 @@ LIMIT 1;
 		<?php
 //        $sql = "SELECT * FROM Brugere LIMIT $pr_page OFFSET $offset";
 		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, user.IP, user.logindate FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS user "
-				. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
+				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
 				. "WHERE user.logindate < '2018-02-26 00:00:00' AND user.date < '2018-02-26 00:00:00' AND timing.value < '2018-02-26 00:00:00' "
 				. "ORDER BY user.logindate ASC, timing.value ASC, user.id ASC "
 				. ""
@@ -106,15 +106,14 @@ LIMIT 1;
 					<?= $data->IP; ?> 
 				</span>
 				<span>
-					Stutteri: <i class='name'><?= $data->stutteri, 'UTF-8', 'Latin1'); ?></i><br />
-					Navn: <?= $data->navn, 'UTF-8', 'Latin1'); ?><br />
-					Mail: <?= $data->email, 'UTF-8', 'Latin1'); ?>
+					Stutteri: <i class='name'><?= $data->stutteri; ?></i><br />
+					Navn: <?= $data->navn; ?><br />
+					Mail: <?= $data->email; ?>
 				</span>
 				<span class="wkr monospace"><?= number_dotter($data->penge); ?></span><?php $iwkr += $data->penge; ?>
 				<span class="monospace center_text">(<?= $number_of_new_messages; ?>)(<?= $number_of_chat ?>)</span>
 				<span class="monospace center_text"><?= $number_of_horses; ?></span><?php $ihorses += $number_of_horses; ?>
 				<span class="monospace center_text"><?= $number_of_konto; ?></span>
-				<?php /* <span><?= $data->email, 'UTF-8', 'Latin1'); ?></span> */ ?>
 				<span class="monospace center_text">
 					<?php
 					if ($data->logindate > $data->last_online) {

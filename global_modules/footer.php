@@ -223,14 +223,16 @@ if (isset($modals)) {
 		echo $modal;
 	}
 }
-if (in_array(strtolower($title), ['visit'])) {
-	require_once("{$basepath}/global_modules/modals/unprovoked_bid.php");
-}
-if (in_array(strtolower($title), ['auktioner', 'stutteri', 'hestehandleren', 'visit'])) {
-	require_once("{$basepath}/global_modules/modals/horze_extended_info.php");
-}
-if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
-	require_once("{$basepath}/global_modules/modals/horse_linage.php");
+if (isset($title)) {
+	if (in_array(strtolower($title), ['visit'])) {
+		require_once("{$basepath}/global_modules/modals/unprovoked_bid.php");
+	}
+	if (in_array(strtolower($title), ['auktioner', 'stutteri', 'hestehandleren', 'visit'])) {
+		require_once("{$basepath}/global_modules/modals/horze_extended_info.php");
+	}
+	if (in_array(strtolower($title), ['auktioner', 'hestehandleren', 'visit'])) {
+		require_once("{$basepath}/global_modules/modals/horse_linage.php");
+	}
 }
 ?>
 <script>
