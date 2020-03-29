@@ -67,7 +67,7 @@ class horses
 		/* Send besked til hingst */
 		/* Husk dyrelægen */
 		/* Få status til at slå igennem på mit stutteri listen */
-		$sql = "REPLACE INTO {$GLOBALS['DB_NAME_NEW']}.horse_metadata (horse_id, meta_key, meta_value, meta_date) VALUES ({$horse_data->id}, 'breeding', '{$target_horse_data->id}', NOW())";
+		$sql = "REPLACE INTO `{$GLOBALS['DB_NAME_NEW']}`.horse_metadata (horse_id, meta_key, meta_value, meta_date) VALUES ({$horse_data->id}, 'breeding', '{$target_horse_data->id}', NOW())";
 		$link_new->query($sql);
 		return ["Du har nu folet {$horse_data->navn} med {$target_horse_data->navn}. Du kan forvente et føl om ~40 dage.", 'success'];
 	}
