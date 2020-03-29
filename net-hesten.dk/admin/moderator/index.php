@@ -15,7 +15,7 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 }
 
 $fun_facts = [];
-$fun_facts['users'] = $link_new->query("SELECT sum(penge) AS total_wkr FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri NOT IN ('Net-hesten', 'DennisTest', 'B', 'auktionshuset', 'Carsten', 'hestehandleren','{$foel}kassen') LIMIT 1")->fetch_object();
+$fun_facts['users'] = $link_new->query("SELECT sum(penge) AS total_wkr FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri NOT IN ('Net-hesten', 'DennisTest', 'B', 'auktionshuset', 'Carsten', 'hestehandleren','{$foel}kassen') LIMIT 1")->fetch_object();
 ?>
 <div>
 	Total mængde wkr: <?= number_dotter($fun_facts['users']->total_wkr); ?><br />
@@ -23,7 +23,7 @@ $fun_facts['users'] = $link_new->query("SELECT sum(penge) AS total_wkr FROM {$_G
 <?php
 $i = 0;
 
-$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere");
+$result = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Brugere");
 $i = 0;
 while ($data = $result->fetch_assoc()) {
 	++$i;
@@ -31,7 +31,7 @@ while ($data = $result->fetch_assoc()) {
 echo "<pre>";
 echo "$i users have never logged in<br />";
 
-$result = $link_new->query("SELECT * FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere");
+$result = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Brugere");
 $i = 0;
 
 $rige = 0;
@@ -56,9 +56,9 @@ while ($data = $result->fetch_assoc()) {
 	if ($data['nyhedsbrev'] == 'ja') {
 		++$nyhedsbrev;
 	}
-	if (($data['penge'], 'UTF-8', 'iso-8859-15') > $richest_wkr)) {
+	if (($data['penge'] > $richest_wkr)) {
 		$richest_wkr = $data['penge'];
-		$richest = $data['stutteri'], 'UTF-8', 'iso-8859-15');
+		$richest = $data['stutteri'];
 	}
 
 	if ($data['penge'] >= 100000000) {
@@ -83,8 +83,8 @@ while ($data = $result->fetch_assoc()) {
 
 	++$i;
 }
-//$sql_horses = "SELECT sum(pris) AS combined_value, count(id) AS amount FROM {$_GLOBALS['DB_NAME_OLD']}.Heste where status != '$dead' and bruger != 'hestehandleren*' and bruger !='carsten' and bruger !='net-hesten' and bruger != '{$foel}kassen'";
-$sql_horses = "SELECT sum(pris) AS combined_value, count(id) AS amount FROM {$_GLOBALS['DB_NAME_OLD']}.Heste where status != '$dead' and bruger NOT IN ('Net-hesten', 'DennisTest', 'B', 'auktionshuset', 'Carsten', 'hestehandleren','{$foel}kassen')";
+//$sql_horses = "SELECT sum(pris) AS combined_value, count(id) AS amount FROM {$GLOBALS['DB_NAME_OLD']}.Heste where status != '$dead' and bruger != 'hestehandleren*' and bruger !='carsten' and bruger !='net-hesten' and bruger != '{$foel}kassen'";
+$sql_horses = "SELECT sum(pris) AS combined_value, count(id) AS amount FROM {$GLOBALS['DB_NAME_OLD']}.Heste where status != '$dead' and bruger NOT IN ('Net-hesten', 'DennisTest', 'B', 'auktionshuset', 'Carsten', 'hestehandleren','{$foel}kassen')";
 $result_horses = $link->query($sql_horses);
 while ($data_horses = $result_horses->fetch_object()) {
 	echo PHP_EOL . '#Horses ' . number_dotter($data_horses->amount) . ' = ' . number_dotter($data_horses->combined_value) . ',- wkr' . PHP_EOL . PHP_EOL;

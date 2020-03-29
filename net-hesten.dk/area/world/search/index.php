@@ -59,7 +59,7 @@ if (is_array(horses::get_all($attr))) {
         $extended_info = '';
         if (in_array('tech_admin', $_SESSION['rights'])) {
         }
-        $owner_id = $link_new->query("SELECT id FROM {$_GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$horse['owner_name']}' LIMIT 1")->fetch_object()->id;
+        $owner_id = $link_new->query("SELECT id FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$horse['owner_name']}' LIMIT 1")->fetch_object()->id;
         $owner_name = $horse['owner_name'];
         $extended_info = [
             'name' => $horse['name'],

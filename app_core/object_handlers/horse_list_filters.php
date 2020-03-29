@@ -1,9 +1,10 @@
 <?php
 
-class horse_list_filters {
+class horse_list_filters
+{
 
-	public static function save_filter_settings($attr = []) {
-		global $link_new;
+	public static function save_filter_settings($attr = [])
+	{
 		global $link_new;
 		global $_POST;
 
@@ -13,8 +14,8 @@ class horse_list_filters {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-            $attr[$key] = $link_new->real_escape_string($value);
-        }
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
 
 		if (!filter_input(INPUT_POST, 'filter_zone') || !$_SESSION['user_id']) {
 			if (!($attr['reset_all_filters'] == true)) {
@@ -22,7 +23,6 @@ class horse_list_filters {
 			}
 		}
 		if ($attr['reset_all_filters'] == true) {
-			
 		} else {
 			$filter_data = false;
 			$sql = "SELECT value FROM user_data_json WHERE parent_id = {$_SESSION['user_id']} AND name = 'list_filtering_settings' LIMIT 1";
@@ -93,8 +93,8 @@ class horse_list_filters {
 		return true;
 	}
 
-	public static function render_filter_settings($attr = []) {
-		global $link_new;
+	public static function render_filter_settings($attr = [])
+	{
 		global $link_new;
 		global $cached_races;
 
@@ -112,8 +112,8 @@ class horse_list_filters {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-            $attr[$key] = $link_new->real_escape_string($value);
-        }
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
 
 		if (!isset($attr['zone'])) {
 			return false;
@@ -146,13 +146,14 @@ class horse_list_filters {
 			return ['Kritisk fejl: Dit stutteri kunne ikke findes, prøv igen eller kontakt en admin evt. på admin@net-hesten.dk', 'error'];
 		}
 		ob_start();
-		?>
+?>
 		<!-- Filters - Start -->
 		<style>
-			.list_filters_form label{
+			.list_filters_form label {
 				margin-right: 10px;
 			}
-			.list_filters_form .filter_line{
+
+			.list_filters_form .filter_line {
 				margin-bottom: 0.5em;
 			}
 		</style>
@@ -182,7 +183,7 @@ class horse_list_filters {
 						?>
 						<option <?= (in_array($race['id'], $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?> value="<?= $race['id']; ?>"><?= $race['name']; ?> (<?= $antal; ?>)</option>
 					<?php } else {
-						?>
+					?>
 						<option <?= (in_array($race['id'], $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?> value="<?= $race['id']; ?>"><?= $race['name']; ?></option>
 					<?php }
 					?>
@@ -225,9 +226,7 @@ class horse_list_filters {
 				</label>
 				<select name="filter_age_min" id="filter_age_min">
 					<?php for ($value = 0; $value <= 18; $value++) { ?>
-						<option <?= ($user_filter_data[$attr['zone']]['age_min'] == $value) ? 'selected' : ''; ?> value="
-																												  <?= $value; ?>">
-							<?= $value; ?> år</option>
+						<option <?= ($user_filter_data[$attr['zone']]['age_min'] == $value) ? 'selected' : ''; ?> value="<?= $value; ?>"><?= $value; ?> år</option>
 					<?php }
 					?>
 				</select>
@@ -236,9 +235,7 @@ class horse_list_filters {
 				</label>
 				<select name="filter_age_max" id="filter_age_max">
 					<?php for ($value = 0; $value <= 16; $value++) { ?>
-						<option <?= ($user_filter_data[$attr['zone']]['age_max'] == $value) ? 'selected' : ''; ?> value="
-																												  <?= $value; ?>">
-							<?= $value; ?> år</option>
+						<option <?= ($user_filter_data[$attr['zone']]['age_max'] == $value) ? 'selected' : ''; ?> value="<?= $value; ?>"><?= $value; ?> år</option>
 					<?php }
 					?>
 					<option <?= ($user_filter_data[$attr['zone']]['age_max'] == 'any' || !isset($user_filter_data[$attr['zone']]['age_max'])) ? 'selected' : ''; ?> value="any">Alle</option>
@@ -257,11 +254,9 @@ class horse_list_filters {
 							if ($artist->name == '') {
 								continue;
 							}
-							?>
-							<option value="<?= $artist->name; ?>" <?= ($user_filter_data[$attr['zone']]['artist'] == $artist->name) ? 'selected' : ''; ?>>
-								<?= $artist->name; ?>
-							</option>
-							<?php
+					?>
+							<option value="<?= $artist->name; ?>" <?= ($user_filter_data[$attr['zone']]['artist'] == $artist->name) ? 'selected' : ''; ?>><?= $artist->name; ?></option>
+					<?php
 						}
 					}
 					?>
@@ -303,7 +298,7 @@ class horse_list_filters {
 			<input style="position:absolute;bottom:0;right:90px;" type="submit" class="btn btn-danger" value="Nulstil" name="reset">
 		</form>
 		<!-- Filters - End -->
-		<?php
+<?php
 		$return_data = ob_get_contents();
 		ob_end_clean();
 
@@ -311,8 +306,8 @@ class horse_list_filters {
 		return $return_data;
 	}
 
-	public static function get_filter_string($attr = []) {
-		global $link_new;
+	public static function get_filter_string($attr = [])
+	{
 		global $link_new;
 		global $cached_races;
 
@@ -322,8 +317,8 @@ class horse_list_filters {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-            $attr[$key] = $link_new->real_escape_string($value);
-        }
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
 
 		if (!isset($attr['zone'])) {
 			return false;
@@ -344,7 +339,7 @@ class horse_list_filters {
 			$races = '';
 			foreach ($user_filter_data[$attr['zone']]['races'] as $race_id) {
 				$race_name = $cached_races[(int) $race_id]['name'];
-//				$race_name = $cached_races[(int) $race_id]['name'];
+				//				$race_name = $cached_races[(int) $race_id]['name'];
 				$races .= "'{$race_name}',";
 			}
 			$return_data .= " AND race IN ({$races}'') ";
@@ -363,7 +358,6 @@ class horse_list_filters {
 		}
 		if ($user_filter_data[$attr['zone']]['age_max']) {
 			if ($user_filter_data[$attr['zone']]['age_max'] == 'any') {
-				
 			} else {
 
 				$return_data .= " AND CAST(alder AS UNSIGNED) <= {$user_filter_data[$attr['zone']]['age_max']} ";
@@ -372,14 +366,13 @@ class horse_list_filters {
 
 		if ($user_filter_data[$attr['zone']]['artist']) {
 			if ($user_filter_data[$attr['zone']]['artist'] == 'all') {
-				
 			} else {
 				$artist_for_db = $user_filter_data[$attr['zone']]['artist'];
 				$return_data .= " AND tegner = '{$artist_for_db}' ";
 			}
 		}
 
-		if (!empty($user_filter_data[$attr['zone']]['name'])) {
+		if (!empty($user_filter_data[$attr['zone']]['name']) && $user_filter_data[$attr['zone']]['name'] != '') {
 
 			$return_data .= " AND navn LIKE '%{$user_filter_data[$attr['zone']]['name']}%' ";
 		}
@@ -421,5 +414,4 @@ class horse_list_filters {
 		}
 		return $return_data;
 	}
-
 }

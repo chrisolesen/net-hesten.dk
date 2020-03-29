@@ -13,7 +13,7 @@ SELECT nt.value, ot.stutteri, ot.email, ot.id
 FROM praktisk_nethest_new.user_data_timing nt 
 LEFT JOIN praktisk_nethest_old_db.Brugere ot ON nt.parent_id = ot.id 
 where nt.name = 'last_active' 
-AND nt.parent_id NOT IN ({$_GLOBALS['hidden_system_users_sql']}) 
+AND nt.parent_id NOT IN ({$GLOBALS['hidden_system_users_sql']}) 
 AND ot.stutteri IS NOT NULL order by nt.value ASC;
 ");
 

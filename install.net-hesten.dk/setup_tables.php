@@ -1,5 +1,5 @@
 <?php
-$basepath = '../..';
+$basepath = '..';
 require_once("{$basepath}/app_core/db_conf.php");
 
 $files = [

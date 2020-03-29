@@ -1,5 +1,5 @@
 <?php
-$basepath = '../..';
+$basepath = '..';
 require_once("{$basepath}/app_core/db_conf.php");
 require_once("{$basepath}/app_core/functions/password_hash.php");
 ?>

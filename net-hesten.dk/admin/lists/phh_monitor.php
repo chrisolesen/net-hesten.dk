@@ -40,8 +40,8 @@ if (!(is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['right
     (SELECT count(id) FROM `game_data_private_trade` WHERE (seller = buyer_id AND buyer = seller_id)) AS direction_two, 
     (SELECT GROUP_CONCAT(DISTINCT LEAST(buyer,seller),' ', GREATEST(seller, buyer)) FROM `game_data_private_trade` WHERE (seller = seller_id AND buyer = buyer_id) OR (seller = buyer_id AND buyer = seller_id)) AS pair  
     FROM `game_data_private_trade` 
-    LEFT JOIN `{$_GLOBALS['DB_NAME_OLD']}`.`Brugere` sellers ON sellers.id = seller 
-    LEFT JOIN `{$_GLOBALS['DB_NAME_OLD']}`.`Brugere` buyers ON buyers.id = buyer
+    LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` sellers ON sellers.id = seller 
+    LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` buyers ON buyers.id = buyer
     GROUP BY pair 
     ORDER BY direction_two + direction_one DESC";
     $result = $link_new->query($sql) or print("<br /><br />Query Failed! SQL: <br />$sql<br /> - Error: <br /><br />".mysqli_error($link_new).'<br /><br />');

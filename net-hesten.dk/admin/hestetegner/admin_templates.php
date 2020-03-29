@@ -127,7 +127,7 @@ if (filter_input(INPUT_POST, 'submit_edit')) {
 						<label for="suggested_race">Racer:</label>
 						<select style="height:275px;" multiple id="suggested_race" name="suggested_race[]">
 							<?php
-							$sql = "SELECT id, name FROM {$_GLOBALS['DB_NAME_NEW']}.horse_races ORDER BY name";
+							$sql = "SELECT id, name FROM {$GLOBALS['DB_NAME_NEW']}.horse_races ORDER BY name";
 							$race_names = $link_new->query($sql);
 							while ($race = $race_names->fetch_object()) {
 								?>

@@ -106,7 +106,7 @@ if (isset($_FILES['fileToUpload'])) {
 </form>
 <br />
 <?php
-$sql = "SELECT count(id) AS amount FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE (`status` IS NULL OR `race` IS NUll) AND id > 7000";
+$sql = "SELECT count(id) AS amount FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE (`status` IS NULL OR `race` IS NUll) AND id > 7000";
 $number_of_new = $link_new->query($sql)->fetch_object()->amount;
 ?>
 <a href='/admin/hestetegner/finish_type_addition.php'>Færdigør tilføjelser (<?= $number_of_new; ?>)</a>
@@ -158,10 +158,10 @@ $number_of_new = $link_new->query($sql)->fetch_object()->amount;
 		<h2>Føl</h2>
 		<ul>
 			<?php
-//			$sql = "SELECT count(id) AS amount, race FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE status IN (25, 26) GROUP BY race ORDER BY amount ASC";
+//			$sql = "SELECT count(id) AS amount, race FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE status IN (25, 26) GROUP BY race ORDER BY amount ASC";
 			$sql = "SELECT races.name, template.amount "
-					. "FROM {$_GLOBALS['DB_NAME_NEW']}.horse_races AS races "
-					. "LEFT JOIN (SELECT count(id) AS amount, race FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE status IN (25,26) AND archived = 0 GROUP BY race) AS template "
+					. "FROM {$GLOBALS['DB_NAME_NEW']}.horse_races AS races "
+					. "LEFT JOIN (SELECT count(id) AS amount, race FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE status IN (25,26) AND archived = 0 GROUP BY race) AS template "
 					. "ON template.race = races.name "
 					. "ORDER BY template.race";
 //					. "ORDER BY template.amount";
@@ -176,10 +176,10 @@ $number_of_new = $link_new->query($sql)->fetch_object()->amount;
 		<h2>Heste</h2>
 		<ul>
 			<?php
-//			$sql = "SELECT count(id) AS amount, race FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE status IN (19,20,21,22,23,24) GROUP BY race ORDER BY amount ASC";
+//			$sql = "SELECT count(id) AS amount, race FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE status IN (19,20,21,22,23,24) GROUP BY race ORDER BY amount ASC";
 			$sql = "SELECT races.name, template.amount "
-					. "FROM {$_GLOBALS['DB_NAME_NEW']}.horse_races AS races "
-					. "LEFT JOIN (SELECT count(id) AS amount, race FROM {$_GLOBALS['DB_NAME_NEW']}.horse_types WHERE status IN (19,20,21,22,23,24) AND archived = 0 GROUP BY race) AS template "
+					. "FROM {$GLOBALS['DB_NAME_NEW']}.horse_races AS races "
+					. "LEFT JOIN (SELECT count(id) AS amount, race FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE status IN (19,20,21,22,23,24) AND archived = 0 GROUP BY race) AS template "
 					. "ON template.race = races.name "
 					. "ORDER BY template.race";
 //					. "ORDER BY template.amount";
