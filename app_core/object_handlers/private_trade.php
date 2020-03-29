@@ -176,7 +176,20 @@ class private_trade
 		foreach ($attr as $key => $value) {
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
-		if (isset($attr['user_name'])) {
+		if (($attr['mode'] ?? false) == 'latest_offer') {
+			$user_id = ($attr['user_id'] ?? ($_SESSION['user_id'] ?? false));
+			if ($user_id) {
+				$sql = "SELECT `creation_date` FROM game_data_private_trade 
+				WHERE (`seller` = {$user_id} AND `status_code` = 44) OR (`buyer` = {$user_id} AND `status_code` = 38)
+				ORDER BY `creation_date` DESC LIMIT 1";
+				$latest = ($link_new->query($sql)->fetch_object() ?? false);
+				if ($latest) {
+					return $latest->creation_date;
+				}
+			}
+			return '0000-00-00 00:00:00';
+		}
+		if (isset($attr['user_id'])) {
 			$offers = $link_new->query("SELECT * FROM game_data_private_trade WHERE (`seller` = {$attr['user_id']} OR `buyer` = {$attr['user_id']}) AND `status_code` IN (44,38) ");
 			if ($offers) {
 				$i = 0;

@@ -11,12 +11,12 @@ class chat
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
-			isset($attr[$key]) ? : $attr[$key] = $value;
+			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		if (!(isset($attr['user_id']))) {
 			return false;
 		}
-		$user_id = (int)$attr['user_id'];
+		$user_id = (int) $attr['user_id'];
 		$sql = "INSERT INTO user_data_timing (parent_id, name, value) VALUES ({$user_id},'last_online_chat',NOW()) ON DUPLICATE KEY UPDATE value = NOW()";
 		$result = $link_new->query($sql);
 		if ($result) {
@@ -33,10 +33,10 @@ class chat
 		$return_data = [];
 		$defaults = ['time_mode' => 'm', 'time_val' => '30', 'mode' => 'return'];
 		foreach ($defaults as $key => $value) {
-			isset($attr[$key]) ? : $attr[$key] = $value;
+			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		$mode = 'MINUTE';
-//		$target_time = new DateTime('now');
+		//		$target_time = new DateTime('now');
 		if ($attr['time_mode'] == 'm') {
 			$mode = 'MINUTE';
 		}
@@ -49,12 +49,11 @@ class chat
 		if ($attr['mode'] == 'count') {
 			return $link_new->query("SELECT count(parent_id) AS amount FROM user_data_timing WHERE name = 'last_online_chat' AND value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode})")->fetch_object()->amount;
 		}
-		$user_id = (int)$attr['user_id'];
 		$sql = "SELECT old.id AS userid, old.stutteri AS username, new.value AS time FROM user_data_timing AS new LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS old ON old.id = new.parent_id WHERE new.name = 'last_online_chat' AND new.value > DATE_SUB(NOW(),INTERVAL {$attr['time_val']} {$mode}) ORDER BY new.value DESC";
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_object()) {
-				$return_data[] = (object)[
+				$return_data[] = (object) [
 					'user_id' => $data->userid,
 					'username' => $data->username,
 					'last_online' => $data->time
@@ -72,7 +71,7 @@ class chat
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
-			isset($attr[$key]) ? : $attr[$key] = $value;
+			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		if ($attr['message'] == '') {
 			return false;
@@ -100,11 +99,11 @@ class chat
 		$return_data = [];
 		$defaults = ['limit' => 10];
 		foreach ($defaults as $key => $value) {
-			isset($attr[$key]) ? : $attr[$key] = $value;
+			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		$limit = '';
 		if (isset($attr['limit']) && isset($attr['page']) && $attr['page'] != false) {
-			$offset = $attr['limit'] * ((int)$attr['page'] - 1);
+			$offset = $attr['limit'] * ((int) $attr['page'] - 1);
 			$limit = "LIMIT {$attr['limit']} OFFSET {$offset}";
 		}
 		$sql = "SELECT "
@@ -113,9 +112,9 @@ class chat
 			. "new.creation_date, "
 			. "new.value "
 			. "FROM "
-			. "{$GLOBALS['DB_NAME_NEW']}.game_data_chat_messages AS new "
+			. "`{$GLOBALS['DB_NAME_NEW']}`.`game_data_chat_messages` AS new "
 			. "LEFT JOIN "
-			. "{$GLOBALS['DB_NAME_OLD']}.Brugere AS old "
+			. "`{$GLOBALS['DB_NAME_OLD']}`.`Brugere` AS old "
 			. "ON "
 			. "old.id = new.creator "
 			. "WHERE "
@@ -131,7 +130,7 @@ class chat
 		if (!empty($return_data)) {
 			return $return_data;
 		} else {
-			return false;
+			return [];
 		}
 	}
 }

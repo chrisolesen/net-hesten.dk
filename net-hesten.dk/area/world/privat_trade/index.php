@@ -4,6 +4,8 @@ $title = 'Privat handel';
 require "$basepath/app_core/object_loader.php";
 require "$basepath/global_modules/header.php";
 
+user::register_timing(['user_id' => $_SESSION['user_id'], 'key' => 'checked_private_trade']); 
+
 $horses_pr_page = (int) filter_input(INPUT_GET, 'horses_pr_page') ?: 45;
 
 $your_horses_page = (int) filter_input(INPUT_GET, 'your_horses_page') ?: 0;
@@ -87,7 +89,7 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 			if ($filter_id = filter_input(INPUT_POST, 'id_filter')) {
 				$attr = ['user_name' => $_SESSION['username'], 'id_filter' => $filter_id];
 			}
-			$attr['custom_filter'] .= horse_list_filters::get_filter_string(['zone' => "private_trade_sell"]);
+			$attr['custom_filter'] = horse_list_filters::get_filter_string(['zone' => "private_trade_sell"]);
 			if (!empty(horses::get_all($attr))) {
 				foreach (horses::get_all($attr) as $horse) {
 					$gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
@@ -146,7 +148,7 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 				$attr = ['user_name' => $_SESSION['username'], 'user_id' => $_SESSION['user_id']];
 				if (!empty(private_trade::list_trade_offers($attr))) {
 					foreach (private_trade::list_trade_offers($attr) as $trade) {
-						$trade_id = $trade['id']; 
+						$trade_id = $trade['id'];
 						$buyer = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE id = {$trade['buyer']}")->fetch_object()->stutteri;
 						$horse = $trade['horse_data'];
 						$gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';

@@ -28,7 +28,7 @@ class horse_list_filters
 			$sql = "SELECT value FROM user_data_json WHERE parent_id = {$_SESSION['user_id']} AND name = 'list_filtering_settings' LIMIT 1";
 			$result = $link_new->query($sql);
 			if ($result) {
-				$filter_data = unserialize($result->fetch_object()->value);
+				$filter_data = unserialize(($result->fetch_object()->value ?? false));
 			} else {
 				return false;
 			}
@@ -138,7 +138,7 @@ class horse_list_filters
 		$sql = "SELECT value FROM user_data_json WHERE parent_id = {$_SESSION['user_id']} AND name = 'list_filtering_settings' LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
-			$user_filter_data = unserialize($result->fetch_object()->value);
+			$user_filter_data = unserialize(($result->fetch_object()->value ?? false));
 			if (!is_array($user_filter_data)) {
 				$user_filter_data[$attr['zone']] = [];
 			}
@@ -335,7 +335,7 @@ class horse_list_filters
 		$sql = "SELECT value FROM user_data_json WHERE parent_id = {$_SESSION['user_id']} AND name = 'list_filtering_settings' LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
-			$user_filter_data = unserialize($result->fetch_object()->value);
+			$user_filter_data = unserialize(($result->fetch_object()->value ?? false));
 		} else {
 			return ['Kritisk fejl: Dit stutteri kunne ikke findes, prøv igen eller kontakt en admin evt. på admin@net-hesten.dk', 'error'];
 		}

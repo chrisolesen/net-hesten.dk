@@ -36,7 +36,7 @@ if ($filter_id = filter_input(INPUT_POST, 'id_filter')) {
 }
 
 
-$attr['custom_filter'] .= horse_list_filters::get_filter_string(['zone' => "visit_{$active_tab}"]);
+$attr['custom_filter'] = horse_list_filters::get_filter_string(['zone' => "visit"]);
 $offset = $your_horses_page * $horses_pr_page;
 $target_page = ($your_horses_page * $horses_pr_page) + $horses_pr_page;
 $attr['limit'] = 100;
@@ -176,7 +176,7 @@ ob_start();
 	</style>
 	<div class="shadow"></div>
 	<div class="content">
-		<?= horse_list_filters::render_filter_settings(['zone' => "visit_{$active_tab}"]); ?>
+		<?= horse_list_filters::render_filter_settings(['zone' => "visit"]); ?>
 	</div>
 </div>
 <?php

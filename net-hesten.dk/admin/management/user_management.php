@@ -140,11 +140,11 @@ if (isset($_POST['adjust_wkr'])) {
 			unset($_SESSION['user_list_search_type']);
 			unset($_SESSION['user_list_search']);
 		}
-		if ($_SESSION['user_list_search_type'] === 'id') {
+		if (($_SESSION['user_list_search_type'] ?? false) === 'id') {
 			$sql = "SELECT id, stutteri, penge, navn, email, date FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_SESSION['user_list_search']} LIMIT $pr_page OFFSET $offset";
 		}
 
-		if ($_SESSION['user_list_search_type'] === 'name') {
+		if (($_SESSION['user_list_search_type'] ?? false) === 'name') {
 			if (strpos($_SESSION['user_list_search'], '@')) {
 				$sql = "SELECT id, stutteri, penge, navn, email, date FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE email LIKE '%{$_SESSION['user_list_search']}%' LIMIT $pr_page OFFSET $offset";
 			} else {
@@ -153,7 +153,7 @@ if (isset($_POST['adjust_wkr'])) {
 		}
 		$result = $link_new->query($sql);
 		while ($data = $result->fetch_object()) {
-			$last_active = $link_new->query("SELECT value FROM user_data_timing WHERE parent_id = {$data->id} AND name = 'last_active'")->fetch_object()->value;
+			$last_active = ($link_new->query("SELECT value FROM user_data_timing WHERE parent_id = {$data->id} AND name = 'last_active'")->fetch_object()->value ?? '0000-00-00 00:00:00');
 			$fetch_rights = "SELECT * FROM user_privileges WHERE user_id = {$data->id}";
 			$rights = $link_new->query($fetch_rights);
 			$rights_array = [];

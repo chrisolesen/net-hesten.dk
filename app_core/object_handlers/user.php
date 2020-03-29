@@ -16,7 +16,7 @@ class user
 
 		$current_ip = $_SERVER['REMOTE_ADDR'];
 
-		$active_session_id = $link_new->query("SELECT id FROM user_data_sessions WHERE ip = '{$current_ip}' AND user_id = {$attr['user_id']} AND end > DATE_SUB(NOW(),INTERVAL 15 MINUTE) ORDER BY id DESC LIMIT 1")->fetch_object()->id;
+		$active_session_id = ($link_new->query("SELECT id FROM user_data_sessions WHERE ip = '{$current_ip}' AND user_id = {$attr['user_id']} AND end > DATE_SUB(NOW(),INTERVAL 15 MINUTE) ORDER BY id DESC LIMIT 1")->fetch_object()->id) ?? false;
 		if ($active_session_id) {
 			$link_new->query("UPDATE user_data_sessions SET end = NOW() WHERE id = $active_session_id");
 		} else {
@@ -81,9 +81,32 @@ class user
 		}
 	}
 
-	public static function get_timings($attr = [])
+	public static function get_timing($attr = [])
 	{
 		global $link_new;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		if (!($attr['name'] ?? false)) {
+			return false;
+		}
+
+
+		$user_id = (((int) $_SESSION['user_id'] ?? ((int) $attr['user_id'] ?? false)));
+		if ($user_id) {
+			$sql = "SELECT `value` FROM user_data_timing WHERE `name` = '{$attr['name']}' AND `parent_id` = {$user_id}";
+			$result = ($link_new->query($sql)->fetch_object()->value ?? false);
+		}
+		if ($user_id && $result) {
+			return $result;
+		} else {
+			return '0000-00-00 00:00:00';
+		}
+	}
+	public static function get_timings($attr = [])
+	{
 		global $link_new;
 		global $GLOBALS;
 		$return_data = [];
@@ -224,7 +247,7 @@ class user
 		}
 
 		if ($attr['mode'] === 'username') {
-			$search_for = $attr['user_id']; 
+			$search_for = $attr['user_id'];
 			$sql = "SELECT stutteri AS username, thumb, penge AS money, id, navn AS name FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE stutteri = '$search_for' LIMIT 1";
 		} else {
 			$sql = "SELECT stutteri AS username, thumb, penge AS money, id, navn AS name FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = '{$attr['user_id']}' LIMIT 1";
