@@ -15,7 +15,7 @@ class horse_trader {
         }
 
 		$bid_date = new DateTime('now');
-		$sql = "SELECT stutteri, penge FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
+		$sql = "SELECT stutteri, penge FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_SESSION['user_id']} LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			$data = $result->fetch_assoc();
@@ -73,7 +73,7 @@ class horse_trader {
         }
 
 		$bid_date = new DateTime('now');
-		$sql = "SELECT stutteri, penge FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$attr['seller_id']} LIMIT 1";
+		$sql = "SELECT stutteri, penge FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$attr['seller_id']} LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			$data = $result->fetch_assoc();

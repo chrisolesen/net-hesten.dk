@@ -39,7 +39,7 @@ if ($_SESSION['logged_in'] == true) {
 				<input class="search" placeholder="Search" /><br />
 				<ul class="list">
 					<?php
-					$result = $link->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = 'hestehandleren*' and date >= '2014-08-01 00:00:00'");
+					$result = $link->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = 'hestehandleren*' and date >= '2014-08-01 00:00:00'");
 					$num_rows = $result->num_rows;
 
 					while ($data = $result->fetch_assoc()) {

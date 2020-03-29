@@ -18,7 +18,7 @@ class horses
 			$user_id = (int) $_SESSION['user_id'];
 			$sql = "SELECT "
 				. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent, changedate "
-				. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste "
+				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste "
 				. "WHERE id = {$attr['horse_id']}";
 			$result = $link_new->query($sql);
 			while ($data = $result->fetch_object()) {
@@ -47,8 +47,8 @@ class horses
 		foreach ($attr as $key => $value) {
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
-		$target_horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
-		$horse_data = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
+		$target_horse_data = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
+		$horse_data = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = {$attr['horse_id']} LIMIT 1")->fetch_object();
 		if (strtolower($horse_data->bruger) != strtolower($username)) {
 			return ["Du ejer ikke den hest du forsøger at fole! {$horse_data->bruger} | {$username}", 'error'];
 		}
@@ -88,11 +88,11 @@ class horses
 			$username = $_SESSION['username'];
 			$dead = 'død';
 			$graes_money = 'Græsningspenge';
-			$user = $link_new->query("SELECT id, penge, stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
+			$user = $link_new->query("SELECT id, penge, stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE stutteri = '{$username}' LIMIT 1")->fetch_object();
 
 			$sql = "SELECT "
 				. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent, changedate "
-				. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste "
+				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste "
 				. "WHERE id = {$attr['horse_id']}";
 			$result = $link_new->query($sql);
 			while ($horse = $result->fetch_object()) {
@@ -171,7 +171,7 @@ class horses
 				. "contests.points, "
 				. "breeding.meta_value AS breed_partner, "
 				. "breeding.meta_date AS breed_date "
-				. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste AS heste "
+				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS heste "
 				. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.game_data_competition_participants AS contests "
 				. "ON contests.participant_id = heste.id AND contests.points IS NULL "
 				. "LEFT JOIN {$GLOBALS['DB_NAME_NEW']}.horse_metadata AS breeding "
@@ -225,7 +225,7 @@ class horses
 		if (isset($attr['ID'])) {
 			$sql = "SELECT "
 				. "id, bruger AS owner_name, navn AS name, race, kon AS gender, alder AS age, pris AS value, graesning, staevne, kaaring, status, original, unik, tegner AS artist, thumb, egenskab, ulempe, talent "
-				. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste "
+				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste "
 				. "WHERE id = '{$attr['ID']}' ";
 			$result = $link_new->query($sql);
 			if ($data = $result->fetch_assoc()) {
@@ -250,7 +250,7 @@ class horses
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 		if (isset($attr['horse_id'])) {
-			$result = ($link_new->query("SELECT bruger AS username FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = '{$attr['horse_id']}' LIMIT 1"));
+			$result = ($link_new->query("SELECT bruger AS username FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = '{$attr['horse_id']}' LIMIT 1"));
 			if ($data = $result->fetch_object()) {
 				return (user::get_info(['mode' => 'username', 'user_id' => $data->username]))->id;
 			}
@@ -281,7 +281,7 @@ class horses
 			. "ulempe, "
 			. "talent,"
 			. "status "
-			. "FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$horse_id} LIMIT 1";
+			. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = {$horse_id} LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_assoc()) {

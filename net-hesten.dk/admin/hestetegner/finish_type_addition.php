@@ -66,7 +66,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			$status = filter_input(INPUT_POST, 'status');
 			$race = filter_input(INPUT_POST, 'race');
 			$id = (int) filter_input(INPUT_POST, 'id');
-			$artist = $link_new->query("SELECT id FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE stutteri = '{$latin_1_name}' LIMIT 1")->fetch_object()->id;
+			$artist = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE stutteri = '{$latin_1_name}' LIMIT 1")->fetch_object()->id;
 			if ($artist && in_array((int) $status, [22, 26, 19, 25, 24]) && $race && is_numeric($id)) {
 
 				$sql = "UPDATE {$GLOBALS['DB_NAME_NEW']}.horse_types SET artists = '{$artist}', status = {$status}, race = '{$race}' WHERE id = {$id}";
@@ -75,7 +75,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			}
 		}
 
-		$sql = "SELECT * FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE (`status` IS NULL OR `race` IS NUll) AND id > 7000";
+		$sql = "SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_types WHERE (`status` IS NULL OR `race` IS NUll) AND id > 7000";
 		$result = $link_new->query($sql);
 		$races = '';
 		while ($data = $result->fetch_object()) {
@@ -114,7 +114,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 	</ul>
 	<datalist id="usernames">
 		<?php
-		$result = $link_new->query("SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere");
+		$result = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere");
 		while ($data = $result->fetch_object()) {
 			?><option value="<?= $data->stutteri; ?>" /><?php
 		}
@@ -122,7 +122,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 	</datalist> 
 	<datalist id="horse_races">
 		<?php
-		$result = $link_new->query("SELECT name FROM {$GLOBALS['DB_NAME_NEW']}.horse_races");
+		$result = $link_new->query("SELECT name FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_races");
 		while ($data = $result->fetch_object()) {
 			?><option value="<?= $data->name; ?>" /><?php
 		}

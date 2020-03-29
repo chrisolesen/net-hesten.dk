@@ -143,7 +143,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			$target_status = 25;
 		}
 		if (filter_input(INPUT_GET, 'type') === 'adult') {
-			$previus_status = $link_new->query("SELECT status FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE image = '{$thumb}' LIMIT 1")->fetch_object()->status;
+			$previus_status = $link_new->query("SELECT status FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_types WHERE image = '{$thumb}' LIMIT 1")->fetch_object()->status;
 			if (in_array($previus_status, [19, 23])) {
 				$target_status = 19;
 			} else {
@@ -156,7 +156,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			$target_status = 26;
 		}
 		if (filter_input(INPUT_GET, 'type') === 'adult') {
-			$previus_status = $link_new->query("SELECT status FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE image = '{$thumb}' LIMIT 1")->fetch_object()->status;
+			$previus_status = $link_new->query("SELECT status FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_types WHERE image = '{$thumb}' LIMIT 1")->fetch_object()->status;
 			if (in_array($previus_status, [19, 23])) {
 				$target_status = 23;
 			} else {
@@ -169,7 +169,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			$target_status = 25;
 		}
 		if (filter_input(INPUT_GET, 'type') === 'adult') {
-			$previus_status = $link_new->query("SELECT status FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE image = '{$thumb}' LIMIT 1")->fetch_object()->status;
+			$previus_status = $link_new->query("SELECT status FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_types WHERE image = '{$thumb}' LIMIT 1")->fetch_object()->status;
 			if (in_array($previus_status, [19, 23])) {
 				$target_status = 19;
 			} else {
@@ -213,7 +213,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 	}
 /*
 	if (filter_input(INPUT_GET, 'do') === 'switch_gender') {
-		$gender = (int) $link_new->query("SELECT allowed_gender FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE image = '{$thumb}' LIMIT 1")->fetch_object()->allowed_gender;
+		$gender = (int) $link_new->query("SELECT allowed_gender FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_types WHERE image = '{$thumb}' LIMIT 1")->fetch_object()->allowed_gender;
 		
 		if($gender == 1){
 			$new_gender = 2;
@@ -237,19 +237,19 @@ $selected_race = substr($_GET['race'], 1, -1);
 
 	if (filter_input(INPUT_GET, 'do') === 'generate_one') {
 		if ($selected_id = filter_input(INPUT_GET, 'id')) {
-			$thumb_data = $link_new->query("SELECT artists, image, race FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE id = {$selected_id} LIMIT 1")->fetch_object();
-			$artist = $link_new->query("SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere WHERE id = {$thumb_data->artists} LIMIT 1")->fetch_object()->stutteri;
+			$thumb_data = $link_new->query("SELECT artists, image, race FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_types WHERE id = {$selected_id} LIMIT 1")->fetch_object();
+			$artist = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$thumb_data->artists} LIMIT 1")->fetch_object()->stutteri;
 			if (!$artist) {
 				exit('Kun en tegner lige nu tak.'); 
 			}
 			$thumb = '/imgHorse/' . $thumb_data->image;
 			$race = $thumb_data->race; 
 
-			$advantage = $link_new->query("SELECT egenskab FROM {$GLOBALS['DB_NAME_OLD']}.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
-			$disadvantage = $link_new->query("SELECT ulempe FROM {$GLOBALS['DB_NAME_OLD']}.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
-			$talent = $link_new->query("SELECT talent FROM {$GLOBALS['DB_NAME_OLD']}.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
+			$advantage = $link_new->query("SELECT egenskab FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
+			$disadvantage = $link_new->query("SELECT ulempe FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
+			$talent = $link_new->query("SELECT talent FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
 
-			$height_data = $link_new->query("SELECT max_height, min_height FROM {$GLOBALS['DB_NAME_NEW']}.horse_races WHERE name = '{$race}' LIMIT 1")->fetch_object();
+			$height_data = $link_new->query("SELECT max_height, min_height FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_races WHERE name = '{$race}' LIMIT 1")->fetch_object();
 			$height_lower = $height_data->lower;
 			$height_upper = $height_data->upper;
 			$height = mt_rand($height_lower, $height_upper);
@@ -313,7 +313,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 		}
 	}
 
-	$sql = "SELECT image, status, id, allowed_gender, archived FROM {$GLOBALS['DB_NAME_NEW']}.horse_types WHERE race = '{$selected_race}' ORDER BY date DESC";
+	$sql = "SELECT image, status, id, allowed_gender, archived FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_types WHERE race = '{$selected_race}' ORDER BY date DESC";
 	$result = $link_new->query($sql);
 	$races = '';
 	$latin_dead = 'død';
@@ -328,7 +328,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 			}
 		}
 		if($data->archived){continue;}
-		if(in_array($data->status, [19, 23])){/* Unique */ $amount = $link_new->query("SELECT count(id) AS amount FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE thumb LIKE '%{$data->image}%' AND status <> 'død'")->fetch_object()->amount;}
+		if(in_array($data->status, [19, 23])){/* Unique */ $amount = $link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE thumb LIKE '%{$data->image}%' AND status <> 'død'")->fetch_object()->amount;}
 		/*
 		gender 1: all
 		2: male

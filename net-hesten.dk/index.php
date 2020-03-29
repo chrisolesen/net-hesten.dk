@@ -17,7 +17,7 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 <section>
 
 	<?php
-	if ($_SESSION['logged_in'] == true) {
+	if (session_value(['name' => 'logged_in']) == true) {
 	?>
 		<img id="booklet_opener" height="300" src="//files.<?= HTTP_HOST; ?>/graphics/magazines/forside_fun_facts_4.png" />
 		<form action="" method="post">

@@ -24,7 +24,7 @@ require "$basepath/global_modules/header.php";
 			$can_do_chance_now = true;
 		}
 		if ($can_do_chance_now) {
-			$chance_event = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Chancen ORDER BY rand() LIMIT 1")->fetch_object();
+			$chance_event = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Chancen ORDER BY rand() LIMIT 1")->fetch_object();
 			$link_new->query("INSERT INTO user_data_timing (parent_id, name, value) "
 				. "VALUES ({$_SESSION['user_id']}, 'chance_last_taken', NOW()) "
 				. "ON DUPLICATE KEY UPDATE value = NOW()");

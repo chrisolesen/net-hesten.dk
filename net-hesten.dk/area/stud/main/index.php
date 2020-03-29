@@ -253,7 +253,7 @@ $amount_active_selection = count($horse_array);
 		<span class="label">Navn:</span>
 		<?= $user_info->name; ?><br />
 		<span class="label">Antal heste:</span>
-		<?= number_dotter($link_new->query("SELECT count(id) AS amount FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE bruger = '{$user_info->username}' AND status <> '{$dead}'")->fetch_object()->amount); ?> <span style="font-variant: small-caps;font-size: 0.7em;">(
+		<?= number_dotter($link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = '{$user_info->username}' AND status <> '{$dead}'")->fetch_object()->amount); ?> <span style="font-variant: small-caps;font-size: 0.7em;">(
 			<?= number_dotter($amount_active_selection) . ($amount_active_selection >= 100 ? '+' : ''); ?>)</span><br />
 		<span class="label">Penge:</span><span class="user_money_pool">
 			<?= number_dotter($user_info->money); ?></span> <span class="wkr_symbol dev_test_effect">wkr</span><br />

@@ -88,7 +88,7 @@ if (filter_input(INPUT_POST, 'search_id')) {
 			$link_new->query($sql);
 		}
 
-		$result = $link_new->query("SELECT * FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id = {$search_id} LIMIT 1");
+		$result = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = {$search_id} LIMIT 1");
 		while ($data = $result->fetch_object()) {
 			?>
 			<input type="hidden" name="search_id" value="<?= $data->id; ?>" />
@@ -120,7 +120,7 @@ if (filter_input(INPUT_POST, 'search_id')) {
 	</form>
 	<datalist id="horse_races">
 		<?php
-		$result = $link_new->query("SELECT hesterace FROM {$GLOBALS['DB_NAME_OLD']}.Hesteracer");
+		$result = $link_new->query("SELECT hesterace FROM `{$GLOBALS['DB_NAME_OLD']}`.Hesteracer");
 		while ($data = $result->fetch_object()) {
 			?><option value="<?= $data->hesterace; ?>" /><?php
 		}
@@ -128,7 +128,7 @@ if (filter_input(INPUT_POST, 'search_id')) {
 	</datalist>
 	<datalist id="user_names">
 		<?php
-		$result = $link_new->query("SELECT stutteri FROM {$GLOBALS['DB_NAME_OLD']}.Brugere");
+		$result = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere");
 		while ($data = $result->fetch_object()) {
 			?><option value="<?= $data->stutteri; ?>" /><?php
 		}

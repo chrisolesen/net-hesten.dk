@@ -176,7 +176,7 @@ class horse_list_filters
 				<?php foreach ($race_names as $race) { ?>
 					<?php if ($attr['zone'] == 'horse_trader') { ?>
 						<?php
-						$antal = $link_new->query("SELECT count(id) AS amount FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE id > 604000 AND bruger = 'hestehandleren' and status <> 'død' and alder < 18  AND race = '{$race['name']}'")->fetch_object()->amount;
+						$antal = $link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id > 604000 AND bruger = 'hestehandleren' and status <> 'død' and alder < 18  AND race = '{$race['name']}'")->fetch_object()->amount;
 						if ($antal == 0) {
 							continue;
 						}
@@ -248,7 +248,7 @@ class horse_list_filters
 				<select name="filter_artist" id="filter_artist">
 					<option value="all" <?= ($user_filter_data[$attr['zone']]['artist'] == 'all') ? 'selected' : ''; ?>>Alle Tegnere</option>
 					<?php
-					$artists = $link_new->query("SELECT DISTINCT users.stutteri AS name, users.id AS user_id FROM {$GLOBALS['DB_NAME_OLD']}.Heste AS horses LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere AS users ON users.stutteri = horses.tegner WHERE status <> '{$dead}' ORDER BY users.stutteri ASC");
+					$artists = $link_new->query("SELECT DISTINCT users.stutteri AS name, users.id AS user_id FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS horses LEFT JOIN {$GLOBALS['DB_NAME_OLD']}.Brugere AS users ON users.stutteri = horses.tegner WHERE status <> '{$dead}' ORDER BY users.stutteri ASC");
 					if ($artists) {
 						while ($artist = $artists->fetch_object()) {
 							if ($artist->name == '') {
