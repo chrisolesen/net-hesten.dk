@@ -30,7 +30,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 		if ($test_old || $test_new) {
 			return [false, 'Stutteri navnet er optaget!, lav et afslag på brugeren hvor du beder dem finde et andet navn.'];
 		}
-		$link_new->query("INSERT INTO {$GLOBALS['DB_NAME_OLD']}.Brugere (stutteri, password, navn, email, penge, thumb, date) VALUES ('{$applicant->username}','{$applicant->password}','{$applicant->name}','{$applicant->email}','{$initial_wkr}','',now())");
+		$link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.Brugere (stutteri, password, navn, email, penge, thumb, date) VALUES ('{$applicant->username}','{$applicant->password}','{$applicant->name}','{$applicant->email}','{$initial_wkr}','',now())");
 		$new_user_id = $link_new->insert_id;
 		$result = $link_new->query("INSERT INTO users (id, username, password, email) VALUES ('{$new_user_id}', '{$applicant->username}','{$applicant->password}','{$applicant->email}')");
 		$new_user_id = $link_new->insert_id;

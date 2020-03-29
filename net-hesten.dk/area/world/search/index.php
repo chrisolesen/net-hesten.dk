@@ -40,7 +40,7 @@ $horses_pr_page = 10;
 $horse_array = [];
 $horse_tabs = [];
 $attr = ['user_name' => $_SESSION['username'], 'mode' => 'search_all'];
-$attr['custom_filter'] .= horse_list_filters::get_filter_string(['zone' => "search_all"]);
+$attr['custom_filter'] = horse_list_filters::get_filter_string(['zone' => "search_all"]);
 
 $offset = $search_horses_page * $horses_pr_page;
 $limit = ($search_horses_page * $horses_pr_page) + $horses_pr_page;
@@ -113,7 +113,7 @@ if (is_array(horses::get_all($attr))) {
             $breed_date_target->add(new DateInterval('P40D'));
             $horse_data .= "<button style='pointer-events: none;' class='enter_graes btn compact_top_button'>Foler ca. {$breed_date_target->format('Y-m-d')}</button>";
         }
-        $horse_data .= "<a href='https://" . HTTP_HOST . "/area/world/visit/visit.php?user={$owner_id}'><button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Ejes af {$owner_name}</button></a>";
+        $horse_data .= "<a href='//" . HTTP_HOST . "/area/world/visit/visit.php?user={$owner_id}'><button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Ejes af {$owner_name}</button></a>";
 
         $horse_data .= "</div>";
         $horse_data .= "<img src='//files." . HTTP_HOST . "/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
@@ -125,11 +125,7 @@ if (is_array(horses::get_all($attr))) {
     }
     $amount_active_selection = count($horse_array);
     $amounts['idle_horses'] = count($horse_tabs['idle_horses']);
-    $amounts['horses_on_grass'] = count($horse_tabs['horses_on_grass']);
-    $amounts['horses_at_contest'] = count($horse_tabs['horses_at_contest']);
-    $amounts['breeding_horses'] = count($horse_tabs['breeding_horses']);
-    $amounts['foels'] = count($horse_tabs['foels']);
-    $amounts['foels_at_contest'] = count($horse_tabs['foels_at_contest']);
+
     foreach ($amounts as $list => $amount) {
         if ($amount > 10) {
         } else {
@@ -137,29 +133,8 @@ if (is_array(horses::get_all($attr))) {
     }
 } else {
     $amounts['idle_horses'] = 0;
-    $amounts['horses_on_grass'] = 0;
-    $amounts['horses_at_contest'] = 0;
-    $amounts['breeding_horses'] = 0;
-    $amounts['foels'] = 0;
-    $amounts['foels_at_contest'] = 0;
 }
-if ($active_tab = filter_input(INPUT_GET, 'tab')) {
-    if ($active_tab == 'idle_horses') {
-        $active_tab_amount = $amounts['idle_horses'];
-    } else if ($active_tab == 'horses_on_grass') {
-        $active_tab_amount = $amounts['horses_on_grass'];
-    } else if ($active_tab == 'breeding_horses') {
-        $active_tab_amount = $amounts['breeding_horses'];
-    } else if ($active_tab == 'horses_at_contest') {
-        $active_tab_amount = $amounts['horses_at_contest'];
-    } else if ($active_tab == 'foels') {
-        $active_tab_amount = $amounts['foels'];
-    } else if ($active_tab == 'foels_at_contest') {
-        $active_tab_amount = $amounts['foels_at_contest'];
-    }
-} else {
-    $active_tab_amount = $amounts['idle_horses'];
-}
+$active_tab_amount = $amounts['idle_horses'];
 ?>
 
 <section class="tabs">
@@ -238,7 +213,7 @@ ob_start();
             jQuery('#horze_extended_info .race').html(horse_data.race);
             jQuery('#horze_extended_info .artist').html(horse_data.artist);
             jQuery('#horze_extended_info .value').html(horse_data.value);
-            jQuery('#horze_extended_info .owner_name').html('<a href="https://net-hesten.dk/area/world/visit/visit.php?user=' + horse_data.owner_id + '">' + horse_data.owner_name + '</a>');
+            jQuery('#horze_extended_info .owner_name').html('<a href="//net-hesten.dk/area/world/visit/visit.php?user=' + horse_data.owner_id + '">' + horse_data.owner_name + '</a>');
             jQuery('#horze_extended_info .talent').html(horse_data.talent);
             jQuery('#horze_extended_info .ulempe').html(horse_data.ulempe);
             jQuery('#horze_extended_info .egenskab').html(horse_data.egenskab);

@@ -88,7 +88,7 @@
 </style>
 
 <?php
-if ($_SESSION['settings']['banner_size'] == 'hide' || ($force_banner_off ?? false)) {
+if (($_SESSION['settings']['banner_size'] ?? false) == 'hide' || ($force_banner_off ?? false)) {
 ?>
 	<style>
 		#top_banner {
@@ -155,7 +155,7 @@ if ($_SESSION['settings']['banner_size'] == 'hide' || ($force_banner_off ?? fals
 		background: #333;
 	}
 </style>
-<?php if (is_array($_SESSION['settings']) && $_SESSION['settings']['display_width'] == 'slim') { ?>
+<?php if (($_SESSION['settings']['display_width'] ?? false) == 'slim') { ?>
 	<style>
 		body {
 			max-height: 100%;

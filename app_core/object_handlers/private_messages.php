@@ -72,25 +72,27 @@ class private_messages
 		$result = $link_new->query($sql);
 		/* status 17 = send */
 		/* status 18 = read */
-		while ($data = $result->fetch_object()) {
-			if ($data->hide == 1 && $data->origin_id == $attr['user_id']) {
-				continue;
-			}
-			if ($data->hide == 2 && $data->target_id == $attr['user_id']) {
-				continue;
-			}
-			if ($data->origin_id == $attr['user_id']) {
-				$return_data[$data->target_id] += 0;
-			} elseif ($data->target_id == $attr['user_id'] && $data->status_code === '17') {
-				$return_data[$data->origin_id] += 1;
-			} elseif ($data->target_id == $attr['user_id']) {
-				$return_data[$data->origin_id] += 0;
+		if ($result) {
+			while ($data = $result->fetch_object()) {
+				if ($data->hide == 1 && $data->origin_id == $attr['user_id']) {
+					continue;
+				}
+				if ($data->hide == 2 && $data->target_id == $attr['user_id']) {
+					continue;
+				}
+				if ($data->origin_id == $attr['user_id']) {
+					$return_data[$data->target_id] += 0;
+				} elseif ($data->target_id == $attr['user_id'] && $data->status_code === '17') {
+					$return_data[$data->origin_id] += 1;
+				} elseif ($data->target_id == $attr['user_id']) {
+					$return_data[$data->origin_id] += 0;
+				}
 			}
 		}
 		if (!empty($return_data)) {
 			return $return_data;
 		} else {
-			return false;
+			return [];
 		}
 	}
 	public static function post_message($attr = [])

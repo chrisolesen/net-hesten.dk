@@ -1,5 +1,5 @@
 <section id="left_menu">
-	<?php if ($_SESSION['logged_in'] == true) { ?>
+	<?php if (($_SESSION['logged_in'] ?? false) == true) { ?>
 		<a data-custom-title="Indbakke" href="/area/stud/messages"><img src="//files.<?= HTTP_HOST; ?>/graphics/inbox.png"></a>
 		<a data-custom-title="Heste Handleren" href="/area/world/horsetrader"><img src="//files.<?= HTTP_HOST; ?>/graphics/trader.png"></a>
 
@@ -12,7 +12,7 @@
 		<a data-custom-title="Søg på heste" href="/area/world/search/"><img src="//files.<?= HTTP_HOST; ?>/graphics/list.png"></a>
 		<a data-custom-title="Alle stutterier" href="/area/world/visit/"><img src="//files.<?= HTTP_HOST; ?>/graphics/list.png"></a>
 		<a data-custom-title="Hestetegner" href="/area/artist_center"><img src="//files.<?= HTTP_HOST; ?>/graphics/artist.png"></a>
-		<a data-custom-title="Privat handel" href="/area/world/privat_trade/"><img src="//files.<?= HTTP_HOST; ?>/graphics/private_trade.png"></a>
+		<a data-custom-title="Privat handel" <?= ((private_trade::list_trade_offers(['mode' => 'latest_offer']) > user::get_timing(['name' => 'checked_private_trade']))) && (($title ?? false) != 'Privat handel') ? 'message_status="blink"' : ''; ?> href="/area/world/privat_trade/"><img src="//files.<?= HTTP_HOST; ?>/graphics/private_trade.png"></a>
 		<a data-custom-title="Konto oversigt" href="/area/stud/accounting"><img src="//files.<?= HTTP_HOST; ?>/graphics/money.png"></a>
 		<a data-custom-title="Støt net-hesten" href="/area/world/support_nethesten/"><img src="//files.<?= HTTP_HOST; ?>/graphics/buy_wkr.png"></a>
 		<?php if (in_array('global_admin', $_SESSION['rights'])) { ?>
