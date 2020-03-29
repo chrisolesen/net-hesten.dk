@@ -8,6 +8,8 @@ CREATE TABLE `game_data_auctions` (
   `instant_price` bigint(20) unsigned NOT NULL,
   `creation_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
+  `highest_bidder` bigint(20) unsigned DEFAULT NULL,
+  `highest_bid` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
