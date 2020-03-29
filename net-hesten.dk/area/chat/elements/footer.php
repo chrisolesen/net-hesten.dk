@@ -14,11 +14,12 @@ $target_date = $target_date->format('Y-m-d');
 			. "AND old.id NOT IN ({$GLOBALS['hidden_system_users_sql']}) "
 			. "ORDER BY old.stutteri";
 	$result = $link_new->query($sql);
-	while ($data = $result->fetch_object()) {
-		?><option value='<?= $data->username; ?>' /><?php
+	if($result){
+		while ($data = $result->fetch_object()) {
+			?><option value='<?= $data->username; ?>' /><?php
+		}
 	}
 	?>
-
 </datalist>
 <?php
 if (!$_SESSION['logged_in'] == true || !isset($basepath)) {
