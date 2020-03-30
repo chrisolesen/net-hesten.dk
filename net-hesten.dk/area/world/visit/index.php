@@ -46,72 +46,75 @@ require "$basepath/global_modules/header.php";
 			// WHEN deal_id < 5 THEN deal_id 
 			// WHEN deal_id > 5 THEN Rand() + 5 //so that the value is between 5 and 6
 			$offset = $page * $pr_page;
-			$sql = 'SELECT old.stutteri AS username, old.thumb, old.penge AS money, old.id, old.navn AS name, last_active.value AS last_online '
+			$sql = 'SELECT old.stutteri AS username, old.thumb, old.penge AS `money`, old.id, old.navn AS `name`, last_active.value AS last_online '
 				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS old "
 				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.user_data_timing AS last_active "
 				. 'ON last_active.parent_id = old.id AND last_active.name = "last_active" '
 				. "WHERE last_active.value > '{$target_date} 00:00:00' "
 				. "AND old.id NOT IN ({$GLOBALS['hidden_system_users_sql']}) "
-				. (($filter_username = filter_input(INPUT_POST, 'visit_search_stud')) ? "AND old.stutteri LIKE '%{$filter_username}%' " : '')
+				. (($filter_username = (filter_input(INPUT_POST, 'visit_search_stud') ?? false)) ? "AND old.stutteri LIKE '%{$filter_username}%' " : '')
 				. " {$order_by} "
 				. "LIMIT {$pr_page} OFFSET {$offset}";
+			echo "<!-- {$sql} -->";
 			$result = $link_new->query($sql);
-			while ($data = $result->fetch_object()) {
+			if ($result) {
+				while ($data = $result->fetch_object()) {
 			?>
-				<div class="horse_square horse_object">
-					<div style="left:170px;" class="info">
+					<div class="horse_square horse_object">
+						<div style="left:170px;" class="info">
+							<?php
+							$privileges = $link_new->query("SELECT privilege_id FROM user_privileges WHERE user_id = {$data->id}");
+							$user_style = '';
+							while ($privilege = $privileges->fetch_object()->privilege_id) {
+								if ($privilege === '1') {
+									$user_style = 'highlight_user_as_admin';
+									break;
+								}
+								if ($privilege === '5') {
+									$user_style = 'highlight_user_as_ht';
+									break;
+								}
+							}
+							?>
+							<style>
+								.highlight_user_as_admin:before {
+									content: "";
+									padding: 1px;
+									height: 10px;
+									border-left: 2px blue solid;
+									display: inline-block;
+									position: relative;
+									top: -1px;
+								}
+
+								.highlight_user_as_ht:before {
+									border-left: 2px red solid;
+								}
+							</style>
+							<span class="name">
+								<span style="font-weight:bold;" class="<?= $user_style; ?>"><?= $data->username; ?></span><br />
+								<span>Penge: <?= number_dotter($data->money); ?> <span class="wkr_symbol">wkr</span></span><br />
+								<span>Heste: <?= $link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = '{$data->username}' AND status <> 'død'")->fetch_object()->amount; ?></span>
+								<!--<span>Værdi: <?= number_dotter($data->id); ?> <span class="wkr_symbol">wkr</span></span>-->
+							</span>
+							<div style="position:absolute;left:300px;top:20px;max-height: 70px;">
+								<span>Sidst online: <?= ((new DateTime($data->last_online))->format('Y-m-d')); ?></span><br />
+							</div>
+							<span class='value hide_on_compact'>Værdi: <?= number_dotter($horse->value); ?> wkr</span>
+							<a class='btn btn-info compact_bottom_button' href="/area/world/visit/visit.php?user=<?= $data->id; ?>" style="position:absolute;">Besøg</a>
+						</div>
 						<?php
-						$privileges = $link_new->query("SELECT privilege_id FROM user_privileges WHERE user_id = {$data->id}");
-						$user_style = '';
-						while ($privilege = $privileges->fetch_object()->privilege_id) {
-							if ($privilege === '1') {
-								$user_style = 'highlight_user_as_admin';
-								break;
-							}
-							if ($privilege === '5') {
-								$user_style = 'highlight_user_as_ht';
-								break;
-							}
+						if ($data->thumb) {
+							$stud_thumbnail = "//files." . HTTP_HOST . "/users/{$data->thumb}";
+						} else {
+							$stud_thumbnail = "//files." . HTTP_HOST . "/graphics/logo/default_logo.png";
 						}
 						?>
-						<style>
-							.highlight_user_as_admin:before {
-								content: "";
-								padding: 1px;
-								height: 10px;
-								border-left: 2px blue solid;
-								display: inline-block;
-								position: relative;
-								top: -1px;
-							}
-
-							.highlight_user_as_ht:before {
-								border-left: 2px red solid;
-							}
-						</style>
-						<span class="name">
-							<span style="font-weight:bold;" class="<?= $user_style; ?>"><?= $data->username; ?></span><br />
-							<span>Penge: <?= number_dotter($data->money); ?> <span class="wkr_symbol">wkr</span></span><br />
-							<span>Heste: <?= $link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = '{$data->username}' AND status <> 'død'")->fetch_object()->amount; ?></span>
-							<!--<span>Værdi: <?= number_dotter($data->id); ?> <span class="wkr_symbol">wkr</span></span>-->
-						</span>
-						<div style="position:absolute;left:300px;top:20px;max-height: 70px;">
-							<span>Sidst online: <?= ((new DateTime($data->last_online))->format('Y-m-d')); ?></span><br />
-						</div>
-						<span class='value hide_on_compact'>Værdi: <?= number_dotter($horse->value); ?> wkr</span>
-						<a class='btn btn-info compact_bottom_button' href="/area/world/visit/visit.php?user=<?= $data->id; ?>" style="position:absolute;">Besøg</a>
+						<img style="max-width:175px;left: 105px;" src='<?= $stud_thumbnail; ?>' />
+						<img style='display: none;' class='zoom_img' src='<?= $stud_thumbnail; ?>' />
 					</div>
-					<?php
-					if ($data->thumb) {
-						$stud_thumbnail = "//files." . HTTP_HOST . "/users/{$data->thumb}";
-					} else {
-						$stud_thumbnail = "//files." . HTTP_HOST . "/graphics/logo/default_logo.png";
-					}
-					?>
-					<img style="max-width:175px;left: 105px;" src='<?= $stud_thumbnail; ?>' />
-					<img style='display: none;' class='zoom_img' src='<?= $stud_thumbnail; ?>' />
-				</div>
 			<?php
+				}
 			}
 			?>
 		</div>
