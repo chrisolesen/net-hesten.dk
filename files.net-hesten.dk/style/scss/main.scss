@@ -1,22 +1,25 @@
 // out: ../, compress: true, sourceMap: false, autoprefixer: last 5 versions, groupmedia: true
 
-@import '_reset.scss';
-@import '_variables.scss';
-@import '_lumosweb_font.scss';
-*, *:before, *:after {
+@import "_reset.scss";
+@import "_variables.scss";
+@import "_lumosweb_font.scss";
+*,
+*:before,
+*:after {
 	-webkit-box-sizing: inherit;
 	-moz-box-sizing: inherit;
 	box-sizing: inherit;
 	max-width: 100%;
 }
-section:after { 
-	content:"";
+section:after {
+	content: "";
 	display: block;
 	clear: both;
 }
-html, body {
+html,
+body {
 	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box; 
+	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	min-height: 100%;
 	display: block;
@@ -27,12 +30,16 @@ body {
 	/*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
 	background: #dfebd3;
 }
-a, a:hover, a:active, a:visited {
-	color:inherit;
+a,
+a:hover,
+a:active,
+a:visited {
+	color: inherit;
 	font-style: normal;
-	text-decoration: none; 
+	text-decoration: none;
 }
-input, a.btn {
+input,
+a.btn {
 	height: 2em;
 }
 #top_banner {
@@ -46,7 +53,7 @@ input, a.btn {
 	nav {
 		padding: 7px 0 13px;
 		line-height: 50px;
-		float:right;
+		float: right;
 		padding-right: $content_padding;
 		a + a {
 			margin-left: $content_spacing;
@@ -58,12 +65,12 @@ input, a.btn {
 	position: relative;
 }
 #left_menu {
-	padding:$content_padding;
-	width: calc( 2rem + 115px);
-	float:left;
+	padding: $content_padding;
+	width: calc(2rem + 115px);
+	float: left;
 
 	/*height: calc(100vh - 20px - 70px);*/
-	a{	
+	a {
 		overflow: hidden;
 		height: 55px;
 		width: 55px;
@@ -72,27 +79,26 @@ input, a.btn {
 		transition: all 0.2s linear;
 		opacity: 0.5;
 		position: relative;
-		display:inline-block;
+		display: inline-block;
 		&:hover {
 			overflow: visible;
 			opacity: 1;
 		}
 		&:nth-child(2n) {
-			top:27.5px;
+			top: 27.5px;
 		}
 	}
 }
 #page-content {
-
 	/*height: calc(100vh - 20px - 70px);*/
-	float:left;
+	float: left;
 	width: calc(100% - 115px - 2rem);
 	padding: ($content_padding) $content_padding 0 0;
 	position: relative;
 }
 
 [data-custom-title] {
-	position:relative;
+	position: relative;
 	&:after {
 		max-width: none;
 		content: attr(data-custom-title);
@@ -113,7 +119,13 @@ input, a.btn {
 		-webkit-box-shadow: 0px 0px 1px #222;
 		box-shadow: 0px 0px 1px #222;
 		background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
-		background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #eeeeee),color-stop(1, #cccccc));
+		background-image: -webkit-gradient(
+			linear,
+			left top,
+			left bottom,
+			color-stop(0, #eeeeee),
+			color-stop(1, #cccccc)
+		);
 		background-image: -webkit-linear-gradient(top, #eeeeee, #cccccc);
 		background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
 		background-image: -ms-linear-gradient(top, #eeeeee, #cccccc);
@@ -131,49 +143,47 @@ input, a.btn {
 }
 [data-section-type="admin_info"] {
 	position: absolute;
-	top:($content_padding + 2rem);
-	right:$content_padding;
-	width:25em;
+	top: ($content_padding + 2rem);
+	right: $content_padding;
+	width: 25em;
 	height: 5em;
 	z-index: 2;
-
 
 	display: none !important;
 }
 h1 {
-	font-size:2em;
+	font-size: 2em;
 	font-weight: bold;
 }
 [data-section-type="top_info"] {
-	float:right;
+	float: right;
 	width: calc(320px - 1em);
 	margin-left: 1em;
 
-
-	color:white;
+	color: white;
 	padding: calc(17px + 1em);
 	position: relative;
 	background: #92ba6a;
 	margin-bottom: $content_spacing;
 	&:before {
-		content:"";
+		content: "";
 		position: absolute;
 		z-index: 2;
-		top:5px;
-		left:5px;
-		bottom:5px;
-		right:5px;
+		top: 5px;
+		left: 5px;
+		bottom: 5px;
+		right: 5px;
 		pointer-events: none !important;
 		border: 1px white solid;
 	}
 	&:after {
-		content:"";
+		content: "";
 		position: absolute;
 		z-index: 2;
-		top:9px;
-		left:9px;
-		bottom:9px;
-		right:9px;
+		top: 9px;
+		left: 9px;
+		bottom: 9px;
+		right: 9px;
 		pointer-events: none !important;
 		border: 2px white solid;
 	}
@@ -182,18 +192,16 @@ h1 {
 .wkr_symbol {
 	/*content:"wkr";*/
 	/*display: inline-block;*/
-	font-variant:small-caps;
-} 
+	font-variant: small-caps;
+}
 
-@import '../effects/_blinker.scss';
-@import '_chat.scss';
+@import "../effects/_blinker.scss";
+@import "_chat.scss";
 /* Forms */
-@import '_button.scss';
-@import '_input.scss';
-@import '_horselists_standard.scss'; 
-@import '_page_structure_elements.scss'; 
-@import '_competitions.scss';
+@import "_button.scss";
+@import "_input.scss";
+@import "_horselists_standard.scss";
+@import "_page_structure_elements.scss";
+@import "_competitions.scss";
 
-
-
-@import '_responsive_styles.scss';
+@import "_responsive_styles.scss";
