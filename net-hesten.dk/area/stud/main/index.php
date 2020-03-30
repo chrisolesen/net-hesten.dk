@@ -79,7 +79,7 @@ if (isset($_FILES['fileToUpload']) && empty($_POST['new_password']) && $_POST['y
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file . '.' . $imageFileType)) {
 			//			echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded. As {$target_file}.{$imageFileType}";
 			$file_path = str_replace("$basepath/files.net-hesten.dk/users/", '', "{$target_file}.{$imageFileType}");
-			$sql = "UPDATE Brugere SET thumb = '{$file_path}' WHERE id = {$_SESSION['user_id']}";
+			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET thumb = '{$file_path}' WHERE id = {$_SESSION['user_id']}";
 			$link_new->query($sql);
 		} else {
 			echo "Beklager, der skete er sket en uventet fejl, prøv igen lidt senere, eller kontakt stutteri TechHesten.";
@@ -87,7 +87,7 @@ if (isset($_FILES['fileToUpload']) && empty($_POST['new_password']) && $_POST['y
 	}
 }
 if (isset($_POST['remove_user_thumbnail']) && empty($_POST['new_password']) && $_POST['your_name'] == $user_info->name) {
-	$sql = "UPDATE Brugere SET thumb = '' WHERE id = {$_SESSION['user_id']}";
+	$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET thumb = '' WHERE id = {$_SESSION['user_id']}";
 	$link_new->query($sql);
 }
 /* Change list-style */
