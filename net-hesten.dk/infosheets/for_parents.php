@@ -12,12 +12,11 @@ if (isset($_SESSION['user_id'])) {
 
 $admin = false;
 $public_page = true;
-require_once ("{$basepath}/global_modules/header.php"); ?>
+require_once("{$basepath}/global_modules/header.php"); ?>
 
 <section>
 
 	<style>
-
 		#rules p {
 			font-size: 16px !important;
 			line-height: 1.2;
@@ -28,7 +27,7 @@ require_once ("{$basepath}/global_modules/header.php"); ?>
 		}
 
 		#rules a {
-			color:cornflowerblue !important;
+			color: cornflowerblue !important;
 		}
 	</style>
 	<div id="rules" style="max-width: 800px;margin: 0 auto;">
@@ -42,16 +41,17 @@ require_once ("{$basepath}/global_modules/header.php"); ?>
 			Vi godkender alle medlemmer til siden manuelt, og holder øje med mistænkelig adfærd, for at gøre vores til at spillet har en god atmosfære, og er et rart sted at opholde sig, også for dem der er af en yngre alder.
 		</p>
 		<p>
-			Det er dermed ikke hvemsomhelst, der bare lige kan oprette en bruger, og begynde at opføre sig ubehageligt på siden. 
+			Det er dermed ikke hvemsomhelst, der bare lige kan oprette en bruger, og begynde at opføre sig ubehageligt på siden.
 		</p>
 		<p>
 			Både som forælder og som medlem på siden, kan man altid sende en e-mail til admin@net-hesten.dk hvis man har spørgsmål, klager eller bekymringer.
 		</p>
 		<p>
-			Følg os på <a href="https://www.facebook.com/Nethesten/" target="_blank">Facebook</a>
+			Følg os på <a href="https://www.facebook.com/Nethesten/" target="_blank">Facebook</a><br />
+			Følg udviklingen &lt;<a href="https://github.com/chrisolesen/net-hesten.dk/" target="_blank">GitHub</a>&gt;
 		</p>
 	</div>
 </section>
 <?php
 
-require_once ("{$basepath}/global_modules/footer.php");
+require_once("{$basepath}/global_modules/footer.php");

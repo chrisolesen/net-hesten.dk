@@ -366,30 +366,30 @@ ob_start();
 			<input type="hidden" name="alter_user_settings" value="true" />
 			<label class="fifty_p" for="liststyle">Liste visninger:</label>
 			<select class="fifty_p" name="liststyle" id="liststyle">
-				<!--<option value="standard" <?= ($_SESSION['settings']['list_style'] == 'standard' ? 'selected' : ''); ?>>Normal</option>-->
-				<option value="compact" <?= ($_SESSION['settings']['list_style'] == 'compact' ? 'selected' : ''); ?>>Kompakt liste</option>
+				<!--<option value="standard" <?= (($_SESSION['settings']['list_style'] ?? false) == 'standard' ? 'selected' : ''); ?>>Normal</option>-->
+				<option value="compact" <?= (($_SESSION['settings']['list_style'] ?? false) == 'compact' ? 'selected' : ''); ?>>Kompakt liste</option>
 			</select>
 			<label class="fifty_p" for="banner_size">Banner:</label>
 			<select class="fifty_p" name="banner_size" id="banner_size">
-				<option value="standard" <?= ($_SESSION['settings']['banner_size'] == 'full_size' ? 'selected' : ''); ?>>Vis</option>
-				<option value="hide" <?= ($_SESSION['settings']['banner_size'] == 'hide' ? 'selected' : ''); ?>>Skjul</option>
+				<option value="standard" <?= (($_SESSION['settings']['banner_size'] ?? false) == 'full_size' ? 'selected' : ''); ?>>Vis</option>
+				<option value="hide" <?= (($_SESSION['settings']['banner_size'] ?? false) == 'hide' ? 'selected' : ''); ?>>Skjul</option>
 			</select>
 			<label class="fifty_p" for="display_width">Side størrelse:</label>
 			<select class="fifty_p" name="display_width" id="display_width">
-				<option value="standard" <?= ($_SESSION['settings']['display_width'] == 'full' ? 'selected' : ''); ?>>Fuld bredde</option>
-				<option value="slim" <?= ($_SESSION['settings']['display_width'] == 'slim' ? 'selected' : ''); ?>>Smal visning</option>
+				<option value="standard" <?= (($_SESSION['settings']['display_width'] ?? false) == 'full' ? 'selected' : ''); ?>>Fuld bredde</option>
+				<option value="slim" <?= (($_SESSION['settings']['display_width'] ?? false) == 'slim' ? 'selected' : ''); ?>>Smal visning</option>
 			</select>
 			<label class="fifty_p" for="user_language">Vælg sprog:</label>
 			<select class="fifty_p" name="user_language" id="user_language">
-				<option value="da_DK" <?= ($_SESSION['settings']['user_language'] == 'da_DK' ? 'selected' : ''); ?>>Dansk</option>
-				<option value="en_US" <?= ($_SESSION['settings']['user_language'] == 'en_US' ? 'selected' : ''); ?>>English</option>
+				<option value="da_DK" <?= (($_SESSION['settings']['user_language'] ?? false) == 'da_DK' ? 'selected' : ''); ?>>Dansk</option>
+				<option value="en_US" <?= (($_SESSION['settings']['user_language'] ?? false) == 'en_US' ? 'selected' : ''); ?>>English</option>
 			</select>
 			<br />
 			<h3 style="margin-bottom: 0.5em;">Notifikationer</h3>
-			<div style="line-height: 20px;font-size:16px;">Vis Græsnings bekræftelser: <input style="height: 1em;" type="checkbox" name="graes_confirmations" <?= ($_SESSION['settings']['graes_confirmations'] == 'show' ? 'checked="checked"' : ''); ?> /></div>
-			<div style="line-height: 20px;font-size:16px;">Vis bekræftelser i hestehandleren: <input style="height: 1em;" type="checkbox" name="horse_trader_buy_confirmations" <?= ($_SESSION['settings']['horse_trader_buy_confirmations'] == 'show' ? 'checked="checked"' : ''); ?> /></div>
+			<div style="line-height: 20px;font-size:16px;">Vis Græsnings bekræftelser: <input style="height: 1em;" type="checkbox" name="graes_confirmations" <?= (($_SESSION['settings']['graes_confirmations'] ?? false)  == 'show' ? 'checked="checked"' : ''); ?> /></div>
+			<div style="line-height: 20px;font-size:16px;">Vis bekræftelser i hestehandleren: <input style="height: 1em;" type="checkbox" name="horse_trader_buy_confirmations" <?= (($_SESSION['settings']['horse_trader_buy_confirmations'] ?? false) == 'show' ? 'checked="checked"' : ''); ?> /></div>
 			<h3 style="margin-bottom: 0.5em;">Valg:</h3>
-			<div style="line-height: 20px;font-size:16px;">Man må byde på alle mine heste: <input style="height: 1em;" type="checkbox" name="accept_offers" <?= ($_SESSION['settings']['accept_offers'] == 'accept' ? 'checked="checked"' : ''); ?> /></div>
+			<div style="line-height: 20px;font-size:16px;">Man må byde på alle mine heste: <input style="height: 1em;" type="checkbox" name="accept_offers" <?= (($_SESSION['settings']['accept_offers'] ?? false) == 'accept' ? 'checked="checked"' : ''); ?> /></div>
 			<br />
 			<input type="submit" class="btn btn-success" value="Gem" name="submit">
 			<br />
