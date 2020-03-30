@@ -66,7 +66,7 @@ if ($_SESSION['logged_in'] == true) {
 								echo '<span class="beskrivelse">' . $data['beskrivelse'] . '</span>' . '<br />';
 								echo $data['race'] . '<br />';
 								echo $data['kon'] . '<br />';
-								echo "<img src='//" . HTTP_HOST . "/$path{$data['thumb']}' />" . '<br />';
+								echo "<img src='//files." . HTTP_HOST . "/$path{$data['thumb']}' />" . '<br />';
 								//			if (++$ii <= 1) {
 								//				print_r($data) . PHP_EOL;
 								//			}
