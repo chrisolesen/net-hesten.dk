@@ -1,4 +1,5 @@
 <?php
+define('HTTP_HOST', filter_input(INPUT_SERVER, 'HTTP_HOST'));
 require '../../../app_core/db_conf.php';
 require '../../../app_core/user_validate.php';
 if ($_SESSION['logged_in'] == true) {
@@ -39,7 +40,7 @@ if ($_SESSION['logged_in'] == true) {
 				<input class="search" placeholder="Search" /><br />
 				<ul class="list">
 					<?php
-					$result = $link->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = 'hestehandleren*' and date >= '2014-08-01 00:00:00'");
+					$result = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = 'hestehandleren*'");
 					$num_rows = $result->num_rows;
 
 					while ($data = $result->fetch_assoc()) {
@@ -77,7 +78,7 @@ if ($_SESSION['logged_in'] == true) {
 					?>
 				</ul>
 			</div>
-			<script type="text/javascript" src="//<?= HTTP_HOST; ?>/scripts/listjs.js"></script>
+			<script type="text/javascript" src="//files.<?= HTTP_HOST; ?>/scripts/listjs.js"></script>
 			<script>
 				var options = {
 					valueNames: ['tegner', 'beskrivelse', 'dato', ]
