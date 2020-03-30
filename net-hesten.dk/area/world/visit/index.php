@@ -48,7 +48,7 @@ require "$basepath/global_modules/header.php";
 			$offset = $page * $pr_page;
 			$sql = 'SELECT old.stutteri AS username, old.thumb, old.penge AS money, old.id, old.navn AS name, last_active.value AS last_online '
 				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS old "
-				. 'LEFT JOIN user_data_timing AS last_active '
+				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.user_data_timing AS last_active "
 				. 'ON last_active.parent_id = old.id AND last_active.name = "last_active" '
 				. "WHERE last_active.value > '{$target_date} 00:00:00' "
 				. "AND old.id NOT IN ({$GLOBALS['hidden_system_users_sql']}) "
@@ -103,9 +103,9 @@ require "$basepath/global_modules/header.php";
 					</div>
 					<?php
 					if ($data->thumb) {
-						$stud_thumbnail = "//files.".HTTP_HOST."/users/{$data->thumb}";
+						$stud_thumbnail = "//files." . HTTP_HOST . "/users/{$data->thumb}";
 					} else {
-						$stud_thumbnail = "//files.".HTTP_HOST."/graphics/logo/default_logo.png";
+						$stud_thumbnail = "//files." . HTTP_HOST . "/graphics/logo/default_logo.png";
 					}
 					?>
 					<img style="max-width:175px;left: 105px;" src='<?= $stud_thumbnail; ?>' />
