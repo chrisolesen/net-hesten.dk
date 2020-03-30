@@ -1,6 +1,11 @@
 #Database configurations 
 /app_core/db_conf.php
 
+#UserData
+/files.net-hesten.dk/horses/artist_submissions/*
+/files.net-hesten.dk/users/*
+!/files.net-hesten.dk/horses/artist_submissions/.gitkeep
+!/files.net-hesten.dk/users/.gitkeep
 #Adminpanels
 
 /net-hesten.dk/admin/hestetegner/move_to_files/count_old.php

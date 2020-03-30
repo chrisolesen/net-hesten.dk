@@ -65,7 +65,7 @@ if ($_SESSION['logged_in'] == true) {
 								echo '<span class="beskrivelse">' . $data['beskrivelse'] . '</span>' . '<br />';
 								echo $data['race'] . '<br />';
 								echo $data['kon'] . '<br />';
-								echo "<img src='https://" . (filter_input(INPUT_SERVER, 'HTTP_HOST')) . "/$path{$data['thumb']}' />" . '<br />';
+								echo "<img src='//" . HTTP_HOST . "/$path{$data['thumb']}' />" . '<br />';
 								//			if (++$ii <= 1) {
 								//				print_r($data) . PHP_EOL;
 								//			}
@@ -77,7 +77,7 @@ if ($_SESSION['logged_in'] == true) {
 					?>
 				</ul>
 			</div>
-			<script type="text/javascript" src="https://<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/scripts/listjs.js"></script>
+			<script type="text/javascript" src="//<?= HTTP_HOST; ?>/scripts/listjs.js"></script>
 			<script>
 				var options = {
 					valueNames: ['tegner', 'beskrivelse', 'dato', ]
