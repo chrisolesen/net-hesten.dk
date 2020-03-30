@@ -74,7 +74,6 @@ LIMIT 1;
             <span>Slet</span>
         </li>
 		<?php
-//        $sql = "SELECT * FROM Brugere LIMIT $pr_page OFFSET $offset";
 		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, user.IP, user.logindate FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS user "
 				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
 				. "WHERE user.logindate < '2018-02-26 00:00:00' AND user.date < '2018-02-26 00:00:00' AND timing.value < '2018-02-26 00:00:00' "

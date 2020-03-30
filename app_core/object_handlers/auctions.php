@@ -88,17 +88,18 @@ class auctions
 		foreach ($attr as $key => $value) {
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
-
-		$auction_data = ($link_new->query("SELECT id, object_id, creator, status_code, minimum_price, instant_price, highest_bidder, highest_bid, end_date FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_auctions WHERE id = {$attr['auction_id']} AND status_code = 1 LIMIT 1"))->fetch_assoc();
-		if (!$auction_data['highest_bidder']) {
-			$auction_data['highest_bidder'] = null;
+		$auction_data = false;
+		$result = $link_new->query("SELECT id, object_id, creator, status_code, minimum_price, instant_price, highest_bidder, highest_bid, end_date FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_auctions WHERE id = {$attr['auction_id']} AND status_code = 1 LIMIT 1");
+		if ($result) {
+			$auction_data = $result->fetch_assoc();
 		}
-		if (!$auction_data['highest_bid']) {
-			$auction_data['highest_bid'] = null;
-		}
-
-
 		if ($auction_data) {
+			if (!$auction_data['highest_bidder']) {
+				$auction_data['highest_bidder'] = null;
+			}
+			if (!$auction_data['highest_bid']) {
+				$auction_data['highest_bid'] = null;
+			}
 
 			if ($attr['mode'] == 'buy_now') {
 				$bid_date = new DateTime('now');

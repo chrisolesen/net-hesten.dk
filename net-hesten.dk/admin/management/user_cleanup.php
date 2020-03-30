@@ -14,7 +14,7 @@ $page = (int) filter_input(INPUT_GET, 'page') ?: 0;
 $offset = $page * $pr_page;
 
 if (isset($_GET['delete_user'])) {
-	$sql = "DELETE FROM Brugere WHERE id = {$_GET['delete_user']} LIMIT 1";
+	$sql = "DELETE FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_GET['delete_user']} LIMIT 1";
 	$result = $link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
 	die();
@@ -106,7 +106,6 @@ if (isset($_GET['clear_account_view'])) {
 			<span>Slet</span>
 		</li>
 		<?php
-		//        $sql = "SELECT * FROM Brugere LIMIT $pr_page OFFSET $offset";
 		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS user "
 			. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
 			. "WHERE user.date < '2018-02-26 00:00:00' AND timing.value < '2018-02-26 00:00:00' "

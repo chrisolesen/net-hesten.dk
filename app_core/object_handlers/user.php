@@ -395,7 +395,6 @@ class user
 	public static function request_password($attr = [])
 	{
 		global $link_new;
-		global $link_new;
 		global $GLOBALS;
 
 		$return_data = [];
@@ -405,7 +404,7 @@ class user
 		}
 		$new_password = substr(md5(rand()), 0, 7);
 		$attr['mail'] = $link_new->real_escape_string($attr['mail']);
-		$attr['user_id'] = $link_new->query("SELECT id FROM Brugere WHERE email = '{$attr['mail']}' LIMIT 1")->fetch_object()->id;
+		$attr['user_id'] = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE email = '{$attr['mail']}' LIMIT 1")->fetch_object()->id;
 		if ($attr['user_id']) {
 			$user_name = $link_new->query("SELECT stutteri AS username FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->username;
 			$user_mail = $link_new->query("SELECT email AS mail FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->mail;
