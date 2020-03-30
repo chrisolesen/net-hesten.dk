@@ -108,14 +108,18 @@ class artist_center
 		foreach ($defaults as $key => $value) {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
-        foreach ($attr as $key => $value) {
-            $attr[$key] = $link_new->real_escape_string($value);
-        }
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
 		if (!isset($attr['user_id']) && $attr['mode'] != 'approve') {
 			exit();
 		}
 
-		$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = 27";
+		if (isset($attr['user_id'])) {
+			$sql = "SELECT * FROM `artist_center_submissions` WHERE `artist` = {$attr['user_id']}";
+		} else {
+			$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = 27";
+		}
 		$result = $link_new->query($sql);
 		while ($data = $result->fetch_object()) {
 			$return_data[] = ["image" => $data->image, "type" => $data->type, "theme" => $data->theme, "occasion" => $data->occasion, "race" => $data->race, "artist" => $data->artist, "date" => $data->date];
