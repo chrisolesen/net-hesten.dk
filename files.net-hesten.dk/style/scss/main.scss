@@ -1,6 +1,8 @@
-@import 'reset';
-@import 'variables';
-@import 'lumosweb_font';
+// out: ../, compress: true, sourceMap: false, autoprefixer: last 5 versions, groupmedia: true
+
+@import '_reset.scss';
+@import '_variables.scss';
+@import '_lumosweb_font.scss';
 *, *:before, *:after {
 	-webkit-box-sizing: inherit;
 	-moz-box-sizing: inherit;
@@ -181,17 +183,17 @@ h1 {
 	/*content:"wkr";*/
 	/*display: inline-block;*/
 	font-variant:small-caps;
-}
+} 
 
-@import 'effects/blinker';
-@import 'chat';
+@import '../effects/_blinker.scss';
+@import '_chat.scss';
 /* Forms */
-@import 'button';
-@import 'input';
-@import 'horselists_standard'; 
-@import 'page_structure_elements'; 
-@import 'competitions';
+@import '_button.scss';
+@import '_input.scss';
+@import '_horselists_standard.scss'; 
+@import '_page_structure_elements.scss'; 
+@import '_competitions.scss';
 
 
 
-@import 'responsive_styles';
+@import '_responsive_styles.scss';

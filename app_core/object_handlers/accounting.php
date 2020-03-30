@@ -1,8 +1,10 @@
 <?php
 
-class accounting {
+class accounting
+{
 
-    public static function get_account_total($attr = []) {
+    public static function get_account_total($attr = [])
+    {
 
         global $link_new;
         $return_data = [];
@@ -20,7 +22,8 @@ class accounting {
         return $money;
     }
 
-    public static function fetch_entries($attr = []) {
+    public static function fetch_entries($attr = [])
+    {
 
         global $link_new;
         $return_data = [];
@@ -34,25 +37,27 @@ class accounting {
             $attr[$key] = $link_new->real_escape_string($value);
         }
         $sql = "SELECT "
-                . "entry_date, "
-                . "line_meta, "
-                . "line_amount "
-                . "FROM "
-                . "{$GLOBALS['DB_NAME_NEW']}.game_data_accounting "
-                . "WHERE "
-                . "user_id = {$attr['user_id']} "
-                . "ORDER BY "
-                . "entry_date DESC "
-                . "LIMIT 100";
+            . "entry_date, "
+            . "line_meta, "
+            . "line_amount "
+            . "FROM "
+            . "`{$GLOBALS['DB_NAME_NEW']}`.game_data_accounting "
+            . "WHERE "
+            . "user_id = {$attr['user_id']} "
+            . "ORDER BY "
+            . "entry_date DESC "
+            . "LIMIT 100";
         $result = $link_new->query($sql);
-        while ($data = $result->fetch_object()) {
-            $return_data[] = (object) ['date' => $data->entry_date, 'amount' => $data->line_amount, 'meta' => json_decode($data->line_meta)];
+        if ($result) {
+            while ($data = $result->fetch_object()) {
+                $return_data[] = (object) ['date' => $data->entry_date, 'amount' => $data->line_amount, 'meta' => json_decode($data->line_meta)];
+            }
         }
-
         return (object) $return_data;
     }
 
-    public static function add_entry($attr = []) {
+    public static function add_entry($attr = [])
+    {
 
         global $link_new;
         $return_data = [];
@@ -87,13 +92,12 @@ class accounting {
         $attr['meta_data']['line_text'] = $attr['line_text'];
         $meta_for_db = json_encode($attr['meta_data'], JSON_UNESCAPED_UNICODE);
 
-        $sql = "INSERT INTO {$GLOBALS['DB_NAME_NEW']}.game_data_accounting "
-                . "(user_id, line_meta, line_amount)"
-                . "VALUES "
-                . "({$attr['user_id']}, '{$meta_for_db}', {$attr['amount']}) "
-                . "";
+        $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.game_data_accounting "
+            . "(user_id, line_meta, line_amount)"
+            . "VALUES "
+            . "({$attr['user_id']}, '{$meta_for_db}', {$attr['amount']}) "
+            . "";
         $result = $link_new->query($sql);
         return $result;
     }
-
 }

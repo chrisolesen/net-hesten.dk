@@ -130,7 +130,7 @@ ob_end_clean();
 			if ($filter_id = filter_input(INPUT_POST, 'id_filter')) {
 				$attr = ['user_name' => $_SESSION['username'], 'id_filter' => $filter_id];
 			}
-			$attr['custom_filter'] .= horse_list_filters::get_filter_string(['zone' => "auctions_sell"]);
+			$attr['custom_filter'] = horse_list_filters::get_filter_string(['zone' => "auctions_sell"]);
 			if (is_array(horses::get_all($attr))) {
 				foreach (horses::get_all($attr) as $horse) {
 					$gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
