@@ -1,4 +1,5 @@
 <?php
+define('HTTP_HOST', filter_input(INPUT_SERVER, 'HTTP_HOST'));
 require '../../../app_core/db_conf.php';
 require '../../../app_core/user_validate.php';
 if ($_SESSION['logged_in'] == true) {
