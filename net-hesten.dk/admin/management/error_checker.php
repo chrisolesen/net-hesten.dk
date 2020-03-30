@@ -67,8 +67,8 @@ if (isset($_GET['fix']) && $_GET['fix'] == 'kaaring' && isset($_GET['id'])) {
 						$refund_suggestions[$i] = $related_bids->creator;
 					}
 					if (isset($_GET['do_suggested_auction_refund']) && $_GET['do_suggested_auction_refund'] == $i) {
-						$temp_user_name = $link_new->query("SELECT stutteri FROM Brugere WHERE id = {$related_bids->creator} LIMIT 1")->fetch_object()->stutteri;
-						$temp_user_money = $link_new->query("SELECT penge FROM Brugere WHERE id = {$related_bids->creator} LIMIT 1")->fetch_object()->penge;
+						$temp_user_name = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$related_bids->creator} LIMIT 1")->fetch_object()->stutteri;
+						$temp_user_money = $link_new->query("SELECT penge FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$related_bids->creator} LIMIT 1")->fetch_object()->penge;
 
 						$sql = "UPDATE Brugere SET penge = (penge + {$related_bids->bid_amount}) WHERE id = {$related_bids->creator}";
 //                        echo "<br /> {$sql}";
