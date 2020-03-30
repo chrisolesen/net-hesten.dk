@@ -7,7 +7,7 @@ $competitions = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.game
 if (filter_input(INPUT_GET, 'partake') == true) {
 	$part_id = (int) filter_input(INPUT_GET, 'comp_id');
 	if($part_id){
-		$link_new->query("INSERT INTO {$GLOBALS['DB_NAME_NEW']}.game_data_simple_competition_participants (competition_id, participant_id) VALUES ({$part_id}, {$_SESSION['user_id']})");
+		$link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition_participants (competition_id, participant_id) VALUES ({$part_id}, {$_SESSION['user_id']})");
 	}
 }
 ?>

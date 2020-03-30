@@ -1,4 +1,4 @@
-<?php if (in_array('tech_admin', $_SESSION['rights'])) { ?>
+<?php if (in_array('tech_admin', ($_SESSION['rights'] ?? []))) { ?>
 	<style>
 		@media all and (max-width: 900) {
 			.json_feedback_modal {

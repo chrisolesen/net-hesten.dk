@@ -71,7 +71,7 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
 
 
             if ($artist && $thumb && $advantage && $disadvantage && $talent) {
-                $sql = "INSERT INTO {$GLOBALS['DB_NAME_OLD']}.Heste " . PHP_EOL
+                $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.Heste " . PHP_EOL
                     . '(' . PHP_EOL
                     . 'bruger, status, alder, pris, beskrivelse, ' . PHP_EOL
                     . 'foersteplads, andenplads, tredieplads, ' . PHP_EOL

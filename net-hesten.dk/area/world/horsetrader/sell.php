@@ -39,7 +39,7 @@ require "$basepath/global_modules/header.php";
 				$filtered = true;
 			}
 
-			$custom_filter .= " AND graesning != 'ja' AND staevne <> 'ja' AND status <> 'avl' AND status <> '{$foel}' AND kaaring <> 'ja' AND competition_id IS NULL ";
+			$custom_filter .= " AND graesning != 'ja' AND staevne <> 'ja' AND status <> 'avl' AND status <> 'føl' AND kaaring <> 'ja' AND competition_id IS NULL ";
 
 
 			if ($filtered) {
