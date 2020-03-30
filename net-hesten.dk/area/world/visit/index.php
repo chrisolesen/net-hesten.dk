@@ -43,8 +43,7 @@ require "$basepath/global_modules/header.php";
 			$order_by = "ORDER BY CASE 
  WHEN old.thumb LIKE '%/%' THEN 10 
  ELSE 20 END, old.id ";
-			// WHEN deal_id < 5 THEN deal_id 
-			// WHEN deal_id > 5 THEN Rand() + 5 //so that the value is between 5 and 6
+ 
 			$offset = $page * $pr_page;
 			$sql = 'SELECT old.stutteri AS username, old.thumb, old.penge AS `money`, old.id, old.navn AS `name`, last_active.value AS last_online '
 				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS old "
@@ -55,7 +54,6 @@ require "$basepath/global_modules/header.php";
 				. (($filter_username = (filter_input(INPUT_POST, 'visit_search_stud') ?? false)) ? "AND old.stutteri LIKE '%{$filter_username}%' " : '')
 				. " {$order_by} "
 				. "LIMIT {$pr_page} OFFSET {$offset}";
-			echo "<!-- {$sql} -->";
 			$result = $link_new->query($sql);
 			if ($result) {
 				while ($data = $result->fetch_object()) {
