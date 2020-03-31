@@ -3,7 +3,9 @@
 
 #UserData
 /files.net-hesten.dk/horses/artist_submissions/*
+/files.net-hesten.dk/templates/*
 /files.net-hesten.dk/users/*
+!/files.net-hesten.dk/templates/.gitkeep
 !/files.net-hesten.dk/horses/artist_submissions/.gitkeep
 !/files.net-hesten.dk/users/.gitkeep
 #Adminpanels
