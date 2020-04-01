@@ -100,9 +100,9 @@
 			padding-right: 5px;
 		}
 
-		[data-section-type='competition'] {
+		[data-section-type="competition"] {
 			width: 100%;
-			float:none;
+			float: none;
 		}
 		#page-content {
 		}
@@ -111,5 +111,93 @@
 @media all and (max-width: 400px) {
 	#top_menu > a > img {
 		left: 0 !important;
+	}
+}
+
+@media all and (max-width: 450px) {
+	body .horse_square.horse_object {
+		padding: 20px !important;
+	}
+	body .horse_square.horse_object,
+	body .horse_square.horse_object *,
+	body .horse_square.horse_object .compact_top_button,
+	body .horse_square.horse_object .compact_bottom_button {
+		position: relative !important;
+		bottom: initial !important;
+		right: initial !important;
+		left: initial !important;
+		top: initial !important;
+		display: block !important;
+		height: auto !important;
+		width: 100% !important;
+	}
+	body .horse_square.horse_object *,
+	body .horse_square.horse_object .compact_top_button,
+	body .horse_square.horse_object .compact_bottom_button {
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+	body .horse_square.horse_object script {
+		display: none !important;
+	}
+	body .horse_square.horse_object .info {
+		display: grid !important;
+		grid-gap: 1em !important;
+	}
+	body .horse_square.horse_object .info .gender,
+	body .horse_square.horse_object .info .icon-vcard {
+		display: none !important;
+	}
+	body .horse_square.horse_object .name,
+	body .horse_square.horse_object .horse_vcard .extended_info.extended_info {
+		width: 100% !important;
+		padding: 0 !important;
+	}
+	body .horse_square.horse_object .horse_vcard .extended_info {
+		line-height: 1.3em !important;
+	}
+	body .horse_square.horse_object .value {
+		transform: initial !important;
+	}
+	body .horse_square.horse_object form .wkr_symbol,
+	body .horse_square.horse_object .value .wkr_symbol,
+	body .horse_square.horse_object .horse_vcard .value .wkr_symbol {
+		display: inline !important;
+	}
+	body .horse_square.horse_object img {
+		position: absolute !important;
+		top: 20px !important;
+		right: 20px !important;
+		bottom: initial !important;
+		left: initial !important;
+		transform: initial !important;
+		max-width: 180px !important;
+		max-height: 170px !important;
+		height: auto !important;
+		width: auto !important;
+	}
+	body .horse_square.horse_object img.zoom_img {
+		display: none !important;
+	}
+	body .horse_square.horse_object form {
+		position: absolute !important;
+		transform: none !important;
+		padding: 10px !important;
+		z-index: 0 !important;
+	}
+	body .horse_square.horse_object form.visible {
+		z-index: 15 !important;
+	}
+	body .horse_square.horse_object form * {
+		margin: 5px 0 !important;
+		padding: 5px 0px 5px 10px !important;
+	}
+	body .horse_square.horse_object form br {
+		display: none !important;
+	}
+	body .horse_square.horse_object form button,
+	body .horse_square.horse_object form input[type="submit"] {
+		margin: 5px 0 !important;
+		padding: 0 !important;
 	}
 }
