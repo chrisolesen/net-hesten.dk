@@ -53,7 +53,6 @@ if ($end_competition_id = filter_input(INPUT_GET, 'end_competition')) {
 	if ($competition->status_code == 31) {
 		echo 'Competion already ended';
 	} else {
-
 		//	31 = ended;
 		$sql = "SELECT horse.id AS hid, horse.navn AS hname, user.stutteri AS uname, user.id AS uid, user.penge AS money, horse.pris AS value FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competition_participants` AS PData "
 			. "LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS horse ON horse.id = PData.participant_id "
@@ -63,57 +62,63 @@ if ($end_competition_id = filter_input(INPUT_GET, 'end_competition')) {
 		$result = $link_new->query($sql);
 		$participants = [];
 		$points = 0;
-		while ($data = $result->fetch_object()) {
-			++$points;
-			if ($competition->name == 'Følkåring') {
-				$point_array = [1, 2, 3, 4];
-			} else {
-				$point_array = [1, 2, 3];
-			}
-			if (in_array($points, $point_array)) {
-				if ($competition->name == 'Følkåring') {
-					if ($points == 1) {
-						$medal = 'Helhedsindtryk';
-						$price_money = 15000;
-						$value_add = 7500;
-					} else if ($points == 2) {
-						$medal = 'Kropsbygning';
-						$price_money = 10000;
-						$value_add = 5000;
-					} else if ($points == 3) {
-						$medal = 'Temperament';
-						$price_money = 10000;
-						$value_add = 5000;
-					} else if ($points == 4) {
-						$medal = 'Gangart';
-						$price_money = 10000;
-						$value_add = 5000;
+		if ($result) {
+			if ($result->num_rows > 0) {
+				while ($data = $result->fetch_object()) {
+					++$points;
+					if ($competition->name == 'Følkåring') {
+						$point_array = [1, 2, 3, 4];
+					} else {
+						$point_array = [1, 2, 3];
 					}
-				} else {
+					if (in_array($points, $point_array)) {
+						if ($competition->name == 'Følkåring') {
+							if ($points == 1) {
+								$medal = 'Helhedsindtryk';
+								$price_money = 15000;
+								$value_add = 7500;
+							} else if ($points == 2) {
+								$medal = 'Kropsbygning';
+								$price_money = 10000;
+								$value_add = 5000;
+							} else if ($points == 3) {
+								$medal = 'Temperament';
+								$price_money = 10000;
+								$value_add = 5000;
+							} else if ($points == 4) {
+								$medal = 'Gangart';
+								$price_money = 10000;
+								$value_add = 5000;
+							}
+						} else {
+							if ($points == 1) {
+								$medal = 'Guld';
+								$price_money = 50000;
+								$value_add = 20000;
+							} else if ($points == 2) {
+								$medal = 'Sølv';
+								$price_money = 25000;
+								$value_add = 10000;
+							} else if ($points == 3) {
+								$medal = 'Bronze';
+								$price_money = 10000;
+								$value_add = 5000;
+							}
+						}
+						$utf_8_message = "<b>Tilykke {$data->uname}</b>,<br /><br /> Din hest {$data->hname} har vundet {$medal} i {$competition->name}. ({$competition->end_date})<br /><br />Du har fået {$price_money}wkr og din hest er steget med {$value_add} i værdi.<br /><br /><b>Med venlig hilsen</b><br />Konkurrencestyrelsen";
+						$origin = 53844; /* Konkurrencestyrelsen */
 
-					if ($points == 1) {
-						$medal = 'Guld';
-						$price_money = 50000;
-						$value_add = 20000;
-					} else if ($points == 2) {
-						$medal = 'Sølv';
-						$price_money = 25000;
-						$value_add = 10000;
-					} else if ($points == 3) {
-						$medal = 'Bronze';
-						$price_money = 10000;
-						$value_add = 5000;
+						$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET penge = (penge + {$price_money}) WHERE id = {$data->uid}");
+						$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET pris = (pris + {$value_add}) WHERE id = {$data->hid}");
+						$link_new->query("INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, {$origin}, {$data->uid}, NOW(), '{$utf_8_message}' )");
 					}
+					$link_new->query("UPDATE `game_data_competition_participants` SET points = '{$points}' WHERE `competition_id` = {$end_competition_id} AND `participant_id` = {$data->hid}");
+					$link_new->query("UPDATE `game_data_competitions` SET status_code = 31 WHERE `id` = {$end_competition_id}");
 				}
-				$utf_8_message = "<b>Tilykke {$data->uname}</b>,<br /><br /> Din hest {$data->hname} har vundet {$medal} i {$competition->name}. ({$competition->end_date})<br /><br />Du har fået {$price_money}wkr og din hest er steget med {$value_add} i værdi.<br /><br /><b>Med venlig hilsen</b><br />Konkurrencestyrelsen";
-				$origin = 53844; /* Konkurrencestyrelsen */
-
-				$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET penge = (penge + {$price_money}) WHERE id = {$data->uid}");
-				$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET pris = (pris + {$value_add}) WHERE id = {$data->hid}");
-				$link_new->query("INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, {$origin}, {$data->uid}, NOW(), '{$utf_8_message}' )");
+			} else {
+				/* No participants */
+				$link_new->query("UPDATE `game_data_competitions` SET status_code = 31 WHERE `id` = {$end_competition_id}");
 			}
-			$link_new->query("UPDATE `game_data_competition_participants` SET points = '{$points}' WHERE `competition_id` = {$end_competition_id} AND `participant_id` = {$data->hid}");
-			$link_new->query("UPDATE `game_data_competitions` SET status_code = 31 WHERE `id` = {$end_competition_id}");
 		}
 	}
 }

@@ -78,8 +78,24 @@ function render_horse_object($horse, $area)
             ?>
                 <button class='foel btn btn-info compact_top_button' data-button-type='modal_activator' data-target='breed_horse'>Avl</button>
             <?php
+            } else if ($horse->graesning == 'ja') {
+
+                $date_now = new DateTime('NOW');
+                $date_then = new DateTime($horse->grassdate);
+                $duration = $date_now->diff($date_then);
+                if ($duration->y > 0 || $duration->m > 0 || $duration->d > 0 || $duration->h > 13) {
+                    /* Punish */
+                    $duration = 'Hesten har været for længe på græs';
+                } else {
+                    /* Pay */
+                    $minutes = ($duration->h * 60) + ($duration->i);
+                    $duration = "{$horse->name} har været på græs {$minutes} Minutter";
+                }
+            ?>
+                <button style='pointer-events: none;' class='enter_graes btn compact_top_button'><?= $duration; ?></button>
+            <?php
             }
-            if ($horse->breed_date && in_array($area, ['main_stud'])) {
+            if ($horse->breed_date && in_array($area, ['main_stud']) && $horse->graesning !== 'ja') {
 
                 $breed_date_target = new DateTime($horse->breed_date);
                 $breed_date_target->add(new DateInterval('P40D'));
