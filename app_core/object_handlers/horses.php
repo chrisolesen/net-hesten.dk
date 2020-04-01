@@ -168,7 +168,7 @@ class horses
 				. "heste.egenskab, "
 				. "heste.ulempe, "
 				. "heste.talent, "
-				. "heste.changedate AS change_date_one, "
+				. "heste.changedate AS grassdate, "
 				. "heste.statuschangedate AS change_date_two, "
 				. "heste.date AS change_date_three, "
 				. "contests.competition_id, "
