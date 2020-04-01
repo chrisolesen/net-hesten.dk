@@ -115,38 +115,75 @@ $user_info = user::get_info(['user_id' => $_SESSION['user_id']]);
 				border-spacing: 0.5em;
 				border-collapse: separate;
 			}
+
+			.account_tab {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				grid-template-columns: 1fr;
+				grid-gap: 2em;
+			}
+
+			#account_list {
+				display: grid;
+				grid-template-columns: 110px 1fr 200px 1fr;
+				text-align: center;
+				grid-gap: 0.25em;
+			}
 		</style>
-		<table id="account_list">
-			<thead>
-				<tr>
-					<th>Klokken</th>
-					<th>Beløb</th>
-					<th>Beskrivelse</th>
-					<th>Saldo</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php $date = new DateTime('now'); ?>
-				<?php $date_test = (new DateTime('now'))->format('Y-m-d'); ?>
+		<?php
+		$labels = '';
+		$data = '';
+		?>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+		<div class="account_tab">
+			<!-- <div id="account_list">
+				<div>Klokken</div>
+				<div>Beløb</div>
+				<div>Beskrivelse</div>
+				<div>Saldo</div>
 				<?php foreach ($account_entries as $account_line) { ?>
-					<?php if ((new DateTime($account_line->date))->format('Y-m-d') != $date_test) { ?>
-						<?php
-						$date = (new DateTime($account_line->date));
-						$date_test = $date->format('Y-m-d');
-						?>
-						<tr>
-							<td data-section-type="info_square" class="date_line" colspan="4"><?= $date->format('d/m - Y'); ?></td>
-						</tr>
-					<?php } ?>
-					<tr class="<?= (($account_line->meta->operator == '+') ? 'positive' : 'negative'); ?>">
-						<td><?= (new DateTime($account_line->date))->format('H:i'); ?></td>
-						<td><?= number_dotter(str_replace('-', '', $account_line->amount)); ?><span class="wkr_symbol dev_test_effect">wkr</span></td>
-						<td><?= $account_line->meta->line_text; ?></td>
-						<td><?= number_dotter($account_line->meta->line_total); ?><span class="wkr_symbol dev_test_effect">wkr</span></td>
-					</tr>
+					<?php $date = (new DateTime($account_line->date)); ?>
+					<div><?= $date->format('H:i - d/m'); ?></div>
+					<div><?= number_dotter(str_replace('-', '', $account_line->amount)); ?><span class="wkr_symbol dev_test_effect">wkr</span></div>
+					<div><?= $account_line->meta->line_text; ?></div>
+					<div><?= number_dotter($account_line->meta->line_total); ?><span class="wkr_symbol dev_test_effect">wkr</span></div>
+					<?php
+					/* $labels = "'" . $date->format('H:i - d/m') . "'," . $labels; */
+					//$labels = "''," . $labels;
+					$labels = "'{$account_line->meta->line_text}'," . $labels;
+					$data = "'{$account_line->meta->line_total}'," . $data;
+					?>
 				<?php } ?>
-			</tbody>
-		</table>
+			</div>-->
+			<div style="height: 200px;width:100%;position:relative;">
+				<canvas id="wkrChart"></canvas>
+			</div>
+		</div>
+		<script>
+			var ctx = document.getElementById('wkrChart').getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'line',
+				data: {
+					labels: [<?= substr($labels, 0, -1) ?>],
+					datasets: [{
+						label: 'wkr',
+						data: [<?= substr($data, 0, -1) ?>],
+						borderWidth: 1
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					responsive: true,
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true
+							}
+						}]
+					}
+				}
+			});
+		</script>
 	</section>
 </section>
 <script>
