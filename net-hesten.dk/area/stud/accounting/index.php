@@ -133,8 +133,6 @@ $user_info = user::get_info(['user_id' => $_SESSION['user_id']]);
 		<?php
 		$labels = '';
 		$data = '';
-		$suggestedMin = 1000000000;
-		$suggestedMax = 0;
 		?>
 		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 		<div class="account_tab">
@@ -154,12 +152,10 @@ $user_info = user::get_info(['user_id' => $_SESSION['user_id']]);
 					//$labels = "''," . $labels;
 					$labels = "'{$account_line->meta->line_text}'," . $labels;
 					$data = "'{$account_line->meta->line_total}'," . $data;
-					$suggestedMin = min($suggestedMin, $account_line->meta->line_total * 0.95);
-					$suggestedMax = max($suggestedMax, $account_line->meta->line_total * 1.01);
 					?>
 				<?php } ?>
 			</div>-->
-			<div style="height: 400px;width:100%;position:relative;">
+			<div style="height: 200px;width:100%;position:relative;">
 				<canvas id="wkrChart"></canvas>
 			</div>
 		</div>
@@ -181,14 +177,12 @@ $user_info = user::get_info(['user_id' => $_SESSION['user_id']]);
 					scales: {
 						yAxes: [{
 							ticks: {
-								suggestedMin: <?= round($suggestedMin); ?>,
-								suggestedMax: <?= round($suggestedMax); ?>
+								beginAtZero: true
 							}
 						}]
 					}
 				}
 			});
-/*								beginAtZero: true*/
 		</script>
 	</section>
 </section>
