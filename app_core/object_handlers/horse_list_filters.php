@@ -254,14 +254,25 @@ class horse_list_filters
 				<select name="filter_artist" id="filter_artist">
 					<option value="all" <?= (($user_filter_data[$attr['zone']]['artist'] ?? false) == 'all') ? 'selected' : ''; ?>>Alle Tegnere</option>
 					<?php
-					$artists = $link_new->query("SELECT DISTINCT users.stutteri AS name, users.id AS user_id FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS horses LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS users ON users.stutteri = horses.tegner WHERE status <> '{$dead}' ORDER BY users.stutteri ASC");
+					global $cached_artists;
+					$artist = false;
+					if (is_array(($cached_artists ?? false))) {
+						$artists = $cached_artists;
+					} else {
+						$result = $link_new->query("SELECT DISTINCT horses.tegner AS name FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS horses WHERE status <> '{$dead}' ORDER BY horses.tegner ASC");
+						$artists = [];
+						while ($artist = $result->fetch_object()) {
+							$artists[] = (object) ['name' => $artist->name];
+						}
+					}
 					if ($artists) {
-						while ($artist = $artists->fetch_object()) {
+						foreach ($artists as $artist) {
+							var_dump($artist);
 							if ($artist->name == '') {
 								continue;
 							}
 					?>
-							<option value="<?= $artist->name; ?>" <?= ($user_filter_data[$attr['zone']]['artist'] == $artist->name) ? 'selected' : ''; ?>><?= $artist->name; ?></option>
+							<option value="<?= $artist->name; ?>" <?= (($user_filter_data[$attr['zone']]['artist'] ?? 'none') == $artist->name) ? 'selected' : ''; ?>><?= $artist->name; ?></option>
 					<?php
 						}
 					}
