@@ -267,7 +267,6 @@ class horse_list_filters
 					}
 					if ($artists) {
 						foreach ($artists as $artist) {
-							var_dump($artist);
 							if ($artist->name == '') {
 								continue;
 							}
