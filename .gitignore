@@ -8,6 +8,10 @@
 !/files.net-hesten.dk/templates/.gitkeep
 !/files.net-hesten.dk/horses/artist_submissions/.gitkeep
 !/files.net-hesten.dk/users/.gitkeep
+#cacheData
+/files.net-hesten.dk/cache_data/*
+!/files.net-hesten.dk/cache_data/.gitkeep
+
 #Adminpanels
 
 /net-hesten.dk/admin/hestetegner/move_to_files/count_old.php

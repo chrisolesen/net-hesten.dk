@@ -56,7 +56,11 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('admin_panel_acc
 	?>
 		<a class="btn btn-info" href="/admin/manuel_crons/index.php">Manuelle Cron</a>
 	<?php
-
+	}
+	if (in_array('global_admin', $_SESSION['rights'])) {
+	?>
+		<a class="btn btn-info" href="/admin/form_cache/index.php">Cache kontrol</a>
+	<?php
 	}
 	if (in_array('tech_admin', $_SESSION['rights'])) {
 	?>
