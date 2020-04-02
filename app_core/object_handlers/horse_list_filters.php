@@ -160,7 +160,21 @@ class horse_list_filters
 			}
 
 			.list_filters_form .filter_line {
-				margin-bottom: 0.5em;
+				/* margin-bottom: 0.5em;*/
+			}
+
+			form.list_filters_form {
+				position: relative;
+				height: 320px;
+				display: grid;
+				grid-gap: 2px 1em;
+				grid-template-columns: 200px 1fr;
+			}
+
+			form.list_filters_form * {
+				grid-column: 2;
+				max-width: 100%;
+				overflow: hidden;
 			}
 		</style>
 		<h2>Filtrer på heste</h2>
@@ -173,11 +187,11 @@ class horse_list_filters
 			$form_action = '?horse_trader_page=0';
 		}
 		?>
-		<form class="list_filters_form" action="<?= $form_action; ?>" method="post" style="position: relative;height: 320px;">
+		<form class="list_filters_form" action="<?= $form_action; ?>" method="post">
 			<input type="hidden" name="action" value="filter_horses" />
 			<input type="hidden" name="filter_zone" value="<?= $attr['zone']; ?>" />
-			<p style="font-size:16px;line-height: 20px;margin-top:10px;">Hold ctrl nede, for at vælge flere.</p>
-			<select name="races[]" multiple="" size="14" style="float:left;margin-right: 20px;">
+			<p style="grid-column: 1 / span 2;font-size:16px;line-height: 20px;margin-top:10px;">Hold ctrl nede, for at vælge flere.</p>
+			<select name="races[]" multiple="" size="14" style="padding:2px;overflow-y:scroll;grid-column: 1;grid-row:2 / 10;">
 				<option value="all" <?= (in_array('all', $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?>>Alle Racer</option>
 				<?php foreach ($race_names as $race) { ?>
 					<?php if ($attr['zone'] == 'horse_trader') { ?>
@@ -265,6 +279,7 @@ class horse_list_filters
 							$artists[] = (object) ['name' => $artist->name];
 						}
 					}
+					$artists[] = (object) ['name' => 'mega super duper irriterende langt navn'];
 					if ($artists) {
 						foreach ($artists as $artist) {
 							if ($artist->name == '') {
