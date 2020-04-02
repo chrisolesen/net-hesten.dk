@@ -46,7 +46,7 @@ class accounting
             . "user_id = {$attr['user_id']} "
             . "ORDER BY "
             . "entry_date DESC "
-            . "LIMIT 25";
+            . "LIMIT 100";
         $result = $link_new->query($sql);
         if ($result) {
             while ($data = $result->fetch_object()) {
