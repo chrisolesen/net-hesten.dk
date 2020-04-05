@@ -55,41 +55,6 @@ require "$basepath/global_modules/header.php";
             <?php } ?>
         </div>
         <div data-section-type="ht-tab-content">
-            <div data-section-type="object_square">
-                <form style="line-height:29px;" method="post" action="" enctype="multipart/form-data">
-                    <input type="hidden" name="action" value="submit_drawing" />
-                    <span>Indsend hest</span>
-                    <select required="" name="race">
-                        <option value="">Vælg race</option>
-                        <?php foreach ($cached_races as $race) { ?>
-                            <option value="<?= $race['id']; ?>"><?= $race['name']; ?></option>
-                        <?php } ?>
-                    </select>
-                    <select required="" name="type">
-                        <option value="">Vælg unik/normal</option>
-                        <option value="unique">Unik</option>
-                        <option value="normal">Normal</option>
-                    </select>
-                    <select required="" name="theme">
-                        <option>Vælg tema</option>
-                        <option value="default" selected="">Almindelig hest</option>
-                        <option value="christmas">Jul</option>
-                        <option value="halloween">Halloween</option>
-                        <option value="nh_birthday">NHs Fødselsdag</option>
-                        <option value="valentine">Valentinsdag</option>
-                    </select>
-                    <select required="" name="occasion">
-                        <option>Vælg anledning</option>
-                        <?php if (in_array('hestetegner', $_SESSION['rights'])) { ?>
-                            <option value="default" selected="">Almindelig indsending</option>
-                        <?php } else { ?>
-                            <option value="artist_request" selected="">HT Anmodning</option>
-                        <?php } ?>
-                    </select>
-                    <input required="" name="drawing_image" id="drawing_image" type="file" />
-                    <input type="submit" name="submit_drawing" class="btn btn-success" value="Gem" />
-                </form>
-            </div>
             <?php if (in_array('hestetegner', $_SESSION['rights'])) { ?>
                 <br />
                 <h2>Du er HesteTegner</h2>
