@@ -43,6 +43,38 @@ function ac_find_next_artist_submission_filename($mode = 'default')
 
 class artist_center
 {
+	public static function find_next_type_filename($attr = [])
+	{
+		global $basepath;
+		if ($handle = opendir("$basepath/files.net-hesten.dk/horses/imgs/")) {
+			$found = false;
+			$num_dirs = 0;
+			while ($found != true) {
+				++$num_dirs;
+				$target_dir = str_replace(["/", "="], [""], base64_encode($num_dirs));
+				if (!is_dir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
+					mkdir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir);
+				}
+				if (is_dir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
+					$num_files = 1;
+					while ($num_files <= 250) {
+						++$num_files;
+						if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
+							continue;
+						} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
+							continue;
+						} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
+							continue;
+						} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jfif')) {
+							continue;
+						} else {
+							return ['path' => "$basepath/files.net-hesten.dk/horses/imgs/", 'filename' => "{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($num_files))];
+						}
+					}
+				}
+			}
+		}
+	}
 
 	public static function submit_drawing($attr = [])
 	{
@@ -225,6 +257,7 @@ class artist_center
 	public static function approve_drawing($attr = [])
 	{
 		global $link_new;
+		global $basepath;
 		$return_data = [];
 		$defaults = [];
 		foreach ($defaults as $key => $value) {
@@ -242,6 +275,14 @@ class artist_center
 				/* Billedet skal markeres */
 				$link_new->query("UPDATE `artist_center_submissions` SET `status` = 28 WHERE `id` = {$submission->id} AND `status` = 27 ");
 				/* Billedet skal aktiveres i typer */
+				$target_file = (object) self::find_next_type_filename();
+				$full_origin_file = "{$basepath}/files.net-hesten.dk/horses/artist_submissions/{$submission->image}";
+				$target_file_type = substr($submission->image, (strripos(($submission->image), '.')));
+				$full_target_file = $target_file->path . $target_file->filename . $target_file_type;
+				if (!file_exists($full_target_file)) {
+					copy($full_origin_file, $full_target_file);
+				}
+				
 				self::grant_points(['user_id' => $submission->artist, 'points' => 1]);
 			}
 		}

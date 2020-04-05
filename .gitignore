@@ -3,10 +3,13 @@
 
 #UserData
 /files.net-hesten.dk/horses/artist_submissions/*
+/files.net-hesten.dk/horses/imgs/*
 /files.net-hesten.dk/templates/*
 /files.net-hesten.dk/users/*
 !/files.net-hesten.dk/templates/.gitkeep
 !/files.net-hesten.dk/horses/artist_submissions/.gitkeep
+!/files.net-hesten.dk/horses/imgs/ghost_horse.png
+!/files.net-hesten.dk/horses/imgs/ghost_foel.png
 !/files.net-hesten.dk/users/.gitkeep
 #cacheData
 /files.net-hesten.dk/cache_data/*
