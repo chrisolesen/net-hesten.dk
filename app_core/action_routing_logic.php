@@ -88,14 +88,14 @@ if (filter_input(INPUT_POST, 'action') == 'reject_privat_trade') {
 	$script_feedback[] = private_trade::reject_privat_trade([
 		'trade_id' => filter_input(INPUT_POST, 'trade_id')
 	]);
-} 
+}
 if (filter_input(INPUT_POST, 'action') == 'request_private_trade') {
 	$script_feedback[] = private_trade::request_private_trade([
 		'horse_id' => filter_input(INPUT_POST, 'horse_id'),
 		'bid_amount' => filter_input(INPUT_POST, 'bid_amount'),
 		'requester_id' => $_SESSION['user_id']
 	]);
-} 
+}
 
 /* Horse Trader */
 if (filter_input(INPUT_POST, 'action') == 'buy_horse_from_trader') {
@@ -193,9 +193,31 @@ if (filter_input(INPUT_POST, 'action') == 'submit_drawing') {
 		]);
 	}
 }
+if (filter_input(INPUT_POST, 'action') == 'approve_artist_submission') {
+	if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights'])) {
+		exit(); /* Don't hack */
+	}
+	artist_center::approve_drawing([
+		'submission_id' => filter_input(INPUT_GET, 'submission_id'),
+	]);
+}
+/*
+if (filter_input(INPUT_GET, 'action') == 'reject_artist_submission') {
+	if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights'])) {
+		exit(); /* Don't hack */
+/*	}
+	if (isset($_SESSION['user_id'])) {
+		artist_center::reject_drawing([
+			'submission_id' => filter_input(INPUT_GET, 'submission_id'),
+		]);
+	}
+}
+*/
+
+
 
 /* Competitions */
-if (filter_input(INPUT_POST, 'action') == 'signup_horse') {
+if (filter_input(INPUT_GET, 'action') == 'signup_horse') {
 	if (isset($_SESSION['user_id'])) {
 		competitions::signup_horse([
 			'user_id' => $_SESSION['user_id'],

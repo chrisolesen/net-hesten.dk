@@ -71,7 +71,7 @@ $types = [];
 			<td>Dato</td>
 			<td>Handlinger</td>
 		</thead>
-		<?php
+		<?php 
 		$submissions = artist_center::fetch_drawings(['mode' => 'approve']);
 		foreach ($submissions as $submission) {
 			if ($submission['occasion'] == 'artist_request') {
@@ -93,7 +93,7 @@ $types = [];
 				<td><?= $submission['date']; ?></td>
 				<td style='position: relative;'>
 					<div style='height: 200px;'>
-						<div style='line-height: 40px;'><a href="?approve_artist_submission=<?= $submission['id']; ?>">Godkend</a> / <a href="?reject_artist_submission=<?= $submission['id']; ?>">Afvis</a></div>
+						<div style='line-height: 40px;'><a href="?action=approve_artist_submission&submission_id=<?= $submission['id']; ?>">Godkend</a> / <a href="?action=reject_artist_submission&submission_id=<?= $submission['id']; ?>">Afvis</a></div>
 						<textarea style='height: calc(100% - 40px);width:100%'></textarea>
 					</div>
 				</td>

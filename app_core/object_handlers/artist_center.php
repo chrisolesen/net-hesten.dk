@@ -207,4 +207,39 @@ class artist_center
 		$result = ($link_new->query($sql)->fetch_object()->artist_points ?? 0);
 		return $result;
 	}
+
+	public static function grant_points($attr = [])
+	{
+		global $link_new;
+		$points = (self::yield_points(['user_id' => $attr['user_id']])) + $attr['points'];
+		$sql = "UPDATE `user_data_numeric` SET `value` = {$points} WHERE `name` = 'artist_points' AND `parent_id` = {$attr['user_id']}";
+		$link_new->query($sql);
+		return true;
+	}
+
+	public static function approve_drawing($attr = [])
+	{
+		global $link_new;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+
+		if (isset($attr['submission_id']) && is_numeric($attr['submission_id'])) {
+			$submission = ($link_new->query("SELECT * FROM `artist_center_submissions` WHERE `id` = {$attr['submission_id']} AND `status` = 27 ")->fetch_object() ?? false);
+			if ($submission) {
+				/* Message user */
+				private_messages::post_message(['message' => 'Din tegning er blevet godkendt.', 'write_to' => $submission->artist, 'poster_id' => 8]);
+				/* Billedet skal markeres */
+				$link_new->query("UPDATE `artist_center_submissions` SET `status` = 28 WHERE `id` = {$submission->id} AND `status` = 27 ");
+				/* Billedet skal aktiveres i typer */
+				self::grant_points(['user_id' => $submission->artist, 'points' => 1]);
+			}
+		}
+		return $return_data;
+	}
 }
