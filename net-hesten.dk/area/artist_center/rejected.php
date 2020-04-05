@@ -54,25 +54,6 @@ require "$basepath/global_modules/header.php";
 				</div>
 			<?php } ?>
 		</div>
-        <div data-section-type="ht-tab-content">
-            <?php if (in_array('hestetegner', $_SESSION['rights'])) { ?>
-                <br />
-                <h2>Du er HesteTegner</h2>
-                <p style="line-height: 1.2;">
-                    Skabelonerne finder du <a style="text-decoration: underline;" href="//files.<?= HTTP_HOST; ?>/templates/nethesten_skabeloner.zip">her</a>.<br />
-                    <div>(OBS! Vores Skabelonner, er kun til privat ikke kommercielt brug, eller på net-hesten.dk)</div><br />
-                </p>
-            <?php } else { ?>
-                <br />
-                <h2>Du er ikke HesteTegner (HT): </h2>
-                <p style="line-height: 1.2;">
-                    Du er velkommen til at søge om titlen, ved at sende tegninger ind. Husk at tegne dem i vores skabeloner som du finder <a style="text-decoration: underline;" href="//files.<?= HTTP_HOST; ?>/templates/nethesten_skabeloner.zip">her</a>.
-                </p>
-                <div>(OBS! Vores Skabelonner, er kun til privat ikke kommercielt brug, eller på net-hesten.dk)</div><br />
-            <?php
-            }
-            ?>
-        </div>
         <style>
             #htc_section {
                 display: grid;
