@@ -33,27 +33,27 @@ require "$basepath/global_modules/header.php";
 				<h1>Heste Tegner Panel<?= in_array('hestetegner', $_SESSION['rights']) ? ' - Oversigt' : ''; ?></h1>
 			</header>
 		</div>
-		<?php if (array_intersect(['hestetegner', 'global_admin'], $_SESSION['rights'])) { ?>
-			<div data-section-type="right-side">
+		<div data-section-type="right-side">
+			<div data-section-type="info_square">
+				<header>
+					<h2>Dine data</h2>
+				</header>
+				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/approved.php"><span class="title">Godkendte Tegninger:</span><span class="value"><?= artist_center::yield_approved(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+				<div><a href="//<?= HTTP_HOST; ?>//area/artist_center/"><span style="text-decoration:underline;" class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+				<?php if (array_intersect(['hestetegner', 'global_admin'], $_SESSION['rights'])) { ?>
+					<div><a href="#" title="Points kan ikke benyttes endnu"><span class="title">HT Points:</span><span class="value"><?= artist_center::yield_points(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+				<?php } ?>
+				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/rejected.php"><span class="title">Afviste Tegninger:</span><span class="value"><?= artist_center::yield_rejected(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+			</div>
+			<?php if (in_array('global_admin', $_SESSION['rights'])) { ?>
 				<div data-section-type="info_square">
 					<header>
-						<h2>Dine data</h2>
+						<h2>Admin data</h2>
 					</header>
-					<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/approved.php"><span class="title">Godkendte Tegninger:</span><span class="value"><?= artist_center::yield_approved(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
-					<div><a href="//<?= HTTP_HOST; ?>//area/artist_center/"><span style="text-decoration:underline;" class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
-					<div><a href="#" title="Points kan ikke benyttes endnu"><span class="title">HT Points:</span><span class="value"><?= artist_center::yield_points(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
-					<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/rejected.php"><span class="title">Afviste Tegninger:</span><span class="value"><?= artist_center::yield_rejected(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+					<div><a style="text-decoration: underline;" href="//<?= HTTP_HOST; ?>/admin/hestetegner/submitted_horses.php">Til HT Admin panel</a></div>
 				</div>
-				<?php if (in_array('global_admin', $_SESSION['rights'])) { ?>
-					<div data-section-type="info_square">
-						<header>
-							<h2>Admin data</h2>
-						</header>
-						<div><a style="text-decoration: underline;" href="//<?= HTTP_HOST; ?>/admin/hestetegner/submitted_horses.php">Til HT Admin panel</a></div>
-					</div>
-				<?php } ?>
-			</div>
-		<?php } ?>
+			<?php } ?>
+		</div>
 		<div data-section-type="ht-tab-content">
 			<div data-section-type="object_square">
 				<form style="line-height:29px;" method="post" action="" enctype="multipart/form-data">
