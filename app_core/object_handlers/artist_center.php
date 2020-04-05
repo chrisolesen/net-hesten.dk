@@ -118,7 +118,7 @@ class artist_center
 		if (isset($attr['user_id'])) {
 			$sql = "SELECT * FROM `artist_center_submissions` WHERE `artist` = {$attr['user_id']} " . (($attr['status'] ?? false) ? "AND `status` = " . ((int) $attr['status']) : '');
 		} else {
-			if ($attr['status']) {
+			if (($attr['status'] ?? false)) {
 				$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = " . ((int) $attr['status']);
 			} else {
 				$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = 27";
@@ -126,7 +126,7 @@ class artist_center
 		}
 		$result = $link_new->query($sql);
 		while ($data = $result->fetch_object()) {
-			$return_data[] = ["admin_comment" =>  $data->admin_comment, "image" => $data->image, "type" => $data->type, "theme" => $data->theme, "occasion" => $data->occasion, "race" => $data->race, "artist" => $data->artist, "date" => $data->date];
+			$return_data[] = ["id" => $data->id, "admin_comment" =>  $data->admin_comment, "image" => $data->image, "type" => $data->type, "theme" => $data->theme, "occasion" => $data->occasion, "race" => $data->race, "artist" => $data->artist, "date" => $data->date];
 		}
 		return $return_data;
 	}
@@ -204,8 +204,13 @@ class artist_center
 		}
 
 		$sql = "SELECT `value` AS artist_points FROM `user_data_numeric` WHERE `name` = 'artist_points' AND parent_id = {$attr['user_id']}";
-		$result = ($link_new->query($sql)->fetch_object()->artist_points ?? 0);
-		return $result;
+		$result = ($link_new->query($sql)->fetch_object() ?? false);
+		if ($result) {
+			return $result->artist_points;
+		} else {
+			$sql = $link_new->query("INSERT INTO `user_data_numeric` (`value`,`name`,`parent_id`) VALUES (0,'artist_points',{$attr['user_id']})");
+			return 0;
+		}
 	}
 
 	public static function grant_points($attr = [])

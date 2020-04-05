@@ -193,7 +193,7 @@ if (filter_input(INPUT_POST, 'action') == 'submit_drawing') {
 		]);
 	}
 }
-if (filter_input(INPUT_POST, 'action') == 'approve_artist_submission') {
+if (filter_input(INPUT_GET, 'action') == 'approve_artist_submission') {
 	if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights'])) {
 		exit(); /* Don't hack */
 	}
