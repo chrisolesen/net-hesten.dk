@@ -79,7 +79,7 @@ class artist_center
 				/* don't expose error messages */
 				$uploadOk = 0;
 			}
-			if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+			if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $imageFileType != "jfif") {
 				/* don't expose error messages */
 				$uploadOk = 0;
 			}
@@ -116,13 +116,17 @@ class artist_center
 		}
 
 		if (isset($attr['user_id'])) {
-			$sql = "SELECT * FROM `artist_center_submissions` WHERE `artist` = {$attr['user_id']}";
+			$sql = "SELECT * FROM `artist_center_submissions` WHERE `artist` = {$attr['user_id']} " . (($attr['status'] ?? false) ? "AND `status` = " . ((int) $attr['status']) : '');
 		} else {
-			$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = 27";
+			if ($attr['status']) {
+				$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = " . ((int) $attr['status']);
+			} else {
+				$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = 27";
+			}
 		}
 		$result = $link_new->query($sql);
 		while ($data = $result->fetch_object()) {
-			$return_data[] = ["image" => $data->image, "type" => $data->type, "theme" => $data->theme, "occasion" => $data->occasion, "race" => $data->race, "artist" => $data->artist, "date" => $data->date];
+			$return_data[] = ["admin_comment" =>  $data->admin_comment, "image" => $data->image, "type" => $data->type, "theme" => $data->theme, "occasion" => $data->occasion, "race" => $data->race, "artist" => $data->artist, "date" => $data->date];
 		}
 		return $return_data;
 	}
@@ -143,7 +147,64 @@ class artist_center
 		}
 
 		$sql = "SELECT count(id) AS waiting_submissions FROM `artist_center_submissions` WHERE `status` = 27 AND artist = {$attr['user_id']}";
-		$result = $link_new->query($sql)->fetch_object()->waiting_submissions;
+		$result = ($link_new->query($sql)->fetch_object()->waiting_submissions ?? 0);
+		return $result;
+	}
+	public static function yield_approved($attr = [])
+	{
+		global $link_new;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+		if (!isset($attr['user_id']) && $attr['mode'] != 'approve') {
+			exit();
+		}
+
+		$sql = "SELECT count(id) AS waiting_submissions FROM `artist_center_submissions` WHERE `status` = 28 AND artist = {$attr['user_id']}";
+		$result = ($link_new->query($sql)->fetch_object()->waiting_submissions ?? 0);
+		return $result;
+	}
+	public static function yield_rejected($attr = [])
+	{
+		global $link_new;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+		if (!isset($attr['user_id']) && $attr['mode'] != 'approve') {
+			exit();
+		}
+
+		$sql = "SELECT count(id) AS waiting_submissions FROM `artist_center_submissions` WHERE `status` = 29 AND artist = {$attr['user_id']}";
+		$result = ($link_new->query($sql)->fetch_object()->waiting_submissions ?? 0);
+		return $result;
+	}
+	public static function yield_points($attr = [])
+	{
+		global $link_new;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+		if (!isset($attr['user_id']) && $attr['mode'] != 'approve') {
+			exit();
+		}
+
+		$sql = "SELECT `value` AS artist_points FROM `user_data_numeric` WHERE `name` = 'artist_points' AND parent_id = {$attr['user_id']}";
+		$result = ($link_new->query($sql)->fetch_object()->artist_points ?? 0);
 		return $result;
 	}
 }

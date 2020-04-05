@@ -39,8 +39,8 @@ require "$basepath/global_modules/header.php";
 					<header>
 						<h2>Dine data</h2>
 					</header>
-					<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/approved.php"><span class="title">Godkendte Tegninger:</span><span class="value"><?= artist_center::yield_approved(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
-					<div><a href="//<?= HTTP_HOST; ?>//area/artist_center/"><span style="text-decoration:underline;" class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+					<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/approved.php"><span style="text-decoration:underline;" class="title">Godkendte Tegninger:</span><span class="value"><?= artist_center::yield_approved(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+					<div><a href="//<?= HTTP_HOST; ?>//area/artist_center/"><span class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 					<div><a href="#" title="Points kan ikke benyttes endnu"><span class="title">HT Points:</span><span class="value"><?= artist_center::yield_points(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 					<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/rejected.php"><span class="title">Afviste Tegninger:</span><span class="value"><?= artist_center::yield_rejected(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 				</div>
@@ -139,9 +139,9 @@ require "$basepath/global_modules/header.php";
 			}
 		</style>
 		<div data-section-type="submissions">
-			<h2 style="grid-column:1 / span 4;margin:0;">Dine indsendte</h2>
+			<h2 style="grid-column:1 / span 4;margin:0;">Dine godkendte</h2>
 			<?php
-			$submissions = artist_center::fetch_drawings(['user_id' => $_SESSION['user_id']]);
+			$submissions = artist_center::fetch_drawings(['user_id' => $_SESSION['user_id'], 'status' => 28]);
 			foreach ($submissions as $submission) {
 				if ($submission['occasion'] == 'artist_request') {
 					$style = 'style="opacity:0.2;"';

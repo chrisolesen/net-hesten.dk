@@ -38,7 +38,7 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_adm
 	}
 
 	table {
-		width: 100%;
+		width: 100%; 
 	}
 
 	td {
