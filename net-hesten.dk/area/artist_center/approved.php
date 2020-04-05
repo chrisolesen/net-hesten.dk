@@ -74,7 +74,7 @@ require "$basepath/global_modules/header.php";
             [data-section-type="submissions"] {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                grid-row: 3;
+                grid-row: 2;
                 grid-column: 1;
                 grid-gap: 0.5em;
             }
