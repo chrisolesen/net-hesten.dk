@@ -43,6 +43,38 @@ function ac_find_next_artist_submission_filename($mode = 'default')
 
 class artist_center
 {
+	public static function find_next_type_filename($attr = [])
+	{
+		global $basepath;
+		if ($handle = opendir("$basepath/files.net-hesten.dk/horses/imgs/")) {
+			$found = false;
+			$num_dirs = 0;
+			while ($found != true) {
+				++$num_dirs;
+				$target_dir = str_replace(["/", "="], [""], base64_encode($num_dirs));
+				if (!is_dir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
+					mkdir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir);
+				}
+				if (is_dir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
+					$num_files = 1;
+					while ($num_files <= 250) {
+						++$num_files;
+						if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
+							continue;
+						} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
+							continue;
+						} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
+							continue;
+						} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jfif')) {
+							continue;
+						} else {
+							return ['path' => "$basepath/files.net-hesten.dk/horses/imgs/", 'filename' => "{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($num_files))];
+						}
+					}
+				}
+			}
+		}
+	}
 
 	public static function submit_drawing($attr = [])
 	{
@@ -79,7 +111,7 @@ class artist_center
 				/* don't expose error messages */
 				$uploadOk = 0;
 			}
-			if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+			if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $imageFileType != "jfif") {
 				/* don't expose error messages */
 				$uploadOk = 0;
 			}
@@ -116,13 +148,17 @@ class artist_center
 		}
 
 		if (isset($attr['user_id'])) {
-			$sql = "SELECT * FROM `artist_center_submissions` WHERE `artist` = {$attr['user_id']}";
+			$sql = "SELECT * FROM `artist_center_submissions` WHERE `artist` = {$attr['user_id']} " . (($attr['status'] ?? false) ? "AND `status` = " . ((int) $attr['status']) : '');
 		} else {
-			$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = 27";
+			if (($attr['status'] ?? false)) {
+				$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = " . ((int) $attr['status']);
+			} else {
+				$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = 27";
+			}
 		}
 		$result = $link_new->query($sql);
 		while ($data = $result->fetch_object()) {
-			$return_data[] = ["image" => $data->image, "type" => $data->type, "theme" => $data->theme, "occasion" => $data->occasion, "race" => $data->race, "artist" => $data->artist, "date" => $data->date];
+			$return_data[] = ["id" => $data->id, "admin_comment" =>  $data->admin_comment, "image" => $data->image, "type" => $data->type, "theme" => $data->theme, "occasion" => $data->occasion, "race" => $data->race, "artist" => $data->artist, "date" => $data->date];
 		}
 		return $return_data;
 	}
@@ -143,7 +179,113 @@ class artist_center
 		}
 
 		$sql = "SELECT count(id) AS waiting_submissions FROM `artist_center_submissions` WHERE `status` = 27 AND artist = {$attr['user_id']}";
-		$result = $link_new->query($sql)->fetch_object()->waiting_submissions;
+		$result = ($link_new->query($sql)->fetch_object()->waiting_submissions ?? 0);
 		return $result;
+	}
+	public static function yield_approved($attr = [])
+	{
+		global $link_new;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+		if (!isset($attr['user_id']) && $attr['mode'] != 'approve') {
+			exit();
+		}
+
+		$sql = "SELECT count(id) AS waiting_submissions FROM `artist_center_submissions` WHERE `status` = 28 AND artist = {$attr['user_id']}";
+		$result = ($link_new->query($sql)->fetch_object()->waiting_submissions ?? 0);
+		return $result;
+	}
+	public static function yield_rejected($attr = [])
+	{
+		global $link_new;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+		if (!isset($attr['user_id']) && $attr['mode'] != 'approve') {
+			exit();
+		}
+
+		$sql = "SELECT count(id) AS waiting_submissions FROM `artist_center_submissions` WHERE `status` = 29 AND artist = {$attr['user_id']}";
+		$result = ($link_new->query($sql)->fetch_object()->waiting_submissions ?? 0);
+		return $result;
+	}
+	public static function yield_points($attr = [])
+	{
+		global $link_new;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+		if (!isset($attr['user_id']) && $attr['mode'] != 'approve') {
+			exit();
+		}
+
+		$sql = "SELECT `value` AS artist_points FROM `user_data_numeric` WHERE `name` = 'artist_points' AND parent_id = {$attr['user_id']}";
+		$result = ($link_new->query($sql)->fetch_object() ?? false);
+		if ($result) {
+			return $result->artist_points;
+		} else {
+			$sql = $link_new->query("INSERT INTO `user_data_numeric` (`value`,`name`,`parent_id`) VALUES (0,'artist_points',{$attr['user_id']})");
+			return 0;
+		}
+	}
+
+	public static function grant_points($attr = [])
+	{
+		global $link_new;
+		$points = (self::yield_points(['user_id' => $attr['user_id']])) + $attr['points'];
+		$sql = "UPDATE `user_data_numeric` SET `value` = {$points} WHERE `name` = 'artist_points' AND `parent_id` = {$attr['user_id']}";
+		$link_new->query($sql);
+		return true;
+	}
+
+	public static function approve_drawing($attr = [])
+	{
+		global $link_new;
+		global $basepath;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+
+		if (isset($attr['submission_id']) && is_numeric($attr['submission_id'])) {
+			$submission = ($link_new->query("SELECT * FROM `artist_center_submissions` WHERE `id` = {$attr['submission_id']} AND `status` = 27 ")->fetch_object() ?? false);
+			if ($submission) {
+				/* Message user */
+				private_messages::post_message(['message' => 'Din tegning er blevet godkendt.', 'write_to' => $submission->artist, 'poster_id' => 8]);
+				/* Billedet skal markeres */
+				//			$link_new->query("UPDATE `artist_center_submissions` SET `status` = 28 WHERE `id` = {$submission->id} AND `status` = 27 ");
+				/* Billedet skal aktiveres i typer */
+				$target_file = (object) self::find_next_type_filename();
+				$full_origin_file = "{$basepath}/files.net-hesten.dk/horses/artist_submissions/{$submission->image}";
+				$target_file_type = substr($submission->image, (strripos(($submission->image), '.')));
+				$full_target_file = $target_file->path . $target_file->filename . $target_file_type;
+				if (!file_exists($full_target_file)) {
+					copy($full_origin_file, $full_target_file);
+				}
+				
+				self::grant_points(['user_id' => $submission->artist, 'points' => 1]);
+			}
+		}
+		return $return_data;
 	}
 }

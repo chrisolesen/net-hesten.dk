@@ -168,16 +168,16 @@ if (isset($_POST['adjust_wkr'])) {
 					<i class='id'><?= $data->id; ?></i>
 				</span>
 				<span>
-					<i class='name'><a style="text-decoration:underline;" href="https://net-hesten.dk/area/world/visit/visit.php?user=<?= $data->id; ?>"><?= $data->stutteri; ?></a></i><br />
+					<i class='name'><a style="text-decoration:underline;" href="//<?= HTTP_HOST; ?>/area/world/visit/visit.php?user=<?= $data->id; ?>"><?= $data->stutteri; ?></a></i><br />
 					<?= $data->navn; ?>
 				</span>
 				<span class="wkr monospace"><a title="Alter WKR" data-lw-action="alter_wkr" href="javascript:void(0);"><?= number_dotter($data->penge); ?></a></span>
 				<span><?= $data->email; ?><br /><a onclick="return confirm('Vil du virkelig nulstille koden til: <?= $data->stutteri; ?> ?');" href="?action=admin_user_password_reset&user_id=<?= $data->id; ?>">Reset password</a></span>
 				<span class="rights monospace center_text">
 					<?php if (in_array('5', $rights_array)) { ?>
-						<a href="?page=<?= $page; ?>&action=remove_right_horse_artist&user_id=<?= $data->id; ?>" class="active make_artist"><img src="//<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/graphics/artist.png" /></a>
+						<a href="?page=<?= $page; ?>&action=remove_right_horse_artist&user_id=<?= $data->id; ?>" class="active make_artist"><img src="//files.<?= HTTP_HOST; ?>/graphics/artist.png" /></a>
 					<?php } else { ?>
-						<a href="?page=<?= $page; ?>&action=grant_right_horse_artist&user_id=<?= $data->id; ?>" class="make_artist"><img src="//<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/graphics/artist.png" /></a>
+						<a href="?page=<?= $page; ?>&action=grant_right_horse_artist&user_id=<?= $data->id; ?>" class="make_artist"><img src="//files.<?= HTTP_HOST; ?>/graphics/artist.png" /></a>
 					<?php } ?>
 				</span>
 				<span class="monospace center_text">

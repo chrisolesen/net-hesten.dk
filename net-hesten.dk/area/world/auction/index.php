@@ -18,7 +18,17 @@ $other_auctions_page_offset = $other_auctions_page * $horses_pr_page;
 
 
 ob_start();
-//$auctions_buy_filter_data = horse_list_filters::get_filter_string(['zone' => "auctions_buy"]);
+$highest_bid_html = "<i class='fad fa-stars' title='Du har højeste bud' style='
+font-size: 14px;
+top: 0px;
+color: darkred;
+right: -6px;
+--fa-primary-opacity: 1;
+--fa-secondary-opacity: 1;
+--fa-secondary-color: darkred;
+--fa-primary-color: dodgerblue;
+position: absolute;
+'></i>";
 foreach (auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => $horses_pr_page]) as $auction) {
 	ob_clean();
 	$remote_data = json_decode(horses::bridge_get($auction['object_id']));
@@ -46,7 +56,7 @@ foreach (auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => 
 					$max_bid = auctions::get_highest_bid(['auction_id' => $auction['id']]);
 					if ((int) $max_bid['bid_amount'] > 0) {
 					?>
-						<span class='talent'>Højeste bud: <?= number_dotter($max_bid['bid_amount']); ?><span class="wkr_symbol">wkr</span></span>
+						<span class='talent'><?= $GLOBALS['language_strings']['Highest_bid']; ?>: <?= number_dotter($max_bid['bid_amount']); ?><span class="wkr_symbol">wkr</span><?= (($auction['highest_bidder'] ?? 0) == $_SESSION['user_id'] ? $highest_bid_html : ''); ?></span>
 					<?php
 					} else {
 					?>

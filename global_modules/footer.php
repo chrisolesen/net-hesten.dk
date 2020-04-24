@@ -343,12 +343,11 @@ if (isset($title)) {
 
 		if ($result) {
 			while ($data = $result->fetch_object()) {
-		?>
-				<option value='<?= $data->username; ?>' /><?php
-														}
-													}
+				echo "<option value='{$data->username}'>";
+			}
+		}
 
-															?>
+		?>
 	</datalist>
 <?php }
 ?>

@@ -33,27 +33,27 @@ require "$basepath/global_modules/header.php";
 				<h1>Heste Tegner Panel<?= in_array('hestetegner', $_SESSION['rights']) ? ' - Oversigt' : ''; ?></h1>
 			</header>
 		</div>
-		<?php if (array_intersect(['hestetegner', 'global_admin'], $_SESSION['rights'])) { ?>
-			<div data-section-type="right-side">
+		<div data-section-type="right-side">
+			<div data-section-type="info_square">
+				<header>
+					<h2>Dine data</h2>
+				</header>
+				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/approved.php"><span class="title">Godkendte Tegninger:</span><span class="value"><?= artist_center::yield_approved(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+				<div><a href="//<?= HTTP_HOST; ?>//area/artist_center/"><span style="text-decoration:underline;" class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+				<?php if (array_intersect(['hestetegner', 'global_admin'], $_SESSION['rights'])) { ?>
+					<div><a href="#" title="Points kan ikke benyttes endnu"><span class="title">HT Points:</span><span class="value"><?= artist_center::yield_points(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+				<?php } ?>
+				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/rejected.php"><span class="title">Afviste Tegninger:</span><span class="value"><?= artist_center::yield_rejected(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+			</div>
+			<?php if (in_array('global_admin', $_SESSION['rights'])) { ?>
 				<div data-section-type="info_square">
 					<header>
-						<h2>Dine data</h2>
+						<h2>Admin data</h2>
 					</header>
-					<div><span class="title">Godkendte Tegninger:</span><span class="value">0</span></div>
-					<div><span class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></div>
-					<div><span class="title">HT Points:</span><span class="value">0</span></div>
-					<div><span class="title">Afviste Tegninger:</span><span class="value">0</span></div>
+					<div><a style="text-decoration: underline;" href="//<?= HTTP_HOST; ?>/admin/hestetegner/submitted_horses.php">Til HT Admin panel</a></div>
 				</div>
-				<?php if (in_array('global_admin', $_SESSION['rights'])) { ?>
-					<div data-section-type="info_square">
-						<header>
-							<h2>Admin data</h2>
-						</header>
-						<div><a style="text-decoration: underline;" href="//<?= HTTP_HOST; ?>/admin/hestetegner/submitted_horses.php">Til HT Admin panel</a></div>
-					</div>
-				<?php } ?>
-			</div>
-		<?php } ?>
+			<?php } ?>
+		</div>
 		<div data-section-type="ht-tab-content">
 			<div data-section-type="object_square">
 				<form style="line-height:29px;" method="post" action="" enctype="multipart/form-data">
@@ -95,15 +95,15 @@ require "$basepath/global_modules/header.php";
 				<h2>Du er HesteTegner</h2>
 				<p style="line-height: 1.2;">
 					Skabelonerne finder du <a style="text-decoration: underline;" href="//files.<?= HTTP_HOST; ?>/templates/nethesten_skabeloner.zip">her</a>.<br />
-					<div>(OBS! Vores Skabelonner, er kun til privat ikke kommercielt brug, eller på net-hesten.dk)</div><br />
 				</p>
+				<div>(OBS! Vores Skabelonner må kun bruges på net-hesten.dk. Du må dog godt bruge dem til privat ikke kommercielt brug.)</div><br />
 			<?php } else { ?>
 				<br />
 				<h2>Du er ikke HesteTegner (HT): </h2>
 				<p style="line-height: 1.2;">
 					Du er velkommen til at søge om titlen, ved at sende tegninger ind. Husk at tegne dem i vores skabeloner som du finder <a style="text-decoration: underline;" href="//files.<?= HTTP_HOST; ?>/templates/nethesten_skabeloner.zip">her</a>.
 				</p>
-				<div>(OBS! Vores Skabelonner, er kun til privat ikke kommercielt brug, eller på net-hesten.dk)</div><br />
+				<div>(OBS! Vores Skabelonner må kun bruges på net-hesten.dk. Du må dog godt bruge dem til privat ikke kommercielt brug.)</div><br />
 			<?php
 			}
 			?>
@@ -130,7 +130,7 @@ require "$basepath/global_modules/header.php";
 				grid-template-columns: repeat(4, 1fr);
 				grid-row: 3;
 				grid-column: 1;
-				grid-gap:0.5em;
+				grid-gap: 0.5em;
 			}
 
 			[data-section-type="right-side"] {
