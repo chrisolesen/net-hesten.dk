@@ -46,7 +46,7 @@ foreach (auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => 
 					$max_bid = auctions::get_highest_bid(['auction_id' => $auction['id']]);
 					if ((int) $max_bid['bid_amount'] > 0) {
 					?>
-						<span class='talent'>Højeste bud: <?= number_dotter($max_bid['bid_amount']); ?><span class="wkr_symbol">wkr</span></span>
+						<span class='talent'><?= $GLOBALS['language_strings']['Highest_bid']; ?>: <?= number_dotter($max_bid['bid_amount']); ?><span class="wkr_symbol">wkr</span><?= (($auction['highest_bidder'] ?? 0) == $_SESSION['user_id'] ? "<i class='fal fa-stars'></i>" : ''); ?></span>
 					<?php
 					} else {
 					?>

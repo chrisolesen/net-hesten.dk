@@ -159,10 +159,6 @@ class horse_list_filters
 				margin-right: 10px;
 			}
 
-			.list_filters_form .filter_line {
-				/* margin-bottom: 0.5em;*/
-			}
-
 			form.list_filters_form {
 				position: relative;
 				height: 320px;
@@ -193,21 +189,18 @@ class horse_list_filters
 			<p style="grid-column: 1 / span 2;font-size:16px;line-height: 20px;margin-top:10px;">Hold ctrl nede, for at vælge flere.</p>
 			<select name="races[]" multiple="" size="14" style="padding:2px;overflow-y:scroll;grid-column: 1;grid-row:2 / 10;">
 				<option value="all" <?= (in_array('all', $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?>>Alle Racer</option>
-				<?php foreach ($race_names as $race) { ?>
-					<?php if ($attr['zone'] == 'horse_trader') { ?>
-						<?php
-						$antal = $link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id > 604000 AND bruger = 'hestehandleren' and status <> 'død' and alder < 18  AND race = '{$race['name']}'")->fetch_object()->amount;
-						if ($antal == 0) {
+				<?php foreach ($race_names as $race) {
+					if ($attr['zone'] == 'horse_trader') {
+						$amount = $link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id > 604000 AND bruger = 'hestehandleren' and status <> 'død' and alder < 18  AND race = '{$race['name']}'")->fetch_object()->amount;
+						if ($amount == 0) {
 							continue;
 						}
-						?>
-						<option <?= (in_array($race['id'], $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?> value="<?= $race['id']; ?>"><?= $race['name']; ?> (<?= $antal; ?>)</option>
-					<?php } else {
-					?>
-						<option <?= (in_array($race['id'], $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?> value="<?= $race['id']; ?>"><?= $race['name']; ?></option>
-					<?php }
-					?>
-				<?php }
+				?>
+						<option <?= (in_array($race['id'], $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?> value="<?= $race['id']; ?>"><?= $race['name']; ?> (<?= $amount; ?>)</option>
+				<?php } else {
+						echo "<option" . ((in_array($race['id'], $user_filter_data[$attr['zone']]['races']) ? ' SELECTED' : '')) . " value='{$race['id']}'>{$race['name']}</option>";
+					}
+				}
 				?>
 				<option value="all" <?= (in_array('all', $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?>>Alle Racer</option>
 			</select>
@@ -279,15 +272,12 @@ class horse_list_filters
 							$artists[] = (object) ['name' => $artist->name];
 						}
 					}
-					$artists[] = (object) ['name' => 'mega super duper irriterende langt navn'];
 					if ($artists) {
 						foreach ($artists as $artist) {
 							if ($artist->name == '') {
 								continue;
 							}
-					?>
-							<option value="<?= $artist->name; ?>" <?= (($user_filter_data[$attr['zone']]['artist'] ?? 'none') == $artist->name) ? 'selected' : ''; ?>><?= $artist->name; ?></option>
-					<?php
+							echo "<option value='{$artist->name}' " . ((($user_filter_data[$attr['zone']]['artist'] ?? 'none') == $artist->name) ? 'selected' : '') . ">{$artist->name}</option>" . PHP_EOL;
 						}
 					}
 					?>

@@ -273,7 +273,7 @@ class artist_center
 				/* Message user */
 				private_messages::post_message(['message' => 'Din tegning er blevet godkendt.', 'write_to' => $submission->artist, 'poster_id' => 8]);
 				/* Billedet skal markeres */
-				$link_new->query("UPDATE `artist_center_submissions` SET `status` = 28 WHERE `id` = {$submission->id} AND `status` = 27 ");
+				//			$link_new->query("UPDATE `artist_center_submissions` SET `status` = 28 WHERE `id` = {$submission->id} AND `status` = 27 ");
 				/* Billedet skal aktiveres i typer */
 				$target_file = (object) self::find_next_type_filename();
 				$full_origin_file = "{$basepath}/files.net-hesten.dk/horses/artist_submissions/{$submission->image}";

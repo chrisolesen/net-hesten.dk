@@ -37,7 +37,8 @@ if (($_SESSION['logged_in'] ?? false) == true) {
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
 	<script src="//files.<?= HTTP_HOST; ?>/scripts/jquery.easing.1.3.js"></script>
 	<script src="/scripts/jquery.nicescroll.min.js"></script>
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.4.2/css/all.css" integrity="sha384-zhaLg9HKxTxDljOPXpWHGn91XMDH+sYAWRSgvzHes290/ISyrNicGrd6BInTnx3L" crossorigin="anonymous" />
+	<!-- FA License only valid for net-hesten.dk and dev-net-hesten.dk -->
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css" integrity="sha384-IIED/eyOkM6ihtOiQsX2zizxFBphgnv1zbe1bKA+njdFzkr6cDNy16jfIKWu4FNH" crossorigin="anonymous" />
 	<script>
 		console.log($(window).width());
 		if (($(window).width()) > 960) {
