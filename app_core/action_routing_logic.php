@@ -217,7 +217,7 @@ if (filter_input(INPUT_GET, 'action') == 'reject_artist_submission') {
 
 
 /* Competitions */
-if (filter_input(INPUT_GET, 'action') == 'signup_horse') {
+if (filter_input(INPUT_POST, 'action') == 'signup_horse') {
 	if (isset($_SESSION['user_id'])) {
 		competitions::signup_horse([
 			'user_id' => $_SESSION['user_id'],
