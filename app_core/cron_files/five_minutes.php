@@ -117,7 +117,7 @@ if ($result) {
 		$sql = "INSERT INTO game_data_private_messages "
 				. "(status_code, origin, target, date, message) "
 				. "VALUES "
-				. "(17, 52745, {$data['winner']}, NOW(), 'Tillykke {$user_id_name_array[$data['winner']][0]}, du har vundet en auktion, med et bud på {$data['winning_amount']} wkr.')";
+				. "(17, 52745, {$data['winner']}, NOW(), 'Tillykke {$user_id_name_array[$data['winner']][0]}, du har vundet en auktion, med et bud på {$data['winning_amount']} wkr. Hesten med ID: {$data['object_id']}, er nu din.')";
 		$result = $link_new->query($sql);
 		/* Send besked til den gamle ejer */
 		$sql = "INSERT INTO game_data_private_messages "
