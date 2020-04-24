@@ -12,7 +12,7 @@ class competitions
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-			$attr[$key] = $link_new->real_escape_string($value);
+			$attr[$key] = (int) $value;
 		}
 		$sql = "INSERT INTO game_data_competition_participants (participant_id, competition_id, signup_date) VALUES ({$attr['horse_id']},{$attr['competition_id']},NOW())";
 		$result = $link_new->query($sql);
