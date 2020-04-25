@@ -15,7 +15,7 @@ $mysqli_date_target = $date_target->format("Y-m-d H:i:s");
 $mysqli_date_now = $current_date->format("Y-m-d H:i:s");
 
 $log_content = PHP_EOL . "# Updating age of horses with {$mysqli_date_target} as target date.";
-file_put_contents("app_core/cron_files/logs/cron_{$cron_interval}_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}app_core/cron_files/logs/cron_{$cron_interval}_{$date_now}", $log_content, FILE_APPEND);
 
 require_once "{$basepath}app_core/db_conf.php";
 
