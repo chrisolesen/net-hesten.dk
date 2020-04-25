@@ -11,31 +11,36 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 }
 ?>
 <style>
-    #error_logs_page td {
-        padding:0.5em 0.25em;
+	#error_logs_page td {
+		padding: 0.5em 0.25em;
 
 
-    }
-    #error_logs_page td + td + td {
-		text-align:right;
 	}
-	#error_logs_page td + td + td + td {
-		text-align:left;
+
+	#error_logs_page td+td+td {
+		text-align: right;
+	}
+
+	#error_logs_page td+td+td+td {
+		text-align: left;
 	}
 </style>
 <section id="error_logs_page">
-    <header>
-        <h2 class="raised">Error Logs</h2>
-    </header>
+	<header>
+		<h2 class="raised">Error Logs</h2>
+		<h3>Server time: <?= (new DateTime('now'))->sub(new DateInterval('PT5M'))->format('Y-m-d H:i:s'); ?></h3>
+	</header>
 	<?php if (isset($_GET['file'])) { ?>
-		<div style="height:200px;overflow:auto;"><pre><?php
-				ob_start();
-				include($_GET['file']);
-				$output = ob_get_contents();
-				ob_end_clean();
-				echo str_replace([' Europe/Copenhagen', ' PHP Warning: ', '-2018', 'PHP Fatal error: '], ['', ' Warn:', '', 'Fatal:'], $output);
-				?></pre></div>
-		<?php }
+		<div style="height:200px;overflow:auto;">
+			<pre><?php
+					ob_start();
+					include($_GET['file']);
+					$output = ob_get_contents();
+					ob_end_clean();
+					echo str_replace([' Europe/Copenhagen', ' PHP Warning: ', '-2018', 'PHP Fatal error: '], ['', ' Warn:', '', 'Fatal:'], $output);
+					?></pre>
+		</div>
+	<?php }
 	?>
 	<?php
 	if (in_array('tech_admin', $_SESSION['rights'])) {
@@ -44,9 +49,16 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 		}
 	}
 	?>
-    <h2>List Error Logs</h2>
-    <table>
-    <tr><th>Type</th><th>Path</th><th>Size</th><th>Time</th><th>Action</th><th></th></tr>
+	<h2>List Error Logs</h2>
+	<table>
+		<tr>
+			<th>Type</th>
+			<th>Path</th>
+			<th>Size</th>
+			<th>Time</th>
+			<th>Action</th>
+			<th></th>
+		</tr>
 		<?php
 		$file_root = '../../';
 		$d = dir("../../");
@@ -132,7 +144,7 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 			}
 		}
 		?>
-    </table>  
+	</table>
 </section>
-	<?php
+<?php
 require "$basepath/global_modules/footer.php";
