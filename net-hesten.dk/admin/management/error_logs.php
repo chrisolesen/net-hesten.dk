@@ -28,7 +28,7 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 <section id="error_logs_page">
 	<header>
 		<h2 class="raised">Error Logs</h2>
-		<h3>Server time: <?= (new DateTime('now'))->sub(new DateInterval('PT5M'))->format('Y-m-d H:i:s'); ?></h3>
+		<h3>Server time: <?= (new DateTime('now'))->format('Y-m-d H:i:s'); ?></h3>
 	</header>
 	<?php if (isset($_GET['file'])) { ?>
 		<div style="height:200px;overflow:auto;">
@@ -61,7 +61,7 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 		</tr>
 		<?php
 		$file_root = '../../';
-		$d = dir("../../");
+		$d = dir("../../../");
 		while (false !== ($entry = $d->read())) {
 			if (is_dir("{$d->path}" . $entry)) {
 				if (in_array($entry, ['..', '.'])) {
