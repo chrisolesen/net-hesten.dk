@@ -6,7 +6,7 @@ $title = 'visit';
 require "$basepath/app_core/object_loader.php";
 require "$basepath/global_modules/header.php";
 
-$visit_id = filter_input(INPUT_GET, 'user');
+$visit_id = (int) filter_input(INPUT_GET, 'user');
 
 if (!$visit_id) {
 	header('Location: /area/world/visit/');
@@ -24,14 +24,12 @@ if (!$visit_user_info) {
 	exit();
 }
 
-$horse_tabs = [];
+$horse_array = [];
 
-$attr = ['user_name' => $visit_user_info->username, 'mode' => 'visiting_one_stud'];
 $attr = ['user_name' => $visit_user_info->username, 'mode' => 'visiting_one_stud'];
 
 if ($filter_id = filter_input(INPUT_POST, 'id_filter')) {
 
-	$attr = ['user_name' => $visit_user_info->username, 'id_filter' => $filter_id, 'mode' => 'visiting_one_stud'];
 	$attr = ['user_name' => $visit_user_info->username, 'id_filter' => $filter_id, 'mode' => 'visiting_one_stud'];
 }
 
@@ -45,68 +43,7 @@ $i = 0;
 
 foreach (horses::get_all($attr) as $horse) {
 
-	$horse_is_at_competition = false;
-	if ($horse['competition_id']) {
-		$horse_is_at_competition = true;
-	}
-	$gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
-	$gender = ((string) strtolower($horse['gender']) === 'hingst') ? 'male' : $gender;
-	$gender = ((string) $gender === '') ? 'error' : $gender;
-
-	$extended_info = [
-		'name' => $horse['name'],
-		'age' => $horse['age'],
-		'gender' => $horse['gender'],
-		'race' => $horse['race'],
-		'artist' => $horse['artist'],
-		'id' => $horse['id'],
-		'value' => $horse['value'],
-		'owner_name' => $horse['owner_name'],
-		'talent' => $horse['talent'],
-		'ulempe' => $horse['ulempe'],
-		'egenskab' => $horse['egenskab'],
-		'type' => ($horse['unik'] == 'ja' ? 'unique' : ($horse['original'] == 'ja' ? 'original' : 'normal')),
-		'gold_medal' => (empty($horse['gold_medal']) ? 0 : $horse['gold_medal']),
-		'silver_medal' => (empty($horse['silver_medal']) ? 0 : $horse['silver_medal']),
-		'bronze_medal' => (empty($horse['bronze_medal']) ? 0 : $horse['bronze_medal']),
-		'junior_medal' => (empty($horse['junior_medal']) ? 0 : $horse['junior_medal']),
-	];
-	$extended_info = json_encode($extended_info);
-
-	$horse_data = '';
-	$horse_data .= "<div class='horse_square horse_object {$gender}' data-horse-id='{$horse['id']}' data-extended-info='{$extended_info}'>";
-	$horse_data .= "<div class='info'>";
-	$horse_data .= "<span class='name'>{$horse['name']}</span>";
-	$horse_data .= "<i class='gender icon-{$gender}-1'></i>";
-	$horse_data .= "<div class='horse_vcard'>";
-	$horse_data .= "<i class='icon-vcard'></i> ";
-	$horse_data .= "<div class='extended_info'>";
-	$horse_data .= "<span class='type_age'>";
-	$horse_data .= ($horse['unik'] == 'ja' ? '<span class="unique">Unik</span> ' : ($horse['original'] == 'ja' ? '<span class="original">Original</span> ' : ''));
-	$horse_data .= "{$horse['race']} {$horse['age']} år</span><br />";
-	$horse_data .= "<span class='horse_id'>ID: {$horse['id']}</span><br /><br />";
-	$horse_data .= "<span class='ability'>Egenskab: {$horse['egenskab']}</span><br />";
-	$horse_data .= "<span class='disability'>Ulempe: {$horse['ulempe']}</span><br />";
-	$horse_data .= "<span class='talent'>Talent: {$horse['talent']}</span><br /><br />";
-	$horse_data .= "<span class='artist'>Tegner: {$horse['artist']}</span>";
-	$horse_data .= "<span class='value'>Værdi: " . number_dotter($horse['value']) . ' <span class="wkr_symbol">wkr</span></span>';
-	$horse_data .= "</div>";
-	$horse_data .= "</div>";
-
-	if ($horse['breed_date']) {
-		$breed_date_target = new DateTime($horse['breed_date']);
-		$breed_date_target->add(new DateInterval('P40D'));
-		$horse_data .= "<button style='pointer-events: none;' class='enter_graes btn compact_top_button'>Foler ca. {$breed_date_target->format('Y-m-d')}</button>";
-	}
-
-	$horse_data .= "<button data-button-type='modal_activator' data-target='unprovoked_bid' class='enter_graes btn btn-info compact_bottom_button'>Byd på hesten</button>";
-
-	$horse_data .= "</div>";
-	$horse_data .= "<img src='//files." . HTTP_HOST . "/{$horse['thumb']}' data-button-type='modal_activator' data-target='horze_extended_info' />";
-	$horse_data .= "<img style='display: none;' class='zoom_img' src='//files." . HTTP_HOST . "/{$horse['thumb']}' />";
-	$horse_data .= "</div>";
-
-	$horse_tabs['idle_horses'][] = $horse_data;
+	$horse_array[] = render_horse_object($horse, 'visit_user');
 }
 ?>
 <style>
@@ -171,9 +108,6 @@ ob_start();
 
 		}
 	</script>
-	<style>
-
-	</style>
 	<div class="shadow"></div>
 	<div class="content">
 		<?= horse_list_filters::render_filter_settings(['zone' => "visit"]); ?>
@@ -185,6 +119,4 @@ $modals[] = ob_get_contents();
 ob_end_clean();
 
 /* Define modal - end */
-?>
-<?php
 require_once("{$basepath}/global_modules/footer.php");

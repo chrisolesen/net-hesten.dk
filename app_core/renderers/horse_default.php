@@ -1,6 +1,8 @@
 <?php
 function render_horse_object($horse, $area)
 {
+    global $link_new;
+    global $GLOBALS;
     ob_start();
     $horse = (object) $horse;
     $horse_is_at_competition = false;
@@ -28,7 +30,7 @@ function render_horse_object($horse, $area)
                     <span class='disability'>Ulempe: <?= $horse->ulempe; ?></span><br />
                     <span class='talent'>Talent: <?= $horse->talent; ?></span><br /><br />
                     <span class='artist'>Tegner: <?= $horse->artist; ?></span>
-                    <?php if (in_array($area, ['main_stud'])) { ?>
+                    <?php if (in_array($area, ['main_stud', 'horse_search', 'visit_user'])) { ?>
                         <span class='value'>Værdi: <?= number_dotter($horse->value); ?><span class="wkr_symbol">wkr</span></span>
                     <?php } elseif (in_array($area, ['horse_trader_sell'])) { ?>
                         <span class='value' style="transform: translateY(-18px);">Værdi: <?= number_dotter($horse->value); ?> <span class="wkr_symbol">wkr</span></span>
@@ -95,12 +97,17 @@ function render_horse_object($horse, $area)
                 <button style='pointer-events: none;' class='enter_graes btn compact_top_button'><?= $duration; ?></button>
             <?php
             }
-            if ($horse->breed_date && in_array($area, ['main_stud']) && $horse->graesning !== 'ja') {
+            if ($horse->breed_date && in_array($area, ['main_stud', 'horse_search', 'visit_user']) && $horse->graesning !== 'ja') {
 
                 $breed_date_target = new DateTime($horse->breed_date);
                 $breed_date_target->add(new DateInterval('P40D'));
             ?>
                 <button style='pointer-events: none;' class='enter_graes btn compact_top_button'>Foler ca. <?= $breed_date_target->format('Y-m-d'); ?></button>
+            <?php
+            }
+            if (in_array($area, ['visit_user'])) {
+            ?>
+                <button data-button-type='modal_activator' data-target='unprovoked_bid' class='enter_graes btn btn-info compact_bottom_button'>Byd på hesten</button>
             <?php
             }
             if ($horse->graesning == 'ja' && in_array($area, ['main_stud'])) {
@@ -112,6 +119,12 @@ function render_horse_object($horse, $area)
                 <button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Sæt på græs</button>
             <?php
             }
+            if (in_array($area, ['horse_search'])) {
+                $owner_id = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE stutteri = '{$horse->owner_name}' LIMIT 1")->fetch_object()->id;
+
+                echo "<a href='//" . HTTP_HOST . "/area/world/visit/visit.php?user={$owner_id}'><button class='enter_graes btn btn-info compact_bottom_button' data-button-type='modal_activator' data-target='put_horse_on_grass'>Ejes af {$horse->owner_name}</button></a>";
+            }
+
             ?>
         </div>
         <img src='//files.<?= HTTP_HOST; ?>/<?= $horse->thumb; ?>' data-button-type='modal_activator' data-target='horze_extended_info' />
