@@ -55,6 +55,8 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('site_helper', $
 
 			$nyid = $horse;
 			$nyhingstid = $partner;
+			/* get stallion value */
+			$stallion_value =  $link_new->query("SELECT pris * 1 FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = {$breed->partner_id}")->fetch_object()->pris;
 
 			$farid = $partner;
 			$morid = $horse;
@@ -120,8 +122,10 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('site_helper', $
 			$nythumb = $rand_thumb->thumb;
 			$foltegner = $rand_thumb->tegner;
 			$nybruger = $user;
+
+			$foel_value = 4500 + floor(($stallion_value * 0.1));
 			//----------generer føllene og stil status tilbage til "Hest"----------------------------------------------
-			$link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Heste` (bruger, navn, race, kon, alder, beskrivelse, pris, foersteplads, andenplads, tredieplads, status, farid, morid, tegner, thumb, date, changedate, status_skift, alder_skift, height, random_height, egenskab, ulempe, talent) VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','6000','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
+			$link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Heste` (bruger, navn, race, kon, alder, beskrivelse, pris, foersteplads, andenplads, tredieplads, status, farid, morid, tegner, thumb, date, changedate, status_skift, alder_skift, height, random_height, egenskab, ulempe, talent) VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','{$foel_value}','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
 			$link_new->query("DELETE FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` WHERE horse_id = '$horse' AND meta_key = 'breeding'");
 
 

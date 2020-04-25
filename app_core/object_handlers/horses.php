@@ -105,6 +105,8 @@ class horses
 						$durration = $date_now->diff($date_then);
 						if ($durration->y > 0 || $durration->m > 0 || $durration->d > 0 || $durration->h > 13) {
 							/* Punish */
+							// First needs to implement guard vs negative money
+							//	accounting::add_entry(['amount' => 500, 'line_text' => "Græsning af hest", 'mode' => '-']);
 							$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
 							$result = $link_new->query($sql);
 							return ["Din hest har stået for længe på græs!", 'warning'];
@@ -112,10 +114,11 @@ class horses
 							/* Pay */
 							$minutes = ($durration->h * 60) + ($durration->i);
 							$payment = $minutes * 2;
+							$horse_value_add = floor(($payment * 0.1));
 							if ($payment > 0) {
 								accounting::add_entry(['amount' => $payment, 'line_text' => "Græsning af hest", 'mode' => '+']);
 							}
-							$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET graesning = '', changedate = NOW() WHERE id = {$attr['horse_id']}";
+							$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET graesning = '', changedate = NOW(), pris = (pris + {$horse_value_add}) WHERE id = {$attr['horse_id']}";
 							$result = $link_new->query($sql);
 							return ["Du lige tjent {$payment} wkr på græsning, godt arbejde!", 'success'];
 						}
