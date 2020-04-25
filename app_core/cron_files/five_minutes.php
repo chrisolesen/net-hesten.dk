@@ -2,7 +2,7 @@
 
 //exit();
 chdir(dirname(__FILE__));
-$basepath = '../../';
+$basepath = dirname(__FILE__) . '../../';
 
 date_default_timezone_set('Europe/Copenhagen');
 $current_date = new DateTime('now');
