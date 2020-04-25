@@ -74,31 +74,18 @@ foreach ((horses::get_all($attr) ?? []) as $horse) {
 /* Define modal - start */
 ob_start();
 ?>
-<style>
-    .fifty_p {
-        width: 50%;
-        float: left;
-        line-height: 25px;
-        margin-bottom: 5px;
-    }
-</style>
 <div id="filter_horses" class="modal">
     <script>
         function filter_horses(caller) {}
     </script>
-    <style>
-    </style>
     <div class="shadow"></div>
     <div class="content">
         <?= horse_list_filters::render_filter_settings(['zone' => "search_all"]); ?>
     </div>
 </div>
-
 <?php
 require_once("{$basepath}/global_modules/modals/horse_linage.php");
 $modals[] = ob_get_contents();
 ob_end_clean();
 /* Define modal - end */
-?>
-<?php
 require_once("{$basepath}/global_modules/footer.php");

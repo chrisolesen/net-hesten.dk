@@ -144,7 +144,7 @@ $your_horses_page_offset = $your_horses_page * $horses_pr_page;
 		</div>
 		<div>
 			<ul>
-				<?php
+				<?php 
 				$attr = ['user_name' => $_SESSION['username'], 'user_id' => $_SESSION['user_id']];
 				if (!empty(private_trade::list_trade_offers($attr))) {
 					foreach (private_trade::list_trade_offers($attr) as $trade) {
