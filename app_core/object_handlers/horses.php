@@ -189,16 +189,17 @@ class horses
 				. (($attr['mode'] == 'auction') ? "AND staevne != 'ja' " : '')
 				. (($attr['mode'] == 'auction') ? "AND kaaring != 'ja' " : '')
 				. (($attr['mode'] == 'auction') ? "AND graesning != 'ja' " : '')
-				//					. ($username === 'hestehandleren' ? "AND alder < 18 " : '')
-				. (isset($attr['id_filter']) ? 'AND id = ' . $attr['id_filter'] . ' ' : '')
-				//					. (($username === 'hestehandleren' && $attr['noorder'] == true) ? "AND date > '2017-06-27 12:00:00' " : '')
-				. (($username == 'hestehandleren' && $attr['noorder'] == true) ? 'ORDER BY rand() ' : '')
 				. (isset($attr['custom_filter']) ? "{$attr['custom_filter']} " : '')
-				. ($username !== 'hestehandleren' ? "ORDER BY unik DESC, original DESC, status DESC, alder ASC " : '')
-				. ((isset($attr['custom_filter']) && $username == 'hestehandleren') ? "ORDER BY date DESC " : '')
-				. (isset($attr['limit']) ? "LIMIT {$attr['limit']} " : '')
-				. (isset($attr['offset']) ? "OFFSET {$attr['offset']} " : '')
-				. "";
+				. (isset($attr['id_filter']) ? 'AND id = ' . $attr['id_filter'] . ' ' : '');
+			if (!($attr['custom_order'] ?? false)) {
+				$sql .= (($username == 'hestehandleren' && $attr['noorder'] == true) ? 'ORDER BY rand() '  : '')
+					. ((isset($attr['custom_filter']) && $username == 'hestehandleren') ? "ORDER BY date DESC " : '')
+					. ($username !== 'hestehandleren' ? "ORDER BY unik DESC, original DESC, status DESC, alder ASC " : '');
+			} else {
+				$sql .= $attr['custom_order'] . ' ';
+			}
+			$sql .= (isset($attr['limit']) ? "LIMIT {$attr['limit']} " : '')
+				. (isset($attr['offset']) ? "OFFSET {$attr['offset']} " : '');
 
 			$result = $link_new->query($sql);
 			$i = 0;

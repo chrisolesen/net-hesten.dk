@@ -66,10 +66,6 @@ while ($horse = $result->fetch_object()) {
 
 
         $claim = round(($horse->pris * 0.8), 0);
-        $claim += ($horse->foersteplads * 5000);
-        $claim += ($horse->andenplads * 1000);
-        $claim += ($horse->tredieplads * 500);
-        $claim += ($horse->kaaringer * 2000);
         $claim += ($kids * 1000);
 
         $original = false;
