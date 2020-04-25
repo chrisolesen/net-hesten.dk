@@ -70,11 +70,11 @@ $sql = ''
 	. 'AND bids.status_code = 4 '
 	. 'AND auctions.status_code = 1 '
 	. 'ORDER BY bids.auction ASC, bids.bid_amount DESC';
-$result = $link_new->query($sql);
+$auction_array = $link_new->query($sql);
 $num_auctions = 0;
-if ($result) {
+if ($auction_array) {
 	/* Only winning bids remain for expired auctions, and all bid have been prepaid, thus no validtions required */
-	while ($data = $result->fetch_assoc()) {
+	while ($data = $auction_array->fetch_assoc()) {
 		++$num_auctions;
 		if (!isset($user_id_name_array[$data['winner']])) {
 			$sql = "SELECT stutteri, penge AS money FROM `{$_GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$data['winner']} LIMIT 1";

@@ -108,7 +108,7 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 													continue;
 												}
 
-												echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../', '/root/', $d5->path) . '/' . $entry . '</td><td>' . ' [' . number_dotter(filesize($d5->path . '/' . $entry)) . ']' . '</td><td>' . '[' . (date("Y-m-d H:i:s", filemtime($d5->path . '/' . $entry))) . "]</td><td><a href='?file=$d5->path.'/'.$entry'>Open</a></td></tr>";
+												echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../../', '/root/', $d5->path) . '/' . $entry . '</td><td>' . ' [' . number_dotter(filesize($d5->path . '/' . $entry)) . ']' . '</td><td>' . '[' . (date("Y-m-d H:i:s", filemtime($d5->path . '/' . $entry))) . "]</td><td><a href='?file=$d5->path.'/'.$entry'>Open</a></td></tr>";
 											}
 										}
 									} else {
@@ -116,7 +116,7 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 										if ($entry !== 'error_log') {
 											continue;
 										}
-										echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../', '/root/', $d4->path) . '/' . $entry . '</td><td>' . ' [' . number_dotter(filesize($d4->path . '/' . $entry)) . ']' . '</td><td>' . '[' . (date("Y-m-d H:i:s", filemtime($d4->path . '/' . $entry))) . "]" . "</td><td><a href='?file=" . ($d4->path . '/' . $entry) . "'>Open</a>" . "</td><td><a href='?delete=" . ($d4->path . '/' . $entry) . "'>Delete</a>" . "</td></tr>";
+										echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../../', '/root/', $d4->path) . '/' . $entry . '</td><td>' . ' [' . number_dotter(filesize($d4->path . '/' . $entry)) . ']' . '</td><td>' . '[' . (date("Y-m-d H:i:s", filemtime($d4->path . '/' . $entry))) . "]" . "</td><td><a href='?file=" . ($d4->path . '/' . $entry) . "'>Open</a>" . "</td><td><a href='?delete=" . ($d4->path . '/' . $entry) . "'>Delete</a>" . "</td></tr>";
 									}
 								}
 							} else {
@@ -124,7 +124,7 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 								if ($entry !== 'error_log') {
 									continue;
 								}
-								echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../', '/root/', $d3->path) . '/' . $entry . '</td><td>' . ' [' . number_dotter(filesize($d3->path . '/' . $entry)) . ']' . '</td><td>' . '[' . (date("Y-m-d H:i:s", filemtime($d3->path . '/' . $entry))) . "]" . "</td><td><a href='?file=" . ($d3->path . '/' . $entry) . "'>Open</a>" . "</td><td><a href='?delete=" . ($d3->path . '/' . $entry) . "'>Delete</a>" . "</td></tr>";
+								echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../../', '/root/', $d3->path) . '/' . $entry . '</td><td>' . ' [' . number_dotter(filesize($d3->path . '/' . $entry)) . ']' . '</td><td>' . '[' . (date("Y-m-d H:i:s", filemtime($d3->path . '/' . $entry))) . "]" . "</td><td><a href='?file=" . ($d3->path . '/' . $entry) . "'>Open</a>" . "</td><td><a href='?delete=" . ($d3->path . '/' . $entry) . "'>Delete</a>" . "</td></tr>";
 							}
 						}
 					} else {
@@ -132,7 +132,7 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 						if ($entry !== 'error_log') {
 							continue;
 						}
-						echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../', '/root/', $d2->path) . '/' . $entry . '</td><td>' . ' [' . number_dotter(filesize($d2->path . '/' . $entry)) . ']' . '</td><td>[' . (date("Y-m-d H:i:s", filemtime($d2->path . '/' . $entry))) . "]" . "</td><td><a href='?file=" . ($d2->path . '/' . $entry) . "'>Open</a>" . "</td><td><a href='?delete=" . ($d2->path . '/' . $entry) . "'>Delete</a>" . "</td></tr>";
+						echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../../', '/root/', $d2->path) . '/' . $entry . '</td><td>' . ' [' . number_dotter(filesize($d2->path . '/' . $entry)) . ']' . '</td><td>[' . (date("Y-m-d H:i:s", filemtime($d2->path . '/' . $entry))) . "]" . "</td><td><a href='?file=" . ($d2->path . '/' . $entry) . "'>Open</a>" . "</td><td><a href='?delete=" . ($d2->path . '/' . $entry) . "'>Delete</a>" . "</td></tr>";
 					}
 				}
 			} else {
@@ -140,7 +140,7 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 				if ($entry !== 'error_log') {
 					continue;
 				}
-				echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../', '/root/', $d->path) . $entry . '</td><td>' . ' [' . number_dotter(filesize($d->path . '/' . $entry)) . ']' . '</td><td>[' . (date("Y-m-d H:i:s", filemtime($d->path . '/' . $entry))) . "]" . "</td><td><a href='?file=" . ($d->path . '/' . $entry) . "'>Open</a>" . "</td><td><a href='?delete=" . ($d->path . '/' . $entry) . "'>Delete</a>" . "</td></tr>";
+				echo '<tr><td>' . $dir . '</td><td>' . str_replace('../../../', '/root/', $d->path) . $entry . '</td><td>' . ' [' . number_dotter(filesize($d->path . '/' . $entry)) . ']' . '</td><td>[' . (date("Y-m-d H:i:s", filemtime($d->path . '/' . $entry))) . "]" . "</td><td><a href='?file=" . ($d->path . '/' . $entry) . "'>Open</a>" . "</td><td><a href='?delete=" . ($d->path . '/' . $entry) . "'>Delete</a>" . "</td></tr>";
 			}
 		}
 		?>
