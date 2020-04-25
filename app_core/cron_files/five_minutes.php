@@ -26,8 +26,8 @@ $sql = ""
 	. "SELECT "
 	. "auctions.*, "
 	. "bids.auction "
-	. "FROM game_data_auctions AS auctions "
-	. "LEFT JOIN game_data_auction_bids AS bids "
+	. "FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_auctions AS auctions "
+	. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_auction_bids AS bids "
 	. "ON bids.auction = auctions.id "
 	. "WHERE end_date < '{$date_now} {$time_now}' "
 	. "AND ISNULL(bids.auction) "
@@ -63,8 +63,8 @@ $sql = ''
 	. 'bids.creator AS winner, '
 	. 'bids.bid_amount AS winning_amount, '
 	. 'bids.bid_date AS bid_date '
-	. 'FROM game_data_auction_bids AS bids '
-	. 'LEFT JOIN game_data_auctions AS auctions '
+	. "FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_auction_bids AS bids "
+	. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_auctions AS auctions "
 	. 'ON bids.auction = auctions.id '
 	. "WHERE end_date < '{$five_in_past}' "
 	. 'AND bids.status_code = 4 '
