@@ -86,10 +86,10 @@ while ($competition_data = $competition_result->fetch_object()) {
 					$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET pris = (pris + {$value_add}) WHERE id = {$data->hid}");
 
 					accounting::add_entry(['amount' => $price_money, 'line_text' => "{$medal} medalje i stævne til [{$data->hid}]", 'mode' => '+', 'user_id' => $data->uid]);
-					$link_new->query("INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, {$origin}, {$data->uid}, NOW(), '{$utf_8_message}' )");
+					$link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, {$origin}, {$data->uid}, NOW(), '{$utf_8_message}' )");
 				}
-				$link_new->query("UPDATE `game_data_competition_participants` SET points = '{$points}' WHERE `competition_id` = {$end_competition_id} AND `participant_id` = {$data->hid}");
-				$link_new->query("UPDATE `game_data_competitions` SET status_code = 31 WHERE `id` = {$end_competition_id}");
+				$link_new->query("UPDATE `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competition_participants` SET points = '{$points}' WHERE `competition_id` = {$end_competition_id} AND `participant_id` = {$data->hid}");
+				$link_new->query("UPDATE `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competitions` SET status_code = 31 WHERE `id` = {$end_competition_id}");
 			}
 		}
 	}
