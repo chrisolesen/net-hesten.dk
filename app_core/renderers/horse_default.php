@@ -1,4 +1,6 @@
 <?php
+/* REVIEW: SQL Queries */
+
 function render_horse_object($horse, $area)
 {
     global $link_new;

@@ -1,4 +1,5 @@
 <?php
+/* REVIEW: SQL Queries */
 
 if (!isset($time_now)) {
 	date_default_timezone_set('Europe/Copenhagen');
@@ -29,7 +30,7 @@ $today = date("d.m.y.G.i");
 
 
 /* Find all horses */
-$total_horses = $link_new->query("SELECT count(*) AS total FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND status != '{$dead}' AND age_updated < '{$mysqli_date_target}'")->fetch_object()->total;
+$total_horses = $link_new->query("SELECT count(*) AS total FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger <> 'Hestehandleren*' AND bruger <> '{$Foelbox}' AND status <> '{$dead}' AND age_updated < '{$mysqli_date_target}'")->fetch_object()->total;
 
 $log_content = PHP_EOL . "# Found a total of {$total_horses} living target horses.";
 file_put_contents("{$basepath}app_core/cron_files/logs/cron_{$cron_interval}_{$date_now}", $log_content, FILE_APPEND);
@@ -43,7 +44,7 @@ $low = 0; /* Need aging */
 
 $debug = '';
 
-$sql = "SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger != 'Hestehandleren*' AND bruger != '{$Foelbox}' AND status != '{$Dead}' and status != '{$dead}' AND age_updated < '{$mysqli_date_target}' ORDER BY id ASC LIMIT {$limit_pr_run}";
+$sql = "SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger <> 'Hestehandleren*' AND bruger <> '{$Foelbox}' AND status <> '{$Dead}' and status <> '{$dead}' AND age_updated < '{$mysqli_date_target}' ORDER BY id ASC LIMIT {$limit_pr_run}";
 $result = $link_new->query($sql);
 if ($result) {
 	while ($horse = $result->fetch_object()) {

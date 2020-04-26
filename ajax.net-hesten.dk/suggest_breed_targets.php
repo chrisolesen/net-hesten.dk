@@ -5,9 +5,9 @@ if ($index_caller !== true) {
 }
 
 if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
-	$horse_race = $link_new->query("SELECT race FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = '{$horse_id}' LIMIT 1")->fetch_object()->race;
+	$horse_race = $link_new->query("SELECT `race` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `id` = '{$horse_id}' LIMIT 1")->fetch_object()->race;
 	$dead = 'død';
-	$result = $link_new->query("SELECT id, navn, bruger, alder, thumb, egenskab, ulempe, talent FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE status <> '{$dead}' AND bruger <> 'carsten' AND bruger <> 'auktionshuset' AND kon = 'Hingst' AND race = '{$horse_race}' AND navn <> 'Unavngivet' AND status = 'hest' AND staevne = '' AND graesning = '' AND alder < 20 ORDER BY rand() LIMIT 4");
+	$result = $link_new->query("SELECT `id`, `navn`, `bruger`, `alder`, `thumb`, `egenskab`, `ulempe`, `talent` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `status` <> '{$dead}' AND `bruger` <> 'carsten' AND `bruger` <> 'auktionshuset' AND `kon` = 'Hingst' AND `race` = '{$horse_race}' AND `navn` <> 'Unavngivet' AND `status` = 'hest' AND `staevne` = '' AND `graesning` = '' AND `alder` < 20 ORDER BY rand() LIMIT 4");
 	$return_data = '';
 	while ($data = $result->fetch_object()) {
 

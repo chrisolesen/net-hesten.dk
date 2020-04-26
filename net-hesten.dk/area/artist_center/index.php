@@ -148,7 +148,7 @@ require "$basepath/global_modules/header.php";
 				} else {
 					$style = '';
 				}
-				$user_name_artist = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = " . $submission['artist'])->fetch_object()->stutteri;
+				$user_name_artist = $link_new->query("SELECT `stutteri` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = {$submission['artist']}")->fetch_object()->stutteri;
 			?>
 
 				<div>

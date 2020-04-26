@@ -1,4 +1,5 @@
 <?php
+/* REVIEW: SQL Queries */
 /* Se alle stutterier */
 $basepath = '../../../..';
 require "$basepath/app_core/object_loader.php";

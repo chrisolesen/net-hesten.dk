@@ -1,5 +1,7 @@
 <?php
-
+/* REVIEW: SQL Queries */
+/* FIXME: The task has glitches */
+/* TODO: Horse skill should influence chances to win */
 if (!defined('cron_by')) {
 	exit();
 }

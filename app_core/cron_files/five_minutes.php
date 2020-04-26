@@ -1,6 +1,5 @@
 <?php
-
-//exit();
+/* REVIEW: SQL Queries */
 chdir(dirname(__FILE__));
 $basepath = '../../';
 

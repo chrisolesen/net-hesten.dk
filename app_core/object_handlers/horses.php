@@ -1,4 +1,5 @@
 <?php
+/* REVIEW: SQL Queries */
 
 class horses
 {
@@ -148,42 +149,42 @@ class horses
 		if (isset($attr['user_name'])) {
 			$username = $attr['user_name'];
 
-			$sql = "SELECT "
-				. "heste.foersteplads AS gold_medal, "
-				. "heste.andenplads AS silver_medal, "
-				. "heste.tredieplads AS bronze_medal, "
-				. "heste.kaaringer AS junior_medal, "
-				. "heste.id, "
-				. "heste.bruger AS owner_name, "
-				. "heste.navn AS name, "
-				. "heste.race, "
-				. "heste.kon AS gender, "
-				. "heste.alder AS age, "
-				. "heste.pris AS value, "
-				. "heste.graesning, "
-				. "heste.staevne, "
-				. "heste.kaaring, "
-				. "heste.status, "
-				. "heste.original, "
-				. "heste.unik, "
-				. "heste.tegner AS artist, "
-				. "heste.thumb, "
-				. "heste.egenskab, "
-				. "heste.ulempe, "
-				. "heste.talent, "
-				. "heste.changedate AS grassdate, "
-				. "heste.statuschangedate AS change_date_two, "
-				. "heste.date AS change_date_three, "
-				. "contests.competition_id, "
-				. "contests.points, "
-				. "breeding.meta_value AS breed_partner, "
-				. "breeding.meta_date AS breed_date "
-				. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS heste "
-				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_competition_participants AS contests "
-				. "ON contests.participant_id = heste.id AND contests.points IS NULL "
-				. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.horse_metadata AS breeding "
-				. "ON breeding.horse_id = heste.id AND breeding.meta_key = 'breeding' "
-				. "WHERE status != 'død' "
+			$sql = "SELECT 
+			heste.foersteplads AS gold_medal, 
+			heste.andenplads AS silver_medal, 
+			heste.tredieplads AS bronze_medal, 
+			heste.kaaringer AS junior_medal, 
+			heste.id, 
+			heste.bruger AS owner_name, 
+			heste.navn AS name, 
+			heste.race, 
+			heste.kon AS gender, 
+			heste.alder AS age, 
+			heste.pris AS value, 
+			`heste`.`graesning`, 
+			heste.staevne, 
+			heste.kaaring, 
+			heste.status, 
+			heste.original, 
+			heste.unik, 
+			heste.tegner AS artist, 
+			heste.thumb, 
+			heste.egenskab, 
+			heste.ulempe, 
+			heste.talent, 
+			heste.changedate AS grassdate, 
+			heste.statuschangedate AS change_date_two, 
+			heste.date AS change_date_three, 
+			contests.competition_id, 
+			contests.points, 
+			breeding.meta_value AS breed_partner, 
+			breeding.meta_date AS breed_date 
+			FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS heste 
+			LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_competition_participants AS contests 
+			ON contests.participant_id = heste.id AND contests.points IS NULL 
+			LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.horse_metadata AS breeding 
+			ON breeding.horse_id = heste.id AND breeding.meta_key = 'breeding' 
+			WHERE status != 'død' "
 				. (($attr['mode'] == 'search_all') ? "AND heste.talent != '' " : '')
 				. (($attr['mode'] == 'search_all') ? "AND heste.egenskab != '' " : '')
 				. (($attr['mode'] == 'search_all') ? "AND heste.ulempe != '' " : '')
