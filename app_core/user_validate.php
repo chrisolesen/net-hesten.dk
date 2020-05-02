@@ -24,17 +24,16 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 
 				/* data upgrade block - start */
 
-				$user_list_style = $link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'list_style' LIMIT 1")->fetch_object()->value;
+				$user_list_style = ($link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'list_style' LIMIT 1")->fetch_object()->value ?? false);
 				$_SESSION['settings']['list_style'] = $user_list_style;
 
 				if (!$user_list_style) {
-
 					$link_new->query("INSERT INTO `user_data_varchar` (`parent_id`, `value`, `name`, `date`) VALUES ({$data['id']}, 'compact', 'list_style', NOW())");
 					$_SESSION['settings']['list_style'] = 'compact';
 				}
 
 
-				$user_display_width = $link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'display_width' LIMIT 1")->fetch_object()->value;
+				$user_display_width = ($link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'display_width' LIMIT 1")->fetch_object()->value ?? false);
 				$_SESSION['settings']['display_width'] = $user_display_width;
 
 				if (!$user_display_width) {
@@ -44,7 +43,7 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 
 
 
-				$user_last_read_dev_notes = $link_new->query("SELECT `value` FROM `user_data_timing` WHERE `parent_id` = {$data['id']} AND `name` = 'last_read_dev_notes' LIMIT 1")->fetch_object()->value;
+				$user_last_read_dev_notes = ($link_new->query("SELECT `value` FROM `user_data_timing` WHERE `parent_id` = {$data['id']} AND `name` = 'last_read_dev_notes' LIMIT 1")->fetch_object()->value ?? false);
 				$_SESSION['settings']['last_read_dev_notes'] = $user_last_read_dev_notes;
 
 				if (!$user_last_read_dev_notes) {
@@ -52,7 +51,7 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 					$_SESSION['settings']['last_read_dev_notes'] = '0000-00-00 00:00:00';
 				}
 
-				$user_accept_offers = $link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'accept_offers' LIMIT 1")->fetch_object()->value;
+				$user_accept_offers = ($link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'accept_offers' LIMIT 1")->fetch_object()->value ?? false);
 				$_SESSION['settings']['accept_offers'] = $user_accept_offers;
 
 				if (!$user_accept_offers) {
@@ -61,7 +60,7 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 				}
 
 
-				$user_banner_size = $link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'banner_size' LIMIT 1")->fetch_object()->value;
+				$user_banner_size = ($link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'banner_size' LIMIT 1")->fetch_object()->value ?? false);
 				$_SESSION['settings']['banner_size'] = $user_banner_size;
 
 				if (!$user_banner_size) {
@@ -69,7 +68,7 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 					$_SESSION['settings']['banner_size'] = 'full_size';
 				}
 
-				$user_graes_confirmations = $link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'graes_confirmations' LIMIT 1")->fetch_object()->value;
+				$user_graes_confirmations = ($link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'graes_confirmations' LIMIT 1")->fetch_object()->value ?? false);
 				$_SESSION['settings']['graes_confirmations'] = $user_graes_confirmations;
 
 				if (!$user_graes_confirmations) {
@@ -77,14 +76,14 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 					$_SESSION['settings']['graes_confirmations'] = 'show';
 				}
 
-				$horse_trader_buy_confirmations = $link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'horse_trader_buy_confirmations' LIMIT 1")->fetch_object()->value;
+				$horse_trader_buy_confirmations = ($link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'horse_trader_buy_confirmations' LIMIT 1")->fetch_object()->value ?? false);
 				$_SESSION['settings']['horse_trader_buy_confirmations'] = $horse_trader_buy_confirmations;
 				if (!$horse_trader_buy_confirmations) {
 					$link_new->query("INSERT INTO `user_data_varchar` (`parent_id`, `value`, `name`, `date`) VALUES ({$data['id']}, 'show', 'horse_trader_buy_confirmations', NOW())");
 					$_SESSION['settings']['horse_trader_buy_confirmations'] = 'show';
 				}
 
-				$user_language = $link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'user_language' LIMIT 1")->fetch_object()->value;
+				$user_language = ($link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'user_language' LIMIT 1")->fetch_object()->value ?? false);
 				$_SESSION['settings']['user_language'] = $user_language;
 				if (!$user_language) {
 					$link_new->query("INSERT INTO `user_data_varchar` (`parent_id`, `value`, `name`, `date`) VALUES ({$data['id']}, 'da_DK', 'user_language', NOW())");
