@@ -11,7 +11,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
 </head>
 
 <body>
-    <a href="/install/">Go back</a>
+    <a href="/index.php">Go back</a>
     <?php
 
     if (filter_input(INPUT_POST, 'install_action') === 'install_admin_user') {
@@ -19,6 +19,72 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
     (`stutteri`, `password`, `date`, `penge`) VALUES (:user_name, :user_pass, NOW(), 1000000)";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute(['user_name' => filter_input(INPUT_POST, 'username'), 'user_pass' => cbc_pwhash(filter_input(INPUT_POST, 'password'))]);
+
+
+        $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` LIMIT 1";
+        $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth->execute();
+        if (!$sth->rowCount()) {
+            /* Insert horse race heights */
+            $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Heste`
+    (`bruger`,
+    `navn`,
+    `race`,
+    `kon`,
+    `alder`,
+    `pris`,
+    `status`,
+    `tegner`,
+    `thumb`,
+    `date`,
+    `changedate`,
+    `statuschangedate`,
+    `height`,
+    `egenskab`,
+    `ulempe`,
+    `talent`,
+    `age_updated`)
+    VALUES
+    (:user_name,
+    'Stallion one',
+    'Ghosts',
+    'Hingst',
+    '4',
+    '15000',
+    'Hest',
+    'no-name artist',
+    'imgHorse/ghost_horse.png',
+    NOW(),
+    NOW(),
+    NOW(),
+    100,
+    'Sød',
+    'Drilsk',
+    'Spring',
+    NOW()),
+    (:user_name,
+    'Mare one',
+    'Ghosts',
+    'Hoppe',
+    '4',
+    '15000',
+    'Hest',
+    'no-name artist',
+    'imgHorse/ghost_horse.png',
+    NOW(),
+    NOW(),
+    NOW(),
+    100,
+    'Sød',
+    'Drilsk',
+    'Spring',
+    NOW())
+    ;";
+            $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $sth->execute(['user_name' => filter_input(INPUT_POST, 'username')]);
+            echo "<br />Gave horse to admin";
+        }
+        echo "<br />Admin user setup correctly";
     }
 
     $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` LIMIT 1";
@@ -35,28 +101,24 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         </form>
     <?php
     } else {
-        echo "<br />Admin user setup correctly";
-        $user_id = $sth->fetchObject()->id;
-        /* Initialize admin privilegde */
-        $sql = "SELECT `privilege_id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`privilege_types` WHERE `privilege_name` = 'global_admin' LIMIT 1";
+
+        $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` LIMIT 1";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
-        if (!$sth->rowCount()) {
-            $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`privilege_types` (`privilege_name`) VALUES ('global_admin')";
-            $sth_priv_insert = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-            $sth_priv_insert->execute();
-        }
-        $priv_id = $sth->fetchObject()->privilege_id;
+        $user_id = $sth->fetchObject()->id;
+        /* Initialize admin privilegde */
 
-        $sql = "SELECT `start` FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` WHERE `user_id` = :user_id AND `privilege_id` = :priv_id LIMIT 1";
+        $sql = "SELECT `start` FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` WHERE `user_id` = :user_id AND `privilege_id` = 1 LIMIT 1";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-        $sth->execute(['user_id' => $user_id, 'priv_id' => $priv_id]);
+        $sth->execute(['user_id' => $user_id]);
         if (!$sth->rowCount()) {
             $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`user_privileges` 
-            (`user_id`, `privilege_id`, `start`, `end`) VALUES (:user_id, :priv_id, NOW(), '0000-00-00 00:00:00')";
+            (`user_id`, `privilege_id`, `start`, `end`) 
+            VALUES (:user_id, 1, NOW(), '0000-00-00 00:00:00'),
+            (:user_id, 11, NOW(), '0000-00-00 00:00:00')
+            ";
             $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-            $sth->execute(['user_id' => $user_id, 'priv_id' => $priv_id]);
-        } else {
+            $sth->execute(['user_id' => $user_id]);
             echo "<br />Privilege Tables initialised";
         }
         /* Initialize horse types */
@@ -79,8 +141,8 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
         if (!$sth->rowCount()) {
             /* Insert horse habit type */
             $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`horse_habits` 
-        (`egenskab`, `ulempe`, `talent`) VALUES 
-        ('Sød', 'Drilsk', 'Spring')";
+        (`egenskab`, `ulempe`, `talent`) VALUES  
+        ('Sød', 'Drilsk', 'Spring'), ('Elsker mad', 'Genert', 'Dressur'), ('Elsker sin ejer', 'Larmende', 'Western')";
             $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
             $sth->execute();
             echo "<br />Horse habit type added";
@@ -97,7 +159,46 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
     ('Ghosts', 150, 170, 'Mythical creatures')";
         $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $sth->execute();
+        echo "<br />Horse race added";
     }
+
+    $sql = "SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`horse_height` LIMIT 1";
+    $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sth->execute();
+    if (!$sth->rowCount()) {
+        /* Insert horse race heights */
+        $sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`horse_height` 
+    (`race`, `lower`, `upper`) VALUES  
+    ('Ghosts', 120, 160)";
+        $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth->execute();
+        echo "<br />Horse heights added";
+    }
+
+    $sql = "SELECT `privilege_id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`privilege_types` WHERE `privilege_name` = 'global_admin' LIMIT 1";
+    $sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+    $sth->execute();
+    if (!$sth->rowCount()) {
+        $sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`privilege_types` (`privilege_id`,`privilege_name`) 
+            VALUES (1, 'global_admin'),
+             (2, 'hestetegner_admin'),
+             (3, 'forum_moderator'),
+             (4, 'forum_admin'),
+             (5, 'hestetegner'),
+             (6, 'blocked'),
+             (7, 'admin_users_all'),
+             (8, 'admin_panel_access'),
+             (9, 'site_helper'),
+             (10, 'site_tester'),
+             (11, 'tech_admin'),
+             (12, 'admin_template_helper'),
+             (13, 'ad_administrator')
+            ";
+        $sth_priv_insert = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $sth_priv_insert->execute();
+        echo '<br/>privilege_types setup done';
+    }
+
     ?>
 </body>
 

@@ -23,9 +23,11 @@
 			<?php
 			$competition_data = $link_new->query("SELECT `id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_simple_competition` WHERE `startdate` < NOW() ORDER BY `startdate` DESC LIMIT 1")->fetch_object();
 			$partaking = false;
-			$partaking = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_simple_competition_participants` WHERE `competition_id` = {$competition_data->id} AND `participant_id` = {$_SESSION['user_id']}");
+			if ($competition_data ?? false) {
+				$partaking = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_simple_competition_participants` WHERE `competition_id` = {$competition_data->id} AND `participant_id` = {$_SESSION['user_id']}");
+			}
 			?>
-			<a <?php if (!$partaking->fetch_object()) {
+			<a <?php if (!$partaking || !$partaking->fetch_object()) {
 					echo 'message_status=""';
 				} ?> data-custom-title="Lodtrækning" href="/area/world/simple_competition/"><img src="//files.<?= HTTP_HOST; ?>/graphics/simple_competition.png"></a>
 			<a data-custom-title="Vær din hest"><img src="//files.<?= HTTP_HOST; ?>/graphics/be_your_horse.png"></a>

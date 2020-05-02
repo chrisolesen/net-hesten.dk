@@ -33,5 +33,5 @@ if ($stmt->execute()) {
 }
 
 ?>
-<a href="/install/">go back</a>
+<a href="/index.php">go back</a>
 
