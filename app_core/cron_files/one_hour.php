@@ -24,4 +24,4 @@ if ($time_now > '18:00:00' && $time_now < '19:00:00') {
 $log_content = ''
 	. PHP_EOL . '# Cron compleated its run. '
 	. PHP_EOL . '#######################################################' . PHP_EOL;
-file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
