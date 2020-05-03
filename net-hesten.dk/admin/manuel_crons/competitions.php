@@ -123,6 +123,16 @@ if ($end_competition_id = filter_input(INPUT_GET, 'end_competition')) {
 		}
 	}
 }
+
+
+if (filter_input(INPUT_GET, 'do_man_cron') === 'automate_contests') {
+	$old_basepath = $basepath;
+	define('cron_by', 'admin-panel');
+	include "{$basepath}/app_core/cron_files/functions/automate_contests.php";
+	chdir(dirname(__FILE__));
+	$basepath = $old_basepath;
+}
+
 ?>
 
 <style>
@@ -131,7 +141,11 @@ if ($end_competition_id = filter_input(INPUT_GET, 'end_competition')) {
 	}
 </style>
 <section>
-	<h1>ManCrons - Stævner</h1><br />
+	<h1>Crons - Stævner</h1><br />
+	<h2>Automatic</h2>
+	<a class="btn btn-success" href="?do_man_cron=automate_contests">Kør script</a>
+	<a class="btn btn-danger" href="./index.php">Tilbage</a>
+	<br /><br />
 	<h2>Nye Stævner</h2><br />
 	<a href="?make=western">Lav Western</a><br />
 	<a href="?make=jump">Lav Spring</a><br />
