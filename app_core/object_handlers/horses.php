@@ -196,7 +196,7 @@ class horses
 				. (isset($attr['custom_filter']) ? "{$attr['custom_filter']} " : '')
 				. (isset($attr['id_filter']) ? 'AND id = ' . $attr['id_filter'] . ' ' : '');
 			if (!($attr['custom_order'] ?? false)) {
-				$sql .= (($username == 'hestehandleren' && $attr['noorder'] == true) ? 'ORDER BY rand() '  : '')
+				$sql .= (($username == 'hestehandleren' && ($attr['noorder'] ?? false) == true) ? 'ORDER BY rand() '  : '')
 					. ((isset($attr['custom_filter']) && $username == 'hestehandleren') ? "ORDER BY date DESC " : '')
 					. ($username !== 'hestehandleren' ? "ORDER BY unik DESC, original DESC, status DESC, alder ASC " : '');
 			} else {

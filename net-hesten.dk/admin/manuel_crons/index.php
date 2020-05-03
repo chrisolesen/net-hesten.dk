@@ -28,6 +28,7 @@ if (
 	if (in_array('global_admin', $_SESSION['rights']) || in_array('tech_admin', $_SESSION['rights'])) {
 	?>
 		<a class="btn btn-info" href="/admin/manuel_crons/competitions.php">Stævner</a>
+		<a class="btn btn-info" href="/admin/manuel_crons/generate_horses.php">Generer heste</a>
 	<?php
 	}
 	if (in_array('global_admin', $_SESSION['rights']) || in_array('tech_admin', $_SESSION['rights']) || in_array('site_helper', $_SESSION['rights'])) {
