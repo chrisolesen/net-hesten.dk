@@ -102,7 +102,7 @@ function render_horse_object($horse, $area)
             if ($horse->breed_date && in_array($area, ['main_stud', 'horse_search', 'visit_user']) && $horse->graesning !== 'ja') {
 
                 $breed_date_target = new DateTime($horse->breed_date);
-                $breed_date_target->add(new DateInterval('P40D'));
+                $breed_date_target->add(new DateInterval($GLOBALS['breedtime']));
             ?>
                 <button style='pointer-events: none;' class='enter_graes btn compact_top_button'>Foler ca. <?= $breed_date_target->format('Y-m-d'); ?></button>
             <?php

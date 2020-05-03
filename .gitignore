@@ -1,5 +1,6 @@
-#Database configurations 
+#Local configurations 
 /app_core/db_conf.php
+/app_core/game-settings.php
 
 #UserData
 /files.net-hesten.dk/horses/artist_submissions/*
