@@ -81,14 +81,17 @@
 
 				<?php
 
-				$sql = "SELECT "
-					. "count(id) AS total_alive,"
-					. "sum(CASE WHEN kon = 'hingst' THEN 1 ELSE 0 END) AS stalions, "
-					. "sum(CASE WHEN kon = 'hoppe' THEN 1 ELSE 0 END) AS horsies, "
-					. "sum(CASE WHEN kon = 'hingst' AND status = 'føl' THEN 1 ELSE 0 END) AS stallionfoels, "
-					. "sum(CASE WHEN kon = 'hoppe' AND status = 'føl' THEN 1 ELSE 0 END) AS horsiefoels, "
-					. "sum(CASE WHEN kon = 'hoppe' AND status = 'avl' THEN 1 ELSE 0 END) AS foaling "
-					. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE status != 'død' LIMIT 1";
+				$sql = "SELECT 
+				count(`id`) AS `total_alive`,
+				sum(CASE WHEN `kon` = 'hingst' AND `status` = 'hest' THEN 1 ELSE 0 END) AS `stalions`, 
+				sum(CASE WHEN `kon` = 'hoppe' AND `status` = 'hest' THEN 1 ELSE 0 END) AS `horsies`, 
+				sum(CASE WHEN `kon` = 'hingst' AND `status` = 'føl' THEN 1 ELSE 0 END) AS `stallionfoels`, 
+				sum(CASE WHEN `kon` = 'hoppe' AND `status` = 'føl' THEN 1 ELSE 0 END) AS `horsiefoels`, 
+				#FIXME: this is no longer the way to identify breeding
+				sum(CASE WHEN `kon` = 'hoppe' AND `status` = 'avl' THEN 1 ELSE 0 END) AS `foaling` 
+				FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste 
+				WHERE status <> 'død' 
+				LIMIT 1";
 				$fun_facts['horses'] = $link_new->query($sql)->fetch_object();
 
 				?>

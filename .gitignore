@@ -7,14 +7,15 @@
 /files.net-hesten.dk/horses/imgs/*
 /files.net-hesten.dk/templates/*
 /files.net-hesten.dk/users/*
+!/files.net-hesten.dk/users/.gitkeep
 !/files.net-hesten.dk/templates/.gitkeep
 !/files.net-hesten.dk/horses/artist_submissions/.gitkeep
 !/files.net-hesten.dk/horses/imgs/ghost_horse_r.png
 !/files.net-hesten.dk/horses/imgs/ghost_foel_r.png
 !/files.net-hesten.dk/horses/imgs/ghost_horse.png
 !/files.net-hesten.dk/horses/imgs/ghost_foel.png
-!/files.net-hesten.dk/users/.gitkeep
-#cacheData
+
+#cache
 /files.net-hesten.dk/cache_data/*
 !/files.net-hesten.dk/cache_data/.gitkeep
 
@@ -22,15 +23,15 @@
 /app_core/cron_files/logs/*
 !/app_core/cron_files/logs/.gitkeep
 
-#Adminpanels
+#Adminpanels - none should be ignored
 
 /net-hesten.dk/admin/hestetegner/move_to_files/count_old.php
-/net-hesten.dk/admin/hestetegner/move_to_files/fix.php
 /net-hesten.dk/admin/hestetegner/move_to_files/count.php
 /net-hesten.dk/admin/hestetegner/move_to_files/index.php
 /net-hesten.dk/admin/hestetegner/move_to_types/index.php
-/net-hesten.dk/admin/hestetegner/parsing/index.php
 /net-hesten.dk/admin/hestetegner/template_handling.php
+/net-hesten.dk/admin/hestetegner/move_to_files/fix.php
+/net-hesten.dk/admin/hestetegner/parsing/index.php
 
 #htaccess
 /net-hesten.dk/.htaccess

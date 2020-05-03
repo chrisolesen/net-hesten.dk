@@ -4,7 +4,6 @@
 function render_horse_object($horse, $area)
 {
     global $link_new;
-    global $GLOBALS;
     ob_start();
     $horse = (object) $horse;
     $horse_is_at_competition = false;
@@ -14,6 +13,7 @@ function render_horse_object($horse, $area)
     $gender = ((string) strtolower($horse->gender) === 'hoppe') ? 'female' : '';
     $gender = ((string) strtolower($horse->gender) === 'hingst') ? 'male' : $gender;
     $gender = ((string) $gender === '') ? 'error' : $gender;
+    $gender = mb_strtolower($gender);
     $extended_info = '';
 
 ?>
@@ -75,7 +75,7 @@ function render_horse_object($horse, $area)
 
             <?php
             $disallow_breeding = false;
-            if ($horse->status == 'føl' || $horse->staevne == 'ja' || $horse->graesning == 'ja' || $gender == 'male' || $horse_is_at_competition || $horse->breed_date) {
+            if (mb_strtolower($horse->status) == 'føl' || $horse->staevne == 'ja' || $horse->graesning == 'ja' || $gender == 'male' || $horse_is_at_competition || $horse->breed_date) {
                 $disallow_breeding = true;
             }
             if (!$disallow_breeding && in_array($area, ['main_stud'])) {

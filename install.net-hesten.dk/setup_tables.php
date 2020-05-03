@@ -20,6 +20,7 @@ foreach ($files as $file) {
     if ($stmt->execute()) {
         echo "Success &lt;{$file}&gt;<br />";
     } else {
+        /* FIXME: Should not report fail if the table simple already exists */
         echo "Fail &lt;{$file}&gt;<br />";
     }
 }

@@ -62,6 +62,14 @@ class horses
 		if (strtolower($horse_data->kon) != 'hoppe') {
 			return ["Du kan ikke fole en hingst.", 'error'];
 		}
+
+		if (strtolower($horse_data->status) == 'føl') {
+			return ["Du kan ikke fole et føl.", 'warning'];
+		}
+
+		if (strtolower($horse_data->status) == 'død') {
+			return ["En død hest kan ikke foles.", 'error'];
+		}
 		/* Tag wkr fra bruger */
 		/* Giv wkr minus gebyr til hingst */
 		/* Send besked til bruger */
@@ -156,15 +164,15 @@ class horses
 			heste.kaaringer AS junior_medal, 
 			heste.id, 
 			heste.bruger AS owner_name, 
-			heste.navn AS name, 
+			heste.navn AS `name`, 
 			heste.race, 
 			heste.kon AS gender, 
 			heste.alder AS age, 
-			heste.pris AS value, 
+			heste.pris AS `value`, 
 			`heste`.`graesning`, 
 			heste.staevne, 
 			heste.kaaring, 
-			heste.status, 
+			heste.`status`, 
 			heste.original, 
 			heste.unik, 
 			heste.tegner AS artist, 
