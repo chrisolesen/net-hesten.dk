@@ -1,4 +1,5 @@
 <?php
+/* REVIEW: SQL Queries */
 
 if (!isset($time_now)) {
     date_default_timezone_set('Europe/Copenhagen');
@@ -40,7 +41,7 @@ $today = date("d.m.y.G.i");
 $loop = 0;
 /* Limit 200 = stabil */
 
-$sql = "SELECT id, alder, bruger, navn, foersteplads, andenplads, tredieplads, kaaringer, pris, race, original, unik FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE alder > 20 AND bruger != '{$Foelbox}' AND bruger != 'hestehandleren*' and bruger <> 'genfoedsel' AND status = 'hest' ORDER BY rand() LIMIT 175";
+$sql = "SELECT id, alder, bruger, navn, foersteplads, andenplads, tredieplads, kaaringer, pris, race, original, unik FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE alder > 20 AND bruger <> '{$Foelbox}' AND bruger <> 'hestehandleren*' and bruger <> 'genfoedsel' AND status = 'hest' ORDER BY rand() LIMIT 175";
 $result = $link_new->query($sql);
 $viable_horses = 0;
 $killed_amount = 0;

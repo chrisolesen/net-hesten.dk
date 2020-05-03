@@ -7,20 +7,21 @@ if ($index_caller !== true) {
 
 if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 
-	$sql = "SELECT morid AS mother, farid AS father "
-			. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste "
-			. "WHERE id = {$horse_id} LIMIT 1";
+	$sql = "SELECT `morid` AS `mother`, `farid` AS `father` 
+	FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
+	WHERE `id` = {$horse_id} 
+	LIMIT 1";
 	$parents = $link_new->query($sql);
 	if ($parents) {
 		$parents = $parents->fetch_object();
 	}
 
 
-	$sql = "SELECT id, navn, alder, thumb, kon, status, unik "
-			. "FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste "
-			. "WHERE farid = {$horse_id} OR morid = {$horse_id} OR id = {$horse_id} "
-			. ($parents->father != '' ? "OR id = {$parents->father} " : "")
-			. ($parents->mother != '' ? "OR id = {$parents->mother} " : "");
+	$sql = "SELECT `id`, `navn`, `alder`, `thumb`, `kon`, `status`, `unik` 
+	FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
+	WHERE `farid` = {$horse_id} OR `morid` = {$horse_id} OR `id` = {$horse_id} "
+		. ($parents->father != '' ? "OR `id` = {$parents->father} " : "")
+		. ($parents->mother != '' ? "OR `id` = {$parents->mother} " : "");
 	$result = $link_new->query($sql);
 
 	$return_data = [];
@@ -47,7 +48,7 @@ if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 		}
 	}
 	if (!empty($return_data)) {
-		echo json_encode($return_data,JSON_FORCE_OBJECT);
+		echo json_encode($return_data, JSON_FORCE_OBJECT);
 		exit();
 	} else {
 		exit();

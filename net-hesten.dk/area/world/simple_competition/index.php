@@ -1,4 +1,5 @@
 <?php
+/* REVIEW: SQL Queries */
 $basepath = '../../../..';
 $title = 'Lodtrækning';
 require "$basepath/app_core/object_loader.php";

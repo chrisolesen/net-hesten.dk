@@ -54,6 +54,11 @@
                     jQuery('#horze_extended_info .junior_medal').parent().show();
                     jQuery('#horze_extended_info .junior_medal').html(horse_data.junior_medal);
                 }
+                if (horse_data.gold_medal == 0 && horse_data.silver_medal == 0 && horse_data.bronze_medal == 0 && horse_data.junior_medal == 0) {
+                    jQuery('#horze_extended_info .medals').parent().hide();
+                } else {
+                    jQuery('#horze_extended_info .medals').parent().show();
+                }
                 jQuery('#horze_extended_info [data-target="horse_linage"]').attr('data-horse-id', horse_data.id);
                 if (data.status !== true) {
                     console.log('Der skete en fejl ved omdøbning, vent lidt tid, hvis fejlen bliver ved, så skriv hestens ID til Tækhesten');
@@ -105,13 +110,16 @@
             <span class="label">Type:</span> <span class="type"></span>
         </div>
         <div>
-            <span class="label">Guld medaljer:</span> <span class="gold_medal"></span>
+            <span class="label medals">Medaljer:</span>
         </div>
         <div>
-            <span class="label">Sølv medaljer:</span> <span class="silver_medal"></span>
+            <span class="label">Guld:</span> <span class="gold_medal"></span>
         </div>
         <div>
-            <span class="label">Bronze medaljer:</span> <span class="bronze_medal"></span>
+            <span class="label">Sølv:</span> <span class="silver_medal"></span>
+        </div>
+        <div>
+            <span class="label">Bronze:</span> <span class="bronze_medal"></span>
         </div>
         <div>
             <span class="label">Føl kåringer:</span> <span class="junior_medal"></span>

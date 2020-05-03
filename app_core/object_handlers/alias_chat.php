@@ -1,4 +1,5 @@
 <?php
+/* REVIEW: SQL Queries */
 
 class alias_chat
 {

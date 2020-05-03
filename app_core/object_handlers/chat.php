@@ -1,4 +1,6 @@
 <?php
+/* REVIEW: SQL Queries */
+
 class chat
 {
 	public static function register_online($attr = [])

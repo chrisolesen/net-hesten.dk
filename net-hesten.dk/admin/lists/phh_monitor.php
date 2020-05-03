@@ -1,4 +1,5 @@
 <?php
+/* REVIEW: SQL Queries */
 $basepath = '../../..';
 $responsive = true;
 require "$basepath/app_core/object_loader.php";

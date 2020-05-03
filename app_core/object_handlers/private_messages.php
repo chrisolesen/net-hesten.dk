@@ -1,4 +1,6 @@
 <?php
+/* REVIEW: SQL Queries */
+
 class private_messages
 {
 	public static function get_new_messages_count($attr = [])

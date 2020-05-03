@@ -1,6 +1,5 @@
 <?php
-
-//exit();
+/* REVIEW: SQL Queries */
 chdir(dirname(__FILE__));
 $basepath = '../../';
 
@@ -41,7 +40,7 @@ if ($result) {
 		++$num_auctions;
 		if ($data['object_type'] == 1) {
 			++$num_horses;
-			$sql = "UPDATE `{$_GLOBALS['DB_NAME_OLD']}`.Heste AS h LEFT JOIN `{$_GLOBALS['DB_NAME_OLD']}`.Brugere AS b ON b.id = '{$data['creator']}' SET h.bruger = b.stutteri WHERE h.id = {$data['object_id']} AND h.bruger = 'Auktionshuset'";
+			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste AS h LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS b ON b.id = '{$data['creator']}' SET h.bruger = b.stutteri WHERE h.id = {$data['object_id']} AND h.bruger = 'Auktionshuset'";
 			$link_new->query($sql);
 			$sql = "UPDATE game_data_auctions AS a SET a.status_code = 2 WHERE a.id = {$data['id']}";
 			$link_new->query($sql);
@@ -77,7 +76,7 @@ if ($auction_array) {
 	while ($data = $auction_array->fetch_assoc()) {
 		++$num_auctions;
 		if (!isset($user_id_name_array[$data['winner']])) {
-			$sql = "SELECT stutteri, penge AS money FROM `{$_GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$data['winner']} LIMIT 1";
+			$sql = "SELECT stutteri, penge AS money FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$data['winner']} LIMIT 1";
 			$user_query_result = $link_new->query($sql);
 			if ($user_query_result) {
 				$user_query_data = $user_query_result->fetch_assoc();
@@ -88,7 +87,7 @@ if ($auction_array) {
 			}
 		}
 		if (!isset($user_id_name_array[$data['seller']])) {
-			$sql = "SELECT stutteri, penge AS money FROM `{$_GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$data['seller']} LIMIT 1";
+			$sql = "SELECT stutteri, penge AS money FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$data['seller']} LIMIT 1";
 			$user_query_result = $link_new->query($sql);
 			if ($user_query_result) {
 				$user_query_data = $user_query_result->fetch_assoc();
@@ -99,7 +98,7 @@ if ($auction_array) {
 			}
 		}
 		$log_content .= PHP_EOL . "# Moving horse with ID {$data['object_id']} to user {$user_id_name_array[$data['winner']][0]} with ID {$data['winner']}.";
-		$sql = "UPDATE `{$_GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '{$user_id_name_array[$data['winner']][0]}' WHERE id = {$data['object_id']} AND bruger = 'Auktionshuset'";
+		$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '{$user_id_name_array[$data['winner']][0]}' WHERE id = {$data['object_id']} AND bruger = 'Auktionshuset'";
 		$link_new->query($sql);
 
 		$auction_fee = round(max(500, ($data['winning_amount'] * 0.005)), 0);
