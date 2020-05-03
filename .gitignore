@@ -15,6 +15,10 @@
 /files.net-hesten.dk/cache_data/*
 !/files.net-hesten.dk/cache_data/.gitkeep
 
+#logs
+/app_core/cron_files/logs/*
+!/app_core/cron_files/logs/.gitkeep
+
 #Adminpanels
 
 /net-hesten.dk/admin/hestetegner/move_to_files/count_old.php

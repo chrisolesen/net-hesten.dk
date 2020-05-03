@@ -1,8 +1,7 @@
 <?php
-/* REVIEW: SQL Queries */
 
 if (!isset($basepath)) {
-	$basepath = '';
+	die();
 }
 
 if (!isset($time_now)) {
@@ -13,10 +12,10 @@ if (!isset($time_now)) {
 }
 
 $log_content = PHP_EOL . '# Generating horses to HorseTrader.';
-file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
 
-require_once "{$basepath}app_core/db_conf.php";
-require_once "{$basepath}app_core/cron_files/data_collections/generation_horse_names.php";
+require_once "{$basepath}/app_core/object_loader.php";
+require_once "{$basepath}/app_core/cron_files/data_collections/generation_horse_names.php";
 
 $Foelbox = 'Følkassen';
 $foel = 'føl';
@@ -31,18 +30,29 @@ $generated_horses = 0;
 $target_horses = 1;
 
 $tech_mail_message = '';
-while ($generated_horses <= $target_horses) {
+while ($generated_horses < $target_horses) {
+	/*	$type_data = $link_new->query("SELECT tegner, thumb, race FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger != 'Hestehandleren*' AND bruger <> '{$Foelbox}' AND status <> '{$foel}' AND genfodes = 'ja' AND unik <> 'ja' ORDER BY RAND() LIMIT 1")->fetch_object();*/
+	/*
+			  19	type_unique
+			  20	type_generation
+			  21	type_rebirth
+			  22	type_rebirth_generation
+			  23	type_rebirth_unique
+			  24	type_ordinary
+			  25	type_foel
+			  26	type_foel_rebirth
+	*/
+	/* TODO: Support multiple artists */
+	$type_data = $link_new->query("SELECT `image`, `race`, `artists` FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` WHERE `status` IN (20,21,22) AND `artists` NOT LIKE '%,%' ORDER BY RAND() LIMIT 1")->fetch_object();
+	$artist = (user::get_info(['user_id' => (int) $type_data->artists]))->username;
+	$thumb = "/imgHorse/{$type_data->image}";
+	$race = $type_data->race;
 
-	$thumb_data = $link_new->query("SELECT tegner, thumb, race FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger != 'Hestehandleren*' AND bruger <> '{$Foelbox}' AND status <> '{$foel}' AND genfodes = 'ja' AND unik <> 'ja' ORDER BY RAND() LIMIT 1")->fetch_object();
-	$artist = $thumb_data->tegner;
-	$thumb = $thumb_data->thumb;
-	$race = $thumb_data->race;
+	$advantage = $link_new->query("SELECT `egenskab` FROM `{$GLOBALS['DB_NAME_OLD']}`.`horse_habits` WHERE `egenskab` <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
+	$disadvantage = $link_new->query("SELECT `ulempe` FROM `{$GLOBALS['DB_NAME_OLD']}`.`horse_habits` WHERE `ulempe` <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
+	$talent = $link_new->query("SELECT `talent` FROM `{$GLOBALS['DB_NAME_OLD']}`.`horse_habits` WHERE `talent` <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
 
-	$advantage = $link_new->query("SELECT egenskab FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_habits WHERE egenskab <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->egenskab;
-	$disadvantage = $link_new->query("SELECT ulempe FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_habits WHERE ulempe <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->ulempe;
-	$talent = $link_new->query("SELECT talent FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_habits WHERE talent <> '' ORDER BY RAND() LIMIT 1")->fetch_object()->talent;
-
-	$height_data = $link_new->query("SELECT lower, upper FROM `{$GLOBALS['DB_NAME_OLD']}`.horse_height WHERE race = '{$race}' LIMIT 1")->fetch_object();
+	$height_data = $link_new->query("SELECT `lower`, `upper` FROM `{$GLOBALS['DB_NAME_OLD']}`.`horse_height` WHERE `race` = '{$race}' LIMIT 1")->fetch_object();
 	$height_lower = $height_data->lower;
 	$height_upper = $height_data->upper;
 	$height = mt_rand($height_lower, $height_upper);
@@ -63,38 +73,36 @@ while ($generated_horses <= $target_horses) {
 
 	$horse_age_to_irl_days = $generation_age * 40;
 	$current_date = new DateTime('now');
-	$target_date = $current_date->sub(new DateInterval("P{$horse_age_to_irl_days}D"))->format('Y-m-d H:i:s');
+	$birth_date = $current_date->sub(new DateInterval("P{$horse_age_to_irl_days}D"))->format('Y-m-d H:i:s');
 
 
 
 	if ($artist && $thumb && $advantage && $disadvantage && $talent) {
-		$sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.Heste " . PHP_EOL
-				. '(' . PHP_EOL
-				. 'bruger, status, alder, pris, beskrivelse, ' . PHP_EOL
-				. 'foersteplads, andenplads, tredieplads, ' . PHP_EOL
-				. 'statuschangedate, date, changedate, status_skift, alder_skift, ' . PHP_EOL
-				. 'navn, kon, ' . PHP_EOL
-				. 'race, tegner, thumb, height, egenskab, ulempe, talent, ' . PHP_EOL
-				. 'farid, morid, random_height' . PHP_EOL
-				. ')' . PHP_EOL
-				. ' VALUES ' . PHP_EOL
-				. '(' . PHP_EOL
-				. "'hestehandleren', 'Hest', $generation_age, 11000, '', " . PHP_EOL
-				. '0, 0, 0, ' . PHP_EOL
-				. "'00-00-00 00:00:00', '{$target_date}','{$target_date}', NOW(), NOW(), " . PHP_EOL
-				. "'{$name}', '{$gender}', " . PHP_EOL
-				. "'{$race}', '{$artist}', '{$thumb}', {$height}, '{$advantage}', '{$disadvantage}', '{$talent}', " . PHP_EOL
-				. "'', '', 'nej'" . PHP_EOL
-				. ")";
+		$sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
+		(
+			`bruger`, `status`, `alder`, `pris`, `beskrivelse`, 
+			`foersteplads`, `andenplads`, `tredieplads`, 
+			`statuschangedate`, `date`, `changedate`, `status_skift`, `alder_skift`, 
+			`navn`, `kon`, 
+			`race`, `tegner`, `thumb`, `height`, `egenskab`, `ulempe`, `talent`, 
+			`farid`, `morid`, `random_height`
+		)
+		VALUES 
+		(
+			'hestehandleren', 'Hest', {$generation_age}, 11000, '', 
+			0, 0, 0, 
+			'00-00-00 00:00:00', '{$birth_date}','{$birth_date}', NOW(), NOW(), 
+			'{$name}', '{$gender}', 
+			'{$race}', '{$artist}', '{$thumb}', {$height}, '{$advantage}', '{$disadvantage}', '{$talent}', 
+			'', '', 'nej'
+		)";
 		$link_new->query($sql);
 
 		$error = $link_new->error;
-
-		
 	}
 	++$generated_horses;
 }
 
 $log_content = PHP_EOL . '#'
-		. PHP_EOL . "# Generated {$generated_horses} horses.";
-file_put_contents("app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+	. PHP_EOL . "# Generated {$generated_horses} horses.";
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
