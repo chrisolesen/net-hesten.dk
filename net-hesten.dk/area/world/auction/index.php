@@ -194,7 +194,7 @@ ob_end_clean();
 				<div data-section-type="info_square">
 					<div class="page_selector">
 						<span class="btn btn-white">Side:
-							<?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>">Forrige side</a>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>">Næste side</a>
+							<?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>&tab=your-horses">Forrige side</a>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>&tab=your-horses">Næste side</a>
 					</div>
 				</div>
 			<?php
