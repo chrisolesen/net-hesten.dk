@@ -142,6 +142,7 @@ ob_end_clean();
 			}
 			$attr['custom_filter'] = horse_list_filters::get_filter_string(['zone' => "auctions_sell"]);
 			if (is_array(horses::get_all($attr))) {
+				$horse_amount = 0;
 				foreach (horses::get_all($attr) as $horse) {
 					$gender = ((string) strtolower($horse['gender']) === 'hoppe') ? 'female' : '';
 					$gender = ((string) strtolower($horse['gender']) === 'hingst') ? 'male' : $gender;
@@ -184,8 +185,19 @@ ob_end_clean();
 						</div>
 						<img src='//files.<?= HTTP_HOST; ?>/<?= $horse['thumb']; ?>' />
 					</div>
-			<?php
+				<?php
+					++$horse_amount;
 				}
+			}
+			if (($horse_amount ?? 0) > 10) {
+				?>
+				<div data-section-type="info_square">
+					<div class="page_selector">
+						<span class="btn btn-white">Side:
+							<?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>">Forrige side</a>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>">Næste side</a>
+					</div>
+				</div>
+			<?php
 			}
 			?>
 		</div>
@@ -283,6 +295,17 @@ ob_end_clean();
 			<?php
 			foreach ($all_auctions as $auction) {
 				echo $auction;
+			}
+			$horse_amount = (count($all_auctions) ?? 0);
+			if (($horse_amount ?? 0) > 10) {
+			?>
+				<div data-section-type="info_square">
+					<div class="page_selector">
+						<span class="btn btn-white">Side:
+							<?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?other_auctions_page=<?= $your_horses_page - 1; ?>">Forrige side</a>&nbsp;<a class="btn btn-info" href="?other_auctions_page=<?= $your_horses_page + 1; ?>">Næste side</a>
+					</div>
+				</div>
+			<?php
 			}
 			?>
 		</div>

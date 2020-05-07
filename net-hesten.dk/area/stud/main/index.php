@@ -298,6 +298,17 @@ $amount_active_selection = count($horse_array);
 				foreach ($horse_array as $horse) {
 					echo $horse . PHP_EOL;
 				}
+				$horse_amount = count($horse_array);
+			}
+			if (($horse_amount ?? 0) > 10) {
+			?>
+				<div data-section-type="info_square">
+					<div class="page_selector">
+						<span class="btn btn-white">Side:
+							<?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>">Forrige side</a>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>">Næste side</a>
+					</div>
+				</div>
+			<?php
 			}
 			?>
 		</div>
