@@ -1,5 +1,4 @@
 <?php
-/* REVIEW: SQL Queries */
 
 class horse_list_filters
 {
@@ -26,7 +25,7 @@ class horse_list_filters
 		if ($attr['reset_all_filters'] == true) {
 		} else {
 			$filter_data = false;
-			$sql = "SELECT value FROM user_data_json WHERE parent_id = {$_SESSION['user_id']} AND name = 'list_filtering_settings' LIMIT 1";
+			$sql = "SELECT `value` FROM `user_data_json` WHERE `parent_id` = {$_SESSION['user_id']} AND `name` = 'list_filtering_settings' LIMIT 1";
 			$result = $link_new->query($sql);
 			if ($result) {
 				$filter_data = unserialize(($result->fetch_object()->value ?? false));
@@ -88,7 +87,9 @@ class horse_list_filters
 
 		$filter_data_for_db = serialize($filter_data);
 
-		$sql = "INSERT INTO user_data_json (parent_id, name, value, date) VALUES ({$_SESSION['user_id']},'list_filtering_settings', '{$filter_data_for_db}', NOW()) ON DUPLICATE KEY UPDATE value = '{$filter_data_for_db}'";
+		$sql = "INSERT INTO `user_data_json` (`parent_id`, `name`, `value`, `date`) 
+		VALUES ({$_SESSION['user_id']},'list_filtering_settings', '{$filter_data_for_db}', NOW()) 
+		ON DUPLICATE KEY UPDATE `value` = '{$filter_data_for_db}'";
 		$link_new->query($sql);
 
 		return true;
@@ -136,7 +137,7 @@ class horse_list_filters
 
 
 		$user_filter_data[$attr['zone']]['races'] = [];
-		$sql = "SELECT value FROM user_data_json WHERE parent_id = {$_SESSION['user_id']} AND name = 'list_filtering_settings' LIMIT 1";
+		$sql = "SELECT `value` FROM `user_data_json` WHERE `parent_id` = {$_SESSION['user_id']} AND `name` = 'list_filtering_settings' LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			$user_filter_data = unserialize(($result->fetch_object()->value ?? false));
@@ -192,7 +193,8 @@ class horse_list_filters
 				<option value="all" <?= (in_array('all', $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?>>Alle Racer</option>
 				<?php foreach ($race_names as $race) {
 					if ($attr['zone'] == 'horse_trader') {
-						$amount = $link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id > 604000 AND bruger = 'hestehandleren' and status <> 'død' and alder < 18  AND race = '{$race['name']}'")->fetch_object()->amount;
+						$amount = $link_new->query("SELECT count(`id`) AS `amount` 
+						FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `id` > 604000 AND `bruger` = 'hestehandleren' AND `status` <> 'død' AND `alder` < 18  AND `race` = '{$race['name']}'")->fetch_object()->amount;
 						if ($amount == 0) {
 							continue;
 						}
@@ -267,7 +269,10 @@ class horse_list_filters
 					if (is_array(($cached_artists ?? false))) {
 						$artists = $cached_artists;
 					} else {
-						$result = $link_new->query("SELECT DISTINCT horses.tegner AS name FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste AS horses WHERE status <> '{$dead}' ORDER BY horses.tegner ASC");
+						$result = $link_new->query("SELECT DISTINCT `horses`.`tegner` AS `name` 
+						FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS `horses` 
+						WHERE `status` <> '{$dead}' 
+						ORDER BY `horses`.`tegner` ASC");
 						$artists = [];
 						while ($artist = $result->fetch_object()) {
 							$artists[] = (object) ['name' => $artist->name];
@@ -348,7 +353,7 @@ class horse_list_filters
 
 
 		$user_filter_data = false;
-		$sql = "SELECT value FROM user_data_json WHERE parent_id = {$_SESSION['user_id']} AND name = 'list_filtering_settings' LIMIT 1";
+		$sql = "SELECT `value` FROM `user_data_json` WHERE `parent_id` = {$_SESSION['user_id']} AND `name` = 'list_filtering_settings' LIMIT 1";
 		$result = $link_new->query($sql);
 		if ($result) {
 			$user_filter_data = unserialize(($result->fetch_object()->value ?? false));
@@ -414,19 +419,19 @@ class horse_list_filters
 				$foel = 'føl';
 
 				if ($user_filter_data[$attr['zone']]['filter_status'] == 'idle_horses') {
-					$return_data .= " AND graesning != 'ja' AND staevne <> 'ja' AND status <> 'avl' AND status <> '{$foel}' AND kaaring <> 'ja' AND competition_id IS NULL ";
+					$return_data .= " AND graesning != 'ja' AND staevne <> 'ja' AND `status` <> 'avl' AND `status` <> '{$foel}' AND kaaring <> 'ja' AND competition_id IS NULL ";
 				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'horses_on_grass') {
 					$return_data .= ' AND graesning = "ja" ';
 				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'breeding_horses') {
-					$return_data .= ' AND ( status = "avl" OR breeding.meta_value IS NOT NULL ) ';
+					$return_data .= ' AND ( `status` = "avl" OR breeding.meta_value IS NOT NULL ) ';
 				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'horses_at_contest') {
-					$return_data .= ' AND STATUS = "hest" AND competition_id IS NOT NULL ';
+					$return_data .= ' AND `status` = "hest" AND competition_id IS NOT NULL ';
 				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'foels') {
-					$return_data .= " AND status = '{$foel}' ";
+					$return_data .= " AND `status` = '{$foel}' ";
 				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'foels_at_contest') {
-					$return_data .= " AND status = '{$foel}' AND competition_id IS NOT NULL ";
+					$return_data .= " AND `status` = '{$foel}' AND competition_id IS NOT NULL ";
 				} elseif ($user_filter_data[$attr['zone']]['filter_status'] == 'unbred_mares') {
-					$return_data .= " AND kon = 'hoppe' AND breeding.meta_value IS NULL ";
+					$return_data .= " AND `kon` = 'hoppe' AND breeding.meta_value IS NULL ";
 				}
 			}
 

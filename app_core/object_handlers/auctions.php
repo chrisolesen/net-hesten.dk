@@ -1,5 +1,4 @@
 <?php
-/* REVIEW: SQL Queries */
 
 class auctions
 {

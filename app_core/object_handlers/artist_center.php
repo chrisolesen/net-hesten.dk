@@ -1,5 +1,4 @@
 <?php
-/* REVIEW: SQL Queries */
 
 function ac_find_next_artist_submission_filename($mode = 'default')
 {
@@ -179,7 +178,7 @@ class artist_center
 			exit();
 		}
 
-		$sql = "SELECT count(id) AS waiting_submissions FROM `artist_center_submissions` WHERE `status` = 27 AND artist = {$attr['user_id']}";
+		$sql = "SELECT count(id) AS `waiting_submissions` FROM `artist_center_submissions` WHERE `status` = 27 AND `artist` = {$attr['user_id']}";
 		$result = ($link_new->query($sql)->fetch_object()->waiting_submissions ?? 0);
 		return $result;
 	}
@@ -198,7 +197,7 @@ class artist_center
 			exit();
 		}
 
-		$sql = "SELECT count(id) AS waiting_submissions FROM `artist_center_submissions` WHERE `status` = 28 AND artist = {$attr['user_id']}";
+		$sql = "SELECT count(`id`) AS `waiting_submissions` FROM `artist_center_submissions` WHERE `status` = 28 AND `artist` = {$attr['user_id']}";
 		$result = ($link_new->query($sql)->fetch_object()->waiting_submissions ?? 0);
 		return $result;
 	}
@@ -217,7 +216,7 @@ class artist_center
 			exit();
 		}
 
-		$sql = "SELECT count(id) AS waiting_submissions FROM `artist_center_submissions` WHERE `status` = 29 AND artist = {$attr['user_id']}";
+		$sql = "SELECT count(`id`) AS `waiting_submissions` FROM `artist_center_submissions` WHERE `status` = 29 AND `artist` = {$attr['user_id']}";
 		$result = ($link_new->query($sql)->fetch_object()->waiting_submissions ?? 0);
 		return $result;
 	}
@@ -236,7 +235,7 @@ class artist_center
 			exit();
 		}
 
-		$sql = "SELECT `value` AS artist_points FROM `user_data_numeric` WHERE `name` = 'artist_points' AND parent_id = {$attr['user_id']}";
+		$sql = "SELECT `value` AS `artist_points` FROM `user_data_numeric` WHERE `name` = 'artist_points' AND `parent_id` = {$attr['user_id']}";
 		$result = ($link_new->query($sql)->fetch_object() ?? false);
 		if ($result) {
 			return $result->artist_points;
@@ -283,7 +282,7 @@ class artist_center
 				if (!file_exists($full_target_file)) {
 					copy($full_origin_file, $full_target_file);
 				}
-				
+
 				self::grant_points(['user_id' => $submission->artist, 'points' => 1]);
 			}
 		}

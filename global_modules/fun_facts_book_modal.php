@@ -1,4 +1,3 @@
-<?php /* REVIEW: SQL Queries */ ?>
 <!--<link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">-->
 <div id="fun_fact_book_modal">
 	<div class="overlay"></div>
@@ -32,8 +31,12 @@
 				$next_month->sub(new DateInterval("P3M"));
 				$min = $date_now->format('Y') . '-' . $date_now->format('m') . '-01 00:00:00';
 				$max = $next_month->format('Y-m') . '-01 00:00:00';
-				$players = $link_new->query("SELECT count(DISTINCT user_id) AS amount FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' AND start < '{$max}' AND TIMEDIFF(end, start) <> '00:00:00'")->fetch_object()->amount;
-				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(end, start))) AS duration FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' and start < '{$max}'")->fetch_object()->duration);
+				$players = $link_new->query("SELECT count(DISTINCT `user_id`) AS `amount` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` 
+				WHERE `start` > '{$min}' AND `start` < '{$max}' AND TIMEDIFF(`end`, `start`) <> '00:00:00'")->fetch_object()->amount;
+				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(`end`, `start`))) AS `duration` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` 
+				WHERE `start` > '{$min}' AND `start` < '{$max}'")->fetch_object()->duration);
 
 				echo "<span style='width:35px;display:inline-block;'>{$date_now->format('M')}:</span> $players spillere, med i alt $duration timer online.<br /><br />";
 
@@ -42,8 +45,12 @@
 				$next_month->add(new DateInterval("P1M"));
 				$min = $date_now->format('Y-m') . '-01 00:00:00';
 				$max = $next_month->format('Y-m') . '-01 00:00:00';
-				$players = $link_new->query("SELECT count(DISTINCT user_id) AS amount FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' AND start < '{$max}' AND TIMEDIFF(end, start) <> '00:00:00'")->fetch_object()->amount;
-				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(end, start))) AS duration FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' and start < '{$max}'")->fetch_object()->duration);
+				$players = $link_new->query("SELECT count(DISTINCT `user_id`) AS `amount` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` 
+				WHERE `start` > '{$min}' AND `start` < '{$max}' AND TIMEDIFF(`end`, `start`) <> '00:00:00'")->fetch_object()->amount;
+				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(`end`, `start`))) AS `duration` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` 
+				WHERE `start` > '{$min}' AND `start` < '{$max}'")->fetch_object()->duration);
 
 				echo "<span style='width:35px;display:inline-block;'>{$date_now->format('M')}:</span> $players spillere, med i alt $duration timer online.<br /><br />";
 
@@ -52,8 +59,12 @@
 				$next_month->add(new DateInterval("P1M"));
 				$min = $date_now->format('Y-m') . '-01 00:00:00';
 				$max = $next_month->format('Y-m') . '-01 00:00:00';
-				$players = $link_new->query("SELECT count(DISTINCT user_id) AS amount FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' AND start < '{$max}' AND TIMEDIFF(end, start) <> '00:00:00'")->fetch_object()->amount;
-				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(end, start))) AS duration FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' and start < '{$max}'")->fetch_object()->duration);
+				$players = $link_new->query("SELECT count(DISTINCT `user_id`) AS `amount` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` 
+				WHERE `start` > '{$min}' AND `start` < '{$max}' AND TIMEDIFF(`end`, `start`) <> '00:00:00'")->fetch_object()->amount;
+				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(`end`, `start`))) AS `duration` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` 
+				WHERE `start` > '{$min}' AND `start` < '{$max}'")->fetch_object()->duration);
 
 				echo "<span style='width:35px;display:inline-block;'>{$date_now->format('M')}:</span> $players spillere, med i alt $duration timer online.<br /><br />";
 
@@ -62,8 +73,12 @@
 				$next_month->add(new DateInterval("P1M"));
 				$min = $date_now->format('Y-m') . '-01 00:00:00';
 				$max = $next_month->format('Y-m') . '-01 00:00:00';
-				$players = $link_new->query("SELECT count(DISTINCT user_id) AS amount FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' AND start < '{$max}' AND TIMEDIFF(end, start) <> '00:00:00'")->fetch_object()->amount;
-				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(end, start))) AS duration FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' and start < '{$max}'")->fetch_object()->duration);
+				$players = $link_new->query("SELECT count(DISTINCT `user_id`) AS `amount` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` 
+				WHERE `start` > '{$min}' AND `start` < '{$max}' AND TIMEDIFF(`end`, `start`) <> '00:00:00'")->fetch_object()->amount;
+				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(`end`, `start`))) AS `duration` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` 
+				WHERE `start` > '{$min}' AND `start` < '{$max}'")->fetch_object()->duration);
 
 				echo "<span style='width:35px;display:inline-block;'>{$date_now->format('M')}:</span> $players spillere, med i alt $duration timer online.<br /><br />";
 
@@ -72,8 +87,11 @@
 				$next_month->add(new DateInterval("P1M"));
 				$min = $date_now->format('Y-m') . '-01 00:00:00';
 				$max = $next_month->format('Y-m') . '-01 00:00:00';
-				$players = $link_new->query("SELECT count(DISTINCT user_id) AS amount FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' AND start < '{$max}' AND TIMEDIFF(end, start) <> '00:00:00'")->fetch_object()->amount;
-				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(end, start))) AS duration FROM `{$GLOBALS['DB_NAME_NEW']}`.user_data_sessions WHERE start > '{$min}' and start < '{$max}'")->fetch_object()->duration);
+				$players = $link_new->query("SELECT count(DISTINCT `user_id`) AS `amount` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` 
+				WHERE `start` > '{$min}' AND `start` < '{$max}' AND TIMEDIFF(`end`, `start`) <> '00:00:00'")->fetch_object()->amount;
+				$duration = round((1 / 60 / 60) * $link_new->query("SELECT SUM(TIME_TO_SEC(TIMEDIFF(`end`, `start`))) AS `duration` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`user_data_sessions` WHERE `start` > '{$min}' AND `start` < '{$max}'")->fetch_object()->duration);
 
 				echo "<span style='width:35px;display:inline-block;'>{$date_now->format('M')}:</span> $players spillere, med i alt $duration timer online.<br /><br />";
 
@@ -121,16 +139,16 @@
 				} else {
 					$month_last = (string) ((int) $month_last - 1);
 				}
-				$auction_data = $link_new->query("SELECT count(bids.bid_date) AS amount, heste.race AS race " .
-					"FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_auction_bids AS bids " .
-					"LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_auctions AS ah on ah.id = bids.auction " .
-					"LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Heste AS heste on heste.id = ah.object_id " .
-					"LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS brugere on brugere.id = bids.creator " .
-					"WHERE bids.bid_date > '{$year_last}-{$month_last}-01 00:00:00' " .
-					"AND bids.bid_date < '{$year_now}-{$month_now}-01 00:00:00' " .
-					"GROUP BY heste.race " .
-					"ORDER BY amount DESC " .
-					"LIMIT 5");
+				$auction_data = $link_new->query("SELECT count(`bids`.`bid_date`) AS `amount`, `heste`.`race` AS `race` 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_auction_bids` AS `bids` 
+				LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.`game_data_auctions` AS `ah` ON `ah`.`id` = `bids`.`auction` 
+				LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS `heste` ON `heste`.`id` = `ah`.`object_id` 
+				LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` AS `brugere` on `brugere`.`id` = `bids`.`creator` 
+				WHERE `bids`.`bid_date` > '{$year_last}-{$month_last}-01 00:00:00' 
+				AND `bids`.`bid_date` < '{$year_now}-{$month_now}-01 00:00:00' 
+				GROUP BY `heste`.`race` 
+				ORDER BY `amount` DESC 
+				LIMIT 5");
 
 				while ($horses = $auction_data->fetch_object()) {
 					echo "<span style='width:150px;display:inline-block;'>{$horses->race}</span><span style='width:100px;display:inline-block;text-align:right;'>{$horses->amount} bud</span><br /><br />";
@@ -142,7 +160,7 @@
 				<h3>WKR statistikker</h3>
 
 				<?php
-				$result = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere");
+				$result = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere`");
 				$i = 0;
 				$rige = 0;
 				$wealthy = 0;

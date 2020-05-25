@@ -1,5 +1,5 @@
 <?php
-/* REVIEW: SQL Queries */
+
 $basepath = '../../..';
 $responsive = true;
 require "$basepath/app_core/object_loader.php";
@@ -14,34 +14,40 @@ $Foelbox = 'Følkassen';
 $Foel = 'Føl';
 $selected_race = substr($_GET['race'], 1, -1);
 ?>
-<a href="/admin/hestetegner/admin_types_version_two.php">Tilbage</a><br /><br /> 
+<a href="/admin/hestetegner/admin_types_version_two.php">Tilbage</a><br /><br />
 <section>
-    <header>
-        <h1>Tilføjelses admin</h1>
-    </header>
+	<header>
+		<h1>Tilføjelses admin</h1>
+	</header>
 	<style>
-        ul {
-            border:1px solid black;
-            padding:10px;
-            display: block;
-        }
-        ul li {
-            display: inline-block;
-        }
-        .heading span {
-            border-bottom: 3px double black;
-            text-align: center;
-        }
-        .monospace {
-            font-family: monospace;
-        }
-        .center_text {
-            text-align: center;
-        }
+		ul {
+			border: 1px solid black;
+			padding: 10px;
+			display: block;
+		}
+
+		ul li {
+			display: inline-block;
+		}
+
+		.heading span {
+			border-bottom: 3px double black;
+			text-align: center;
+		}
+
+		.monospace {
+			font-family: monospace;
+		}
+
+		.center_text {
+			text-align: center;
+		}
+
 		.col {
-			float:left;
+			float: left;
 			width: 50%;
 		}
+
 		li {
 			line-height: 1.3;
 			height: 200px;
@@ -51,14 +57,15 @@ $selected_race = substr($_GET['race'], 1, -1);
 			position: relative;
 			overflow: hidden;
 			margin: 5px;
-			padding:5px;
+			padding: 5px;
 		}
+
 		img {
 			max-height: 100%;
 			max-width: 200px;
 			position: relative;
 		}
-    </style>
+	</style>
 
 	<ul>
 		<?php
@@ -67,16 +74,16 @@ $selected_race = substr($_GET['race'], 1, -1);
 			$status = filter_input(INPUT_POST, 'status');
 			$race = filter_input(INPUT_POST, 'race');
 			$id = (int) filter_input(INPUT_POST, 'id');
-			$artist = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE stutteri = '{$latin_1_name}' LIMIT 1")->fetch_object()->id;
+			$artist = $link_new->query("SELECT id FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `stutteri` = '{$latin_1_name}' LIMIT 1")->fetch_object()->id;
 			if ($artist && in_array((int) $status, [22, 26, 19, 25, 24]) && $race && is_numeric($id)) {
 
-				$sql = "UPDATE `{$GLOBALS['DB_NAME_NEW']}`.horse_types SET artists = '{$artist}', status = {$status}, race = '{$race}' WHERE id = {$id}";
-//				echo $sql;
+				$sql = "UPDATE `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` SET `artists` = '{$artist}', `status` = {$status}, `race` = '{$race}' WHERE `id` = {$id}";
+				//				echo $sql;
 				$link_new->query($sql);
 			}
 		}
 
-		$sql = "SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_types WHERE (`status` IS NULL OR `race` IS NUll) AND id > 7000";
+		$sql = "SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` WHERE (`status` IS NULL OR `race` IS NUll) AND `id` > 7000";
 		$result = $link_new->query($sql);
 		$races = '';
 		while ($data = $result->fetch_object()) {
@@ -90,11 +97,11 @@ $selected_race = substr($_GET['race'], 1, -1);
 			  25	type_foel
 			  26	type_foel_rebirth
 			 */
-			?>
+		?>
 			<li>
 				<form action="" method="POST">
 					<input type="hidden" name="id" value="<?= $data->id; ?>" />
-					<img style="float:left;" src="https:<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/imgHorse/<?= $data->image; ?>" />
+					<img style="float:left;" src="https:<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/imgHorse/<?= $data->image; ?>" />
 					<div style="float:left;width:200px;">
 						<label>Race</label><input type="text" list="horse_races" name="race" />
 						<label>Tegner</label><input type="text" list="usernames" name="artist" />
@@ -108,26 +115,28 @@ $selected_race = substr($_GET['race'], 1, -1);
 						<input type="submit" class="save btn btn-success" name="save" value="Gem" />
 					</div>
 				</form>
-			</li> 
-			<?php
+			</li>
+		<?php
 		}
 		?>
 	</ul>
 	<datalist id="usernames">
 		<?php
-		$result = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere");
+		$result = $link_new->query("SELECT `stutteri` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere`");
 		while ($data = $result->fetch_object()) {
-			?><option value="<?= $data->stutteri; ?>" /><?php
-		}
 		?>
-	</datalist> 
+			<option value="<?= $data->stutteri; ?>" /><?php
+													}
+														?>
+	</datalist>
 	<datalist id="horse_races">
 		<?php
-		$result = $link_new->query("SELECT name FROM `{$GLOBALS['DB_NAME_NEW']}`.horse_races");
+		$result = $link_new->query("SELECT `name` FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_races`");
 		while ($data = $result->fetch_object()) {
-			?><option value="<?= $data->name; ?>" /><?php
-		}
 		?>
+			<option value="<?= $data->name; ?>" /><?php
+												}
+													?>
 	</datalist>
 </section>
 <?php

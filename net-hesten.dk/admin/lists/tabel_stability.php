@@ -1,5 +1,5 @@
 <?php
-/* REVIEW: SQL Queries */
+
 $basepath = '../../..';
 $responsive = true;
 require "$basepath/app_core/object_loader.php";
@@ -73,9 +73,9 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 		];
 		foreach ($tables as $name) {
 			++$table_count;
-			$sql = "SELECT COUNT(*) AS amount FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$GLOBALS['DB_NAME_OLD']}' AND table_name = '{$name}'";
+			$sql = "SELECT COUNT(*) AS `amount` FROM INFORMATION_SCHEMA.COLUMNS WHERE `table_schema` = '{$GLOBALS['DB_NAME_OLD']}' AND `table_name` = '{$name}'";
 			$cols = $link_new->query($sql)->fetch_object()->amount;
-			$sql = "SELECT count(*) AS amount FROM `{$name}` LIMIT 1";
+			$sql = "SELECT count(*) AS `amount` FROM `{$name}` LIMIT 1";
 			$amount = $link_new->query($sql)->fetch_object()->amount;
 			$total_rows += $amount;
 			$total_data_points += ($amount * $cols);
@@ -130,9 +130,9 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 		];
 		foreach ($tables as $name) {
 			++$table_count;
-			$sql = "SELECT COUNT(*) AS amount FROM INFORMATION_SCHEMA.COLUMNS WHERE table_schema = '{$GLOBALS['DB_NAME_NEW']}' AND table_name = '{$name}'";
+			$sql = "SELECT COUNT(*) AS `amount` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `table_schema` = '{$GLOBALS['DB_NAME_NEW']}' AND `table_name` = '{$name}'";
 			$cols = $link_new->query($sql)->fetch_object()->amount;
-			$sql = "SELECT count(*) AS amount FROM `{$name}` LIMIT 1";
+			$sql = "SELECT count(*) AS `amount` FROM `{$name}` LIMIT 1";
 			$amount = $link_new->query($sql)->fetch_object()->amount;
 			$total_rows += $amount;
 			$total_data_points += ($amount * $cols);

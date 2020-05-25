@@ -1,5 +1,4 @@
 <?php
-/* REVIEW: SQL Queries */
 
 class accounting
 {
@@ -18,7 +17,7 @@ class accounting
 		foreach ($attr as $key => $value) {
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
-		$money = ($link_new->query("SELECT penge AS money FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
+		$money = ($link_new->query("SELECT `penge` AS `money` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
 
 		return $money;
 	}
@@ -37,17 +36,11 @@ class accounting
 		foreach ($attr as $key => $value) {
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
-		$sql = "SELECT "
-			. "entry_date, "
-			. "line_meta, "
-			. "line_amount "
-			. "FROM "
-			. "`{$GLOBALS['DB_NAME_NEW']}`.game_data_accounting "
-			. "WHERE "
-			. "user_id = {$attr['user_id']} "
-			. "ORDER BY "
-			. "entry_date DESC "
-			. "LIMIT 100";
+		$sql = "SELECT `entry_date`, `line_meta`, `line_amount` 
+		FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_accounting` 
+		WHERE `user_id` = {$attr['user_id']} 
+		ORDER BY `entry_date` DESC 
+		LIMIT 100";
 		$result = $link_new->query($sql);
 		if ($result) {
 			while ($data = $result->fetch_object()) {
@@ -77,15 +70,15 @@ class accounting
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 		/* Fetch current money */
-		$money = ($link_new->query("SELECT penge AS money FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
+		$money = ($link_new->query("SELECT `penge` AS `money` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = {$attr['user_id']} LIMIT 1")->fetch_object()->money);
 		$attr['meta_data']['operator'] = $attr['mode'];
 
 		/* Update user money */
 		if ($attr['mode'] === '+') {
-			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET penge = (penge + {$attr['amount']}) WHERE id = {$attr['user_id']} ";
+			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET `penge` = (`penge` + {$attr['amount']}) WHERE `id` = {$attr['user_id']} ";
 			$attr['meta_data']['line_total'] = $money + $attr['amount'];
 		} else {
-			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET penge = (penge - {$attr['amount']}) WHERE id = {$attr['user_id']} ";
+			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET `penge` = (`penge` - {$attr['amount']}) WHERE `id` = {$attr['user_id']} ";
 			$attr['meta_data']['line_total'] = $money - $attr['amount'];
 		}
 		$link_new->query($sql);
@@ -93,11 +86,8 @@ class accounting
 		$attr['meta_data']['line_text'] = $attr['line_text'];
 		$meta_for_db = json_encode($attr['meta_data'], JSON_UNESCAPED_UNICODE);
 
-		$sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.game_data_accounting "
-			. "(user_id, line_meta, line_amount)"
-			. "VALUES "
-			. "({$attr['user_id']}, '{$meta_for_db}', {$attr['amount']}) "
-			. "";
+		$sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`game_data_accounting` (`user_id`, `line_meta`, `line_amount`)
+		VALUES ({$attr['user_id']}, '{$meta_for_db}', {$attr['amount']}) ";
 		$result = $link_new->query($sql);
 		return $result;
 	}

@@ -1,5 +1,5 @@
 <?php
-/* REVIEW: SQL Queries */
+
 $basepath = '../../../..';
 $title = 'Hestehandleren';
 require "$basepath/app_core/object_loader.php";
@@ -34,11 +34,13 @@ require "$basepath/global_modules/header.php";
 					continue;
 				}
 				++$i;
-				$number_of_signups = $link_new->query("SELECT count(participant_id) AS signups FROM `game_data_competition_participants` WHERE `competition_id` = {$data->id}")->fetch_object()->signups;
+				$number_of_signups = $link_new->query("SELECT count(`participant_id`) AS `signups` 
+				FROM `game_data_competition_participants` 
+				WHERE `competition_id` = {$data->id}")->fetch_object()->signups;
 
 				if ($data->allowed_races) {
 					$allowed_races = '';
-					$races = $link_new->query("SELECT name FROM `horse_races` WHERE `id` IN ({$data->allowed_races})");
+					$races = $link_new->query("SELECT `name` FROM `horse_races` WHERE `id` IN ({$data->allowed_races})");
 					while ($race = $races->fetch_object()) {
 						$allowed_races .= $race->name . '<br />';
 					}

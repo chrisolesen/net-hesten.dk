@@ -1,5 +1,5 @@
 <?php
-/* REVIEW: SQL Queries */
+
 $basepath = '../../..';
 $responsive = true;
 require "$basepath/app_core/object_loader.php";
@@ -87,11 +87,15 @@ if (filter_input(INPUT_POST, 'search_id')) {
 			$original = filter_input(INPUT_POST, 'original') == 'on' ? 'ja' : '';
 			$rebirth = filter_input(INPUT_POST, 'rebirth') == 'on' ? 'ja' : '';
 
-			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET status = '{$status}', genfodes = '{$rebirth}', original = '{$original}', unik = '{$unique}', race = '{$race}', bruger = '{$user}', kon = '{$gender}', date = '{$target_date}', changedate = '{$target_date}', alder = '{$wanted_age}' WHERE id = {$id} LIMIT 1";
+			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
+			SET `status` = '{$status}', `genfodes` = '{$rebirth}', `original` = '{$original}', `unik` = '{$unique}', `race` = '{$race}', `bruger` = '{$user}', 
+			`kon` = '{$gender}', `date` = '{$target_date}', `changedate` = '{$target_date}', `alder` = '{$wanted_age}' 
+			WHERE `id` = {$id} 
+			LIMIT 1";
 			$link_new->query($sql);
 		}
 
-		$result = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE id = {$search_id} LIMIT 1");
+		$result = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `id` = {$search_id} LIMIT 1");
 		while ($data = $result->fetch_object()) {
 		?>
 			<input type="hidden" name="search_id" value="<?= $data->id; ?>" />
@@ -123,7 +127,7 @@ if (filter_input(INPUT_POST, 'search_id')) {
 	</form>
 	<datalist id="horse_races">
 		<?php
-		$result = $link_new->query("SELECT hesterace FROM `{$GLOBALS['DB_NAME_OLD']}`.Hesteracer");
+		$result = $link_new->query("SELECT `hesterace` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Hesteracer`");
 		while ($data = $result->fetch_object()) {
 		?>
 			<option value="<?= $data->hesterace; ?>" /><?php
@@ -132,7 +136,7 @@ if (filter_input(INPUT_POST, 'search_id')) {
 	</datalist>
 	<datalist id="user_names">
 		<?php
-		$result = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere");
+		$result = $link_new->query("SELECT `stutteri` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere`");
 		while ($data = $result->fetch_object()) {	?>
 			<option value="<?= $data->stutteri; ?>" /><?php	} ?>
 	</datalist>

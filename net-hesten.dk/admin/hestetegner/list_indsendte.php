@@ -1,5 +1,5 @@
 <?php
-/* REVIEW: SQL Queries */
+
 define('HTTP_HOST', filter_input(INPUT_SERVER, 'HTTP_HOST'));
 require '../../../app_core/db_conf.php';
 require '../../../app_core/user_validate.php';
@@ -41,7 +41,7 @@ if ($_SESSION['logged_in'] == true) {
 				<input class="search" placeholder="Search" /><br />
 				<ul class="list">
 					<?php
-					$result = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = 'hestehandleren*'");
+					$result = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `bruger` = 'hestehandleren*'");
 					$num_rows = $result->num_rows;
 
 					while ($data = $result->fetch_assoc()) {
