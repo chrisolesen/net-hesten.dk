@@ -41,10 +41,19 @@ $today = date("d.m.y.G.i");
 $loop = 0;
 /* Limit 200 = stabil */
 
-$sql = "SELECT id, alder, bruger, navn, foersteplads, andenplads, tredieplads, kaaringer, pris, race, original, unik FROM {$GLOBALS['DB_NAME_OLD']}.Heste WHERE alder > 20 AND bruger <> '{$Foelbox}' AND bruger <> 'hestehandleren*' and bruger <> 'genfoedsel' AND status = 'hest' ORDER BY rand() LIMIT 175";
+$sql = "SELECT `id`, `alder`, `bruger`, `navn`, `foersteplads`, `andenplads`, `tredieplads`, `kaaringer`, `pris`, `race`, `original`, `unik` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` "
+    . "WHERE `alder` > 20 "
+    . "AND `bruger` <> '{$Foelbox}' "
+    . "AND `bruger` <> 'hestehandleren*' "
+    . "AND `bruger` <> 'genfoedsel' "
+    . "AND status = 'hest' "
+    . "ORDER BY rand() "
+    . "LIMIT 175";
+
 $result = $link_new->query($sql);
 $viable_horses = 0;
 $killed_amount = 0;
+
 if ($result) {
 
     while ($horse = $result->fetch_object()) {
@@ -94,11 +103,11 @@ if ($result) {
             $message = str_replace($tegn, $substitut, $message);
 
             /* Kill Horse */
-            $sql = "UPDATE Heste SET status = '{$dead}', death_date = '{$date_now}' WHERE id = {$horse->id}";
+            $sql = "UPDATE `Heste` SET `status` = '{$dead}', `death_date` = '{$date_now}' WHERE `id` = {$horse->id}";
             $link_new->query($sql);
             /* Inform user */
             $utf_8_message = $message;
-            $sql = "INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, 53432, {$user->id}, NOW(), '{$utf_8_message}' )";
+            $sql = "INSERT INTO `game_data_private_messages` (`status_code`, `hide`, `origin`, `target`, `date`, `message`) VALUES (17, 0, 53432, {$user->id}, NOW(), '{$utf_8_message}' )";
             $link_new->query($sql);
             /* Sæt giv penge til brugeren */
             accounting::add_entry(['amount' => $claim, 'line_text' => "Erstatning for {$horse_name} [{$horse->id}]", "user_id" => $user->id, "mode" => "+"]);

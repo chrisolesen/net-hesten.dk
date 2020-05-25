@@ -23,10 +23,8 @@ class alias_chat
             $attr[$key] = $link_new->real_escape_string($value);
         }
 
-        $sql = "INSERT INTO game_data_alias_chat "
-            . "(creator, alias, value) "
-            . "VALUES "
-            . "({$attr['poster_id']}, '{$attr['alias']}', '{$attr['message']}')";
+        $sql = "INSERT INTO `game_data_alias_chat` (`creator`, `alias`, `value`) "
+            . "VALUES ({$attr['poster_id']}, '{$attr['alias']}', '{$attr['message']}')";
         $result = $link_new->query($sql);
 
         if ($result) {
@@ -48,21 +46,16 @@ class alias_chat
             isset($attr[$key]) ?: $attr[$key] = $value;
         }
         $limit = '';
+
         if (isset($attr['limit']) && isset($attr['page']) && $attr['page'] != false) {
             $offset = $attr['limit'] * ((int)$attr['page'] - 1);
             $limit = "LIMIT {$attr['limit']} OFFSET {$offset}";
         }
-        $sql = "SELECT "
-            . "new.creation_date, "
-            . "new.value, "
-            . "new.alias_id "
-            . "FROM "
-            . "{$GLOBALS['DB_NAME_NEW']}.game_data_alias_chat AS new "
-            . "WHERE "
-            . "new.status_code <> 13 "
-            . ($limit == '' ? "AND new.creation_date > DATE_SUB(NOW(),INTERVAL 2 DAY) " : '')
-            . "ORDER BY "
-            . "new.creation_date DESC "
+
+        $sql = "SELECT `new`.`creation_date`, `new`.`value`, `new`.`alias_id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_alias_chat` AS `new` "
+            . "WHERE `new`.`status_code` <> 13 "
+            . ($limit == '' ? "AND `new`.`creation_date` > DATE_SUB(NOW(),INTERVAL 2 DAY) " : '')
+            . "ORDER BY `new`.`creation_date` DESC "
             . "{$limit}";
 
         $result = $link_new->query($sql);
