@@ -46,7 +46,7 @@ require "$basepath/net-hesten.dk/area/chat/elements/header.php";
             <li>
                 <div class="poster">
 
-                    <span class="username <?= (in_array(strtolower($message['creator']), $admin_colors)) ? 'admin' : ''; ?>"><a href="/area/world/visit/visit.php?user=<?= $message['creator_id']; ?>" target="_top"><?= $message['creator']; ?></a>:</span>	<?= $message['date']; ?>
+                    <span class="username <?= (in_array(mb_strtolower($message['creator']), $admin_colors)) ? 'admin' : ''; ?>"><a href="/area/world/visit/visit.php?user=<?= $message['creator_id']; ?>" target="_top"><?= $message['creator']; ?></a>:</span>	<?= $message['date']; ?>
 
                 </div>
                 <div class="msg"><?= str_replace(["\n", "\r"], ['<br />', ''], $message['text']); ?></div>

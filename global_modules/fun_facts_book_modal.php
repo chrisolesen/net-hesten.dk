@@ -172,7 +172,7 @@
 				$stats = [];
 				$total_wkr = 0;
 				while ($data = $result->fetch_assoc()) {
-					if (in_array(strtolower($data['stutteri']), ['net-hesten', 'dennistest', 'b', 'auktionshuset', 'carsten', 'hestehandleren', 'techhesten'])) {
+					if (in_array(mb_strtolower($data['stutteri']), ['net-hesten', 'dennistest', 'b', 'auktionshuset', 'carsten', 'hestehandleren', 'techhesten'])) {
 						continue;
 					}
 					$total_wkr = (int) $total_wkr + (int) $data['penge'];

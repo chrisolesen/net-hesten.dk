@@ -45,7 +45,7 @@ if (filter_input(INPUT_GET, 'chat_page')) {
 		?>
 		<li>
 			<div class="poster"> 
-				<span class="username <?= (in_array(strtolower($message['creator']), $admin_colors)) ? 'admin' : ''; ?>"><?= $message['creator']; ?>:</span>	<?= $message['date']; ?>
+				<span class="username <?= (in_array(mb_strtolower($message['creator']), $admin_colors)) ? 'admin' : ''; ?>"><?= $message['creator']; ?>:</span>	<?= $message['date']; ?>
 			</div>
 			<div class="msg"><?= str_replace(["\n", "\r"], ['<br />', ''], $message['text']); ?></div>
 		</li>
