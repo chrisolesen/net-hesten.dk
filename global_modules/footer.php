@@ -295,7 +295,7 @@ if (isset($title)) {
 		blinker = {};
 
 		function check_new_messages() {
-			$.get("//ajax.net-hesten.dk/index.php?request=feed_live_content&user_id=" + <?= $_SESSION['user_id']; ?>, function(data) {
+			$.get("//ajax.<?= HTTP_HOST; ?>/index.php?request=feed_live_content&user_id=" + <?= $_SESSION['user_id']; ?>, function(data) {
 				blinker_data = JSON.parse(data);
 
 				$("#chat-frame-activator").attr('message_status', blinker_data.main_chat);
