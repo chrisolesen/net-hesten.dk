@@ -1,5 +1,5 @@
 <?php
-/* REVIEW: SQL Queries */
+
 $basepath = '../../..';
 $title = 'Heste typer';
 require "$basepath/app_core/object_loader.php";
@@ -39,7 +39,7 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_adm
 	}
 
 	table {
-		width: 100%; 
+		width: 100%;
 	}
 
 	td {
@@ -72,7 +72,7 @@ $types = [];
 			<td>Dato</td>
 			<td>Handlinger</td>
 		</thead>
-		<?php 
+		<?php
 		$submissions = artist_center::fetch_drawings(['mode' => 'approve']);
 		foreach ($submissions as $submission) {
 			if ($submission['occasion'] == 'artist_request') {
@@ -80,7 +80,7 @@ $types = [];
 			} else {
 				$style = '';
 			}
-			$user_name_artist = $link_new->query("SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = " . $submission['artist'])->fetch_object()->stutteri;
+			$user_name_artist = $link_new->query("SELECT `stutteri` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = " . $submission['artist'])->fetch_object()->stutteri;
 		?>
 			<tr <?= $style; ?>>
 				<td>

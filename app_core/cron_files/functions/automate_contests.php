@@ -112,7 +112,7 @@ $date_tomorrow = new DateTime('now');
 $date_tomorrow->add(new DateInterval('P1D'));
 $end_date = $date_tomorrow->format('Y-m-d') . ' 17:55:00';
 
-$sql = "SELECT count(`id`) AS `count` FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competitions` WHERE `status_code` <> 31 AND `name` = '{$name}'";
+$sql = "SELECT count(`id`) AS `count` FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competitions` WHERE `status_code` <> 31 AND `name` = 'Følkåring'";
 if (($link_new->query($sql)->fetch_object()->count ?? 0) < 2) {
 	$link_new->query("INSERT INTO `game_data_competitions` 
 		(`status_code`, `start_date`, `end_date`, `allowed_races`, `allowed_types`,`name`,`description`) 
@@ -179,7 +179,7 @@ VALUES
 ");
 }
 
-$sql = "SELECT count(`id`) AS `count` FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competitions` WHERE `status_code` <> 31 AND `name` = '{$name}'";
+$sql = "SELECT count(`id`) AS `count` FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competitions` WHERE `status_code` <> 31 AND `name` = 'Følkåring'";
 if (($link_new->query($sql)->fetch_object()->count ?? 0) < 2) {
 	$link_new->query("INSERT INTO `game_data_competitions` 
 		(`status_code`, `start_date`, `end_date`, `allowed_races`, `allowed_types`,`name`,`description`) 

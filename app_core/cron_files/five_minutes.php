@@ -1,5 +1,4 @@
 <?php
-/* REVIEW: SQL Queries */
 chdir(dirname(__FILE__));
 $basepath = '../../';
 
@@ -22,15 +21,12 @@ require_once "{$basepath}app_core/object_handlers/accounting.php";
 /* Find no bid auctions */
 $log_content = '';
 $sql = ""
-	. "SELECT "
-	. "auctions.*, "
-	. "bids.auction "
-	. "FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_auctions AS auctions "
-	. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_auction_bids AS bids "
-	. "ON bids.auction = auctions.id "
-	. "WHERE end_date < '{$date_now} {$time_now}' "
-	. "AND ISNULL(bids.auction) "
-	. "AND auctions.status_code = 1 ";
+	. "SELECT `auctions`.*, `bids`.`auction` 
+	FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_auctions` AS `auctions` 
+	LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.`game_data_auction_bids` AS `bids` 
+	ON `bids`.`auction` = `auctions`.`id` 
+	WHERE `end_date` < '{$date_now} {$time_now}' 
+	AND ISNULL(`bids`.`auction`) AND `auctions`.`status_code` = 1 ";
 $result = $link_new->query($sql);
 
 $num_horses = 0;
@@ -40,9 +36,12 @@ if ($result) {
 		++$num_auctions;
 		if ($data['object_type'] == 1) {
 			++$num_horses;
-			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste AS h LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS b ON b.id = '{$data['creator']}' SET h.bruger = b.stutteri WHERE h.id = {$data['object_id']} AND h.bruger = 'Auktionshuset'";
+			$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS `h` 
+			LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` AS `b` ON `b`.`id` = '{$data['creator']}' 
+			SET `h`.`bruger` = `b`.`stutteri` 
+			WHERE `h`.`id` = {$data['object_id']} AND `h`.`bruger` = 'Auktionshuset'";
 			$link_new->query($sql);
-			$sql = "UPDATE game_data_auctions AS a SET a.status_code = 2 WHERE a.id = {$data['id']}";
+			$sql = "UPDATE `game_data_auctions` AS `a` SET `a`.`status_code` = 2 WHERE `a`.`id` = {$data['id']}";
 			$link_new->query($sql);
 		}
 	}
@@ -54,21 +53,14 @@ file_put_contents("{$basepath}/app_core/cron_files/logs/cron_five_minutes_{$date
 $five_in_past = $current_date->sub(new DateInterval('PT5M'))->format('Y-m-d H:i:s');
 
 $log_content = PHP_EOL . "# Looking for winning bids.";
-$sql = ''
-	. 'SELECT '
-	. 'auctions.id AS auction_id, '
-	. 'auctions.creator AS seller, '
-	. 'auctions.object_id AS object_id, '
-	. 'bids.creator AS winner, '
-	. 'bids.bid_amount AS winning_amount, '
-	. 'bids.bid_date AS bid_date '
-	. "FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_auction_bids AS bids "
-	. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.game_data_auctions AS auctions "
-	. 'ON bids.auction = auctions.id '
-	. "WHERE end_date < '{$five_in_past}' "
-	. 'AND bids.status_code = 4 '
-	. 'AND auctions.status_code = 1 '
-	. 'ORDER BY bids.auction ASC, bids.bid_amount DESC';
+$sql = "SELECT `auctions`.`id` AS `auction_id`, `auctions`.`creator` AS `seller`, `auctions`.`object_id` AS `object_id`, `bids`.`creator` AS `winner`, 
+`bids`.`bid_amount` AS `winning_amount`, `bids`.`bid_date` AS `bid_date` 
+FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_auction_bids` AS `bids` 
+LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.`game_data_auctions` AS `auctions` 
+ON `bids`.`auction` = `auctions`.`id` 
+WHERE `end_date` < '{$five_in_past}' 
+AND `bids`.`status_code` = 4 AND `auctions`.`status_code` = 1 
+ORDER BY `bids`.`auction` ASC, `bids`.`bid_amount` DESC";
 $auction_array = $link_new->query($sql);
 $num_auctions = 0;
 if ($auction_array) {
@@ -76,7 +68,7 @@ if ($auction_array) {
 	while ($data = $auction_array->fetch_assoc()) {
 		++$num_auctions;
 		if (!isset($user_id_name_array[$data['winner']])) {
-			$sql = "SELECT stutteri, penge AS money FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$data['winner']} LIMIT 1";
+			$sql = "SELECT `stutteri`, `penge` AS `money` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = {$data['winner']} LIMIT 1";
 			$user_query_result = $link_new->query($sql);
 			if ($user_query_result) {
 				$user_query_data = $user_query_result->fetch_assoc();
@@ -87,7 +79,7 @@ if ($auction_array) {
 			}
 		}
 		if (!isset($user_id_name_array[$data['seller']])) {
-			$sql = "SELECT stutteri, penge AS money FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$data['seller']} LIMIT 1";
+			$sql = "SELECT `stutteri`, `penge` AS `money` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = {$data['seller']} LIMIT 1";
 			$user_query_result = $link_new->query($sql);
 			if ($user_query_result) {
 				$user_query_data = $user_query_result->fetch_assoc();
@@ -98,7 +90,7 @@ if ($auction_array) {
 			}
 		}
 		$log_content .= PHP_EOL . "# Moving horse with ID {$data['object_id']} to user {$user_id_name_array[$data['winner']][0]} with ID {$data['winner']}.";
-		$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = '{$user_id_name_array[$data['winner']][0]}' WHERE id = {$data['object_id']} AND bruger = 'Auktionshuset'";
+		$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET `bruger` = '{$user_id_name_array[$data['winner']][0]}' WHERE `id` = {$data['object_id']} AND `bruger` = 'Auktionshuset'";
 		$link_new->query($sql);
 
 		$auction_fee = round(max(500, ($data['winning_amount'] * 0.005)), 0);
@@ -108,21 +100,17 @@ if ($auction_array) {
 
 		//		$sql = "UPDATE Brugere SET penge = (penge + {$earnings}) WHERE id = {$data['seller']}";
 		//		$link_new->query($sql);
-		$sql = "UPDATE game_data_auctions SET status_code = 2 WHERE id = {$data['auction_id']}";
+		$sql = "UPDATE `game_data_auctions` SET `status_code` = 2 WHERE `id` = {$data['auction_id']}";
 		$link_new->query($sql);
-		$sql = "UPDATE game_data_auction_bids SET status_code = 6 WHERE auction = {$data['auction_id']} AND bid_date = '{$data['bid_date']}' AND creator = {$data['winner']}";
+		$sql = "UPDATE `game_data_auction_bids` SET `status_code` = 6 WHERE `auction` = {$data['auction_id']} AND `bid_date` = '{$data['bid_date']}' AND `creator` = {$data['winner']}";
 		$link_new->query($sql);
 		/* Send besked til den ny ejer */
-		$sql = "INSERT INTO game_data_private_messages "
-			. "(status_code, origin, target, date, message) "
-			. "VALUES "
-			. "(17, 52745, {$data['winner']}, NOW(), 'Tillykke {$user_id_name_array[$data['winner']][0]}, du har vundet en auktion, med et bud på {$data['winning_amount']} wkr. Hesten med ID: {$data['object_id']}, er nu din.')";
+		$sql = "INSERT INTO `game_data_private_messages` (`status_code`, `origin`, `target`, `date`, `message`) 
+		VALUES (17, 52745, {$data['winner']}, NOW(), 'Tillykke {$user_id_name_array[$data['winner']][0]}, du har vundet en auktion, med et bud på {$data['winning_amount']} wkr. Hesten med ID: {$data['object_id']}, er nu din.')";
 		$result = $link_new->query($sql);
 		/* Send besked til den gamle ejer */
-		$sql = "INSERT INTO game_data_private_messages "
-			. "(status_code, origin, target, date, message) "
-			. "VALUES "
-			. "(17, 52745, {$data['seller']}, NOW(), 'Tillykke {$user_id_name_array[$data['seller']][0]}, det er lykkeds at sælge din hest på auktion, for {$data['winning_amount']} wkr!')";
+		$sql = "INSERT INTO `game_data_private_messages` (`status_code`, `origin`, `target`, `date`, `message`) 
+		VALUES (17, 52745, {$data['seller']}, NOW(), 'Tillykke {$user_id_name_array[$data['seller']][0]}, det er lykkeds at sælge din hest på auktion, for {$data['winning_amount']} wkr!')";
 		$result = $link_new->query($sql);
 		/* Opret indlæg i den gamle ejers 'konto' */
 

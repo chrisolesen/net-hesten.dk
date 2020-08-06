@@ -1,5 +1,4 @@
 <?php
-/* REVIEW: SQL Queries */
 
 class competitions
 {
@@ -16,7 +15,8 @@ class competitions
 		foreach ($attr as $key => $value) {
 			$attr[$key] = (int) $value;
 		}
-		$sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.game_data_competition_participants (participant_id, competition_id, signup_date) VALUES ({$attr['horse_id']},{$attr['competition_id']},NOW())";
+		$sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competition_participants` (`participant_id`, `competition_id`, `signup_date`) 
+		VALUES ({$attr['horse_id']},{$attr['competition_id']},NOW())";
 		$result = $link_new->query($sql);
 		return var_export($result, true);
 	}
