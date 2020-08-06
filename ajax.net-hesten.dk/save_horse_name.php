@@ -23,8 +23,7 @@ if (($horse_id = (int) filter_input(INPUT_GET, 'horse_id'))) {
         }
         while ($data = $result->fetch_object()) {
             $new_name = filter_input(INPUT_GET, 'new_name');
-            $new_name = str_replace(['"', "'"], ['', ''], $new_name);
-            $new_name = $link_new->real_escape_string(mb_convert_encoding($new_name, 'latin1', 'UTF-8'));
+            $new_name = $link_new->real_escape_string($new_name);
             $link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET `navn` = '{$new_name}' WHERE `id` = {$_GET['horse_id']} AND `bruger` = '{$username}'");
             $response['status'] = true;
             echo $_GET['callback'] . '(' . json_encode($response) . ')';
