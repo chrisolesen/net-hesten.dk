@@ -193,13 +193,16 @@ class horse_list_filters
 				<option value="all" <?= (in_array('all', $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?>>Alle Racer</option>
 				<?php foreach ($race_names as $race) {
 					if ($attr['zone'] == 'horse_trader') {
-						$amount = $link_new->query("SELECT count(`id`) AS `amount` 
-						FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `id` > 604000 AND `bruger` = 'hestehandleren' AND `status` <> 'død' AND `alder` < 18  AND `race` = '{$race['name']}'")->fetch_object()->amount;
-						if ($amount == 0) {
-							continue;
+						global $ht_race_counts;
+						$race_counts = $ht_race_counts ?? [];
+						if (!empty($race_counts)) {
+							$amount = $race_counts[$race['id']]['amount'];
+							if ($amount == 0) {
+								continue;
+							}
 						}
 				?>
-						<option <?= (in_array($race['id'], $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?> value="<?= $race['id']; ?>"><?= $race['name']; ?> (<?= $amount; ?>)</option>
+						<option <?= (in_array($race['id'], $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?> value="<?= $race['id']; ?>"><?= $race['name']; ?> (<?= $amount ?? '?'; ?>)</option>
 				<?php } else {
 						echo "<option" . ((in_array($race['id'], $user_filter_data[$attr['zone']]['races']) ? ' SELECTED' : '')) . " value='{$race['id']}'>{$race['name']}</option>";
 					}

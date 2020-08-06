@@ -16,6 +16,7 @@ require_once "{$basepath}/app_core/game-settings-example.php";
 
 /* Load cache data */
 @include "{$basepath}/files.net-hesten.dk/cache_data/list_of_races.php"; /* $cached_races */
+@include "{$basepath}/files.net-hesten.dk/cache_data/ht_race_counts.php"; 
 @include "{$basepath}/files.net-hesten.dk/cache_data/latin_one_strings.php";
 @include "{$basepath}/files.net-hesten.dk/cache_data/cached_artists.php";
 require "{$basepath}/app_core/functions/number_dotter.php";
