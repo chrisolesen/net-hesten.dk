@@ -176,7 +176,7 @@ class user
 			$mail_message_data .= 'Alder: ' . $data->alder . '<br />';
 			$mail_message_data .= 'Køn: ' . $data->kon . '<br />';
 			$mail_message_data .= 'Beskrivelse: ' . $data->beskrivelse . '<br />';
-			$mail_message_data .= '<img src="//files.net-hesten.dk/users/' . $data->thumb . '" />' . '<br />';
+			$mail_message_data .= '<img src="//files.' . HTTP_HOST . '/users/' . $data->thumb . '" />' . '<br />';
 		}
 		$mail_message_data .= '<br /><br />';
 		$mail_message_data .= 'Sessions:<br />';
