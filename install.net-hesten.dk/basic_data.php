@@ -241,7 +241,8 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
 
 </html>
 <!-- 
-INSERT INTO `old`.`Brugere` (`id`, `stutteri`, `navn`, `penge`,`email`, `date`) VALUES (5, 'SystemPrivatHandel', 'Privat Hestehandler', 0,'sph@', NOW()); 
-INSERT INTO `old`.`Brugere` (`id`, `stutteri`, `navn`, `email`, `penge`, `date`) VALUES (4, 'Auktionshuset', 'Auktionshuset', 'ah@',0, NOW());
-INSERT INTO `old`.`Chancen` (`chancetekst`,`penge`,`thumb`,`date`,`changedate`) VALUES ('test',1000,'',NOW(),NOW());
+	INSERT INTO `old`.`Brugere` (`id`, `stutteri`, `navn`, `email`, `penge`, `date`) VALUES (53844, 'Konkurrencestyrelsen', 'Konkurrencestyrelsen', 'ks@',0, NOW());
+	INSERT INTO `old`.`Brugere` (`id`, `stutteri`, `navn`, `penge`,`email`, `date`) VALUES (5, 'SystemPrivatHandel', 'Privat Hestehandler', 0,'sph@', NOW()); 
+	INSERT INTO `old`.`Brugere` (`id`, `stutteri`, `navn`, `email`, `penge`, `date`) VALUES (52745, 'Auktionshuset', 'Auktionshuset', 'ah@',0, NOW());
+	INSERT INTO `old`.`Chancen` (`chancetekst`,`penge`,`thumb`,`date`,`changedate`) VALUES ('test',1000,'',NOW(),NOW());
 -->

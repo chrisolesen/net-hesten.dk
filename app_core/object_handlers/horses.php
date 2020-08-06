@@ -22,7 +22,7 @@ class horses
 			WHERE `id` = {$attr['horse_id']}";
 			$result = $link_new->query($sql);
 			while ($data = $result->fetch_object()) {
-				if (strtolower($data->owner_name) == strtolower($_SESSION['username'])) {
+				if (mb_strtolower($data->owner_name) == mb_strtolower($_SESSION['username'])) {
 					$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET `graesning` = 'ja', `changedate` = NOW() WHERE `id` = {$attr['horse_id']}";
 					$result = $link_new->query($sql);
 					return ["Hesten er nu sat på græs, husk at hente den ind, inden 14 timer.", 'success'];
@@ -49,12 +49,10 @@ class horses
 		}
 		$target_horse_data = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `id` = {$attr['target_horse_id']} LIMIT 1")->fetch_object();
 		$horse_data = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `id` = {$attr['horse_id']} LIMIT 1")->fetch_object();
-		if (strtolower($horse_data->bruger) != strtolower($username)) {
+		if (mb_strtolower($horse_data->bruger) != mb_strtolower($username)) {
 			return ["Du ejer ikke den hest du forsøger at fole! {$horse_data->bruger} | {$username}", 'error'];
 		}
-		if (strtolower($target_horse_data->bruger) == strtolower($username)) {
-			//			return["Du må ikke fole med dine egne hingste.", 'warning'];
-		}
+		
 		if (strtolower($horse_data->graesning) == 'ja' || strtolower($horse_data->staevne) == 'ja') {
 			return ["Du kan ikke fole en hest, når den befinder sig til et stævne eller på græsmarken.", 'warning'];
 		}
@@ -62,11 +60,11 @@ class horses
 			return ["Du kan ikke fole en hingst.", 'error'];
 		}
 
-		if (strtolower($horse_data->status) == 'føl') {
+		if (mb_strtolower($horse_data->status) == 'føl') {
 			return ["Du kan ikke fole et føl.", 'warning'];
 		}
 
-		if (strtolower($horse_data->status) == 'død') {
+		if (mb_strtolower($horse_data->status) == 'død') {
 			return ["En død hest kan ikke foles.", 'error'];
 		}
 		/* Tag wkr fra bruger */
@@ -107,7 +105,7 @@ class horses
 			while ($horse = $result->fetch_object()) {
 				$date_now = new DateTime('NOW');
 				//				50 wkr time inden 14 timer ellers  500 wkr fra
-				if (strtolower($horse->owner_name) == strtolower($username)) {
+				if (mb_strtolower($horse->owner_name) == mb_strtolower($username)) {
 					if ($horse->graesning == 'ja') {
 						$date_now = new DateTime('NOW');
 						$date_then = new DateTime($horse->changedate);

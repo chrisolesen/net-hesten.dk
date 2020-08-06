@@ -125,7 +125,7 @@ class horse_trader
 		if (!$temp_horse_data = horses::get_one(['ID' => $attr['horse_id']])) {
 			return ["Kritisk fejl: Hesten med det angivne ID {{$attr['horse_id']}} findes ikke, prøv igen eller kontakt en admin evt. på admin@net-hesten.dk", 'error'];
 		}
-		if (strtolower($temp_horse_data->owner_name) !== strtolower("{$temp_user_data['username']}")) {
+		if (mb_strtolower($temp_horse_data->owner_name) !== mb_strtolower("{$temp_user_data['username']}")) {
 			return ['Hesten du har forsøgt at sælge, tilhører desværre ikke dig.', 'warning'];
 		}
 

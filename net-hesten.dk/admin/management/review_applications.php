@@ -59,7 +59,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 		$message .= '<html><body style="background:#dfebd3;padding:20px;"><div style="background:rgba(146, 186, 106, 0.5);max-width:600px;margin:0 auto;padding:20px;border:1px solid white;">';
 		$message .= "<b>Hej {$applicant->username},</b><br /><br />Dit stutteri er nu blevet godkendt af Net-Hesten.dk, tillykke :)."
 			. '<br>Husk at læse "Hjælp" og "Regler" inden du går i gang. Ellers kan du gå ind på "hestesnak" i forummet og få nyttige tips. <br />Velkommen og god forøjelse.'
-			. '<br><br>Gå ind på <a href=http://www.net-hesten.dk>Net-Hesten</a> og log ind med følgende: <br>'
+			. '<br><br>Gå ind på <a href=https://net-hesten.dk>Net-Hesten</a> og log ind med følgende: <br>'
 			. "Stutteri: <b>{$applicant->username}</b> og den kode du valgte ved indmeldelse</b><br /><br />";
 		$message .= '<b>Med venlig hilsen</b><br />';
 		$message .= 'Net-Hesten - Teamet';
