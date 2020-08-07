@@ -1,8 +1,8 @@
 <?php
 $basepath = '../../../..';
 $title = 'Messages';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 ?>
 
@@ -55,7 +55,7 @@ private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => 
 			<li data-message_id="<?= $message->id; ?>" class="msg <?= $message->origin == $_SESSION['user_id'] ? 'mine' : 'theirs'; ?> status-<?= $message->status_code; ?>">
 				<div class="poster">
 					<span class="username"><?= user::get_info(['user_id' => $message->origin])->username; ?>:</span> <?= $message->date; ?>
-					<a href="/area/stud/messages/thread.php?delete_message=<?= $message->id; ?>&send_to=<?= $_POST['send_to']; ?>"><img class="delete_msg" src="//<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/delete.png" height="20px" /></a>
+					<a href="/area/stud/messages/thread.php?delete_message=<?= $message->id; ?>&send_to=<?= $_POST['send_to']; ?>"><img class="delete_msg" src="//files.<?= filter_input(INPUT_SERVER,'HTTP_HOST');?>/graphics/delete.png" height="20px" /></a>
 				</div>
 				<div class="msg"><?= str_replace(["\n", "\r"], ['<br />', ''], $message->message); ?></div>
 			</li>

@@ -1,7 +1,7 @@
 <?php
 
 chdir(dirname(__FILE__));
-$basepath = '../../';
+$basepath = realpath(__DIR__ . '../..');
 
 define('cron_by', 'one_hour');
 

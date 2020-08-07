@@ -2,8 +2,8 @@
 
 $basepath = '../../..';
 $responsive = true;
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();
@@ -23,28 +23,28 @@ if (!in_array('global_admin', $_SESSION['rights'])) {
 function find_next_type_filename()
 {
 	global $basepath;
-	if ($handle = opendir("$basepath/files.net-hesten.dk/horses/imgs/")) {
+	if ($handle = opendir("{$basepath}/files.net-hesten.dk/horses/imgs/")) {
 		$found = false;
 		$num_dirs = 0;
 		while ($found != true) {
 			++$num_dirs;
 			$target_dir = str_replace(["/", "="], [""], base64_encode($num_dirs));
-			if (!is_dir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
+			if (!is_dir("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
 				return "$target_dir does not exist";
-				//						mkdir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir);
+				//						mkdir("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir);
 			}
-			if (is_dir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
+			if (is_dir("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
 				$num_files = 1;
 				while ($num_files <= 250) {
 					++$num_files;
-					if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
+					if (is_file("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
 						continue;
-					} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
+					} else if (is_file("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
 						continue;
-					} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
+					} else if (is_file("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
 						continue;
 					} else {
-						return "$basepath/files.net-hesten.dk/horses/imgs/{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($num_files));
+						return "{$basepath}/files.net-hesten.dk/horses/imgs/{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($num_files));
 					}
 				}
 			}
@@ -90,7 +90,7 @@ if (isset($_FILES['fileToUpload'])) {
 	} else {
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file . '.' . $imageFileType)) {
 			//			echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded. As {$target_file}.{$imageFileType}";
-			$file_path = str_replace("$basepath/files.net-hesten.dk/horses/imgs/", '', "{$target_file}.{$imageFileType}");
+			$file_path = str_replace("{$basepath}/files.net-hesten.dk/horses/imgs/", '', "{$target_file}.{$imageFileType}");
 			$sql = "INSERT INTO `horse_types` (`image`, `date`) VALUES ('{$file_path}', NOW())";
 			$link_new->query($sql);
 			echo mysqli_error($link_new);
@@ -206,4 +206,4 @@ $number_of_new = $link_new->query($sql)->fetch_object()->amount;
 	</div>
 </section>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

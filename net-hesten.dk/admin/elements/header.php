@@ -1,6 +1,6 @@
 <?php
-require "$basepath/app_core/db_conf.php";
-require "$basepath/app_core/user_validate.php";
+require "{$basepath}/app_core/db_conf.php";
+require "{$basepath}/app_core/user_validate.php";
 if ((!$_SESSION['logged_in'] == true || !isset($basepath)) && filter_input(INPUT_SERVER, 'REQUEST_URI') !== '/') {
     header("Location: /");
 }

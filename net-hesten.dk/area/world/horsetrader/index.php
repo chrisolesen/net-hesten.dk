@@ -2,8 +2,8 @@
 /* REVIEW: SQL Queries */
 $basepath = '../../../..';
 $title = 'Hestehandleren';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 $horses_pr_page = 10;
 $horse_trader_page = (int) filter_input(INPUT_GET, 'horse_trader_page') ?: 0;

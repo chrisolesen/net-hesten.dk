@@ -2,8 +2,8 @@
 
 $basepath = '../../..';
 $responsive = true;
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 if (!(is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['rights']))) {
 	ob_end_clean();
@@ -76,4 +76,4 @@ if (!(is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['right
 	</table>
 </section>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

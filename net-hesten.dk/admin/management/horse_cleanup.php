@@ -2,8 +2,8 @@
 /* REVIEW: SQL Queries */
 $basepath = '../../..';
 $responsive = true;
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 ?>
 <?php
 if (!in_array('tech_admin', $_SESSION['rights'])) {
@@ -154,4 +154,4 @@ LIMIT 1;
 	</span>
 </section>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

@@ -2,8 +2,8 @@
 /* REVIEW: SQL Queries */
 $basepath = '../../../..';
 $title = 'Privat handel';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 user::register_timing(['user_id' => $_SESSION['user_id'], 'key' => 'checked_private_trade']); 
 

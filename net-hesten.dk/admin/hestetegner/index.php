@@ -1,7 +1,7 @@
 <?php
 $basepath = '../../..';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 ?>
 <?php
 if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights']) && !in_array('admin_template_helper', $_SESSION['rights'])) {
@@ -43,4 +43,4 @@ if (in_array('global_admin', $_SESSION['rights']) || in_array('hestetegner_admin
 }
 ?>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

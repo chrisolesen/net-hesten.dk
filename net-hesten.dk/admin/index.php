@@ -1,8 +1,8 @@
 <?php
 $basepath = '../..';
 $title = 'Admin portal';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 if (!in_array('global_admin', $_SESSION['rights']) && !in_array('admin_panel_access', $_SESSION['rights'])) {
 	ob_end_clean();

@@ -2,8 +2,8 @@
 
 $basepath = '../../..';
 $responsive = true;
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 ?>
 <?php
 
@@ -143,4 +143,4 @@ if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'
 </div>
 <?php
 
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

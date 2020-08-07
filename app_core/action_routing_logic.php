@@ -49,8 +49,8 @@ if (filter_input(INPUT_POST, 'action') === 'post_private_message') {
 
 if (filter_input(INPUT_POST, 'action') == strtoupper(md5(crypt('add_horse_template', $GLOBALS['project_upload_secret'])))) {
 	$file_upload_allowed = true;
-	$target_dir = "$basepath/files.net-hesten.dk/horses/templates";
-	require_once "$basepath/app_core/object_handlers/file_uploads.php";
+	$target_dir = "{$basepath}/files.net-hesten.dk/horses/templates";
+	require_once "{$basepath}/app_core/object_handlers/file_uploads.php";
 }
 /* Auctions */
 if (filter_input(INPUT_POST, 'action') === 'put_on_auction') {

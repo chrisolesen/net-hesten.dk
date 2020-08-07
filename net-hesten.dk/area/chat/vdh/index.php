@@ -1,8 +1,8 @@
 <?php
 $basepath = '../../../..';
 $title = 'Vær din hest';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/net-hesten.dk/area/chat/elements/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/net-hesten.dk/area/chat/elements/header.php";
 ?>
 <link rel="stylesheet" href="/area/chat/styles/version_two.css?v=<?= time(); ?>" />
 <link rel="stylesheet" href="/style/messages.css?v=<?= time(); ?>" />
@@ -85,4 +85,4 @@ require "$basepath/net-hesten.dk/area/chat/elements/header.php";
 
 </script>
 <?php
-require "$basepath/net-hesten.dk/area/chat/elements/footer.php";
+require "{$basepath}/net-hesten.dk/area/chat/elements/footer.php";

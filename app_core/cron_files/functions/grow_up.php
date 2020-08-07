@@ -1,5 +1,9 @@
 <?php
 
+if (!isset($basepath)) {
+	die();
+}
+
 if (!isset($time_now)) {
 	date_default_timezone_set('Europe/Copenhagen');
 	$current_date = new DateTime('now');
@@ -8,9 +12,9 @@ if (!isset($time_now)) {
 }
 
 $log_content = PHP_EOL . '# Checking for foals, that are ready, to grow up.';
-file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
 
-require_once "{$basepath}app_core/db_conf.php";
+require_once "{$basepath}/app_core/db_conf.php";
 
 $Foelbox = 'Følkassen';
 $foel = 'føl';
@@ -85,4 +89,4 @@ while ($data = $result->fetch_assoc()) {
 $log_content = PHP_EOL . '#'
 	. PHP_EOL . "# Found {$foel_amount} foels in total."
 	. PHP_EOL . "# Found {$grow_up_amount} that were ready to grow up.";
-file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);

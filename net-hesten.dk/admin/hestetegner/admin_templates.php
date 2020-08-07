@@ -1,8 +1,8 @@
 <?php
 
 $basepath = '../../..';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 ?>
 <?php
 if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights']) && !in_array('admin_template_helper', $_SESSION['rights'])) {
@@ -13,27 +13,27 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_adm
 function find_next_filename()
 {
 	global $basepath;
-	if ($handle = opendir("$basepath/files.net-hesten.dk/templates/")) {
+	if ($handle = opendir("{$basepath}/files.net-hesten.dk/templates/")) {
 		$found = false;
 		$num_dirs = 0;
 		while ($found != true) {
 			++$num_dirs;
 			$target_dir = str_replace(["/", "="], [""], base64_encode($num_dirs));
-			if (!is_dir("$basepath/files.net-hesten.dk/templates/" . $target_dir)) {
-				mkdir("$basepath/files.net-hesten.dk/templates/" . $target_dir);
+			if (!is_dir("{$basepath}/files.net-hesten.dk/templates/" . $target_dir)) {
+				mkdir("{$basepath}/files.net-hesten.dk/templates/" . $target_dir);
 			}
-			if (is_dir("$basepath/files.net-hesten.dk/templates/" . $target_dir)) {
+			if (is_dir("{$basepath}/files.net-hesten.dk/templates/" . $target_dir)) {
 				$num_files = 1;
 				while ($num_files <= 250) {
 					++$num_files;
-					if (is_file("$basepath/files.net-hesten.dk/templates/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
+					if (is_file("{$basepath}/files.net-hesten.dk/templates/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
 						continue;
-					} else if (is_file("$basepath/files.net-hesten.dk/templates/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
+					} else if (is_file("{$basepath}/files.net-hesten.dk/templates/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
 						continue;
-					} else if (is_file("$basepath/files.net-hesten.dk/templates/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
+					} else if (is_file("{$basepath}/files.net-hesten.dk/templates/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
 						continue;
 					} else {
-						return "$basepath/files.net-hesten.dk/templates/{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($num_files));
+						return "{$basepath}/files.net-hesten.dk/templates/{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($num_files));
 					}
 				}
 			}
@@ -78,7 +78,7 @@ if (isset($_FILES['fileToUpload'])) {
 	} else {
 		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file . '.' . $imageFileType)) {
 			//			echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded. As {$target_file}.{$imageFileType}";
-			$file_path = str_replace("$basepath/files.net-hesten.dk/templates/", '', "{$target_file}.{$imageFileType}");
+			$file_path = str_replace("{$basepath}/files.net-hesten.dk/templates/", '', "{$target_file}.{$imageFileType}");
 			$sql = "INSERT INTO `horse_templates` (`image`, `status`, `date`) VALUES ('$file_path', 1, NOW())";
 			$link_new->query($sql);
 		} else {
@@ -275,4 +275,4 @@ if (filter_input(INPUT_POST, 'submit_edit')) {
 	});
 </script>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

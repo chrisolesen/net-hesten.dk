@@ -1,6 +1,6 @@
 <?php
 
-$basepath = '..';
+$basepath = realpath(__DIR__ . '/..');
 require_once "{$basepath}/app_core/db_conf.php";
 require_once "{$basepath}/app_core/object_loader.php";
 require_once "{$basepath}/app_core/user_validate.php";

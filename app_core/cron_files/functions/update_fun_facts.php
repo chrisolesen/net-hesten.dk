@@ -1,6 +1,8 @@
 <?php
 
-$basepath = '';
+if (!isset($basepath)) {
+	die();
+}
 
 if (!isset($time_now)) {
 	date_default_timezone_set('Europe/Copenhagen');
@@ -10,9 +12,9 @@ if (!isset($time_now)) {
 }
 
 $log_content = PHP_EOL . '# Updating fun facts.';
-file_put_contents("app_core/cron_files/logs/cron_{$cron_interval}_{$date_now}", $log_content, FILE_APPEND);
-
-require_once "{$basepath}app_core/db_conf.php";
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_{$cron_interval}_{$date_now}", $log_content, FILE_APPEND);
+ 
+require_once "{$basepath}/app_core/db_conf.php";
 
 $Foelbox = 'Følkassen';
 $foel = 'føl';
@@ -22,4 +24,4 @@ $today = date("d.m.y.G.i");
 
 
 $log_content = PHP_EOL . '# Done updating fun facts.';
-file_put_contents("app_core/cron_files/logs/cron_{$cron_interval}_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_{$cron_interval}_{$date_now}", $log_content, FILE_APPEND);

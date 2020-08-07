@@ -2,8 +2,8 @@
 
 $basepath = '../../..';
 $responsive = true;
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 if (!(is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['rights']))) {
 	ob_end_clean();
@@ -422,4 +422,4 @@ $selected_race = substr($_GET['race'], 1, -1);
 	</script>
 </section>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

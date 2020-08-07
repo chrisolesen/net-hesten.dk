@@ -2,8 +2,8 @@
 
 $basepath = '../../../..';
 $title = 'Lodtrækning';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 $competitions = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_simple_competition` WHERE `startdate` < NOW() ORDER BY `startdate` DESC LIMIT 2");
 if (filter_input(INPUT_GET, 'partake') == true) {
 	$part_id = (int) filter_input(INPUT_GET, 'comp_id');

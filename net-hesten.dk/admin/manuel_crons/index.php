@@ -1,7 +1,8 @@
 <?php
+chdir(dirname(__FILE__));
 $basepath = '../../..';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 ?>
 <?php
 if (
@@ -12,6 +13,14 @@ if (
 ) {
 	ob_end_clean();
 	header('Location: /');
+}
+
+if (($script = filter_input(INPUT_GET, 'run_cron') ?? false)) {
+	switch ($script) {
+		case 'die':
+			require_once("{$basepath}/app_core/cron_files/functions/die.php");
+			break;
+	}
 }
 ?>
 <style>
@@ -40,9 +49,10 @@ if (
 	<?php
 	if (in_array('tech_admin', $_SESSION['rights'])) {
 	?>
+		<a class="btn btn-info" href="/admin/manuel_crons/?run_cron=die">Dødsscript</a>
 	<?php
 	}
 	?>
 </section>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

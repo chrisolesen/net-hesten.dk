@@ -2,8 +2,8 @@
 /* REVIEW: SQL Queries */
 $basepath = '../../..';
 $responsive = true;
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 ?>
 <h1>Net-Hesten - Spil Data</h1>
 <?php
@@ -119,4 +119,4 @@ echo '28/03 2018 = 6.159.476.239 wkr ' . ' + horses 39.283 = 520.483.096,- wkr (
 echo "</pre>";
 echo '<br />';
 echo '17-07 2017 ændrede session gap-længde fra 30 min til 15 min, for concurrent session' . PHP_EOL;
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

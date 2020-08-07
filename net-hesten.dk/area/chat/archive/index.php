@@ -1,8 +1,8 @@
 <?php
 $basepath = '../../../..';
 $title = 'Chat Archive';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/net-hesten.dk/area/chat/elements/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/net-hesten.dk/area/chat/elements/header.php";
 ?>
 <?php
 if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
@@ -54,4 +54,4 @@ if (filter_input(INPUT_GET, 'chat_page')) {
 	?>
 </ul>
 <?php
-require "$basepath/net-hesten.dk/area/chat/elements/footer.php";
+require "{$basepath}/net-hesten.dk/area/chat/elements/footer.php";
