@@ -5,7 +5,7 @@ if (!defined('cron_by')) {
 }
 
 chdir(dirname(__FILE__));
-$basepath = realpath(__DIR__ . '../../../..');
+$basepath = realpath(__DIR__ . '/../../..');
 
 if (!isset($basepath)) {
 	die();

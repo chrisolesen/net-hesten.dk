@@ -1,6 +1,6 @@
 <?php
 chdir(dirname(__FILE__));
-$basepath = realpath(__DIR__ . '../..');
+$basepath = realpath(__DIR__ . '/../..');
 
 date_default_timezone_set('Europe/Copenhagen');
 $current_date = new DateTime('now');
