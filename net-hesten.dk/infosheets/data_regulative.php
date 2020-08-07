@@ -1,9 +1,9 @@
 <?php
 
 $basepath = '../..';
-require_once "$basepath/app_core/db_conf.php";
-require_once "$basepath/app_core/object_loader.php";
-require_once "$basepath/app_core/user_validate.php";
+require_once "{$basepath}/app_core/db_conf.php";
+require_once "{$basepath}/app_core/object_loader.php";
+require_once "{$basepath}/app_core/user_validate.php";
 
 if (isset($_SESSION['user_id'])) {
 	user::register_timing(['user_id' => $_SESSION['user_id'], 'key' => 'last_active']);
@@ -68,12 +68,12 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 
 	<div id="rules" style="max-width: 600px;margin: 0 auto;">
 		<h1 style="padding-top:0;">Net-Hesten - Persondata politik </h1>
-		<h2>Gældende siden 17. Marts 2020</h2>
+		<h2>Gældende siden 6. August 2020</h2>
 
 		<h2>Forord</h2>
 		<p>Den data vi gemmer på net-hesten falder ikke ind under GDPR</p>
 		<p>Men da spillet primæret henvender sig til unge mennesker, og vi går meget op i vores brugeres rettigheder på nettet, har vi alligevel valgt beskrive udvalgte punkter</p>
-		
+
 		<h2>Oversigt</h2>
 
 		<h3>Dine rettigheder</h3>
@@ -88,6 +88,11 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 			<li><a href="#your_basic_data">Dine basis data</a></li>
 			<li><a href="#chat_messages">Dine beskeder, til andre brugere samt i chatten</a></li>
 			<li><a href="#saved_sessions">Dine onlinetider + IP i spillet, seneste 6 måneder</a></li>
+		</ul>
+
+		<h3>Cookies</h3>
+		<ul>
+			<li><a href="#cookies">Vi benytter kun funktionelle cookies</a></li>
 		</ul>
 
 		<h3>Din adgangskode er sikret hos os</h3>
@@ -105,13 +110,13 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 
 		<h1>Dine rettigheder</h1>
 
-		<h2 id="access">Adgang til vores oplysninger på dig</h2>
+		<h2 id="access">Adgang til vores oplysninger på dig</h2><!-- since 17. marts 2020 -->
 
 		<p>Du har mulighed for at se de data vi har gemt.</p>
 		<p>Det gøres ved at gå ind på "mit stutteri" og trykke "indstillinger" trykke "advancerede" og herefter klikke "tilsend kopi af persondata", herefter bliver det sent til din mail.</p>
 		<p>Processen er automatisk, så hvis du ikke modtager mailen, kan du prøve igen, eller sende en mail til tech@net-hesten.dk, så for du det manuelt tilsendt.</p>
 
-		<h2 id="deletion">Få slettet oplysninger om dig</h2>
+		<h2 id="deletion">Få slettet oplysninger om dig</h2><!-- since 17. marts 2020 -->
 		<p>Du har ret til at få slette oplysninger om din person, som du ikke ønsker vi har.</p>
 		<p>Du kan selv slette f.eks. dit navn, ved at rette det på din profil.</p>
 		<p>Der er en del data, vi kun kan slette ved helt at slette din bruger.</p>
@@ -120,16 +125,16 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 
 		<h1 id="what_data">Hvilke data har vi på dig</h1>
 
-		<h2 id="your_basic_data">Dine basis data</h2>
+		<h2 id="your_basic_data">Dine basis data</h2><!-- since 17. marts 2020 -->
 		<p>Vi gemmer din mail tilknyttet til din bruger</p>
 		<p>Der er mulighed for at tilknyttet et navn til sin profil, hvis du har gjort dette, er det naturligvis gemt i vores data</p>
 
-		<h2 id="chat_messages">Dine beskeder, til andre brugere samt i chatten</h2>
+		<h2 id="chat_messages">Dine beskeder, til andre brugere samt i chatten</h2><!-- since 17. marts 2020 -->
 		<p>Alt hvad der skrives i chat beskeder, og i private beskeder, gemmes naturligvis på serveren, hvorfor vi af gode grunde har adgang til det.</p>
 		<p>Især værd at notere er, at hvis du sletter en PB, vil den anden bruger, ikke miste sin kopi, og selv hvis i begge sletter jeres udgaver, har vi stadig en kopi i systemet</p>
 		<p>Hvis begger parter har slettet beskeden vil den blive ryddet fra vores server efter 1 år</p>
 
-		<h2 id="saved_sessions">Dine onlinetider + IP i spillet, seneste 6 måneder</h2>
+		<h2 id="saved_sessions">Dine onlinetider + IP i spillet, seneste 6 måneder</h2><!-- since 17. marts 2020 -->
 		<p>Eksempel på hvordan denne data ser ud, den går kun 6 måneder tilbage<br />
 			{bruger id} - {start tid} - {slut tid} - {ip} <br />
 			52194 2018-05-13 18:36:12 2018-05-13 19:09:43 127.0.0.1<br />
@@ -138,9 +143,15 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 			52194 2018-05-13 09:01:45 2018-05-13 09:07:04 127.0.0.1<br />
 		</p>
 
+		<h1>Cookies.</h1>
+		<h2 id="cookies">Vi benytter kun funktionelle cookies</h2><!-- since 6. august 2020 -->
+		<p>Hos Net-hesten går vi meget op i datasikkerhed og vores bruges ret til privatliv.</p>
+		<p>Vi benytter derfor udelukkende såkaldte funktionelle cookies, der ikke kan bruges til at spore dig.</p>
+		<p>Dermed sender vi ikke information om din færden på vores side til nogen 3. parter.</p>
+
 		<h1>Din adgangskode er sikret hos os.</h1>
 
-		<h2 id="hashing">Password hashing</h2>
+		<h2 id="hashing">Password hashing</h2><!-- since 17. marts 2020 -->
 		<p>Hvis nogen skulle få fat i vores bruger tabeller</p>
 		<p>Så er alle passwords i tabellen, hashed efter alle kunstens regler</p>
 		<p>En hashing funktion er en envejskryptering, der tillader at bekræfte, at to ting var ens, men ikke at finde ud af hvad den først var.</p>
@@ -151,18 +162,18 @@ require_once("{$basepath}/global_modules/header.php"); ?>
 
 		<h1>Hvem deler vi dine data med</h1>
 
-		<h2 id="owners">Ejerne</h2>
+		<h2 id="owners">Ejerne</h2><!-- since 17. marts 2020 -->
 		<p>Stutteri TækHesten styres af Chris Olesen: <br /> &bullet;&nbsp;<a href="https://www.facebook.com/chris.olesen1">Facebook</a> &bullet;&nbsp;<a href="https://www.linkedin.com/in/chrisolesen1/">LinkedIN</a></p>
 		<p>Stutteri Net-Hesten styres af Line Jensen:<br /> &bullet;&nbsp;<a href="https://www.facebook.com/LineBineBone">Facebook</a></p>
 		<p>I samarbejde driver vi net-hesten.dk som et privat projekt</p>
 		<p>Begge parter har som værende de officielle ejere af sitet, ubeskåret adgang til alle oplysninger.</p>
 
-		<h2 id="police">Politiet</h2>
+		<h2 id="police">Politiet</h2><!-- since 17. marts 2020 -->
 		<p>Net-Hesten er et spil, der henvender sig til en relativt bred målgruppe, men især henvender vi os også til helt unge brugere</p>
 		<p>I den forbindelse, kan der trods vores bedste intentioner, og indsats, potentielt opstå situationer, hvor det vil være nødvendigt at involvere politiet</p>
 		<p>I så fald, vil vi dele alt relevant info, på de involverede brugere med ordensmagten</p>
 
-		<h2 id="share_facebook">Facebook</h2>
+		<h2 id="share_facebook">Facebook</h2><!-- since 17. marts 2020 -->
 		<p>Når du skriver til vores profil inde på Facebook, så gør du det, i henhold til Facebooks vilkår.</p>
 		<p>Vi har ingen magt over, hvordan Facebook behandler, eller opbevarer data, vi kan sørge for, at det kun er Net-Hestens Admins der har adgang til vores udgave af dine data.</p>
 		<p>Når du vælger at kontakte os via Facebook, vælger du derfor samtidig, at være underlagt deres data politikker.</p>
