@@ -1,8 +1,8 @@
 <?php
 
 $basepath = '../../..';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();
@@ -25,4 +25,4 @@ while ($remind_user = $remind_users->fetch_object()) {
 	echo '<br />';
 }
 
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

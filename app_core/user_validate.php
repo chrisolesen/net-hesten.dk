@@ -18,7 +18,7 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 
 	if ($result) {
 		while ($data = $result->fetch_assoc()) {
-			if (crypt($password, $data['password']) === $data['password']) {
+			if (crypt(trim($password), $data['password']) === $data['password']) {
 				$user_found = true;
 				$_SESSION['settings'] = [];
 

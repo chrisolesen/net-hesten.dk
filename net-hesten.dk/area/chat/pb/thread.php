@@ -1,8 +1,8 @@
 <?php
 $basepath = '../../../..';
 $title = 'Private Inbox';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/net-hesten.dk/area/chat/elements/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/net-hesten.dk/area/chat/elements/header.php";
 
 if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
 	user::register_session(['user_id' => $_SESSION['user_id']]);
@@ -99,4 +99,4 @@ private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => 
 	}
 </script>
 <?php
-require "$basepath/net-hesten.dk/area/chat/elements/footer.php";
+require "{$basepath}/net-hesten.dk/area/chat/elements/footer.php";

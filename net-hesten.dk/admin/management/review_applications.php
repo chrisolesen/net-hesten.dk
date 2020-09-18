@@ -1,8 +1,8 @@
 <?php
 /* REVIEW: SQL Queries */
 $basepath = '../../..';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 if (!is_array($_SESSION['rights']) || (!in_array('global_admin', $_SESSION['rights']) && !in_array('admin_users_all', $_SESSION['rights']))) {
 	ob_end_clean();
@@ -202,4 +202,4 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 	</div>
 </section>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

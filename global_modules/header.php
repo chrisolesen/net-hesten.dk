@@ -1,6 +1,6 @@
 <?php
-require_once "$basepath/app_core/db_conf.php";
-require_once "$basepath/app_core/user_validate.php";
+require_once "{$basepath}/app_core/db_conf.php";
+require_once "{$basepath}/app_core/user_validate.php";
 
 if (((($_SESSION['logged_in'] ?? false) !== true) || !isset($basepath) || !isset($_SESSION['user_id']) || $_SESSION['user_id'] != ((int) $_SESSION['user_id'])) && filter_input(INPUT_SERVER, 'REQUEST_URI') !== '/' && !$public_page) {
 	header("Location: /");

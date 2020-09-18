@@ -1,8 +1,8 @@
 <?php
 
 $basepath = '../../..';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();
@@ -203,4 +203,4 @@ if (filter_input(INPUT_GET, 'do_man_cron') === 'automate_contests') {
 </section>
 
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

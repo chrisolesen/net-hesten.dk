@@ -3,10 +3,10 @@
 if (!defined('cron_by')) {
 	die();
 }
-if (cron_by == 'admin-panel') {
-	chdir(dirname(__FILE__));
-	$basepath = '../../../';
-}
+
+chdir(dirname(__FILE__));
+$basepath = realpath(__DIR__ . '/../../..');
+
 if (!isset($basepath)) {
 	die();
 }
@@ -19,10 +19,7 @@ if (!isset($time_now)) {
 }
 
 require_once "{$basepath}/app_core/object_loader.php";
-/*
-require_once "{$basepath}app_core/db_conf.php";
-require_once "{$basepath}app_core/object_handlers/accounting.php";
-*/
+
 
 /* End active competitions - start */
 $sql = "SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competitions` WHERE `status_code` <> 31 ORDER BY `start_date` DESC, `id` DESC";

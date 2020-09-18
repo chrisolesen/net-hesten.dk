@@ -2,8 +2,8 @@
 
 $basepath = '../../..';
 $title = 'Heste typer';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 ?>
 <?php
 if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights'])) {
@@ -128,4 +128,4 @@ if (filter_input(INPUT_POST, 'save_race')) {
 	<br />
 </section>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

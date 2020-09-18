@@ -2,8 +2,8 @@
 /* REVIEW: SQL Queries */
 /* Se alle stutterier */
 $basepath = '../../../..';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 ?>
 <?php $dead = 'død'; ?>
 <?php $user_info = user::get_info(['user_id' => $_SESSION['user_id']]); ?>

@@ -1,6 +1,6 @@
 <?php
 chdir(dirname(__FILE__));
-$basepath = '../../';
+$basepath = realpath(__DIR__ . '/../..');
 
 date_default_timezone_set('Europe/Copenhagen');
 $current_date = new DateTime('now');
@@ -8,15 +8,15 @@ $date_now = $current_date->format('Y-m-d');
 $time_now = $current_date->format('H:i:s');
 $cron_interval = 'five_minutes';
 
-include_once "{$basepath}app_core/cron_files/functions/get_older.php";
 
 $log_content = PHP_EOL . PHP_EOL . '#######################################################'
 	. PHP_EOL . '# Five minutes cron started at ' . $time_now
 	. PHP_EOL . '# Checking for ended auctions. ';
 file_put_contents("{$basepath}/app_core/cron_files/logs/cron_five_minutes_{$date_now}", $log_content, FILE_APPEND);
 
-require_once "{$basepath}app_core/db_conf.php";
-require_once "{$basepath}app_core/object_handlers/accounting.php";
+include_once "{$basepath}/app_core/cron_files/functions/get_older.php";
+require_once "{$basepath}/app_core/db_conf.php";
+require_once "{$basepath}/app_core/object_handlers/accounting.php";
 
 /* Find no bid auctions */
 $log_content = '';

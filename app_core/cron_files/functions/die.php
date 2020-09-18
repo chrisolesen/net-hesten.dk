@@ -8,10 +8,10 @@ if (!isset($time_now)) {
 }
 
 $log_content = PHP_EOL . '# Checking for horses, that are ready, for the afterlife.';
-file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
-require_once "{$basepath}app_core/db_conf.php";
-require_once "{$basepath}app_core/functions/number_dotter.php";
-require_once "{$basepath}app_core/object_handlers/accounting.php";
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+require_once "{$basepath}/app_core/db_conf.php";
+require_once "{$basepath}/app_core/functions/number_dotter.php";
+require_once "{$basepath}/app_core/object_handlers/accounting.php";
 
 $Foelbox = 'Følkassen';
 $foel = 'føl';
@@ -109,4 +109,4 @@ if ($result) {
 $log_content = PHP_EOL . '#'
 	. PHP_EOL . "# Found {$viable_horses} viable horses."
 	. PHP_EOL . "# {$killed_amount} were killed.";
-file_put_contents("{$basepath}app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+file_put_contents("{$basepath}/app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);

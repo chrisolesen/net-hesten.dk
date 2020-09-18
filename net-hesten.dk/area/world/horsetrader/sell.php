@@ -1,8 +1,8 @@
 <?php
 $basepath = '../../../..';
 $title = 'Hestehandleren';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 ?>
 <section class="tabs">
 	<nav>

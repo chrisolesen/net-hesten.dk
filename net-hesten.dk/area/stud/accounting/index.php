@@ -2,8 +2,8 @@
 /* Mit Stutteri */
 $basepath = '../../../..';
 $title = 'Konto oversigt';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 $user_info = user::get_info(['user_id' => $_SESSION['user_id']]);
 ?>

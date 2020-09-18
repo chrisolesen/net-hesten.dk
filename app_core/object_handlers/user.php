@@ -434,7 +434,7 @@ class user
 
 			$password_hash = crypt(trim($new_password), $cryptSalt);
 			if ($password_hash) {
-				$link_new->query("UPDATE `Brugere` SET `password` = '{$password_hash}' WHERE `id` = {$attr['user_id']}");
+				$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET `password` = '{$password_hash}' WHERE `id` = {$attr['user_id']}");
 			}
 
 			$mail_message = '<!DOCTYPE html>';
@@ -492,7 +492,7 @@ class user
 		$password_hash = crypt(trim($new_password), $cryptSalt);
 		if ($password_hash) {
 			/* Indsæt brugeren i anmodnings tabellen */
-			$link_new->query("UPDATE `Brugere` SET `password` = '{$password_hash}' WHERE `id` = {$attr['user_id']}");
+			$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET `password` = '{$password_hash}' WHERE `id` = {$attr['user_id']}");
 		}
 
 		$mail_message = '<!DOCTYPE html>';
@@ -515,7 +515,7 @@ class user
 
 		pw_mailer(['to' => $user_mail, 'subject' => 'Nyt password til Net-Hesten', 'message' => $mail_message]);
 
-		$return_data[] = ["Brugerens password er blevet nulstillet, og han/hun har modtaget en mail med information.", 'success'];
+		$return_data[] = ["Brugerens password er blevet nulstillet til {$new_password}, og han/hun har modtaget en mail med information.", 'success'];
 
 		if (count($return_data) > 0) {
 			return $return_data;

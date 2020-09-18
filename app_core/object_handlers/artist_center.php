@@ -3,14 +3,14 @@
 function ac_find_next_artist_submission_filename($mode = 'default')
 {
 	global $basepath;
-	$dir_path = "$basepath/files.net-hesten.dk/horses/artist_submissions/";
+	$dir_path = "{$basepath}/files.net-hesten.dk/horses/artist_submissions/";
 	if ($mode == 'yield_path') {
 		return $dir_path;
 	}
 	if (!is_dir($dir_path)) {
 		return false;
 	}
-	if ($handle = opendir("$basepath/files.net-hesten.dk/horses/artist_submissions/")) {
+	if ($handle = opendir("{$basepath}/files.net-hesten.dk/horses/artist_submissions/")) {
 		$found = false;
 		$num_dirs = 0;
 		while ($found != true) {
@@ -46,29 +46,29 @@ class artist_center
 	public static function find_next_type_filename($attr = [])
 	{
 		global $basepath;
-		if ($handle = opendir("$basepath/files.net-hesten.dk/horses/imgs/")) {
+		if ($handle = opendir("{$basepath}/files.net-hesten.dk/horses/imgs/")) {
 			$found = false;
 			$num_dirs = 0;
 			while ($found != true) {
 				++$num_dirs;
 				$target_dir = str_replace(["/", "="], [""], base64_encode($num_dirs));
-				if (!is_dir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
-					mkdir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir);
+				if (!is_dir("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
+					mkdir("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir);
 				}
-				if (is_dir("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
+				if (is_dir("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir)) {
 					$num_files = 1;
 					while ($num_files <= 250) {
 						++$num_files;
-						if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
+						if (is_file("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.png')) {
 							continue;
-						} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
+						} else if (is_file("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jpg')) {
 							continue;
-						} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
+						} else if (is_file("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.gif')) {
 							continue;
-						} else if (is_file("$basepath/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jfif')) {
+						} else if (is_file("{$basepath}/files.net-hesten.dk/horses/imgs/" . $target_dir . '/' . str_replace(["/", "="], [""], base64_encode($num_files)) . '.jfif')) {
 							continue;
 						} else {
-							return ['path' => "$basepath/files.net-hesten.dk/horses/imgs/", 'filename' => "{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($num_files))];
+							return ['path' => "{$basepath}/files.net-hesten.dk/horses/imgs/", 'filename' => "{$target_dir}/" . str_replace(["/", "="], [""], base64_encode($num_files))];
 						}
 					}
 				}

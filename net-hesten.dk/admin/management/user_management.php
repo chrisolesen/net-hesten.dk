@@ -2,8 +2,8 @@
 /* REVIEW: SQL Queries */
 $basepath = '../../..';
 $responsive = true;
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();
@@ -234,4 +234,4 @@ if (isset($_POST['adjust_wkr'])) {
 	});
 </script>
 <?php
-require "$basepath/global_modules/footer.php";
+require "{$basepath}/global_modules/footer.php";

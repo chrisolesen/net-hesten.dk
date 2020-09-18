@@ -2,7 +2,7 @@
 
 $title = 'Specifikationer';
 $basepath = '../../..';
-require "$basepath/m.net-hesten.dk/admin/elements/header.php";
+require "{$basepath}/m.net-hesten.dk/admin/elements/header.php";
 ?>
 <?php
 
@@ -171,4 +171,4 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('admin_panel_acc
 </script>
 <?php
 
-require "$basepath/m.net-hesten.dk/admin/elements/footer.php";
+require "{$basepath}/m.net-hesten.dk/admin/elements/footer.php";

@@ -4,8 +4,8 @@
 
 $basepath = '../../../..';
 $title = 'visit';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/global_modules/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/global_modules/header.php";
 
 $visit_id = (int) filter_input(INPUT_GET, 'user');
 

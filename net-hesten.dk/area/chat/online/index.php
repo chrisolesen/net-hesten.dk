@@ -2,8 +2,8 @@
 
 $basepath = '../../../..';
 $title = 'Online Liste';
-require "$basepath/app_core/object_loader.php";
-require "$basepath/net-hesten.dk/area/chat/elements/header.php";
+require "{$basepath}/app_core/object_loader.php";
+require "{$basepath}/net-hesten.dk/area/chat/elements/header.php";
 
 
 chat::register_online(['user_id' => $_SESSION['user_id']]);
@@ -57,4 +57,4 @@ user::register_session(['user_id' => $_SESSION['user_id']]);
 </script>
 <?php
 
-require "$basepath/net-hesten.dk/area/chat/elements/footer.php";
+require "{$basepath}/net-hesten.dk/area/chat/elements/footer.php";

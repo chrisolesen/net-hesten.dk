@@ -1,9 +1,9 @@
 <?php
 
 $basepath = '../..';
-require_once "$basepath/app_core/db_conf.php";
-require_once "$basepath/app_core/object_loader.php";
-require_once "$basepath/app_core/user_validate.php";
+require_once "{$basepath}/app_core/db_conf.php";
+require_once "{$basepath}/app_core/object_loader.php";
+require_once "{$basepath}/app_core/user_validate.php";
 
 if (isset($_SESSION['user_id'])) {
 	user::register_timing(['user_id' => $_SESSION['user_id'], 'key' => 'last_active']);
