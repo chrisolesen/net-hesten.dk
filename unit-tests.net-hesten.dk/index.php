@@ -1,5 +1,6 @@
 <?php
-$basepath = '../';
+chdir(dirname(__FILE__));
+$basepath = realpath(__DIR__ . '/..');
 require_once "{$basepath}/app_core/object_loader.php";
 
 $php_time = (new DateTime('now'))->format('H:i:s');
