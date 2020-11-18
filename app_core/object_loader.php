@@ -13,8 +13,9 @@ $script_feedback = [];
 define('HTTP_HOST', filter_input(INPUT_SERVER, 'HTTP_HOST'));
 mb_internal_encoding('UTF-8');
 require_once "{$basepath}/app_core/db_conf.php";
+require_once "{$basepath}/app_core/enviroment_equalizer.php";
 require_once "{$basepath}/app_core/game-settings-example.php";
-@include "{$basepath}/app_core/game-settings.php";
+@include "{$basepath}/app_core/game-settings.php"; /* allows individual overrides */
 
 /* Load cache data */
 @include "{$basepath}/files.net-hesten.dk/cache_data/list_of_races.php"; /* $cached_races */

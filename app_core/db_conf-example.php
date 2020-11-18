@@ -5,7 +5,7 @@ $GLOBALS['hidden_system_users_sql'] = '1, 2, 3';
 
 $GLOBALS['project_upload_secret'] = 'crypt-code';
 
-date_default_timezone_set('Europe/Copenhagen');
+define('PROJECT_TIMEZONE', 'Europe/Copenhagen');
 define('DB_HOST', 'localhost');
 define('DB_USER', '');
 define('DB_PASS', '');
@@ -17,7 +17,6 @@ $GLOBALS['DB_NAME_NEW'] = DB_NAME_NEW;
 
 $link_new = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME_NEW, DB_PORT);
 $link_new->set_charset('utf8');
-$link_new->query("SET time_zone = 'Europe/Copenhagen'");
 
 $GLOBALS['pdo_new'] = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME_NEW . ';charset=utf8;', DB_USER, DB_PASS);
 
