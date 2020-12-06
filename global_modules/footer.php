@@ -215,7 +215,7 @@ foreach ($script_feedback as $key => $value) {
 //require_once("{$basepath}/global_modules/modals/json_feedback.php");
 ?>
 <section id="bottom_streamer">
-	<span>Net-Hesten &bullet;&nbsp;Drives&nbsp;som&nbsp;et&nbsp;privat&nbsp;projet &bullet;&nbsp;<a href="/infosheets/data_regulative.php">Data politik</a> &bullet;&nbsp;<a href="/infosheets/for_parents.php">Forældreinfo</a> &bullet;&nbsp;<a href="/infosheets/regler.php">Regler</a> &bullet;&nbsp;<a href="/infosheets/help.php">Hjælp</a></span>
+	<span>Net-Hesten &bullet;&nbsp;Drives&nbsp;som&nbsp;et&nbsp;privat&nbsp;projekt &bullet;&nbsp;<a href="/infosheets/data_regulative.php">Data politik</a> &bullet;&nbsp;<a href="/infosheets/for_parents.php">Forældreinfo</a> &bullet;&nbsp;<a href="/infosheets/regler.php">Regler</a> &bullet;&nbsp;<a href="/infosheets/help.php">Hjælp</a></span>
 </section>
 <?php
 if (isset($modals)) {
