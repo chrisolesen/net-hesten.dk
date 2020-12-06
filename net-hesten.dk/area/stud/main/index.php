@@ -132,6 +132,16 @@ if (isset($_POST['display_width'])) {
 	$link_new->query($sql);
 	$_SESSION['settings']['display_width'] = $new_value;
 }
+if (isset($_POST['left_menu_style'])) {
+	if ($_POST['left_menu_style'] == 'old_school') {
+		$new_value = 'old_school';
+	} else {
+		$new_value = 'standard';
+	}
+	$sql = "UPDATE user_data_varchar SET value = '{$new_value}', date = NOW() WHERE parent_id = {$_SESSION['user_id']} AND name = 'left_menu_style'";
+	$link_new->query($sql);
+	$_SESSION['settings']['left_menu_style'] = $new_value;
+}
 if (isset($_POST['alter_user_settings'])) {
 	if (isset($_POST['graes_confirmations'])) {
 		$new_value = 'show';
@@ -390,6 +400,11 @@ ob_start();
 			<select class="fifty_p" name="display_width" id="display_width">
 				<option value="standard" <?= (($_SESSION['settings']['display_width'] ?? false) == 'full' ? 'selected' : ''); ?>>Fuld bredde</option>
 				<option value="slim" <?= (($_SESSION['settings']['display_width'] ?? false) == 'slim' ? 'selected' : ''); ?>>Smal visning</option>
+			</select>
+			<label class="fifty_p" for="left_menu_style">Venstre menu:</label>
+			<select class="fifty_p" name="left_menu_style" id="left_menu_style">
+				<option value="standard" <?= (($_SESSION['settings']['left_menu_style'] ?? false) == 'standard' ? 'selected' : ''); ?>>Stilistisk</option>
+				<option value="old_school" <?= (($_SESSION['settings']['left_menu_style'] ?? false) == 'old_school' ? 'selected' : ''); ?>>Nostalgisk</option>
 			</select>
 			<label class="fifty_p" for="user_language">Vælg sprog:</label>
 			<select class="fifty_p" name="user_language" id="user_language">

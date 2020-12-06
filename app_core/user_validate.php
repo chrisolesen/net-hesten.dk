@@ -42,6 +42,14 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 				}
 
 
+				$user_display_width = ($link_new->query("SELECT `value` FROM `user_data_varchar` WHERE `parent_id` = {$data['id']} AND `name` = 'left_menu_style' LIMIT 1")->fetch_object()->value ?? false);
+				$_SESSION['settings']['left_menu_style'] = $user_display_width;
+
+				if (!$user_display_width) {
+					$link_new->query("INSERT INTO `user_data_varchar` (`parent_id`, `value`, `name`, `date`) VALUES ({$data['id']}, 'standard', 'left_menu_style', NOW())");
+					$_SESSION['settings']['left_menu_style'] = 'standard';
+				}
+
 
 				$user_last_read_dev_notes = ($link_new->query("SELECT `value` FROM `user_data_timing` WHERE `parent_id` = {$data['id']} AND `name` = 'last_read_dev_notes' LIMIT 1")->fetch_object()->value ?? false);
 				$_SESSION['settings']['last_read_dev_notes'] = $user_last_read_dev_notes;

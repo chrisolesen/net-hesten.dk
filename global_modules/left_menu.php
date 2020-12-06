@@ -1,4 +1,4 @@
-<section id="left_menu">
+<section id="left_menu" class="<?= $_SESSION['settings']['left_menu_style'] ??= 'mode_default' ?>">
 	<?php if (($_SESSION['logged_in'] ?? false) == true) { ?>
 		<a data-custom-title="Indbakke" href="/area/stud/messages"><img src="//files.<?= HTTP_HOST; ?>/graphics/inbox.png"></a>
 		<a data-custom-title="Heste Handleren" href="/area/world/horsetrader"><img src="//files.<?= HTTP_HOST; ?>/graphics/trader.png"></a>
@@ -40,3 +40,34 @@
 		<?php } ?>
 	<?php } ?>
 </section>
+<style>
+	#left_menu.old_school ~ #page-content {
+		width:calc(100% - 175px - 2rem);
+	} 
+	#left_menu.old_school {
+		width: calc(2rem + 175px);
+	}
+	#left_menu.old_school a {
+		height: 30px;;
+		opacity: 1;
+		display:block;
+		width: auto;;
+		position: static;
+	}
+	#left_menu.old_school a img {
+		height: 30px;
+		width: 30px;
+		float:left;
+	}
+	#left_menu.old_school [data-custom-title]:after {
+		box-shadow: none;
+		background: none;
+		padding:0;
+		line-height: 30px;
+		display: inline-block !important;
+		opacity: 1 !important;
+		position: static !important;
+		-webkit-transform: none;
+		transform: none;
+	}
+</style>
