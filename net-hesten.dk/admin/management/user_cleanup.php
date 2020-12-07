@@ -9,6 +9,7 @@ require "{$basepath}/global_modules/header.php";
 if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();
 	header('Location: /');
+	exit();
 }
 $pr_page = (int) filter_input(INPUT_GET, 'pr_page') ?: 10;
 $page = (int) filter_input(INPUT_GET, 'page') ?: 0;
@@ -18,7 +19,7 @@ if (isset($_GET['delete_user'])) {
 	$sql = "DELETE FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_GET['delete_user']} LIMIT 1";
 	$result = $link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
-	die();
+	exit();
 }
 if (isset($_GET['confiscate_horses'])) {
 	$sql = "SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_GET['confiscate_horses']} LIMIT 1";
@@ -26,20 +27,20 @@ if (isset($_GET['confiscate_horses'])) {
 	$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Heste SET bruger = 'Dyreværnet' WHERE bruger = '{$temp_stud}'";
 	$link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
-	die();
+	exit();
 }
 if (isset($_GET['clear_pb'])) {
 	$sql = "DELETE FROM game_data_private_messages WHERE target = {$_GET['clear_pb']} AND origin IN ({$GLOBALS['hidden_system_users_sql']})";
 	$link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
-	die();
+	exit();
 }
 if (isset($_GET['reasign_chat'])) {
 	/* 53849 = TidligereBruger */
 	$sql = "UPDATE game_data_chat_messages SET creator = 53849 WHERE creator = {$_GET['reasign_chat']}";
 	$link_new->query($sql);
 	header('Location: /admin/management/user_cleanup.php');
-	die();
+	exit();
 }
 if (isset($_GET['clear_account_view'])) {
 	$sql = "SELECT stutteri FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere WHERE id = {$_GET['clear_account_view']} LIMIT 1";
@@ -47,7 +48,7 @@ if (isset($_GET['clear_account_view'])) {
 	/*$sql = "DELETE FROM `{$GLOBALS['DB_NAME_OLD']}`.Konto WHERE stutteri = '{$temp_stud}'";
 	$result = $link_new->query($sql);*/
 	header('Location: /admin/management/user_cleanup.php');
-	die();
+	exit();
 }
 ?>
 <section>

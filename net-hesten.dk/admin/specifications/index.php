@@ -9,6 +9,7 @@ require "{$basepath}/m.net-hesten.dk/admin/elements/header.php";
 if (!in_array('global_admin', $_SESSION['rights']) && !in_array('admin_panel_access', $_SESSION['rights'])) {
 	ob_end_clean();
 	header('Location: /');
+	exit();
 }
 ?>
 <section class="tabs" style='color:black;text-shadow:none;'>

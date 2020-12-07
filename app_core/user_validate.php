@@ -121,11 +121,13 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 if ((isset($_SESSION['valid_ip']) && $_SESSION['valid_ip'] != $_SERVER['REMOTE_ADDR'])) {
 	session_destroy();
 	header('Location: /');
+	exit();
 }
 
 if (isset($_POST['logout']) || isset($_GET['logout'])) {
 	session_destroy();
 	header('Location: /');
+	exit();
 }
 
 

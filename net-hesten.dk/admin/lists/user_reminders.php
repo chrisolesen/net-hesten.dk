@@ -7,6 +7,7 @@ require "{$basepath}/global_modules/header.php";
 if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();
 	header('Location: /');
+	exit();
 }
 
 $remind_users = $link_new->query("SELECT `nt`.`value`, `ot`.`stutteri`, `ot`.`email`, `ot`.`id` 

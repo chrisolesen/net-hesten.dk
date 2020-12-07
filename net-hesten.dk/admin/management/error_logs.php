@@ -9,6 +9,7 @@ require "{$basepath}/global_modules/header.php";
 if (!is_array($_SESSION['rights']) || !in_array('tech_admin', $_SESSION['rights'])) {
 	ob_end_clean();
 	header('Location: /');
+	exit();
 }
 ?>
 <style>
