@@ -4,8 +4,10 @@ if (!defined('cron_by')) {
 	die();
 }
 
-chdir(dirname(__FILE__));
-$basepath = realpath(__DIR__ . '/../../..');
+if (cron_by == 'admin-panel') {
+	chdir(dirname(__FILE__));
+	$basepath = realpath(__DIR__ . '/../../..');
+}
 
 if (!isset($basepath)) {
 	die();
@@ -20,6 +22,10 @@ if (!isset($time_now)) {
 
 require_once "{$basepath}/app_core/object_loader.php";
 
+if (cron_by == 'one_hour') {
+	$log_content = PHP_EOL . '# Automating contests.';
+	file_put_contents("{$basepath}/app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
+}
 
 /* End active competitions - start */
 $sql = "SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competitions` WHERE `status_code` <> 31 ORDER BY `start_date` DESC, `id` DESC";
@@ -89,7 +95,8 @@ while ($competition_data = $competition_result->fetch_object()) {
 							$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` SET penge = (penge + {$price_money}) WHERE id = {$data->uid}");
 							$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET pris = (pris + {$value_add}) WHERE id = {$data->hid}");
 							$link_new->query("INSERT INTO game_data_private_messages (status_code, hide, origin, target, date, message) VALUES (17, 0, {$origin}, {$data->uid}, NOW(), '{$utf_8_message}' )");
-						}
+							accounting::add_entry(['amount' => $price_money, 'line_text' => "Gevinst for {$competition->name}", "user_id" => $data->uid, "mode" => "+"]);
+						} 
 						$link_new->query("UPDATE `game_data_competition_participants` SET points = '{$points}' WHERE `competition_id` = {$end_competition_id} AND `participant_id` = {$data->hid}");
 						$link_new->query("UPDATE `game_data_competitions` SET status_code = 31 WHERE `id` = {$end_competition_id}");
 					}

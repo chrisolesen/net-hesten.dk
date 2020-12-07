@@ -9,9 +9,7 @@ if (!isset($time_now)) {
 
 $log_content = PHP_EOL . '# Checking for horses, that are ready, for the afterlife.';
 file_put_contents("{$basepath}/app_core/cron_files/logs/cron_one_hour_{$date_now}", $log_content, FILE_APPEND);
-require_once "{$basepath}/app_core/db_conf.php";
-require_once "{$basepath}/app_core/functions/number_dotter.php";
-require_once "{$basepath}/app_core/object_handlers/accounting.php";
+require_once "{$basepath}/app_core/object_loader.php";
 
 $Foelbox = 'Følkassen';
 $foel = 'føl';
@@ -43,7 +41,7 @@ $loop = 0;
 $sql = "SELECT `id`, `alder`, `bruger`, `navn`, `foersteplads`, `andenplads`, `tredieplads`, `kaaringer`, `pris`, `race`, `original`, `unik` 
 FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 WHERE `alder` > 20 AND `bruger` <> '{$Foelbox}' AND `bruger` <> 'hestehandleren*' AND `bruger` <> 'genfoedsel' AND `status` = 'hest' 
-ORDER BY rand() LIMIT 175";
+ORDER BY rand() LIMIT 200";
 
 $result = $link_new->query($sql);
 $viable_horses = 0;
@@ -53,7 +51,7 @@ if ($result) {
 	while ($horse = $result->fetch_object()) {
 		++$viable_horses;
 
-		if (mt_rand(0, 100) <= $horse->alder) {
+		if (mt_rand(0, 80) <= $horse->alder) {
 
 			if ($horse->bruger == 'hestehandleren' || $horse->bruger == 'Hestehandleren' || $horse->bruger == NULL) {
 				$horse->bruger = 'techhesten';

@@ -30,7 +30,7 @@ require "{$basepath}/app_core/functions/months_ago.php";
 require "{$basepath}/app_core/functions/mailer.php";
 /* Load order sensitive object handlers */
 require "{$basepath}/app_core/object_handlers/private_messages.php";
-require "{$basepath}/app_core/object_handlers/accounting.php";
+require "{$basepath}/app_core/object_handlers/accounting.php"; 
 /* Non critical object handlers */
 require "{$basepath}/app_core/object_handlers/horses.php";
 require "{$basepath}/app_core/object_handlers/auctions.php";
