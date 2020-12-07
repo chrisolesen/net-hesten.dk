@@ -43,7 +43,7 @@ $loop = 0;
 $sql = "SELECT `id`, `alder`, `bruger`, `navn`, `foersteplads`, `andenplads`, `tredieplads`, `kaaringer`, `pris`, `race`, `original`, `unik` 
 FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 WHERE `alder` > 20 AND `bruger` <> '{$Foelbox}' AND `bruger` <> 'hestehandleren*' AND `bruger` <> 'genfoedsel' AND `status` = 'hest' 
-ORDER BY rand() LIMIT 175";
+ORDER BY rand() LIMIT 200";
 
 $result = $link_new->query($sql);
 $viable_horses = 0;
@@ -53,7 +53,7 @@ if ($result) {
 	while ($horse = $result->fetch_object()) {
 		++$viable_horses;
 
-		if (mt_rand(0, 100) <= $horse->alder) {
+		if (mt_rand(0, 80) <= $horse->alder) {
 
 			if ($horse->bruger == 'hestehandleren' || $horse->bruger == 'Hestehandleren' || $horse->bruger == NULL) {
 				$horse->bruger = 'techhesten';
