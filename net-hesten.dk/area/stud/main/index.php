@@ -173,6 +173,7 @@ if (isset($_POST['alter_user_settings'])) {
 }
 if (isset($_POST['banner_size'])) {
 	header('Location: /area/stud/main/');
+	exit();
 }
 if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
 	$salt = uniqid('', true);

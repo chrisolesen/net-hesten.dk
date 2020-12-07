@@ -9,6 +9,7 @@ require "{$basepath}/global_modules/header.php";
 if (!in_array('tech_admin', $_SESSION['rights'])) {
 	ob_end_clean();
 	header('Location: /');
+	exit();
 }
 $pr_page = (int) filter_input(INPUT_GET, 'pr_page') ?: 10;
 $page = (int) filter_input(INPUT_GET, 'page') ?: 0;

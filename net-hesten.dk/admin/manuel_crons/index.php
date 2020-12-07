@@ -13,6 +13,7 @@ if (
 ) {
 	ob_end_clean();
 	header('Location: /');
+	exit();
 }
 
 if (($script = filter_input(INPUT_GET, 'run_cron') ?? false)) {

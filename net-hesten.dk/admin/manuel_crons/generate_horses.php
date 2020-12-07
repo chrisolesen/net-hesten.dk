@@ -6,6 +6,7 @@ require_once "{$basepath}/global_modules/header.php";
 if (!in_array('global_admin', $_SESSION['rights'])) {
     ob_end_clean();
     header('Location: /');
+	exit();
 }
 
 if (filter_input(INPUT_GET, 'do_man_cron') === 'generate_horses') {

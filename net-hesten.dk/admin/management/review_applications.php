@@ -7,6 +7,7 @@ require "{$basepath}/global_modules/header.php";
 if (!is_array($_SESSION['rights']) || (!in_array('global_admin', $_SESSION['rights']) && !in_array('admin_users_all', $_SESSION['rights']))) {
 	ob_end_clean();
 	header('Location: /');
+	exit();
 }
 
 /* List applicants */

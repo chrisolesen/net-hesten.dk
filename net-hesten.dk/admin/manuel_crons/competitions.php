@@ -1,12 +1,13 @@
 <?php
 
-$basepath = '../../..';
+$basepath = '../../..'; 
 require "{$basepath}/app_core/object_loader.php";
 require "{$basepath}/global_modules/header.php";
 
 if (!in_array('global_admin', $_SESSION['rights'])) {
 	ob_end_clean();
 	header('Location: /');
+	exit();
 }
 $date_tomorrow = new DateTime('now');
 $date_tomorrow->add(new DateInterval('P1D'));

@@ -142,7 +142,7 @@ if (filter_input(INPUT_GET, 'action') == 'admin_user_password_reset') {
 		'user_id' => filter_input(INPUT_GET, 'user_id')
 	]);
 	header('Location: /admin/management/user_management.php');
-	die();
+	exit();
 }
 if (filter_input(INPUT_GET, 'action') == 'grant_right_horse_artist') {
 	if (!in_array('global_admin', $_SESSION['rights'])) {
