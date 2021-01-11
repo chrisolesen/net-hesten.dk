@@ -3,8 +3,6 @@
 		<a data-custom-title="Indbakke" href="/area/stud/messages"><img src="//files.<?= HTTP_HOST; ?>/graphics/inbox.png"></a>
 		<a data-custom-title="Heste Handleren" href="/area/world/horsetrader"><img src="//files.<?= HTTP_HOST; ?>/graphics/trader.png"></a>
 
-		<a data-custom-title="Uofficielt Forum" href="http://nethesten.boards.net/" target="_BLANK"><img height="55" width="55" src="//files.<?= HTTP_HOST; ?>/graphics/forum.png"></a>
-
 		<a data-custom-title="Discord chat" href="https://discord.gg/cspYYPf" target="_BLANK"><img height="55" width="55" src="//files.<?= HTTP_HOST; ?>/graphics/discord.png"></a>
 		<a data-custom-title="Auktionshus" href="/area/world/auction/"><img src="//files.<?= HTTP_HOST; ?>/graphics/auctions.png"></a>
 		<a data-custom-title="Tag chancen" href="/area/world/lotto/quick_chance.php"><img src="//files.<?= HTTP_HOST; ?>/graphics/chance.png"></a>
