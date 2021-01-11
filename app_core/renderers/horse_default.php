@@ -18,7 +18,7 @@ function render_horse_object($horse, $area)
 ?>
 	<div class='horse_square horse_object <?= $gender; ?>' data-horse-id='<?= $horse->id; ?>'>
 		<div class='info'>
-			<span class='name'><?= $horse->name; ?></span>
+			<span class='name'><?= $horse->name ?: 'Unavngivet'; ?></span>
 			<i class='gender icon-<?= $gender; ?>-1'></i>
 			<div class='horse_vcard'>
 				<i class='icon-vcard'></i>
