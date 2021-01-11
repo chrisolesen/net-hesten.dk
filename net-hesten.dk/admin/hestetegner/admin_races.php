@@ -38,8 +38,8 @@ if (filter_input(INPUT_POST, 'save_race')) {
 	header('Location: /admin/hestetegner/admin_races.php');
 	exit();
 }
-?>
-<script src="https://<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/scripts/tinymce/tinymce.min.js"></script>
+?> 
+<script src="//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/scripts/tinymce/tinymce.min.js"></script>
 <script>
 	tinymce.init({
 		selector: 'textarea[name="description"]'

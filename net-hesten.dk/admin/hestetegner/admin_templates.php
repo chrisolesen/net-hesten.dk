@@ -104,8 +104,8 @@ if (filter_input(INPUT_POST, 'submit_edit')) {
 }
 
 /* List templates */
-?>
-<script src="https://<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/scripts/list.min.js" type="text/javascript"></script>
+?> 
+<script src="//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/scripts/list.min.js" type="text/javascript"></script>
 <section>
 	<header>
 		<h2 class="raised">Skabeloner</h2>
@@ -120,7 +120,7 @@ if (filter_input(INPUT_POST, 'submit_edit')) {
 				$active_races = json_decode($data->suggested_races);
 		?>
 				<div>
-					<img style="max-height: 150px;float:left;margin-bottom: 125px;margin-right:20px;" src="https://<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/templates/<?= $data->image; ?>" />
+					<img style="max-height: 150px;float:left;margin-bottom: 125px;margin-right:20px;" src="//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/templates/<?= $data->image; ?>" />
 					<div style="height: 275px;float:left;margin-right:20px;">
 						<label for="suggested_race">Racer:</label>
 						<select style="height:275px;" multiple id="suggested_race" name="suggested_race[]">

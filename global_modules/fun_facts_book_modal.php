@@ -1,4 +1,3 @@
-<!--<link href="https://fonts.googleapis.com/css?family=Sedgwick+Ave" rel="stylesheet">-->
 <div id="fun_fact_book_modal">
 	<div class="overlay"></div>
 	<div id="mybook">
