@@ -325,25 +325,8 @@ $amount_active_selection = count($horse_array);
 		</div>
 	</section>
 </section>
-<script>
-	jQuery(document).ready(function() {
-		<?php if (!isset($_GET['tab'])) { ?>
-			jQuery('[data-target="idle_horses"]').click();
-		<?php } else {
-		?>
-			jQuery('[data-target="<?= $_GET['tab']; ?>"]').click();
-		<?php }
-		?>
-	});
-	jQuery('[data-button-type="zone_activator"]').each(function() {
-		jQuery(this).click(function() {
-			jQuery('.tabs > section').removeClass('visible');
-			jQuery('.tabs > section[data-zone="' + jQuery(this).attr('data-target') + '"]').addClass('visible');
-		});
-	});
-</script>
 <?php
-/* Define modal - start */
+/* Define modals - start */
 ob_start();
 ?>
 <style>
@@ -365,184 +348,6 @@ ob_start();
 		<?= horse_list_filters::render_filter_settings(['zone' => "home"]); ?>
 	</div>
 </div>
-<div id="edit_user_modal" class="modal">
-	<div class="shadow"></div>
-	<div class="content">
-		<h2>Rediger stutteri</h2>
-		<form action="" method="post" enctype="multipart/form-data">
-			<label class="fifty_p" for="fileToUpload">Stutteri billede:</label>
-			<input class="fifty_p" type="file" name="fileToUpload" id="fileToUpload">
-			<label class="fifty_p" for="your_name">Dit navn:</label>
-			<input class="fifty_p" type="text" name="your_name" value="<?= $user_info->name; ?>" id="your_name">
-			<label class="fifty_p" for="new_password">Skift Password:</label>
-			<input class="fifty_p" type="text" name="new_password" id="new_password">
-			<input type="submit" class="btn btn-success" value="Gem" name="submit">
-			<input type="submit" class="btn btn-danger" value="Fjern billede" name="remove_user_thumbnail">
-		</form>
-	</div>
-</div>
-<div id="user_settings_modal" class="modal">
-	<div class="shadow"></div>
-	<div class="content">
-		<h2>Indstillinger</h2>
-		<form action="" method="post">
-			<input type="hidden" name="alter_user_settings" value="true" />
-			<label class="fifty_p" for="liststyle">Liste visninger:</label>
-			<select class="fifty_p" name="liststyle" id="liststyle">
-				<!--<option value="standard" <?= (($_SESSION['settings']['list_style'] ?? false) == 'standard' ? 'selected' : ''); ?>>Normal</option>-->
-				<option value="compact" <?= (($_SESSION['settings']['list_style'] ?? false) == 'compact' ? 'selected' : ''); ?>>Kompakt liste</option>
-			</select>
-			<label class="fifty_p" for="banner_size">Banner:</label>
-			<select class="fifty_p" name="banner_size" id="banner_size">
-				<option value="standard" <?= (($_SESSION['settings']['banner_size'] ?? false) == 'full_size' ? 'selected' : ''); ?>>Vis</option>
-				<option value="hide" <?= (($_SESSION['settings']['banner_size'] ?? false) == 'hide' ? 'selected' : ''); ?>>Skjul</option>
-			</select>
-			<label class="fifty_p" for="display_width">Side størrelse:</label>
-			<select class="fifty_p" name="display_width" id="display_width">
-				<option value="standard" <?= (($_SESSION['settings']['display_width'] ?? false) == 'full' ? 'selected' : ''); ?>>Fuld bredde</option>
-				<option value="slim" <?= (($_SESSION['settings']['display_width'] ?? false) == 'slim' ? 'selected' : ''); ?>>Smal visning</option>
-			</select>
-			<label class="fifty_p" for="left_menu_style">Venstre menu:</label>
-			<select class="fifty_p" name="left_menu_style" id="left_menu_style">
-				<option value="standard" <?= (($_SESSION['settings']['left_menu_style'] ?? false) == 'standard' ? 'selected' : ''); ?>>Stilistisk</option>
-				<option value="old_school" <?= (($_SESSION['settings']['left_menu_style'] ?? false) == 'old_school' ? 'selected' : ''); ?>>Nostalgisk</option>
-			</select>
-			<label class="fifty_p" for="user_language">Vælg sprog:</label>
-			<select class="fifty_p" name="user_language" id="user_language">
-				<option value="da_DK" <?= (($_SESSION['settings']['user_language'] ?? false) == 'da_DK' ? 'selected' : ''); ?>>Dansk</option>
-				<option value="en_US" <?= (($_SESSION['settings']['user_language'] ?? false) == 'en_US' ? 'selected' : ''); ?>>English</option>
-			</select>
-			<br />
-			<h3 style="margin-bottom: 0.5em;">Notifikationer</h3>
-			<div style="line-height: 20px;font-size:16px;">Vis Græsnings bekræftelser: <input style="height: 1em;" type="checkbox" name="graes_confirmations" <?= (($_SESSION['settings']['graes_confirmations'] ?? false)  == 'show' ? 'checked="checked"' : ''); ?> /></div>
-			<div style="line-height: 20px;font-size:16px;">Vis bekræftelser i hestehandleren: <input style="height: 1em;" type="checkbox" name="horse_trader_buy_confirmations" <?= (($_SESSION['settings']['horse_trader_buy_confirmations'] ?? false) == 'show' ? 'checked="checked"' : ''); ?> /></div>
-			<h3 style="margin-bottom: 0.5em;">Valg:</h3>
-			<div style="line-height: 20px;font-size:16px;">Man må byde på alle mine heste: <input style="height: 1em;" type="checkbox" name="accept_offers" <?= (($_SESSION['settings']['accept_offers'] ?? false) == 'accept' ? 'checked="checked"' : ''); ?> /></div>
-			<br />
-			<input type="submit" class="btn btn-success" value="Gem" name="submit">
-			<br />
-			<br />
-			<h3>Advancerede:</h3>
-			<br />
-			<input type="submit" class="btn btn-success" value="Tilsend kopi af persondata" name="send_personal_data">
-			<?php if (is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['rights'])) { ?>
-			<?php }
-			?>
-		</form>
-	</div>
-</div>
-<div id="put_horse_on_grass" class="modal">
-	<script type="text/javascript">
-		function put_horse_on_grass(caller) {
-			console.log(jQuery(caller).parent().parent().attr('data-horse-id'));
-			jQuery('#put_horse_on_grass__horse_id').attr('value', jQuery(caller).parent().parent().attr('data-horse-id'));
-			jQuery('#put_horse_on_grass__horse_id').val(jQuery(caller).parent().parent().attr('data-horse-id'));
-			<?php
-			if ($_SESSION['settings']['graes_confirmations'] == 'hide') {
-			?>
-				jQuery('#put_horse_on_grass').removeClass('active');
-				jQuery("#put_horse_on_grass_form").ajaxSubmit(function() {
-					jQuery(caller).parent().parent().remove();
-					//					window.location.href = 'https://dev.<?= HTTP_HOST; ?>/area/stud/main/?tab=idle_horses';
-				});
-			<?php
-			}
-			?>
-		}
-	</script>
-	<div class="shadow"></div>
-	<div class="content">
-		<h2>Sæt på græs</h2>
-		<p style="font-size: 14px;line-height: 1.5;">
-			Hesten vil blive sat på græs. Du tjener 2 wkr for hvert minut din hest er på græs. Husk dog at sætte den tilbage i stalden inden 14 timer ellers bliver der trukket 500 wkr fra din konto og du mister optjeningen.
-		</p>
-		<form id="put_horse_on_grass_form" action="/area/stud/main/" method="post">
-			<input type="hidden" name="action" value="put_horse_on_grass" />
-			<input id="put_horse_on_grass__horse_id" type="hidden" name="horse_id" value="" />
-			<input type="submit" class="btn btn-success" value="Sæt på græs" name="submit">
-		</form>
-	</div>
-</div>
-<div id="breed_horse" class="modal">
-	<script type="text/javascript">
-		function breed_horse(caller) {
-			console.log(jQuery(caller).parent().parent().attr('data-horse-id'));
-			jQuery('#breed_horse__horse_id').attr('value', jQuery(caller).parent().parent().attr('data-horse-id'));
-			jQuery('#breed_horse__horse_id').val(jQuery(caller).parent().parent().attr('data-horse-id'));
-			jQuery.get({
-				url: "//ajax.<?= HTTP_HOST; ?>/index.php?request=suggest_breed_targets&horse_id=" + jQuery(caller).parent().parent().attr('data-horse-id'),
-				cache: false
-			}).then(function(data) {
-				jQuery("#breed_targets_zone").html(data);
-				jQuery("#breed_horse input[type='submit']").attr('disabled', 'disabled');
-				jQuery('[data-type="potential_breed_target"]').each(function() {
-					jQuery(this).click(function() {
-						jQuery('#breed_horse__target_horse_id').attr('value', jQuery(this).attr('data-horse_id'));
-						jQuery('#breed_horse__target_horse_id').val(jQuery(this).attr('data-horse_id'));
-						jQuery('.marked_breed_target').removeClass('marked_breed_target');
-						jQuery(this).addClass('marked_breed_target');
-						jQuery(this).parent().parent().parent().find('input[type="submit"]').removeAttr('disabled');
-					});
-				});
-			});
-		}
-	</script>
-	<style>
-		.marked_breed_target {
-			box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.3);
-		}
-
-		input[type='submit'][disabled='disabled'] {
-			opacity: 0.5;
-		}
-	</style>
-	<div class="shadow"></div>
-	<div class="content">
-		<h2>Vælg en hingst til din hoppe</h2>
-		<div id="breed_targets_zone" style="font-size:16px;"></div>
-		<form action="" method="post" style="position: relative;">
-			<input type="hidden" name="action" value="breed_horse" />
-			<input id="breed_horse__horse_id" type="hidden" name="horse_id" value="" />
-			<input id="breed_horse__target_horse_id" type="hidden" name="target_horse_id" value="" />
-			<p style="font-size:16px;line-height: 20px;margin-top:10px;">Der går 1 hesteår (~40 dage) før føllet kommet til verden. <br />Hoppen skal stå i foleboksen det meste af denne periode og kan derfor ikke deltage i stævner samtidig.</p>
-			<p style="font-size:16px;line-height: 30px;">Det koster 7.500 wkr, at folet din hoppe.</p>
-			<input style="position:absolute;bottom:0;right:0;" type="submit" disabled="disabled" class="btn btn-success" value="Start avl" name="submit">
-		</form>
-	</div>
-</div>
-<div id="put_horse_in_stable" class="modal">
-	<script>
-		function put_horse_in_stable(caller) {
-			console.log(jQuery(caller).parent().parent().attr('data-horse-id'));
-			jQuery('#put_horse_in_stable__horse_id').attr('value', jQuery(caller).parent().parent().attr('data-horse-id'));
-			jQuery('#put_horse_in_stable__horse_id').val(jQuery(caller).parent().parent().attr('data-horse-id'));
-			<?php
-			if ($_SESSION['settings']['graes_confirmations'] == 'hide') {
-			?>
-				jQuery('#put_horse_in_stable').removeClass('active');
-				jQuery("#put_horse_in_stable_form").ajaxSubmit(function() {
-					jQuery(caller).parent().parent().remove();
-					//					window.location.href = 'https://dev.<?= HTTP_HOST; ?>/area/stud/main/?tab=horses_on_grass';
-				});
-			<?php
-			}
-			?>
-		}
-	</script>
-	<div class="shadow"></div>
-	<div class="content">
-		<h2>Sæt i stald</h2>
-		<p style="font-size: 14px;line-height: 1.5;">
-			Hesten vil hentet ind fra græs. Du tjener 2 wkr for hvert minut din hest har været på græs.
-		</p>
-		<form id="put_horse_in_stable_form" action="/area/stud/main/" method="post">
-			<input type="hidden" name="action" value="put_horse_in_stable" />
-			<input id="put_horse_in_stable__horse_id" type="hidden" name="horse_id" value="" />
-			<input type="submit" class="btn btn-success" value="Sæt i stald" name="submit">
-		</form>
-	</div>
-</div>
-
 <script type="text/javascript">
 	jQuery(".horse_object .info .name").click(function() {
 		if (jQuery(this).attr('data-object-edit-state') == 'open') {} else {
@@ -565,7 +370,6 @@ ob_start();
 						url: "//ajax.<?= HTTP_HOST; ?>/index.php",
 						cache: false
 					}).always(function(data) {
-						//                        console.log(data.status);
 						if (data.status !== true) {
 							alert('Der skete en fejl ved omdøbning, vent lidt tid, hvis fejlen bliver ved, så skriv hestens ID til Tækhesten');
 						}
@@ -601,12 +405,16 @@ ob_start();
 		}
 	}
 </style>
-<?php ?>
 <?php
+require_once("{$basepath}/global_modules/modals/user_settings_profile.php");
+require_once("{$basepath}/global_modules/modals/user_settings_display.php");
+require_once("{$basepath}/global_modules/modals/horse_put_in_stable.php");
+require_once("{$basepath}/global_modules/modals/horse_put_on_grass.php");
+require_once("{$basepath}/global_modules/modals/horse_breed_mare.php");
 require_once("{$basepath}/global_modules/modals/horse_linage.php");
 $modals[] = ob_get_contents();
 ob_end_clean();
-/* Define modal - end */
+/* Define modals - end */
 ?>
 <?php
 require_once("{$basepath}/global_modules/footer.php");
