@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,IAAK;EACJ,OAAO,EAAC,CAAC;;AAEV,YAAa;EACZ,MAAM,EAAC,CAAC;EACR,OAAO,EAAC,CAAC;EACT,UAAU,EAAE,IAAI;;AAEjB,iBAAkB;EACjB,aAAa,EAAE,CAAC;;AAEjB,aAAc;EACb,SAAS,EAAE,KAAK;EAChB,UAAU,EAAE,KAAK;;AAElB,eAAgB;EACf,OAAO,EAAE,IAAI",
-"sources": ["scss/iframe.scss"],
-"names": [],
-"file": "iframe.css"
-}

@@ -29,8 +29,8 @@ if (isset($_GET['delete_message'])) {
 }
 
 private_messages::mark_as_read(['other_user' => $_POST['send_to'], 'user_id' => $_SESSION['user_id'], 'thread' => $_POST['thread']]);
-?>
-<link rel="stylesheet" href="/style/messages.css?v=<?= time(); ?>" />
+?> 
+<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/messages.css?v=<?= time(); ?>" />
 <style>
 	body ul.message_list {
 		height: calc(100% - 190px)
