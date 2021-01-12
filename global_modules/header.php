@@ -30,7 +30,7 @@ if (($_SESSION['logged_in'] ?? false) == true) {
 	?>
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
-	<link rel="stylesheet" href="/style/font-awesome.min.css" />
+	<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/font-awesome.min.css" />
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
@@ -58,11 +58,6 @@ if (($_SESSION['logged_in'] ?? false) == true) {
 		.nicescroll-rails-vr .nicescroll-cursors {
 			background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
 			background-size: 20px 20px;
-		}
-
-		/* temp fix */
-		.btn {
-			font-family: 'Merienda One', cursive !important;
 		}
 	</style>
 </head>

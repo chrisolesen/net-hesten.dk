@@ -136,9 +136,6 @@ $selected_race = substr($_GET['race'], 1, -1);
 			z-index: 2;
 		}
 
-		/*a.btn {
-			font-family:'Merienda One', cursive;
-		}*/
 	</style>
 
 	<ul>

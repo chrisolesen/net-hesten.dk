@@ -70,10 +70,6 @@
         #horze_extended_info div {
             line-height: 25px;
         }
-
-        #horze_extended_info span {
-            font-family: 'Merienda One', cursive;
-        }
     </style>
     <div class="shadow"></div>
     <div class="content">

@@ -38,22 +38,9 @@
 		line-height: 1.3em;
 		width: 120px;
 		display: inline-block;
-	}
+	} 
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	label,
-	.label,
-	input,
-	#top_menu,
-	#left_menu a,
-	button,
-	span.name {
-		font-family: 'Merienda One', cursive;
-	}
+	
 
 	#page-content,
 	p,
