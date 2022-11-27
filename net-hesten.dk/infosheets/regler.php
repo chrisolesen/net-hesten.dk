@@ -29,7 +29,7 @@ require_once ("{$basepath}/global_modules/header.php"); ?>
 	<div id="rules" style="max-width: 100%;width:50%;min-width:280px;margin: 0 auto;padding-bottom:40px;float:left;">
 		<h1>Net-hestens regler</h1>
 		<p>
-			Det er vigtigt, at alle brugerne på Net-hesten forstår og følger sidens regler. Reglerne er fastsat så ingen kan få succes med at snyde eller gøre andre dumme ting på Net-hesten. Hvis du overtræder en regel, får du enten en advarsel, en karantæne eller en direkte udsmidning fra siden, alt efter hvor slemt, det du har gjort, er.
+			Det er vigtigt, at alle brugere på Net-hesten forstår og følger sidens regler. Reglerne er fastsat så ingen kan få succes med at snyde eller gøre andre dumme ting på Net-hesten. Hvis du overtræder en regel, får du enten en advarsel, en karantæne eller en direkte udsmidning fra siden, alt efter hvor slemt, det du har gjort, er.
 		</p>
 		<p>
 			En advarsel er en løftet pegefinger, som betyder at det du har gjort ikke er i orden, og du skal forbedre din opførsel. Får man flere advarsler kan det føre til karantæne eller udsmidning, hvis Net-hesten vurderer det er nødvendigt.
