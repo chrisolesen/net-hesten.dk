@@ -41,7 +41,8 @@ $loop = 0;
 $sql = "SELECT `id`, `alder`, `bruger`, `navn`, `foersteplads`, `andenplads`, `tredieplads`, `kaaringer`, `pris`, `race`, `original`, `unik` 
 FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 WHERE `alder` > 20 AND `bruger` <> '{$Foelbox}' AND `bruger` <> 'hestehandleren*' AND `bruger` <> 'genfoedsel' AND `status` = 'hest' 
-ORDER BY rand() LIMIT 200";
+LIMIT 500";
+
 
 $result = $link_new->query($sql);
 $viable_horses = 0;
