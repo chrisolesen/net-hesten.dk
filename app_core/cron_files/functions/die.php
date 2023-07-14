@@ -52,7 +52,7 @@ if ($result) {
 	while ($horse = $result->fetch_object()) {
 		++$viable_horses;
 
-		if (mt_rand(0, 80) <= $horse->alder) {
+		if (mt_rand(0, 50) <= $horse->alder) {
 
 			if ($horse->bruger == 'hestehandleren' || $horse->bruger == 'Hestehandleren' || $horse->bruger == NULL) {
 				$horse->bruger = 'techhesten';
