@@ -41,7 +41,7 @@ $loop = 0;
 $sql = "SELECT `id`, `alder`, `bruger`, `navn`, `foersteplads`, `andenplads`, `tredieplads`, `kaaringer`, `pris`, `race`, `original`, `unik` 
 FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 WHERE `alder` > 20 AND `bruger` <> '{$Foelbox}' AND `bruger` <> 'hestehandleren*' AND `bruger` <> 'genfoedsel' AND `status` = 'hest' 
-LIMIT 5000";
+LIMIT 10000";
 
 
 $result = $link_new->query($sql);
