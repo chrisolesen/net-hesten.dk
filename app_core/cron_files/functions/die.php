@@ -97,7 +97,7 @@ if ($result) {
 			$message = str_replace($tegn, $substitut, $message);
 
 			/* Kill Horse */
-			$link_new->query("UPDATE `Heste` SET `status` = '{$dead}', `death_date` = '{$date_now}' WHERE `id` = {$horse->id}");
+			$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET `status` = '{$dead}', `death_date` = '{$date_now}' WHERE `id` = {$horse->id}");
 			/* Inform user */
 			$utf_8_message = $message;
 			$link_new->query("INSERT INTO `game_data_private_messages` (`status_code`, `hide`, `origin`, `target`, `date`, `message`) VALUES (17, 0, 53432, {$user->id}, NOW(), '{$utf_8_message}' )");
