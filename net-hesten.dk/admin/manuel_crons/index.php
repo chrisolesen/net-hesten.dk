@@ -17,6 +17,14 @@ if (
 }
 
 if (($script = filter_input(INPUT_GET, 'run_cron') ?? false)) {
+
+	if (!isset($time_now)) {
+		date_default_timezone_set('Europe/Copenhagen');
+		$current_date = new DateTime('now');
+		$date_now = $current_date->format('Y-m-d');
+		$time_now = $current_date->format('H:i:s');
+	}
+
 	switch ($script) {
 		case 'die':
 			require_once("{$basepath}/app_core/cron_files/functions/die.php");
