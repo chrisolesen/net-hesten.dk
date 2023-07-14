@@ -10,6 +10,12 @@ if (!is_array($_SESSION['rights']) || (!in_array('global_admin', $_SESSION['righ
 	exit();
 }
 
+$date_now = new DateTime('NOW');
+$three_months = new DateInterval('P1Y');
+$date_gdpr_ancient = new DateTime();
+$date_gdpr_ancient->sub($three_months);
+
+
 /* List applicants */
 ?>
 <?php
@@ -95,7 +101,11 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 	<section>
 		<?php
 		$applicant_id = filter_input(INPUT_GET, 'delete_application');
-		if (filter_input(INPUT_GET, 'verify') == true || filter_input(INPUT_GET, 'status') == 'unverified') {
+		if (
+			filter_input(INPUT_GET, 'verify') == true
+			|| filter_input(INPUT_GET, 'status') == 'unverified'
+			|| (filter_input(INPUT_GET, 'verifydate') != false && filter_input(INPUT_GET, 'verifydate') < $date_gdpr_ancient->format('Y-m-d H:i:s'))
+		) {
 			if (filter_input(INPUT_POST, 'deleteMSG')) {
 				$applicant = $link_new->query("SELECT * FROM user_application WHERE id = $applicant_id LIMIT 1")->fetch_object();
 				$to = "$applicant->username <$applicant->email>";
@@ -197,7 +207,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 				<div class="grid_item"><?= $data->message; ?></div>
 				<div class="grid_item <?= ($data->verify_date != null ? 'verified' : 'unverified'); ?>"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></div>
 				<div class="grid_item"><a href="?accept_application=<?= $data->id; ?>">Opret</a></div>
-				<div class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>&status=<?= ($data->verify_date != null ? 'verified' : 'unverified'); ?>">Slet</a></div>
+				<div class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>&status=<?= ($data->verify_date != null ? 'verified' : 'unverified'); ?><?= ($data->verify_date != null ? "&verifydate={$data->verify_date}" : ''); ?>">Slet</a></div>
 		<?php
 			}
 		}
