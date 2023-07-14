@@ -197,7 +197,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 				<div class="grid_item"><?= $data->message; ?></div>
 				<div class="grid_item <?= ($data->verify_date != null ? 'verified' : 'unverified'); ?>"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></div>
 				<div class="grid_item"><a href="?accept_application=<?= $data->id; ?>">Opret</a></div>
-				<div class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>&status='<?= ($data->verify_date != null ? 'verified' : 'unverified'); ?>'">Slet</a></div>
+				<div class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>&status=<?= ($data->verify_date != null ? 'verified' : 'unverified'); ?>">Slet</a></div>
 		<?php
 			}
 		}
