@@ -41,7 +41,7 @@ $loop = 0;
 $sql = "SELECT `id`, `alder`, `bruger`, `navn`, `foersteplads`, `andenplads`, `tredieplads`, `kaaringer`, `pris`, `race`, `original`, `unik` 
 FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 WHERE `alder` > 20 AND `bruger` <> '{$Foelbox}' AND `bruger` <> 'hestehandleren*' AND `bruger` <> 'genfoedsel' AND `status` = 'hest' 
-LIMIT 500";
+LIMIT 1000";
 
 
 $result = $link_new->query($sql);
@@ -62,6 +62,7 @@ if ($result) {
 
 
 			if (strpos("'", $horse->bruger)) {
+				file_put_contents("{$basepath}/app_core/cron_files/logs/cron_one_hour_{$date_now}", PHP_EOL . "#User {$horse->bruger} is invalid", FILE_APPEND);
 				continue;
 			}
 			++$killed_amount;
