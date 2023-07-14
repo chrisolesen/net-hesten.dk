@@ -1,0 +1,21 @@
+<VirtualHost *:80>
+    DocumentRoot "/xampp/htdocs/net-hesten.dk/net-hesten.dk"
+    ServerName net-hesten.local
+    ServerAlias www.net-hesten.local
+</VirtualHost>
+<VirtualHost *:80>
+    DocumentRoot "/xampp/htdocs/net-hesten.dk/install.net-hesten.dk"
+    ServerName install.net-hesten.local
+</VirtualHost>
+<VirtualHost *:80>
+    DocumentRoot "/xampp/htdocs/net-hesten.dk/unit-tests.net-hesten.dk"
+    ServerName unit-tests.net-hesten.local
+</VirtualHost>
+<VirtualHost *:80>
+    DocumentRoot "/xampp/htdocs/net-hesten.dk/ajax.net-hesten.dk"
+    ServerName ajax.net-hesten.local
+</VirtualHost>
+<VirtualHost *:80>
+    DocumentRoot "/xampp/htdocs/net-hesten.dk/files.net-hesten.dk"
+    ServerName files.net-hesten.local
+</VirtualHost>

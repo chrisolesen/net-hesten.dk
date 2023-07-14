@@ -3,6 +3,7 @@
 $GLOBALS['hidden_system_users'] = [1, 2, 3];
 $GLOBALS['hidden_system_users_sql'] = '1, 2, 3';
 
+// You can grab a key from here https://www.random.org/passwords/?num=5&len=32&format=html&rnd=new
 $GLOBALS['project_upload_secret'] = 'crypt-code';
 
 define('PROJECT_TIMEZONE', 'Europe/Copenhagen');

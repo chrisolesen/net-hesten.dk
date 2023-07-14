@@ -95,7 +95,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 	<section>
 		<?php
 		$applicant_id = filter_input(INPUT_GET, 'delete_application');
-		if (filter_input(INPUT_GET, 'verify') == true) {
+		if (filter_input(INPUT_GET, 'verify') == true || filter_input(INPUT_GET, 'status') == 'unverified') {
 			if (filter_input(INPUT_POST, 'deleteMSG')) {
 				$applicant = $link_new->query("SELECT * FROM user_application WHERE id = $applicant_id LIMIT 1")->fetch_object();
 				$to = "$applicant->username <$applicant->email>";
@@ -161,11 +161,13 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 		.grid_item {
 			padding: 5px;
 		}
+
 		.grid_item.verified {
-			color:darkgoldenrod;
+			color: darkgoldenrod;
 		}
+
 		.grid_item.unverified {
-			color:darkred;
+			color: darkred;
 		}
 
 		.grid_header_wrapper {
@@ -195,7 +197,7 @@ if (filter_input(INPUT_GET, 'accept_application')) {
 				<div class="grid_item"><?= $data->message; ?></div>
 				<div class="grid_item <?= ($data->verify_date != null ? 'verified' : 'unverified'); ?>"><?= ($data->verify_date != null ? $data->verify_date : $data->date); ?></div>
 				<div class="grid_item"><a href="?accept_application=<?= $data->id; ?>">Opret</a></div>
-				<div class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>">Slet</a></div>
+				<div class="grid_item"><a href="?delete_application=<?= $data->id; ?>&applicant_name=<?= $data->username; ?>&status='<?= ($data->verify_date != null ? 'verified' : 'unverified'); ?>'">Slet</a></div>
 		<?php
 			}
 		}
