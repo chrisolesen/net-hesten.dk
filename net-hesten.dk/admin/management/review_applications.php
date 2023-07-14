@@ -11,7 +11,7 @@ if (!is_array($_SESSION['rights']) || (!in_array('global_admin', $_SESSION['righ
 }
 
 $date_now = new DateTime('NOW');
-$three_months = new DateInterval('P1Y');
+$three_months = new DateInterval('P3M');
 $date_gdpr_ancient = new DateTime();
 $date_gdpr_ancient->sub($three_months);
 
