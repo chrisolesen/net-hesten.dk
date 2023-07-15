@@ -84,7 +84,7 @@ class accounting
 		$link_new->query($sql);
 		/* Create account list entry */
 		$attr['meta_data']['line_text'] = $attr['line_text'];
-		$meta_for_db = json_encode($attr['meta_data'], JSON_UNESCAPED_UNICODE);
+		$meta_for_db = str_replace("'","\\'",json_encode($attr['meta_data'], JSON_UNESCAPED_UNICODE));
 
 		$sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`game_data_accounting` (`user_id`, `line_meta`, `line_amount`)
 		VALUES ({$attr['user_id']}, '{$meta_for_db}', {$attr['amount']}) ";
