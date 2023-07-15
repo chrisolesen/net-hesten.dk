@@ -88,6 +88,7 @@ class accounting
 
 		$sql = "INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`game_data_accounting` (`user_id`, `line_meta`, `line_amount`)
 		VALUES ({$attr['user_id']}, '{$meta_for_db}', {$attr['amount']}) ";
+		// TODO : Use prepared statements to avoid errors on apostrofees in data array
 		$result = $link_new->query($sql);
 		return $result;
 	}
