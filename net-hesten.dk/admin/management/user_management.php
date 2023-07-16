@@ -181,6 +181,11 @@ if (isset($_POST['adjust_wkr'])) {
 					<?php } else { ?>
 						<a href="?page=<?= $page; ?>&action=grant_right_horse_artist&user_id=<?= $data->id; ?>" class="make_artist"><img src="//files.<?= HTTP_HOST; ?>/graphics/artist.png" /></a>
 					<?php } ?>
+					<?php if (in_array('2', $rights_array)) { ?>
+						<a href="?page=<?= $page; ?>&action=remove_right_horse_artist_admin&user_id=<?= $data->id; ?>" class="active make_artist_admin">RHTA</a>
+					<?php } else { ?>
+						<a href="?page=<?= $page; ?>&action=grant_right_horse_artist_admin&user_id=<?= $data->id; ?>" class="make_artist_admin">GHTA</a>
+					<?php } ?>
 				</span>
 				<span class="monospace center_text">
 					<?= $data->date; ?><br />

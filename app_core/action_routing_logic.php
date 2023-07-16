@@ -173,6 +173,40 @@ if (filter_input(INPUT_GET, 'action') == 'remove_right_horse_artist') {
 	exit();
 }
 
+if (filter_input(INPUT_GET, 'action') == 'grant_right_horse_artist_admin') {
+	if (!in_array('global_admin', $_SESSION['rights'])) {
+		ob_end_clean();
+		header('Location: /');
+		exit();
+	}
+	$script_feedback[] = user::update_rights([
+		'user_id' => filter_input(INPUT_GET, 'user_id'),
+		'privilege_type' => '2',
+		'action' => 'grant'
+	]);
+	$script_feedback[] = user::update_rights([
+		'user_id' => filter_input(INPUT_GET, 'user_id'),
+		'privilege_type' => '8', // Admin panel access
+		'action' => 'grant'
+	]);
+	header("Location: /admin/management/user_management.php?page={$_GET['page']}");
+	exit();
+}
+if (filter_input(INPUT_GET, 'action') == 'remove_right_horse_artist_admin') {
+	if (!in_array('global_admin', $_SESSION['rights'])) {
+		ob_end_clean();
+		header('Location: /');
+		exit();
+	}
+	$script_feedback[] = user::update_rights([
+		'user_id' => filter_input(INPUT_GET, 'user_id'),
+		'privilege_type' => '2',
+		'action' => 'remove'
+	]);
+	header("Location: /admin/management/user_management.php?page={$_GET['page']}");
+	exit();
+}
+
 
 //if (filter_input(INPUT_POST, 'action') == 'post_chat_message') {
 //    $script_feedback[] = chat::post_message([
