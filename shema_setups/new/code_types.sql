@@ -1,7 +1,7 @@
 CREATE TABLE `game_data_status_codes` (
 	`id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) CHARACTER SET utf8 NOT NULL,
-	`decription` text CHARACTER SET latin1 NOT NULL,
+	`decription` text CHARACTER SET latin1,
 	PRIMARY KEY (`id`),
 	UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

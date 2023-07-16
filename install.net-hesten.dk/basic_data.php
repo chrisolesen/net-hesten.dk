@@ -16,7 +16,9 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
 
 	if (filter_input(INPUT_POST, 'install_action') === 'install_admin_user') {
 		$sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` 
-			(`stutteri`, `password`, `date`, `penge`) VALUES (:user_name, :user_pass, NOW(), 1000000)";
+			(`stutteri`, `password`, `date`, `penge`,`navn`,`email`,`alder`,`kon`,`hestetegner`,`beskrivelse`,`thumb`,`admin`) 
+			VALUES 
+			(:user_name, :user_pass, NOW(), 1000000, 'net-hesten', 'mail@net-hesten.local',18,'i',0,'','',1)";
 		$sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$sth->execute(['user_name' => filter_input(INPUT_POST, 'username'), 'user_pass' => cbc_pwhash(filter_input(INPUT_POST, 'password'))]);
 
@@ -43,7 +45,11 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
 			`egenskab`,
 			`ulempe`,
 			`talent`,
-			`age_updated`)
+			`age_updated`,
+			`beskrivelse`,`graesning`,`staevne`,`foersteplads`,`andenplads`,`tredieplads`,`kaaring`,`kaaringer`,
+			`partnerid`,`farid`,`morid`,`salgsstatus`,`original`,`genereres`,`genfodes`,`unik`,`saelger`,`salgs_dato`,`alder_skift`,`status_skift`,
+			`hh_ownership`,`death_date`,`random_height`
+			)
 			VALUES
 			(:user_name,
 			'Stallion one',
@@ -61,7 +67,11 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
 			'Sød',
 			'Drilsk',
 			'Spring',
-			NOW()),
+			NOW(),
+			'','','',0,0,0,'','',
+			0,0,0,0,0,0,0,0,'','0000-00-00','0000-00-00','0000-00-00',
+			'0000-00-00 00:00:00','0000-00-00',''
+			),
 			(:user_name,
 			'Mare one',
 			'Ghosts',
@@ -78,7 +88,11 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
 			'Sød',
 			'Drilsk',
 			'Spring',
-			NOW()),
+			NOW(),
+			'','','',0,0,0,'','',
+			0,0,0,0,0,0,0,0,'','0000-00-00','0000-00-00','0000-00-00',
+			'0000-00-00 00:00:00','0000-00-00',''
+			),
 			(:user_name,
 			'Foel one',
 			'Ghosts',
@@ -95,7 +109,11 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
 			'Sød',
 			'Drilsk',
 			'Spring',
-			NOW())
+			NOW(),
+			'','','',0,0,0,'','',
+			0,0,0,0,0,0,0,0,'','0000-00-00','0000-00-00','0000-00-00',
+			'0000-00-00 00:00:00','0000-00-00',''
+			)
 				;";
 			$sth = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 			$sth->execute(['user_name' => filter_input(INPUT_POST, 'username')]);
@@ -234,7 +252,7 @@ require_once("{$basepath}/app_core/functions/password_hash.php");
 		";
 		$sth_priv_insert = $GLOBALS['pdo_new']->prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 		$sth_priv_insert->execute();
-		echo '<br/>privilege_types setup done';
+		echo '<br/>game_data_status_codes setup done';
 	}
 	?>
 </body>

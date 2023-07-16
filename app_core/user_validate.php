@@ -63,7 +63,7 @@ if (isset($_POST['password']) && isset($_POST['username'])) {
 				$_SESSION['settings']['accept_offers'] = $user_accept_offers;
 
 				if (!$user_accept_offers) {
-					$link_new->query("INSERT INTO `user_data_varchar` (`parent_id`, `value`, `name`) VALUES ({$data['id']}, 'reject', 'accept_offers')");
+					$link_new->query("INSERT INTO `user_data_varchar` (`parent_id`, `value`, `name`, `date`) VALUES ({$data['id']}, 'reject', 'accept_offers',NOW())");
 					$_SESSION['settings']['accept_offers'] = 'reject';
 				}
 
