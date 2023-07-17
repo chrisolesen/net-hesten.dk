@@ -7,82 +7,85 @@
  */
 class array_sorter
 {
-    var $skey = false;
-    var $sarray = false;
-    var $sasc = true;
+	var $skey = false;
+	var $sarray = false;
+	var $sasc = true;
 
-    /**
-     * Constructor
-     *
-     * @access public
-     * @param mixed $array array to sort
-     * @param string $key array key to sort by
-     * @param boolean $asc sort order (ascending or descending)
-     */
-    
-    //function array_sorter(&$array, $key, $asc = true)
-    public function __construct(&$array, $key, $asc = true){
-        $this->sarray = $array;
-        $this->skey = $key;
-        $this->sasc = $asc;
-    }
-    /**
-     * Sort method
-     *
-     * @access public
-     * @param boolean $remap if true reindex the array to rewrite indexes
-     */
-    function sortit($remap = true)
-    {
-        $array = &$this->sarray;
-        uksort($array, array($this, "_as_cmp"));
-        if ($remap) {
-            $tmp = array();
-            while (list($id, $data) = each($array))
-                $tmp[] = $data;
-            return $tmp;
-        }
-        return $array;
-    }
+	/**
+	 * Constructor
+	 *
+	 * @access public
+	 * @param mixed $array array to sort
+	 * @param string $key array key to sort by
+	 * @param boolean $asc sort order (ascending or descending)
+	 */
 
-    /**
-     * Custom sort function
-     *
-     * @access private
-     * @param mixed $a an array entry
-     * @param mixed $b an array entry
-     */
-    function _as_cmp($a, $b)
-    {
-        //since uksort will pass here only indexes get real values from our array
-        if (!is_array($a) && !is_array($b)) {
-            $a = $this->sarray[$a][$this->skey];
-            $b = $this->sarray[$b][$this->skey];
-        }
+	//function array_sorter(&$array, $key, $asc = true)
+	public function __construct(&$array, $key, $asc = true)
+	{
+		$this->sarray = $array;
+		$this->skey = $key;
+		$this->sasc = $asc;
+	}
+	/**
+	 * Sort method
+	 *
+	 * @access public
+	 * @param boolean $remap if true reindex the array to rewrite indexes
+	 */
+	function sortit($remap = true)
+	{
+		$array = &$this->sarray;
+		uksort($array, array($this, "_as_cmp"));
 
-        //if string - use string comparision
-        if (!ctype_digit($a) && !ctype_digit($b)) {
-            if ($this->sasc)
-                return strcasecmp($a, $b);
-            else
-                return strcasecmp($b, $a);
-        } else {
-            if ($a == $b)
-                return 0;
+		if ($remap) {
+			$tmp = array();
+			foreach ($array as $data) {
+				$tmp[] = $data;
+			}
+			return $tmp;
+		}
 
-            if ($this->sasc)
-                return ($a > $b) ? -1 : 1;
-            else
-                return ($a > $b) ? 1 : -1;
-        }
-    }
+		return $array;
+	}
 
-}//end of class
+	/**
+	 * Custom sort function
+	 *
+	 * @access private
+	 * @param mixed $a an array entry
+	 * @param mixed $b an array entry
+	 */
+	function _as_cmp($a, $b)
+	{
+		//since uksort will pass here only indexes get real values from our array
+		if (!is_array($a) && !is_array($b)) {
+			$a = $this->sarray[$a][$this->skey];
+			$b = $this->sarray[$b][$this->skey];
+		}
+
+		//if string - use string comparision
+		if (!ctype_digit($a) && !ctype_digit($b)) {
+			if ($this->sasc)
+				return strcasecmp($a, $b);
+			else
+				return strcasecmp($b, $a);
+		} else {
+			if ($a == $b)
+				return 0;
+
+			if ($this->sasc)
+				return ($a > $b) ? -1 : 1;
+			else
+				return ($a > $b) ? 1 : -1;
+		}
+	}
+} //end of class
 
 function array_sorter(&$array, $key, $asc = true)
 {
-    $sorter = new array_sorter($array, $key, $asc);
-    return $sorter->sortit();
+	$sorter = new array_sorter($array, $key, $asc);
+	return $sorter->sortit();
 }
 
 /*
