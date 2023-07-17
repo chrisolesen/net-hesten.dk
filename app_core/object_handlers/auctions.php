@@ -305,7 +305,7 @@ class auctions
 			$horse = horses::get_one(['ID' => $attr['horse_id']]);
 
 			if ($horse->gender == 'Hoppe' && !is_null($horse->breed_partner)) {
-				return ["Du kan ikke sælge en ifolet hoppe på auktion.", 'error'];
+				return ["Du kan ikke sælge en ifolet hoppe på auktion.", 'warning'];
 			}
 			/* TODO: optimise this loop */
 			$seller_user_name = $_SESSION['username'];
@@ -325,7 +325,7 @@ class auctions
 				return ["Din hest er nu sat på auktion!", 'success'];
 			}
 
-			return ["Du ejer ikke den hest du har forsøgt at sælge!", "warning"];
+			return ["Du ejer ikke den hest du har forsøgt at sælge!", "error"];
 		} else {
 			return ['Kritisk fejl: #1', 'error'];
 		}

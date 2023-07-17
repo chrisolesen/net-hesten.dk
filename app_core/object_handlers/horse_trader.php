@@ -129,6 +129,10 @@ class horse_trader
 			return ['Hesten du har forsøgt at sælge, tilhører desværre ikke dig.', 'warning'];
 		}
 
+		if ($temp_horse_data->gender == 'Hoppe' && !is_null($temp_horse_data->breed_partner)) {
+			return ["Du kan ikke sælge en ifolet hoppe til Hestehandleren.", 'warning'];
+		}
+
 		$sell_income = ($temp_horse_data->value * 0.9);
 
 		accounting::add_entry(['amount' => $sell_income, 'line_text' => "HH: Solgt hest: [{$attr['horse_id']}]", 'mode' => '+']);
