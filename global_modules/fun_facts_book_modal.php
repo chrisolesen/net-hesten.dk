@@ -112,6 +112,14 @@
 				LIMIT 1";
 				$fun_facts['horses'] = $link_new->query($sql)->fetch_object();
 
+
+				$sql = "SELECT count(b.horse_id) AS foaling 
+				FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` b 
+				INNER JOIN `{$GLOBALS['DB_NAME_OLD']}`.Heste ON id = b.horse_id AND `status` <> 'død' AND kon = 'Hoppe'
+				WHERE meta_key = 'breeding';";
+				$fun_facts['horses']->foaling = $link_new->query($sql)->fetch_object()->foaling;
+
+
 				?>
 				<br />
 				<h3>Heste</h3>
