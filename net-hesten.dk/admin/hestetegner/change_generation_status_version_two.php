@@ -296,9 +296,13 @@ $selected_race = substr($_GET['race'], 1, -1);
 				if ($artist && $thumb && $advantage && $disadvantage && $talent) {
 					$sql = "INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 					(`bruger`, `status`, `alder`, `pris`, `beskrivelse`, `foersteplads`, `andenplads`, `tredieplads`, `statuschangedate`, `date`, `changedate`, 
-					`status_skift`, `alder_skift`, `navn`, `kon`, `race`, `tegner`, `thumb`, `height`, `egenskab`, `ulempe`, `talent`, `farid`, `morid`, `random_height`)
+					`status_skift`, `alder_skift`, `navn`, `kon`, `race`, `tegner`, `thumb`, `height`, `egenskab`, `ulempe`, `talent`, `farid`, `morid`, `random_height`,
+					`graesning`,`staevne`,`kaaring`,`kaaringer`,`partnerid`,`salgsstatus`,`original`,`genereres`,`genfodes`,`unik`,`saelger`,`salgs_dato`,`hh_ownership`,`death_date`
+					)
 					VALUES ('net-hesten', '{$horse_birth_status}', $generation_age, 15000, '', 0, 0, 0, '00-00-00 00:00:00', '{$target_date}','{$target_date}', NOW(), NOW(), 
-					'{$name}', '{$gender}', '{$race}', ' {$artist}', '{$thumb}', {$height}, '{$advantage}', '{$disadvantage}', '{$talent}', '', '', 'nej')";
+					'{$name}', '{$gender}', '{$race}', ' {$artist}', '{$thumb}', {$height}, '{$advantage}', '{$disadvantage}', '{$talent}', '', '', 'nej',
+					'','','','','','','','','','','','','0000-00-00 00:00:00','0000-00-00'
+					)";
 					$link_new->query($sql);
 					echo ($link_new->error ?? false);
 		?>
