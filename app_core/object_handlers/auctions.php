@@ -19,7 +19,7 @@ class auctions
 		FROM `game_data_auction_bids` AS `b` 
 		LEFT JOIN `game_data_auctions` AS `a` 
 		ON `a`.`id` = `b`.`auction` 
-		WHERE `b`.`creator` = {$_SESSION['user_id']} 
+		WHERE `b`.`creator` = {$_SESSION['user_id']} AND `a`.`end_date` > DATE_SUB(NOW(), INTERVAL 90 DAY) 
 		ORDER BY `b`.`auction` DESC, `b`.`bid_amount` DESC";
 
 		$result = $link_new->query($sql);
