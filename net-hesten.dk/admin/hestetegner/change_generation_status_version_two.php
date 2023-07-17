@@ -5,7 +5,7 @@ $responsive = true;
 require "{$basepath}/app_core/object_loader.php";
 require "{$basepath}/global_modules/header.php";
 
-if (!(is_array($_SESSION['rights']) && in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights']))) {
+if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights'])) {
 	ob_end_clean();
 	header('Location: /');
 	exit();
