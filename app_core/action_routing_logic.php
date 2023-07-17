@@ -54,7 +54,7 @@ if (filter_input(INPUT_POST, 'action') == strtoupper(md5(crypt('add_horse_templa
 }
 /* Auctions */
 if (filter_input(INPUT_POST, 'action') === 'put_on_auction') {
-	auctions::put_on_sale([
+	$script_feedback[] = auctions::put_on_sale([
 		'sell_date' => filter_input(INPUT_POST, 'sell_date'),
 		'horse_id' => filter_input(INPUT_POST, 'horse_id'),
 		'buy_now_price' => filter_input(INPUT_POST, 'buy_now_price'),

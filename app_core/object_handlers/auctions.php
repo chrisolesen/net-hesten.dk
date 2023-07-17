@@ -287,7 +287,11 @@ class auctions
 		if ($attr['sell_date'] == '' || $attr['sell_date'] == false) {
 			$attr['sell_date'] == $five_days_in_future->format('Y-m-d');
 		}
-		$defaults = [];
+		if (trim($attr['buy_now_price']) == '') {
+			$attr['buy_now_price'] = 0;
+		}
+
+		$defaults = ['buy_now_price' => 0];
 		foreach ($defaults as $key => $value) {
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
@@ -297,26 +301,30 @@ class auctions
 		if (isset($attr['horse_id'])) {
 			/* rows creator, status_code, object_id, object_type, minimum_price, instant_price, creation_date, end_date */
 			/* Verify ownership of horse */
-			$horses = horses::get_all(['user_name' => $_SESSION['username']]);
+			//$horses = horses::get_all(['user_name' => $_SESSION['username']]);
+			$horse = horses::get_one(['ID' => $attr['horse_id']]);
+
+			if ($horse->gender == 'Hoppe' && !is_null($horse->breed_partner)) {
+				return ["Du kan ikke sælge en ifolet hoppe på auktion.", 'error'];
+			}
 			/* TODO: optimise this loop */
 			$seller_user_name = $_SESSION['username'];
+			if ($horse->owner_name == $seller_user_name) {
 
-			foreach ($horses as $horse) {
-				if ($horse['id'] == ($attr['horse_id'])) {
-					/* Transfer horse to auctions user */
-					$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET `bruger` = 'Auktionshuset' WHERE `id` = '{$horse['id']}' AND `bruger` = '{$seller_user_name}'";
-					$result = $link_new->query($sql);
-					/* Insert horse into auctions table */
-					$sql = "INSERT INTO `game_data_auctions` (`creator`, `status_code`, `object_id`, `object_type`, `minimum_price`, `instant_price`, `creation_date`, `end_date`) 
+				/* Transfer horse to auctions user */
+				$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.`Heste` SET `bruger` = 'Auktionshuset' WHERE `id` = '{$horse->id}' AND `bruger` = '{$seller_user_name}'";
+				$result = $link_new->query($sql);
+				/* Insert horse into auctions table */
+				$sql = "INSERT INTO `game_data_auctions` (`creator`, `status_code`, `object_id`, `object_type`, `minimum_price`, `instant_price`, `creation_date`, `end_date`) 
 					VALUES ('{$attr['seller_id']}', '1', '{$attr['horse_id']}', '1', '{$attr['minimum_bid']}','{$attr['buy_now_price']}', NOW(), '{$attr['sell_date']} 17:00:00' )";
-					$result = $link_new->query($sql);
-					/* TODO */
-					/* Verify that horse is in auctions table or transfer back to user */
-					/* Withdraw the posting charge from the creator */
-					/* Output response to user */
-					return ["Din hest er nu sat på auktion!", 'success'];
-				}
+				$result = $link_new->query($sql);
+				/* TODO */
+				/* Verify that horse is in auctions table or transfer back to user */
+				/* Withdraw the posting charge from the creator */
+				/* Output response to user */
+				return ["Din hest er nu sat på auktion!", 'success'];
 			}
+
 			return ["Du ejer ikke den hest du har forsøgt at sælge!", "error"];
 		} else {
 			return ['Kritisk fejl: #1', 'error'];

@@ -52,7 +52,7 @@ class horses
 		if (mb_strtolower($horse_data->bruger) != mb_strtolower($username)) {
 			return ["Du ejer ikke den hest du forsøger at fole! {$horse_data->bruger} | {$username}", 'error'];
 		}
-		
+
 		if (strtolower($horse_data->graesning) == 'ja' || strtolower($horse_data->staevne) == 'ja') {
 			return ["Du kan ikke fole en hest, når den befinder sig til et stævne eller på græsmarken.", 'warning'];
 		}
@@ -239,9 +239,42 @@ class horses
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 		if (isset($attr['ID'])) {
-			$sql = "SELECT `id`, `bruger` AS `owner_name`, `navn` AS `name`, `race`, `kon` AS `gender`, `alder` AS `age`, `pris` AS `value`, `graesning`, `staevne`, `kaaring`, 
-			`status`, `original`, `unik`, `tegner` AS `artist`, `thumb`, `egenskab`, `ulempe`, `talent` 
-			FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
+			$sql = "SELECT 
+			
+			`heste`.`foersteplads` AS `gold_medal`, 
+			`heste`.`andenplads` AS `silver_medal`, 
+			`heste`.`tredieplads` AS `bronze_medal`, 
+			`heste`.`kaaringer` AS `junior_medal`, 
+			`heste`.`id`, 
+			`heste`.`bruger` AS `owner_name`, 
+			`heste`.`navn` AS `name`, 
+			`heste`.`race`, 
+			`heste`.`kon` AS `gender`, 
+			`heste`.`alder` AS `age`, 
+			`heste`.`pris` AS `value`, 
+			`heste`.`graesning`,
+			`heste`.`staevne`, 
+			`heste`.`kaaring`, 
+			`heste`.`status`, 
+			`heste`.`original`, 
+			`heste`.`unik`, 
+			`heste`.`tegner` AS `artist`, 
+			`heste`.`thumb`, 
+			`heste`.`egenskab`, 
+			`heste`.`ulempe`, 
+			`heste`.`talent`,
+			`heste`.`changedate` AS `grassdate`, 
+			`heste`.`statuschangedate` AS `change_date_two`, 
+			`heste`.`date` AS `change_date_three`, 
+			`contests`.`competition_id`, 
+			`contests`.`points`, 
+			`breeding`.`meta_value` AS `breed_partner`, 
+			`breeding`.`meta_date` AS `breed_date` 
+			FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS `heste` 
+			LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competition_participants` AS `contests` 
+			ON `contests`.`participant_id` = `heste`.`id` AND `contests`.`points` IS NULL 
+			LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` AS `breeding` 
+			ON `breeding`.`horse_id` = `heste`.`id` AND `breeding`.`meta_key` = 'breeding' 
 			WHERE `id` = '{$attr['ID']}' ";
 			$result = $link_new->query($sql);
 			if ($data = $result->fetch_assoc()) {
