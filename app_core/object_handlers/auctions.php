@@ -325,7 +325,7 @@ class auctions
 				return ["Din hest er nu sat på auktion!", 'success'];
 			}
 
-			return ["Du ejer ikke den hest du har forsøgt at sælge!", "error"];
+			return ["Du ejer ikke den hest du har forsøgt at sælge!", "warning"];
 		} else {
 			return ['Kritisk fejl: #1', 'error'];
 		}
