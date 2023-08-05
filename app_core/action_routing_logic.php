@@ -145,7 +145,7 @@ if (filter_input(INPUT_GET, 'action') == 'admin_user_password_reset') {
 	exit();
 }
 if (filter_input(INPUT_GET, 'action') == 'grant_right_horse_artist') {
-	if (!in_array('global_admin', $_SESSION['rights'])) {
+	if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights'])) {
 		ob_end_clean();
 		header('Location: /');
 		exit();
@@ -159,7 +159,7 @@ if (filter_input(INPUT_GET, 'action') == 'grant_right_horse_artist') {
 	exit();
 }
 if (filter_input(INPUT_GET, 'action') == 'remove_right_horse_artist') {
-	if (!in_array('global_admin', $_SESSION['rights'])) {
+	if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', $_SESSION['rights'])) {
 		ob_end_clean();
 		header('Location: /');
 		exit();

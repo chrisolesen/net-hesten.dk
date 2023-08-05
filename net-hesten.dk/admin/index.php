@@ -20,7 +20,7 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('admin_panel_acc
 <section class="admin_panel">
 	<h2>Admin Paneler</h2>
 	<?php
-	if (in_array('global_admin', $_SESSION['rights'])) {
+	if (in_array('global_admin', $_SESSION['rights']) || in_array('hestetegner_admin', $_SESSION['rights'])) {
 	?>
 		<a class="btn btn-info" href="/admin/management/user_management.php">Bruger administration</a>
 	<?php
