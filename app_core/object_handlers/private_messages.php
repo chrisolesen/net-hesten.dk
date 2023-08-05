@@ -94,8 +94,8 @@ class private_messages
 		foreach ($attr as $key => $value) {
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
-		$sql = "INSERT INTO `game_data_private_messages` (`status_code`, `origin`, `target`, `thread`, `date`, `message`) 
-		VALUES (17, {$attr['poster_id']}, {$attr['write_to']}, {$attr['thread']}, NOW(), '{$attr['message']}')";
+		$sql = "INSERT INTO `game_data_private_messages` (`status_code`, `origin`, `target`, `thread`, `date`, `message`,`hide`) 
+		VALUES (17, {$attr['poster_id']}, {$attr['write_to']}, {$attr['thread']}, NOW(), '{$attr['message']}',0)";
 		$result = $link_new->query($sql);
 		if ($result) {
 			return true;

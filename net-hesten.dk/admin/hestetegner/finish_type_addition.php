@@ -98,11 +98,12 @@ $selected_race = substr($_GET['race'], 1, -1);
 			  25	type_foel
 			  26	type_foel_rebirth
 			 */
+			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https:" : "http:";
 		?>
 			<li>
 				<form action="" method="POST">
 					<input type="hidden" name="id" value="<?= $data->id; ?>" />
-					<img style="float:left;" src="https://files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/imgHorse/<?= $data->image; ?>" />
+					<img style="float:left;" src="<?= $protocol; ?>//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/horses/imgs/<?= $data->image; ?>" />
 					<div style="float:left;width:200px;">
 						<label>Race</label><input type="text" list="horse_races" name="race" />
 						<label>Tegner</label><input type="text" list="usernames" name="artist" />

@@ -240,7 +240,7 @@ class artist_center
 		if ($result) {
 			return $result->artist_points;
 		} else {
-			$sql = $link_new->query("INSERT INTO `user_data_numeric` (`value`,`name`,`parent_id`) VALUES (0,'artist_points',{$attr['user_id']})");
+			$sql = $link_new->query("INSERT INTO `user_data_numeric` (`value`,`name`,`parent_id`,`date`) VALUES (0,'artist_points',{$attr['user_id']},NOW())");
 			return 0;
 		}
 	}
@@ -267,13 +267,17 @@ class artist_center
 			$attr[$key] = $link_new->real_escape_string($value);
 		}
 
+
+
 		if (isset($attr['submission_id']) && is_numeric($attr['submission_id'])) {
+
+			$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = 27";
 			$submission = ($link_new->query("SELECT * FROM `artist_center_submissions` WHERE `id` = {$attr['submission_id']} AND `status` = 27 ")->fetch_object() ?? false);
 			if ($submission) {
 				/* Message user */
-				private_messages::post_message(['message' => 'Din tegning er blevet godkendt.', 'write_to' => $submission->artist, 'poster_id' => 8]);
+				private_messages::post_message(['message' => 'Din tegning er blevet godkendt.', 'write_to' => $submission->artist, 'poster_id' => $_SESSION['user_id']]);
 				/* Billedet skal markeres */
-				//			$link_new->query("UPDATE `artist_center_submissions` SET `status` = 28 WHERE `id` = {$submission->id} AND `status` = 27 ");
+				//$link_new->query("UPDATE `artist_center_submissions` SET `status` = 28 WHERE `id` = {$submission->id} AND `status` = 27 ");
 				/* Billedet skal aktiveres i typer */
 				$target_file = (object) self::find_next_type_filename();
 				$full_origin_file = "{$basepath}/files.net-hesten.dk/horses/artist_submissions/{$submission->image}";
@@ -282,6 +286,10 @@ class artist_center
 				if (!file_exists($full_target_file)) {
 					copy($full_origin_file, $full_target_file);
 				}
+
+				$sql = "INSERT INTO `horse_types` (`image`, `date`,`artists`) VALUES ('{$target_file->filename}{$target_file_type}', NOW(),'{$submission->artist}')";
+				$link_new->query($sql);
+				//				$link_new->query("SELECT * FROM `artist_center_submissions` WHERE `id` = {$attr['submission_id']} AND `status` = 27 ");
 
 				self::grant_points(['user_id' => $submission->artist, 'points' => 1]);
 			}
