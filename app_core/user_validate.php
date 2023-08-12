@@ -148,4 +148,10 @@ if (isset($_SESSION['user_id']) && (isset($_SESSION['valid_ip']) && $_SESSION['v
 			$_SESSION['rights'][] = $data_lvl2['rights'];
 		}
 	}
+
+	if (in_array('tech_admin', $_SESSION['rights'])) {
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+	}
 }
