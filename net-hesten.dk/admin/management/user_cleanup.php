@@ -111,13 +111,15 @@ if (isset($_GET['clear_account_view'])) {
 
 		$target_date = new DateTime('NOW');
 		$target_date->sub((new DateInterval('P1Y')));
-		
-		$sql = "SELECT timing.value AS last_online, user.id, user.stutteri, user.penge, user.navn, user.email, user.date, FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS user "
-			. "LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' "
-			. "WHERE user.date < '{$target_date->format('Y-m-d H:i:s')}' AND timing.value < '{$target_date->format('Y-m-d H:i:s')}' "
-			. "ORDER BY timing.value ASC, user.id ASC "
-			. ""
-			. "";
+
+		$sql = "SELECT timing.`value` AS last_online, `user`.id, `user`.stutteri, `user`.penge, `user`.navn, `user`.email, `user`.`date` 
+		FROM `{$GLOBALS['DB_NAME_OLD']}`.Brugere AS `user` 
+		LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.user_data_timing AS timing ON timing.parent_id = user.id AND timing.name = 'last_active' 
+		WHERE `user`.`date` < '{$target_date->format('Y-m-d H:i:s')}' AND timing.`value` < '{$target_date->format('Y-m-d H:i:s')}' 
+		ORDER BY timing.`value` ASC, `user`.id ASC";
+
+
+
 		$result = $link_new->query($sql);
 		$i = 0;
 		$ihorses = 0;
