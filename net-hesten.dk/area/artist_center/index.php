@@ -28,10 +28,11 @@ require "{$basepath}/global_modules/header.php";
 			display:block;
 		}
 		body [data-section-type=info_square]{
-			height: 190px;
+			height: auto !important;
 		}
 		body [data-section-type="right-side"] {
 			float: none;
+			width:100% !important;
 		}
 	}
 </style>
