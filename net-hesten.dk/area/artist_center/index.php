@@ -25,14 +25,25 @@ require "{$basepath}/global_modules/header.php";
 	@media all and (max-width:640px) {
 		body #htc_section {
 			grid-template-columns: 1fr;
-			display:block;
+			display: block;
 		}
-		body [data-section-type=info_square]{
+
+		body [data-section-type=info_square] {
 			height: auto !important;
 		}
+
 		body [data-section-type="right-side"] {
 			float: none;
-			width:100% !important;
+			width: 100% !important;
+		}
+
+		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] {
+			height: auto !important;
+		}
+
+		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] input,
+		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] select {
+			display: block;
 		}
 	}
 </style>
