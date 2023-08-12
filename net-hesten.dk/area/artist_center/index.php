@@ -44,6 +44,7 @@ require "{$basepath}/global_modules/header.php";
 		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] input,
 		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] select {
 			display: block;
+			float:none;
 		}
 	}
 </style>
