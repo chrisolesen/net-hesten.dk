@@ -21,6 +21,19 @@ require "{$basepath}/global_modules/header.php";
 		width: calc(100% - 200px);
 		text-align: right;
 	}
+
+	@media all and (max-width:640px) {
+		body #htc_section {
+			grid-template-columns: 1fr;
+			display:block;
+		}
+		body [data-section-type=info_square]{
+			height: 190px;
+		}
+		body [data-section-type="right-side"] {
+			float: none;
+		}
+	}
 </style>
 <section class="tabs">
 	<nav>
@@ -114,6 +127,8 @@ require "{$basepath}/global_modules/header.php";
 				grid-template-columns: 1fr 300px;
 				grid-gap: 1em;
 			}
+
+
 
 			[data-section-type="page_title"] {
 				grid-column: 1 / span 2;
