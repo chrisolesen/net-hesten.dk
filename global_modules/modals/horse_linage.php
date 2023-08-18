@@ -101,7 +101,7 @@
         .name {
             font-weight: bold;
         }
-        hr {
+        h3 {
             margin-bottom: 1em;
         }
     </style>
