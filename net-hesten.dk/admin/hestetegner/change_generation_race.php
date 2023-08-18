@@ -15,13 +15,11 @@ $Foel = 'Føl';
 $selected_horse_id = filter_input(INPUT_GET, 'id');
 ?>
 <a href="/admin/hestetegner/admin_types_version_two.php">Tilbage</a><br /><br />
-<section id="change_generation_race"> 
+<section id="change_generation_race">
 	<header>
 		<h1>Raceskift type <?= $selected_horse_id; ?></h1>
 	</header>
 	<style>
-	
-
 		/*a.btn {
 			font-family:'Merienda One', cursive;
 		}*/
@@ -100,8 +98,28 @@ $selected_horse_id = filter_input(INPUT_GET, 'id');
 				$amount = $link_new->query("SELECT count(`id`) AS `amount` 
 				FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `thumb` LIKE '%{$data->image}%' AND `status` <> 'død'")->fetch_object()->amount;
 			}
-
+			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https:" : "http:";
 		?>
+			<li>
+				<form action="" method="POST">
+					<input type="hidden" name="id" value="<?= $data->id; ?>" />
+					<img style="float:left;" src="<?= $protocol; ?>//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/horses/imgs/<?= $data->image; ?>" />
+					<div style="float:left;width:200px;">
+						<label>Race</label><input type="text" list="horse_races" name="race" />
+						<label>Tegner</label><input type="text" list="usernames" name="artist" />
+						<label>status</label><select name="status">
+							<option value="22">Hest genereres</option>
+							<option value="26">Føl genereres</option>
+							<option value="19">Unik</option>
+							<option value="25">Føl</option>
+							<option value="24">Normal Hest</option>
+						</select>
+						<input type="submit" class="save btn btn-success" name="save" value="Gem" />
+					</div>
+				</form>
+			</li>
+
+
 			<li title="Type ID: <?= $data->id; ?>" data-horse-thumb="<?= $data->image; ?>" class="<?= in_array($data->status, [21, 22, 23, 26]) ? 'rebirth' : ''; ?> <?php /*= in_array($data->status, [20, 22, 26]) ? 'generation' : ''; */ ?> <?= in_array($data->status, [19, 23]) ? 'unique' : ''; ?>">
 				<img src="//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/imgHorse/<?= $data->image; ?>" />
 				<?php if (!in_array($data->status, [19, 23]) || (in_array($data->status, [19, 23]) && $amount == 0)) { ?>
@@ -180,5 +198,23 @@ $selected_horse_id = filter_input(INPUT_GET, 'id');
 		}
 	</script>
 </section>
+<datalist id="usernames">
+	<?php
+	$result = $link_new->query("SELECT `stutteri` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere`");
+	while ($data = $result->fetch_object()) {
+	?>
+		<option value="<?= $data->stutteri; ?>" /><?php
+												}
+													?>
+</datalist>
+<datalist id="horse_races">
+	<?php
+	$result = $link_new->query("SELECT `name` FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_races`");
+	while ($data = $result->fetch_object()) {
+	?>
+		<option value="<?= $data->name; ?>" /><?php
+											}
+												?>
+</datalist>
 <?php
 require "{$basepath}/global_modules/footer.php";
