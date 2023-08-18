@@ -84,7 +84,7 @@ if (filter_input(INPUT_POST, 'save_race')) {
 		$race = false;
 		if (isset($_GET['edit_race'])) {
 			$race_id = (int) $_GET['edit_race'];
-			$race = $link_new->query("SELECT `id`, `name`, `max_height`, `min_height`, `description` FROM `horse_races` WHERE `id` = {$race_id} LIMIT 1")->fetch_all();
+			$race = $link_new->query("SELECT `id`, `name`, `max_height`, `min_height`, `description` FROM `horse_races` WHERE `id` = {$race_id} ORDER BY `name` DESC LIMIT 1")->fetch_all();
 		?>
 			<input type="hidden" name="race_id" value="<?= $race_id; ?>" />
 		<?php
