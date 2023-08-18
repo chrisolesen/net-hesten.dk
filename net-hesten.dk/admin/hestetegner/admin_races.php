@@ -110,7 +110,7 @@ if (filter_input(INPUT_POST, 'save_race')) {
 		</thead>
 		<?php
 		$created_races = [];
-		$races = $link_new->query("SELECT `id`, `name`, `max_height`, `min_height`, `description` FROM `horse_races`")->fetch_all();
+		$races = $link_new->query("SELECT `id`, `name`, `max_height`, `min_height`, `description` FROM `horse_races` ORDER BY `name` DESC")->fetch_all();
 		foreach ($races as $race) {
 			$created_races[] = $race[1];
 			//			continue;
