@@ -101,10 +101,13 @@
         .name {
             font-weight: bold;
         }
+        hr {
+            margin-bottom: 1em;
+        }
     </style>
     <div class="shadow"></div>
     <div class="content" style="min-width: 400px;">
-        <h2>Stamtræ</h2>
+        <h2>Stamtavle</h2>
         <hr />
         <h3>Forældre</h3>
         <div class="parents">
