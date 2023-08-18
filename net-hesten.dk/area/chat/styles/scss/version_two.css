@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 header {
   display: block;
   clear: both;
@@ -135,6 +139,7 @@ body .btn {
   margin-bottom: 0;
   color: #333333;
   text-align: center;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   cursor: pointer;
   background-color: #f5f5f5;
   background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
@@ -167,4 +172,4 @@ body .btn-green {
 body .btn-green:active, body .btn-green:focus, body .btn-green:hover {
   color: #ffffff;
   background: #51a351;
-}/*# sourceMappingURL=messages.css.map */
+}/*# sourceMappingURL=version_two.css.map */

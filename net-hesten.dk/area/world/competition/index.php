@@ -53,9 +53,9 @@ require "{$basepath}/global_modules/header.php";
 					<h2><?= $data->name; ?></h2>
 					<div class="competition_description">
 						<?php if ($data->name == 'Følkåring') { ?>
-							<img src="/style/graphics/foelkaaring.png" />
+							<img src="//files.<?= HTTP_HOST; ?>/style/graphics/foelkaaring.png" />
 						<?php } else { ?>
-							<img src="/style/graphics/goldmedal.png" />
+							<img src="//files.<?= HTTP_HOST; ?>/style/graphics/goldmedal.png" />
 						<?php } ?>
 						<?php if ($data->name == 'Følkåring') { ?>
 							Helhedsindtryk:<br /> 15.000 wkr<br /><br />

@@ -1,9 +1,1 @@
-{
-    "version": 3,
-    "mappings": "AAAA,AAAA,IAAI,CAAC;EACJ,OAAO,EAAC,CAAC;CACT;;AACD,AAAA,OAAO,AAAA,KAAK,CAAC;EACZ,MAAM,EAAC,CAAC;EACR,OAAO,EAAC,CAAC;EACT,UAAU,EAAE,IAAI;CAChB;;AACD,AAAA,OAAO,AAAA,UAAU,CAAC;EACjB,aAAa,EAAE,CAAC;CAChB;;AACD,AAAA,aAAa,CAAC;EACb,SAAS,EAAE,KAAK;EAChB,UAAU,EAAE,KAAK;CACjB;;AACD,AAAA,OAAO,AAAA,QAAQ,CAAC;EACf,OAAO,EAAE,IAAI;CACb",
-    "sources": [
-        "iframe.scss"
-    ],
-    "names": [],
-    "file": "iframe.css"
-}
+{"version":3,"sources":["iframe.scss","iframe.css"],"names":[],"mappings":"AAEA;EACC,UAAA;ACDD;;ADGA;EACC,SAAA;EACA,UAAA;EACA,gBAAA;ACAD;;ADEA;EACC,gBAAA;ACCD;;ADCA;EACC,gBAAA;EACA,iBAAA;ACED;;ADAA;EACC,aAAA;ACGD","file":"iframe.css"}

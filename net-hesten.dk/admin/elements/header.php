@@ -15,6 +15,7 @@ ob_start();
         <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="/admin/style/main.css" />
+        <link rel="stylesheet" href="/admin/style/admin_extras.css" />
         <?php if ($responsive) { ?>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
         <?php } ?>

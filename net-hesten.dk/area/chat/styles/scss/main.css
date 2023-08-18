@@ -1,0 +1,63 @@
+header {
+  display: block;
+  clear: both;
+  margin: 0;
+  border-color: rgba(50, 50, 50, 0.8) rgba(150, 150, 150, 0.8) rgba(150, 150, 150, 0.8) rgb(50, 50, 50);
+  border-style: solid;
+  color: #232323;
+  border-width: 2px 1px 1px 2px;
+  padding: 5px;
+  line-height: 1.2;
+  margin-bottom: 5px;
+}
+header:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+ul.message_list {
+  overflow: auto;
+  padding: 0 0 140px;
+}
+
+li {
+  display: block;
+  clear: both;
+  margin: 0;
+  border-color: rgba(50, 50, 50, 0.8) rgba(150, 150, 150, 0.8) rgba(150, 150, 150, 0.8) rgb(50, 50, 50);
+  border-style: solid;
+  color: #232323;
+  border-width: 2px 1px 1px 2px;
+  padding: 5px;
+  line-height: 1.2;
+}
+li:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+li + li {
+  margin-top: 5px;
+}
+li .poster {
+  text-decoration: underline;
+  margin-bottom: 2.5px;
+}
+
+.new_post {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  height: 170px;
+  left: 0;
+  right: 0;
+  height: 120px;
+  position: fixed;
+  width: 260px;
+  left: 10px;
+}
+
+.chat_auto_renew_block {
+  float: right;
+}/*# sourceMappingURL=main.css.map */

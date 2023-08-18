@@ -17,6 +17,7 @@ if (($_SESSION['logged_in'] ?? false) == true) {
 	<meta charset="UTF-8" />
 	<title id="page_title">Net-Hesten</title>
 	<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/main.css?v=<?= time(); ?>" />
+	<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/admin_extras.css?v=<?= time(); ?>" />
 	<?php if (($_SESSION['settings']['list_style'] ?? false) == 'compact') { ?>
 		<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/horselists_compact_style.css?v=<?= time(); ?>" />
 	<?php }
@@ -30,7 +31,7 @@ if (($_SESSION['logged_in'] ?? false) == true) {
 	?>
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Merienda+One" rel="stylesheet">
-	<link rel="stylesheet" href="/style/font-awesome.min.css" />
+	<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/font-awesome.min.css" />
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>

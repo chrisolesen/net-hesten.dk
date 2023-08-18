@@ -1,0 +1,115 @@
+#change_generation_race ul {
+	border: 1px solid black;
+	padding: 10px;
+	display: block;
+}
+
+#change_generation_race ul li {
+	display: inline-block; 
+}
+
+#change_generation_race .heading span {
+	border-bottom: 3px double black;
+	text-align: center;
+}
+
+#change_generation_race .monospace {
+	font-family: monospace;
+}
+
+#change_generation_race .center_text {
+	text-align: center;
+}
+
+#change_generation_race .col {
+	float: left;
+	width: 50%;
+}
+
+#change_generation_race li {
+	line-height: 1.3;
+	height: 280px;
+	width: 200px;
+	border: 3px grey double;
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	margin: 5px;
+	padding: 5px;
+}
+
+#change_generation_race img {
+	max-height: 100%;
+	max-width: 100%;
+	position: relative;
+}
+
+#change_generation_race .unique,
+#change_generation_race .rebirth,
+#change_generation_race .generation {
+	border: 3px grey double;
+}
+
+#change_generation_race .generation {
+	border-left-color: blue;
+	border-bottom-color: blue;
+}
+
+#change_generation_race .rebirth {
+	border-top-color: blue;
+	border-right-color: blue;
+}
+
+#change_generation_race .unique {
+	border-left-color: gold !important;
+	border-bottom-color: gold !important;
+}
+
+#change_generation_race .generate_one {
+	position: absolute;
+	bottom: 35px;
+	right: 5px;
+	z-index: 2;
+}
+
+#change_generation_race .alter_type {
+	position: absolute;
+	bottom: 35px;
+	left: 5px;
+	z-index: 2;
+}
+
+#change_generation_race .alter_gen {
+	position: absolute;
+	bottom: 5px;
+	right: 5px;
+	z-index: 2;
+}
+
+#change_generation_race .unique_ness {
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+	z-index: 2;
+}
+
+#change_generation_race .gender {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	z-index: 2;
+}
+
+#change_generation_race .race {
+	position: absolute;
+	bottom: 65px;
+	left: 5px;
+	z-index: 2;
+}
+
+#change_generation_race .archive {
+	position: absolute;
+	bottom: 65px;
+	right: 5px;
+	z-index: 2;
+}

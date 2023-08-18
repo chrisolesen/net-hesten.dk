@@ -334,6 +334,8 @@ $selected_race = substr($_GET['race'], 1, -1);
 				FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `thumb` LIKE '%{$data->image}%' AND `status` <> 'død'")->fetch_object()->amount;
 			}
 
+			$age_type = filter_input(INPUT_GET, 'type');
+
 			$genders = $data->allowed_gender;
 			/*
 			  19	type_unique
@@ -354,12 +356,12 @@ $selected_race = substr($_GET['race'], 1, -1);
 					<a class="generate_one btn btn-info" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=generate_one&id=<?= $data->id; ?>&type=<?= $_GET['type']; ?>">Lav én</a>
 				<?php } ?>
 				<a class="alter_gen btn <?= in_array($data->status, [21, 22, 23, 26]) ? 'btn-danger' : 'btn-success'; ?>" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [21, 22, 23, 26]) ? 'deaktivate' : 'activate'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><?= in_array($data->status, [21, 22, 23, 26]) ? 'Genfød ikke' : 'Genfød'; ?></a>
-				<?php if (filter_input(INPUT_GET, 'type') !== 'foel') { ?>
+				<?php if ($age_type !== 'foel') { ?>
 					<a class="unique_ness btn <?= in_array($data->status, [20, 21, 22, 24]) ? 'btn-success' : 'btn-danger'; ?>" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [20, 21, 22, 24]) ? 'make_unique' : 'make_normal'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><?= in_array($data->status, [20, 21, 22, 24]) ? 'Unik' : 'Normal'; ?></a>
 				<?php
 				} ?>
 				<!-- TO DO: finish -->
-				<a class="race btn btn-info" style="pointer-events:none;">ID: <?= $data->id; ?></a>
+				<a class="race btn btn-info" href="/admin/hestetegner/change_generation_race.php?id=<?= $data->id; ?>">ID: <?= $data->id; ?></a>
 				<a class="archive btn btn-danger" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=archive&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">Arkiver</a>
 				<a class="alter_type btn btn-info" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [25, 26]) ? 'make_adult' : 'make_foel'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><?= in_array($data->status, [25, 26]) ? 'Bliv Hest' : 'Bliv Føl'; ?></a>
 				<div class="gender" style="overflow:hidden;height:32px;" onclick="slide_gender_toggle(this);">
