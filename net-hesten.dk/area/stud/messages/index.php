@@ -9,7 +9,7 @@ require "{$basepath}/global_modules/header.php";
 		height: calc(100% - 65px);
 	}
 </style>
-<link rel="stylesheet" href="/style/messages.css?v=<?= time(); ?>" />
+<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/messages.css?v=<?= time(); ?>" />
 
 <ul class="thread_list">
 	<?php
