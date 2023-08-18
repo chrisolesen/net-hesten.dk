@@ -33,7 +33,11 @@ if (($horse_id = (int) filter_input(INPUT_GET, 'horse_id'))) {
 			SELECT count(`participant_id`) FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competition_participants` `participant` 
 			LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competitions` `competition` ON `competition`.`id` = `participant`.`competition_id` 
 			WHERE `participant_id` = `horse`.`id` AND `participant`.`points` < 6 AND `competition`.`allowed_types` IN (2) 
-		) AS `junior_medal` 
+		) AS `junior_medal`,
+		(
+			SELECT meta_value FROM `net-hesten`.`horse_metadata` `breeder_meta` 
+			WHERE breeder_meta.`meta_key` = 'breeder' AND breeder_meta.horse_id = `horse`.`id` 
+		) AS `breeder` 
 		FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` `horse` 
 		WHERE `horse`.`id` = {$horse_id}"
 		);

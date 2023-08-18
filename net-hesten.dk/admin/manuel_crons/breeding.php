@@ -20,11 +20,17 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('site_helper', $
 	<h1>ManCrons - Avl</h1><br />
 	<?php
 	if (isset($_GET['do']) && $_GET['do'] == 'foel_cron') {
-		$breeds = $link_new->query("SELECT `meta`.`meta_value` AS `partner_id`, `meta`.`horse_id`, `horse`.`bruger`, `horse`.`race` 
+
+		$sql = "SELECT `meta`.`meta_value` AS `partner_id`, `meta`.`horse_id`, `horse`.`bruger`, `horse`.`race` 
 		FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` AS `meta` 
 		LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Heste` AS `horse` ON `horse`.`id` = `meta`.`horse_id` 
 		WHERE `meta_key` = 'breeding' AND `meta_date` < DATE_SUB(NOW(),INTERVAL 40 DAY) 
-		LIMIT 150");
+		LIMIT 150";
+
+
+		$breeds = $link_new->query($sql);
+
+
 
 		$foel_amount = 0;
 		$grow_up_amount = 0;
@@ -43,6 +49,7 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('site_helper', $
 		$born_amount = 0;
 		$in_waiting = 0;
 		while ($breed = $breeds->fetch_object()) {
+
 			$latin_race = $breed->race;
 			$horse = $breed->horse_id;
 			$partner = $breed->partner_id;
@@ -58,7 +65,10 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('site_helper', $
 			$nyid = $horse;
 			$nyhingstid = $partner;
 			/* get stallion value */
-			$stallion_value =  $link_new->query("SELECT `pris` * 1 FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `id` = {$breed->partner_id}")->fetch_object()->pris;
+
+			$sql_stallion_value = "SELECT `pris` * 1 AS `pris` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `id` = {$breed->partner_id}";
+
+			$stallion_value =  $link_new->query($sql_stallion_value)->fetch_object()->pris;
 
 			$farid = $partner;
 			$morid = $horse;
@@ -119,10 +129,12 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('site_helper', $
 
 			//------pluk en tilfældig thumb fra føllene i Følkassen-----------------------------------------
 
-			$result_layer_three = $link_new->query("SELECT `tegner`, `thumb` 
+			$result_layer_three_sql = "SELECT `tegner`, `thumb` 
 			FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 			WHERE `bruger` = '{$Foelbox}' AND `race` = '$latin_race' 
-			ORDER BY RAND() LIMIT 1");
+			ORDER BY RAND() LIMIT 1";
+			$result_layer_three = $link_new->query($result_layer_three_sql);
+
 			$rand_thumb = $result_layer_three->fetch_object();
 			$nythumb = $rand_thumb->thumb;
 			$foltegner = $rand_thumb->tegner;
@@ -130,9 +142,13 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('site_helper', $
 
 			$foel_value = 4500 + floor(($stallion_value * 0.1));
 			//----------generer føllene og stil status tilbage til "Hest"----------------------------------------------
-			$link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Heste` (`bruger`, `navn`, `race`, `kon`, `alder`, `beskrivelse`, `pris`, `foersteplads`, `andenplads`, 
+			$insert_result = $link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Heste` (`graesning`,`staevne`,`kaaring`,`kaaringer`,`partnerid`,`salgsstatus`,`original`,`genereres`,`genfodes`,`unik`,`saelger`,`salgs_dato`,`hh_ownership`,`death_date`,
+			`bruger`, `navn`, `race`, `kon`, `alder`, `beskrivelse`, `pris`, `foersteplads`, `andenplads`, 
 			`tredieplads`, `status`, `farid`, `morid`, `tegner`, `thumb`, `date`, `changedate`, `status_skift`, `alder_skift`, `height`, `random_height`, `egenskab`, `ulempe`, `talent`) 
-			VALUES ('$nybruger','Unavngivet','$nyrace','$nykon','0','','{$foel_value}','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
+			VALUES ('','','','','','','','','','','','','0000-00-00 00:00:00','0000-00-00 00:00:00',
+			'$nybruger','Unavngivet','$nyrace','$nykon','0','','{$foel_value}','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
+
+			$link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` (`horse_id`,`meta_key`,`meta_value`,`meta_date`) VALUES ({$link_new->insert_id},'breeder','{$user}',NOW())");
 			$link_new->query("DELETE FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` WHERE `horse_id` = '$horse' AND `meta_key` = 'breeding'");
 
 

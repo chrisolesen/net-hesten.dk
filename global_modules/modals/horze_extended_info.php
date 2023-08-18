@@ -23,6 +23,7 @@
                 jQuery('#horze_extended_info .talent').html(horse_data.talent);
                 jQuery('#horze_extended_info .ulempe').html(horse_data.ulempe);
                 jQuery('#horze_extended_info .egenskab').html(horse_data.egenskab);
+                jQuery('#horze_extended_info .breeder').html(horse_data.breeder);
                 console.log(horse_data.type);
                 if (horse_data.type == null) {
                     jQuery('#horze_extended_info .type').parent().hide();
@@ -130,7 +131,7 @@
         <div>
         </div>
         <div>
-            <span class="label">Opdrætter:</span> <span class="">Kommer snart!</span>
+            <span class="label">Opdrætter:</span> <span class="breeder">Kommer snart!</span>
         </div>
         <div style="margin-top:10px;">
             <button class='btn btn-info' data-button-type='modal_activator' data-horse-id="" data-target='horse_linage'>Åben stamtavle</button>

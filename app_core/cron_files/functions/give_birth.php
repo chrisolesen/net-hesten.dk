@@ -120,7 +120,13 @@ while ($breed = $breeds->fetch_object()) {
 	$link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_OLD']}`.`Heste` (`bruger`,`navn`,`race`, `kon`, `alder`, `beskrivelse`, `pris`, `foersteplads`, `andenplads`, `tredieplads`, 
 	`status`, `farid`, `morid`, `tegner`, `thumb`, `date`, `changedate`, `status_skift`, `alder_skift`, `height`, `random_height`, `egenskab`, `ulempe`, `talent`) 
 	VALUES ('$nybruger','Unavngivet','{$breed->race}','$nykon','0','','{$foel_value}','0','0','0','{$foel}','$nyhingstid','$nyid','$foltegner','$nythumb',now(),now(),'$today','$today','$child_height','$random_height', '$egenskab', '$ulempe', '$talent')");
-	$link_new->query("DELETE FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` WHERE `horse_id` = '$horse' AND `meta_key` = 'breeding'");
+	
+	$link_new->query("INSERT INTO `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` 
+	(`horse_id`,`meta_key`,`meta_value`,`meta_date`) 
+	VALUES ({$link_new->insert_id},'breeder','{$user}',NOW())
+	");
+
+	$link_new->query("DELETE FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` WHERE `horse_id` = '{$horse}' AND `meta_key` = 'breeding'");
 
 
 	//----------sender post til Postkassen"----------------------------------------------
