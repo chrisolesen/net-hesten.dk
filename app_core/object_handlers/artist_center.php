@@ -155,9 +155,13 @@ class artist_center
 			WHERE acs.`artist` = {$attr['user_id']} " . (($attr['status'] ?? false) ? "AND acs.`status` = " . ((int) $attr['status']) : '');
 		} else {
 			if (($attr['status'] ?? false)) {
-				$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = " . ((int) $attr['status']);
+				$sql = "SELECT acs.*,hr.name FROM `artist_center_submissions` acs
+				LEFT JOIN horse_races hr ON hr.id = acs.race 
+				WHERE `status` = " . ((int) $attr['status']);
 			} else {
-				$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = 27";
+				$sql = "SELECT acs.*,hr.name FROM `artist_center_submissions` acs
+				LEFT JOIN horse_races hr ON hr.id = acs.race 
+				WHERE `status` = 27";
 			}
 		}
 		$result = $link_new->query($sql);
