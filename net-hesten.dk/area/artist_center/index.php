@@ -53,7 +53,7 @@ require "{$basepath}/global_modules/header.php";
 		<ul>
 		</ul>
 	</nav>
-	<section id="htc_section">
+	<section id="htc_section" class="pending_page">
 		<div data-section-type="page_title">
 			<header>
 				<h1>Heste Tegner Panel<?= in_array('hestetegner', $_SESSION['rights']) ? ' - Oversigt' : ''; ?></h1>
@@ -134,38 +134,7 @@ require "{$basepath}/global_modules/header.php";
 			}
 			?>
 		</div>
-		<style>
-			#htc_section {
-				display: grid;
-				grid-template-columns: 1fr 300px;
-				grid-gap: 1em;
-			}
 
-
-
-			[data-section-type="page_title"] {
-				grid-column: 1 / span 2;
-				grid-row: 1;
-			}
-
-			[data-section-type="ht-tab-content"] {
-				grid-row: 2;
-				grid-column: 1;
-			}
-
-			[data-section-type="submissions"] {
-				display: grid;
-				grid-template-columns: repeat(4, 1fr);
-				grid-row: 3;
-				grid-column: 1;
-				grid-gap: 0.5em;
-			}
-
-			[data-section-type="right-side"] {
-				grid-row: 2 / span 2;
-				grid-column: 2;
-			}
-		</style>
 		<div data-section-type="submissions">
 			<h2 style="grid-column:1 / span 4;margin:0;">Dine indsendte</h2>
 			<?php
@@ -179,12 +148,11 @@ require "{$basepath}/global_modules/header.php";
 				$user_name_artist = $link_new->query("SELECT `stutteri` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = {$submission['artist']}")->fetch_object()->stutteri;
 			?>
 
-				<div class="artist_center_submission">
+				<div class="artist_center_horse_list artist_center_submission">
 					<a class="btn btn-danger delete_submission" href="?reject_artist_submission=<?= $submission['id']; ?>">Slet</a>
+					<div class="btn btn-white race_name"><?= $submission['race_name']; ?></div>
 					<img src="//files.<?= HTTP_HOST; ?>/horses/artist_submissions/<?= $submission['image']; ?>" />
-					<div>
-						<?= $submission['date']; ?><br />
-					</div>
+					<div class="btn btn-white date"><?= $submission['date']; ?></div>
 				</div>
 			<?php
 			}
@@ -192,6 +160,29 @@ require "{$basepath}/global_modules/header.php";
 		</div>
 	</section>
 </section>
+<style>
+	#htc_section {
+		display: grid;
+		grid-template-columns: 1fr 300px;
+		grid-gap: 1em;
+	}
+
+	[data-section-type="page_title"] {
+		grid-column: 1 / span 2;
+		grid-row: 1;
+	}
+
+	[data-section-type="ht-tab-content"] {
+		grid-row: 2;
+		grid-column: 1;
+	}
+
+
+	[data-section-type="right-side"] {
+		grid-row: 2 / span 2;
+		grid-column: 2;
+	}
+</style>
 
 <script type="text/javascript">
 	// iOS Hover Event Class Fix

@@ -71,13 +71,7 @@ require "{$basepath}/global_modules/header.php";
 				grid-column: 1;
 			}
 
-			[data-section-type="submissions"] {
-				display: grid;
-				grid-template-columns: repeat(4, 1fr);
-				grid-row: 2;
-				grid-column: 1;
-				grid-gap: 0.5em;
-			}
+			
 
 			[data-section-type="right-side"] {
 				grid-row: 2 / span 2;
@@ -97,11 +91,10 @@ require "{$basepath}/global_modules/header.php";
 				$user_name_artist = $link_new->query("SELECT `stutteri` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = " . $submission['artist'])->fetch_object()->stutteri;
 			?>
 
-				<div>
+				<div class="artist_center_horse_list">
+					<div class="btn btn-white race_name"><?= $submission['race_name']; ?></div>
 					<img src="//files.<?= HTTP_HOST; ?>/horses/artist_submissions/<?= $submission['image']; ?>" />
-					<div>
-						<?= $submission['date']; ?><br />
-					</div>
+					<div class="btn btn-white date"><?= $submission['date']; ?></div>
 				</div>
 			<?php
 			}

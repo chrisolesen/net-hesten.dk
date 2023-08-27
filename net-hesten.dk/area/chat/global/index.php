@@ -13,7 +13,6 @@ if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
 ?>
 <?php if (1 === 1) { ?>
     <link rel="stylesheet" href="/area/chat/styles/version_two.css?v=<?= time(); ?>" />
-    <link rel="stylesheet" href="/style/messages.css?v=<?= time(); ?>" />
     <style>
         body ul.message_list {
             height: calc(100% - 160px - 10px)
