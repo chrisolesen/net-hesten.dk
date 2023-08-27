@@ -297,7 +297,7 @@ class artist_center
 		return $return_data;
 	}
 
-	public static function delete_drawing($attr = [])
+	public static function reject_drawing($attr = [])
 	{
 		global $link_new;
 		global $basepath;
@@ -317,7 +317,7 @@ class artist_center
 			$submission = ($link_new->query($sql)->fetch_object() ?? false);
 			if ($submission) {
 
-				if ($submission->artist == $_SESSION['user_id']) {
+				if ($submission->artist == $_SESSION['user_id'] || (in_array('global_admin', $_SESSION['rights']) || in_array('hestetegner_admin', $_SESSION['rights']))) {
 					/* Message user */
 					//private_messages::post_message(['message' => 'Din tegning er afvist.', 'write_to' => $submission->artist, 'poster_id' => $_SESSION['user_id']]);
 					/* Billedet skal markeres */

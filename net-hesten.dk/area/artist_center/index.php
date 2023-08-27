@@ -180,7 +180,7 @@ require "{$basepath}/global_modules/header.php";
 			?>
 
 				<div class="artist_center_submission">
-					<a class="btn btn-danger delete_submission" href="?delete_artist_submission=<?= $submission['id']; ?>">Slet</a>
+					<a class="btn btn-danger delete_submission" href="?reject_artist_submission=<?= $submission['id']; ?>">Slet</a>
 					<img src="//files.<?= HTTP_HOST; ?>/horses/artist_submissions/<?= $submission['image']; ?>" />
 					<div>
 						<?= $submission['date']; ?><br />
