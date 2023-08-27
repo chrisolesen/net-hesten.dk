@@ -397,10 +397,11 @@ ob_start();
 	}
 
 	@media all and (max-height:700px) {
+		.modal.active .content,
 		#breed_horse.modal .content {
-			height: calc(100vh - 10px) !important;
-			top: 5px !important;
-			bottom: 5px !important;
+			height: calc(100vh - 45px) !important;
+			top: 10px !important;
+			transform: translateX(-50%) !important;
 			overflow: auto !important;
 		}
 	}
