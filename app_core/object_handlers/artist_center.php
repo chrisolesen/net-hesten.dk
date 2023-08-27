@@ -134,6 +134,8 @@ class artist_center
 
 	public static function fetch_drawings($attr = [])
 	{
+
+		// 805087
 		global $link_new;
 		$return_data = [];
 		$defaults = [];
@@ -148,7 +150,9 @@ class artist_center
 		}
 
 		if (isset($attr['user_id'])) {
-			$sql = "SELECT * FROM `artist_center_submissions` WHERE `artist` = {$attr['user_id']} " . (($attr['status'] ?? false) ? "AND `status` = " . ((int) $attr['status']) : '');
+			$sql = "SELECT acs.*,hr.name AS race_name FROM `artist_center_submissions` acs
+			LEFT JOIN horse_races hr ON hr.id = acs.race 
+			WHERE acs.`artist` = {$attr['user_id']} " . (($attr['status'] ?? false) ? "AND acs.`status` = " . ((int) $attr['status']) : '');
 		} else {
 			if (($attr['status'] ?? false)) {
 				$sql = "SELECT * FROM `artist_center_submissions` WHERE `status` = " . ((int) $attr['status']);
@@ -158,7 +162,7 @@ class artist_center
 		}
 		$result = $link_new->query($sql);
 		while ($data = $result->fetch_object()) {
-			$return_data[] = ["id" => $data->id, "admin_comment" =>  $data->admin_comment, "image" => $data->image, "type" => $data->type, "theme" => $data->theme, "occasion" => $data->occasion, "race" => $data->race, "artist" => $data->artist, "date" => $data->date];
+			$return_data[] = ["id" => $data->id, "admin_comment" =>  $data->admin_comment, "image" => $data->image, "type" => $data->type, "theme" => $data->theme, "occasion" => $data->occasion, "race" => $data->race, "race_name" => $data->race_name, "artist" => $data->artist, "date" => $data->date];
 		}
 		return $return_data;
 	}
