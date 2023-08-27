@@ -10,15 +10,33 @@
 		position: relative;
 		cursor: pointer;
 	}
-	.children {
+	.siblings,
+	.fsiblings,
+	.msiblings,
+	.children { 
 		max-height: 300px;
 		overflow: auto;
 		padding: 1em 0;
 	}
+	.top_line {
+		display: grid;
+		grid-template-columns: 160px 1fr;
+		.parents_holder {
+			h3 {
+				text-align: right;
+				padding: 1em 60px 1em 0;
+			}
+			.parents {
+				text-align: right;
+				margin: 0 60px 0 auto;
+				width: 290px;
+			}
+		}
+	}
 	.parents {
-		text-align: center;
+		/*text-align: center;
 		margin: 0 auto;
-		width: 290px;
+		width: 290px;*/
 	}
 
 	.self {

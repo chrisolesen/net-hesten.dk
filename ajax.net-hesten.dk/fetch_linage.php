@@ -20,7 +20,9 @@ if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 		$parents->mother = 0;
 	}
 
-	$sql = "SELECT `id`, `navn`, `alder`, `thumb`, `kon`, `status`, `unik`, `farid`, `morid` 
+	$sql = "SELECT `id`, `navn`, `alder`, `thumb`, `kon`, `status`, `unik`,
+	CASE WHEN `farid` = '' THEN 0 ELSE `farid` END AS `farid`, 
+	CASE WHEN `morid` = '' THEN 0 ELSE `morid` END AS `morid`  
 	FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 	WHERE 
 	`farid` = {$horse_id} OR `morid` = {$horse_id} -- Children 
@@ -50,6 +52,12 @@ if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 			$return_data['parents']['mother'] = $horse_array;
 		} else if ($data->id === $horse_id) {
 			$return_data['self'] = $horse_array;
+		} else if ($data->farid == $parents->father && $data->morid == $parents->mother) {
+			$return_data['siblings']['full'][] = $horse_array;
+		} else if ($data->morid == $parents->mother) {
+			//			$return_data['siblings']['mother'][] = $horse_array;
+		} else if ($data->farid == $parents->father) {
+			//			$return_data['siblings']['father'][] = $horse_array;
 		} else {
 			$return_data['children'][] = $horse_array;
 		}
