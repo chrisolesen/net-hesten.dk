@@ -1,5 +1,16 @@
 <?php
 
+/* Script feedback example  
+return ["Du lige solgt din hest for {$sell_income} wkr, tillykke!", 'success'];
+*/
+
+$routers = GLOB("routers/*");
+foreach ($routers as $router) {
+	if (substr($router, -4) == '.php') {
+		require_once($router);
+	}
+}
+
 if (filter_input(INPUT_POST, 'action')) {
 }
 /* Horses */

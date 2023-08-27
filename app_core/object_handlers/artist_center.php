@@ -296,4 +296,41 @@ class artist_center
 		}
 		return $return_data;
 	}
+
+	public static function delete_drawing($attr = [])
+	{
+		global $link_new;
+		global $basepath;
+		$return_data = [];
+		$defaults = [];
+		foreach ($defaults as $key => $value) {
+			isset($attr[$key]) ?: $attr[$key] = $value;
+		}
+		foreach ($attr as $key => $value) {
+			$attr[$key] = $link_new->real_escape_string($value);
+		}
+
+
+
+		if (isset($attr['submission_id']) && is_numeric($attr['submission_id'])) {
+			$sql = "SELECT * FROM `artist_center_submissions` WHERE `id` = {$attr['submission_id']}";
+			$submission = ($link_new->query($sql)->fetch_object() ?? false);
+			if ($submission) {
+
+				if ($submission->artist == $_SESSION['user_id']) {
+					/* Message user */
+					private_messages::post_message(['message' => 'Din tegning er afvist.', 'write_to' => $submission->artist, 'poster_id' => $_SESSION['user_id']]);
+					/* Billedet skal markeres */
+					$link_new->query("UPDATE `artist_center_submissions` SET `status` = 29 WHERE `id` = {$submission->id} AND `status` = 27 ");
+					/* Billedet skal aktiveres i typer */
+					return ["Du har selv afvist din tegning.", 'success'];
+				} else {
+					return ["Du har ikke tegnet den tegning du har anmodet om at slette.", 'error'];
+				}
+			} else {
+				return ["Den hest du har anmodet om at slette findes ikke.", 'error'];
+			}
+		}
+		return ["Du har ikke sendt et ID med.", 'error'];
+	}
 }

@@ -38,11 +38,11 @@ require "{$basepath}/global_modules/header.php";
 				<header>
 					<h2>Dine data</h2>
 				</header>
-				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/approved.php"><span class="title">Godkendte Tegninger:</span><span class="value"><?= artist_center::yield_approved(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
-				<div><a href="//<?= HTTP_HOST; ?>//area/artist_center/"><span class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 				<?php if (array_intersect(['hestetegner', 'global_admin'], $_SESSION['rights'])) { ?>
 					<div><a href="#" title="Points kan ikke benyttes endnu"><span class="title">HT Points:</span><span class="value"><?= artist_center::yield_points(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 				<?php } ?>
+				<div><a href="//<?= HTTP_HOST; ?>//area/artist_center/"><span class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/approved.php"><span class="title">Godkendte Tegninger:</span><span class="value"><?= artist_center::yield_approved(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/rejected.php"><span style="text-decoration:underline;" class="title">Afviste Tegninger:</span><span class="value"><?= artist_center::yield_rejected(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 			</div>
 			<?php if (in_array('global_admin', $_SESSION['rights'])) { ?>

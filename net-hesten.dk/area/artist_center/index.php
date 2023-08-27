@@ -44,7 +44,7 @@ require "{$basepath}/global_modules/header.php";
 		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] input,
 		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] select {
 			display: block;
-			float:none;
+			float: none;
 		}
 	}
 </style>
@@ -64,11 +64,11 @@ require "{$basepath}/global_modules/header.php";
 				<header>
 					<h2>Dine data</h2>
 				</header>
-				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/approved.php"><span class="title">Godkendte Tegninger:</span><span class="value"><?= artist_center::yield_approved(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
-				<div><a href="//<?= HTTP_HOST; ?>//area/artist_center/"><span style="text-decoration:underline;" class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 				<?php if (array_intersect(['hestetegner', 'global_admin'], $_SESSION['rights'])) { ?>
 					<div><a href="#" title="Points kan ikke benyttes endnu"><span class="title">HT Points:</span><span class="value"><?= artist_center::yield_points(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 				<?php } ?>
+				<div><a href="//<?= HTTP_HOST; ?>//area/artist_center/"><span style="text-decoration:underline;" class="title">Afventende Tegninger:</span><span class="value"><?= artist_center::yield_waiting(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
+				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/approved.php"><span class="title">Godkendte Tegninger:</span><span class="value"><?= artist_center::yield_approved(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 				<div><a href="//<?= HTTP_HOST; ?>/area/artist_center/rejected.php"><span class="title">Afviste Tegninger:</span><span class="value"><?= artist_center::yield_rejected(['user_id' => $_SESSION['user_id']]); ?></span></a></div>
 			</div>
 			<?php if (in_array('global_admin', $_SESSION['rights'])) { ?>
@@ -169,7 +169,7 @@ require "{$basepath}/global_modules/header.php";
 		<div data-section-type="submissions">
 			<h2 style="grid-column:1 / span 4;margin:0;">Dine indsendte</h2>
 			<?php
-			$submissions = artist_center::fetch_drawings(['user_id' => $_SESSION['user_id']]);
+			$submissions = artist_center::fetch_drawings(['user_id' => $_SESSION['user_id'], 'status' => 27]);
 			foreach ($submissions as $submission) {
 				if ($submission['occasion'] == 'artist_request') {
 					$style = 'style="opacity:0.2;"';
@@ -179,7 +179,8 @@ require "{$basepath}/global_modules/header.php";
 				$user_name_artist = $link_new->query("SELECT `stutteri` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere` WHERE `id` = {$submission['artist']}")->fetch_object()->stutteri;
 			?>
 
-				<div>
+				<div class="artist_center_submission">
+					<a class="btn btn-danger delete_submission" href="?delete_artist_submission=<?= $submission['id']; ?>">Slet</a>
 					<img src="//files.<?= HTTP_HOST; ?>/horses/artist_submissions/<?= $submission['image']; ?>" />
 					<div>
 						<?= $submission['date']; ?><br />
