@@ -319,7 +319,7 @@ class artist_center
 
 				if ($submission->artist == $_SESSION['user_id']) {
 					/* Message user */
-					private_messages::post_message(['message' => 'Din tegning er afvist.', 'write_to' => $submission->artist, 'poster_id' => $_SESSION['user_id']]);
+					//private_messages::post_message(['message' => 'Din tegning er afvist.', 'write_to' => $submission->artist, 'poster_id' => $_SESSION['user_id']]);
 					/* Billedet skal markeres */
 					$link_new->query("UPDATE `artist_center_submissions` SET `status` = 29 WHERE `id` = {$submission->id} AND `status` = 27 ");
 					/* Billedet skal aktiveres i typer */
