@@ -23,7 +23,7 @@ if (($_SESSION['logged_in'] ?? false) == true) {
 	<?php }
 	?>
 	<?php if (isset($_GET['test_view'])) { ?>
-		<meta name="viewport" content="width=1240, initial-scale=1.0">
+		<meta name="viewport" content="width=1240, initial-scale=0.5">
 	<?php } else {
 	?>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
