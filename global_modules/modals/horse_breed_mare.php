@@ -42,5 +42,28 @@
 			<p style="font-size:16px;line-height: 30px;">Det koster 7.500 wkr, at folet din hoppe.</p>
 			<input style="position:absolute;bottom:0;right:0;" type="submit" disabled="disabled" class="btn btn-success" value="Start avl" name="submit">
 		</form>
+		<input id="find_id" type="text" placeholder="Find ID" value="" />
+		<button class="btn btn-success fetch_id">Søg</button>
 	</div>
+	<script>
+		jQuery('.fetch_id').click(function() {
+			console.log('?');
+			jQuery.get({
+				url: "//ajax.<?= HTTP_HOST; ?>/index.php?request=suggest_breed_targets&find_id=" + jQuery("#find_id").val(),
+				cache: false
+			}).then(function(data) {
+				jQuery("#breed_targets_zone").html(data);
+				jQuery("#breed_horse input[type='submit']").attr('disabled', 'disabled');
+				jQuery('[data-type="potential_breed_target"]').each(function() {
+					jQuery(this).click(function() {
+						jQuery('#breed_horse__target_horse_id').attr('value', jQuery(this).attr('data-horse_id'));
+						jQuery('#breed_horse__target_horse_id').val(jQuery(this).attr('data-horse_id'));
+						jQuery('.marked_breed_target').removeClass('marked_breed_target');
+						jQuery(this).addClass('marked_breed_target');
+						jQuery(this).parent().parent().parent().find('input[type="submit"]').removeAttr('disabled');
+					});
+				});
+			});
+		});
+	</script>
 </div>

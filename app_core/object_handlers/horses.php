@@ -67,6 +67,15 @@ class horses
 		if (mb_strtolower($horse_data->status) == 'død') {
 			return ["En død hest kan ikke foles.", 'error'];
 		}
+
+		if (
+			mb_strtolower($target_horse_data->status) == 'død' 
+			|| mb_strtolower($target_horse_data->status) == 'føl' 
+			|| mb_strtolower($target_horse_data->kon) != 'hingst'
+			|| mb_strtolower($target_horse_data->race) != mb_strtolower($horse_data->race) 		
+		) {
+			return ["Venligst ikke snyd.", 'error'];
+		}
 		/* Tag wkr fra bruger */
 		/* Giv wkr minus gebyr til hingst */
 		/* Send besked til bruger */
