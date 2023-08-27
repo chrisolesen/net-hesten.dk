@@ -14,14 +14,21 @@ if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 	$parents = $link_new->query($sql);
 	if ($parents) {
 		$parents = $parents->fetch_object();
+	} else {
+		$parents = (object) [];
+		$parents->father = 0;
+		$parents->mother = 0;
 	}
 
+	$sql = "SELECT `id`, `navn`, `alder`, `thumb`, `kon`, `status`, `unik`, `farid`, `morid` 
+	FROM `net-hesten-old`.`Heste` 
+	WHERE 
+	`farid` = {$horse_id} OR `morid` = {$horse_id} -- Children 
+	OR `id` = {$horse_id} -- SELF  
+	OR `id` IN (0,{$parents->father},{$parents->mother}) -- Parents 
+	OR `farid` = {$parents->father} OR `morid` = {$parents->mother} -- Siblings
+	";
 
-	$sql = "SELECT `id`, `navn`, `alder`, `thumb`, `kon`, `status`, `unik` 
-	FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
-	WHERE `farid` = {$horse_id} OR `morid` = {$horse_id} OR `id` = {$horse_id} "
-		. ($parents->father != '' ? "OR `id` = {$parents->father} " : "")
-		. ($parents->mother != '' ? "OR `id` = {$parents->mother} " : "");
 	$result = $link_new->query($sql);
 
 	$return_data = [];

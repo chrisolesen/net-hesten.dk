@@ -58,74 +58,30 @@
             });
         }
     </script>
-    <style>
-        #horse_linage .child,
-        #horse_linage .mother,
-        #horse_linage .self,
-        #horse_linage .father {
-            display: inline-block;
-            margin: 10px;
-            height: 160px;
-            width: 120px;
-            position: relative;
-            cursor: pointer;
-        }
-        
-        #horse_linage .parents {
-            text-align: center;
-            margin: 0 auto;
-            width: 290px;
-        }
-
-        #horse_linage .self {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        #horse_linage .content {
-            text-align: center;
-            width: 600px;
-        }
-
-        #horse_linage .gender_icon {
-            position: absolute;
-            top: -15px;
-            right: -15px;
-        }
-
-        #horse_linage img {
-            max-height: 120px;
-            max-width: 120px;
-        }
-
-        .name {
-            font-weight: bold;
-        }
-        h3 {
-            margin-bottom: 1em;
-        }
-    </style>
     <div class="shadow"></div>
     <div class="content" style="min-width: 400px;">
         <h2>Stamtavle</h2>
-        <hr />
-        <h3>Forældre</h3>
-        <div class="parents">
-            <div class="father"><i class="gender_icon fa fa-mars fa-2x" style="color:black;display:block;"></i>
-                <a data-button-type='modal_activator' data-horse-id="" data-target='horse_linage'><img src="" /></a>
-                <span class="name"></span>
-            </div>
-            <div class="mother"><i class="gender_icon fa fa-venus fa-2x" style="color:black;display:block;"></i>
-                <a data-button-type='modal_activator' data-horse-id="" data-target='horse_linage'><img src="" /></a>
-                <span class="name"></span>
+        <div>
+
+            <h3>Forældre</h3>
+            <div class="parents">
+                <div class="father"><i class="gender_icon fa fa-mars fa-2x" style="color:black;display:block;"></i>
+                    <a data-button-type='modal_activator' data-horse-id="" data-target='horse_linage'><img src="" /></a>
+                    <span class="name"></span>
+                </div>
+                <div class="mother"><i class="gender_icon fa fa-venus fa-2x" style="color:black;display:block;"></i>
+                    <a data-button-type='modal_activator' data-horse-id="" data-target='horse_linage'><img src="" /></a>
+                    <span class="name"></span>
+                </div>
             </div>
         </div>
-        <hr />
-        <h3>Søskende</h3>
-        <div class="self"></div>
-        <hr />
-        <h3>Afkøm</h3>
-        <div class="children"></div>
-
+        <div>
+            <h3>Søskende</h3>
+            <div class="self"></div>
+        </div>
+        <div>
+            <h3>Afkøm</h3>
+            <div class="children"></div>
+        </div>
     </div>
 </div>

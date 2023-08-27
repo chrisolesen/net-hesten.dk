@@ -1,0 +1,52 @@
+#horse_linage {
+	.child,
+	.mother,
+	.self,
+	.father {
+		display: inline-block;
+		margin: 10px;
+		height: 160px;
+		width: 120px;
+		position: relative;
+		cursor: pointer;
+	}
+	.children {
+		max-height: 300px;
+		overflow: auto;
+		padding: 1em 0;
+	}
+	.parents {
+		text-align: center;
+		margin: 0 auto;
+		width: 290px;
+	}
+
+	.self {
+		margin: 20px 0;
+		text-align: center;
+	}
+
+	.content {
+		text-align: center;
+		width: 1000px;
+	}
+
+	.gender_icon {
+		position: absolute;
+		top: -15px;
+		right: -15px;
+	}
+
+	img {
+		max-height: 120px;
+		max-width: 120px;
+	}
+	h3 {
+		padding: 1em 0;
+		border-top: 1px solid black;
+	}
+}
+
+.name {
+	font-weight: bold;
+}
