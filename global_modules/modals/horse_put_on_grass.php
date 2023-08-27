@@ -21,7 +21,7 @@
 		<p style="font-size: 14px;line-height: 1.5;">
 			Hesten vil blive sat på græs. Du tjener 2 wkr for hvert minut din hest er på græs. Husk dog at sætte den tilbage i stalden inden 14 timer ellers bliver der trukket 500 wkr fra din konto og du mister optjeningen.
 		</p>
-		<form id="put_horse_on_grass_form" action="/area/stud/main/" method="post">
+		<form id="put_horse_on_grass_form" action="/area/stud/main/?your_horses_page=<?= filter_input(INPUT_GET, 'your_horses_page') ?? 0; ?>" method="post">
 			<input type="hidden" name="action" value="put_horse_on_grass" />
 			<input id="put_horse_on_grass__horse_id" type="hidden" name="horse_id" value="" />
 			<input type="submit" class="btn btn-success" value="Sæt på græs" name="submit">
