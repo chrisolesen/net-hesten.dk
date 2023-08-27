@@ -21,7 +21,7 @@ if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 	}
 
 	$sql = "SELECT `id`, `navn`, `alder`, `thumb`, `kon`, `status`, `unik`, `farid`, `morid` 
-	FROM `net-hesten-old`.`Heste` 
+	FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 	WHERE 
 	`farid` = {$horse_id} OR `morid` = {$horse_id} -- Children 
 	OR `id` = {$horse_id} -- SELF  
