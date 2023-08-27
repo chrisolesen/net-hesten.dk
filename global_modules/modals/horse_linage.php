@@ -80,7 +80,7 @@
             <div class="self"></div>
         </div>
         <div>
-            <h3>Afkøm</h3>
+            <h3>Afkom</h3>
             <div class="children"></div>
         </div>
     </div>
