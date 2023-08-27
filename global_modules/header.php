@@ -17,6 +17,7 @@ if (($_SESSION['logged_in'] ?? false) == true) {
 	<meta charset="UTF-8" />
 	<title id="page_title">Net-Hesten</title>
 	<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/main.css?v=<?= time(); ?>" />
+	<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/responsive.css?v=<?= time(); ?>" />
 	<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/admin_extras.css?v=<?= time(); ?>" />
 	<?php if (($_SESSION['settings']['list_style'] ?? false) == 'compact') { ?>
 		<link rel="stylesheet" href="//files.<?= HTTP_HOST; ?>/style/horselists_compact_style.css?v=<?= time(); ?>" />
