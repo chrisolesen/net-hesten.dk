@@ -248,7 +248,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 
 
 		
-		$sql = "SELECT `image`, `status`, `id`, `allowed_gender`, `archived` FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` ORDER BY `date` DESC";
+		$sql = "SELECT `image`, `status`, `id`, `allowed_gender`, `archived` FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` LIMIT 20 ORDER BY `date` DESC";
 		$result = $link_new->query($sql);
 		$races = '';
 		$latin_dead = 'død';
