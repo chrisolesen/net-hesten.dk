@@ -41,33 +41,13 @@
 	<?php } ?>
 </section>
 <style>
+/*
 	#left_menu.old_school ~ #page-content {
 		width:calc(100% - 175px - 2rem);
 	} 
 	#left_menu.old_school {
 		width: calc(2rem + 175px);
 	}
-	#left_menu.old_school a {
-		height: 30px;;
-		opacity: 1;
-		display:block;
-		width: auto;;
-		position: static;
-	}
-	#left_menu.old_school a img {
-		height: 30px;
-		width: 30px;
-		float:left;
-	}
-	#left_menu.old_school [data-custom-title]:after {
-		box-shadow: none;
-		background: none;
-		padding:0;
-		line-height: 30px;
-		display: inline-block !important;
-		opacity: 1 !important;
-		position: static !important;
-		-webkit-transform: none;
-		transform: none;
-	}
+	*/
+	
 </style>

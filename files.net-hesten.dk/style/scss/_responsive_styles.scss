@@ -13,6 +13,8 @@
 	#top_menu,
 	#page-wrap,
 	#left_menu,
+	#left_menu.old_school,
+	#left_menu.old_school ~ #page-content,
 	#page-content {
 		width: 100%;
 		display: block;
@@ -92,7 +94,12 @@
 			max-width: 100%;
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
+			&.old_school {
+				display: grid;
+				grid-template-columns:1fr 1fr 1fr;
+			}
 		}
+
 		#left_menu,
 		#page-content {
 			float: none;

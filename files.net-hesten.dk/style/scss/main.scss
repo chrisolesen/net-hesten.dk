@@ -88,11 +88,45 @@ a.btn {
 			top: 27.5px;
 		}
 	}
+
+	&.old_school {
+		width: calc(2rem + 175px);
+		a {
+			height: 30px;
+			opacity: 1;
+			display: block;
+			width: auto;
+			top:initial;
+/*			position: static;*/
+			img {
+				height: 30px;
+				width: 30px;
+				float: left;
+			}
+		}
+
+		[data-custom-title]:after {
+			box-shadow: none;
+			background: none;
+			padding: 0;
+			font-size:0.8em;
+			margin-left:0.5em;
+			line-height: 30px;
+			display: inline-block !important;
+			opacity: 1 !important;
+			position: static !important;
+			-webkit-transform: none;
+			transform: none;
+		}
+	}
 }
 #page-content {
 	/*height: calc(100vh - 20px - 70px);*/
 	float: left;
 	width: calc(100% - 115px - 2rem);
+	#left_menu.old_school ~ & {
+		width: calc(100% - 175px - 2rem);
+	}
 	padding: ($content_padding) $content_padding 0 0;
 	position: relative;
 }
@@ -203,7 +237,7 @@ h1 {
 @import "_horselists_standard.scss";
 @import "_page_structure_elements.scss";
 @import "_competitions.scss";
-@import "_horse_linage.scss"; 
-@import "_artist_center.scss"; 
+@import "_horse_linage.scss";
+@import "_artist_center.scss";
 
 @import "_responsive_styles.scss";
