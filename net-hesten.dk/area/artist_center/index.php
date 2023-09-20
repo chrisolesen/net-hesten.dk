@@ -28,6 +28,15 @@ require "{$basepath}/global_modules/header.php";
 			display: block;
 		}
 
+		body #htc_section [data-section-type=submissions] {
+			grid-template-columns: 1fr;
+			padding: 0 1em;
+		}
+
+		body #htc_section [data-section-type=submissions] h2 {
+			grid-column: 1 !important;
+		}
+
 		body [data-section-type=info_square] {
 			height: auto !important;
 		}

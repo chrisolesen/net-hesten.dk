@@ -21,6 +21,41 @@ require "{$basepath}/global_modules/header.php";
 		width: calc(100% - 200px);
 		text-align: right;
 	}
+
+	@media all and (max-width:640px) {
+		body #htc_section {
+			grid-template-columns: 1fr;
+			display: block;
+		}
+
+		body #htc_section [data-section-type=submissions] {
+			grid-template-columns: 1fr;
+			padding: 0 1em;
+		}
+
+		body #htc_section [data-section-type=submissions] h2 {
+			grid-column: 1 !important;
+		}
+
+		body [data-section-type=info_square] {
+			height: auto !important;
+		}
+
+		body [data-section-type="right-side"] {
+			float: none;
+			width: 100% !important;
+		}
+
+		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] {
+			height: auto !important;
+		}
+
+		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] input,
+		body [data-section-type="ht-tab-content"] [data-section-type="object_square"] select {
+			display: block;
+			float: none;
+		}
+	}
 </style>
 <section class="tabs">
 	<nav>
@@ -71,7 +106,7 @@ require "{$basepath}/global_modules/header.php";
 				grid-column: 1;
 			}
 
-			
+
 
 			[data-section-type="right-side"] {
 				grid-row: 2 / span 2;
