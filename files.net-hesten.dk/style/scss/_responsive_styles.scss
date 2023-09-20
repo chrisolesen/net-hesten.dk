@@ -96,7 +96,7 @@
 			grid-template-columns: repeat(auto-fit, minmax(55px, 1fr));
 			&.old_school {
 				display: grid;
-				grid-template-columns:1fr 1fr 1fr;
+				grid-template-columns:1fr 1fr;
 			}
 		}
 
