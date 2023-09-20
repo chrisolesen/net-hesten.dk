@@ -40,14 +40,3 @@
 		<?php } ?>
 	<?php } ?>
 </section>
-<style>
-/*
-	#left_menu.old_school ~ #page-content {
-		width:calc(100% - 175px - 2rem);
-	} 
-	#left_menu.old_school {
-		width: calc(2rem + 175px);
-	}
-	*/
-	
-</style>

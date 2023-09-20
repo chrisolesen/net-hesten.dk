@@ -86,6 +86,13 @@
 	}
 
 	body {
+		#top_banner {
+			height: 150px;
+			img {
+				height: 150px;
+				width: auto;
+			}
+		}
 		#left_menu a:nth-child(2n) {
 			top: auto;
 		}
