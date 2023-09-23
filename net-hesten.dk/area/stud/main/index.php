@@ -182,12 +182,15 @@ if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
 	$cryptSalt = '$' . $algo . '$rounds=' . $rounds . '$' . $salt;
 	$password_hash = crypt(trim($_POST['new_password']), $cryptSalt);
 	if ($password_hash) {
-		$link_new->query("UPDATE Brugere SET password = '{$password_hash}' WHERE id = {$_SESSION['user_id']}");
+		$link_new->query("UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET `password` = '{$password_hash}' WHERE id = {$_SESSION['user_id']}");
 	}
 }
 if (isset($_POST['your_name']) && $_POST['your_name'] !== $user_info->name) {
+
+	//var_dump($_POST['your_name']);exit(); 
 	$new_name = $link_new->real_escape_string($_POST['your_name']);
-	$link_new->query("UPDATE Brugere SET navn = '{$new_name}' WHERE id = {$_SESSION['user_id']}");
+	$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET navn = '{$new_name}' WHERE id = {$_SESSION['user_id']}";
+	$link_new->query($sql);
 }
 if (isset($_POST['user_language']) && $_POST['user_language'] !== $_SESSION['settings']['user_language']) {
 	$new_value = $link_new->real_escape_string($_POST['user_language']);
