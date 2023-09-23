@@ -15,8 +15,8 @@ if (($horse_id = (int) filter_input(INPUT_GET, 'horse_id'))) {
 			"SELECT `horse`.`id`, `navn` AS `name`, `alder` AS `age`, `kon` AS `gender`, `race`, `tegner` AS `artist`, `pris` AS `value`,
 			 `bruger` AS `owner_name`, `talent`, `ulempe`, `egenskab`, 
 			 CASE 
-			 	WHEN `unik` = 1 THEN 'Unik'
-			  	WHEN `original` = 1 THEN 'Original'
+			 	WHEN `unik` = 'ja' THEN 'Unik'
+			  	WHEN `original` = 'ja' THEN 'Original'
 				ELSE 'Normal'
 			END AS `type`, 
 		(
