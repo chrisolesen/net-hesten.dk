@@ -32,7 +32,12 @@ $horse_trader_page_offset = $horse_trader_page * $horses_pr_page;
 				</header>
 				<?php if ($filtered == true) { ?>
 					<div class="page_selector">
-						<span class="btn">Side: <?= $horse_trader_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?horse_trader_page=<?= $horse_trader_page - 1; ?>">Forrige side</a>&nbsp;<a class="btn btn-info" href="?horse_trader_page=<?= $horse_trader_page + 1; ?>">Næste side</a>
+						<form action="" method="GET" style="display:inline-block;width:75px;" >
+							<input name="horse_trader_page" class="btn" value="<?= $horse_trader_page + 1; ?>" />
+							<input style="display:none;" type="submit" />
+						</form>
+						<a class="btn btn-info" href="?horse_trader_page=<?= $horse_trader_page - 1; ?>">Forrige side</a>
+						<a class="btn btn-info" href="?horse_trader_page=<?= $horse_trader_page + 1; ?>">Næste side</a>
 					</div>
 				<?php } ?>
 				<?php if (!$filtered) { ?>
