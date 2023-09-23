@@ -13,7 +13,12 @@ if (($horse_id = (int) filter_input(INPUT_GET, 'horse_id'))) {
 
 		$result = $link_new->query(
 			"SELECT `horse`.`id`, `navn` AS `name`, `alder` AS `age`, `kon` AS `gender`, `race`, `tegner` AS `artist`, `pris` AS `value`,
-			 `bruger` AS `owner_name`, `talent`, `ulempe`, `egenskab`, `unik`, `original`, 
+			 `bruger` AS `owner_name`, `talent`, `ulempe`, `egenskab`, 
+			 CASE 
+			 	WHEN `unik` = 1 THEN 'Unik'
+			  	WHEN `original` = 1 THEN 'Original'
+				ELSE 'Normal'
+			END AS `type`, 
 		(
 			SELECT count(`participant_id`) FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competition_participants` `participant` 
 			LEFT JOIN `{$GLOBALS['DB_NAME_NEW']}`.`game_data_competitions` `competition` ON `competition`.`id` = `participant`.`competition_id` 
