@@ -42,7 +42,8 @@ if (($horse_id = (int) filter_input(INPUT_GET, 'horse_id'))) {
 		(
 			SELECT meta_value FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_metadata` `breeder_meta` 
 			WHERE breeder_meta.`meta_key` = 'breeder' AND breeder_meta.horse_id = `horse`.`id` 
-		) AS `breeder` 
+		) AS `breeder` ,
+		CONCAT('//files.net-hesten.dk/',thumb) AS thumb
 		FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` `horse` 
 		WHERE `horse`.`id` = {$horse_id}"
 		);
