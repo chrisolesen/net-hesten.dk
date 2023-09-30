@@ -92,7 +92,7 @@ function render_horse_object($horse, $area)
 				} else {
 					/* Pay */
 					$minutes = ($duration->h * 60) + ($duration->i);
-					$duration = "{$horse->name} har været på græs {$minutes} Minutter";
+					$duration = "{$horse->name} har været på græs i {$duration->h} Timer og {$duration->i} Minutter";
 				}
 			?>
 				<button style='pointer-events: none;' class='enter_graes btn compact_top_button'><?= $duration; ?></button>
