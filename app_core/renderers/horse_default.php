@@ -91,11 +91,15 @@ function render_horse_object($horse, $area)
 					$duration = 'Hesten har været for længe på græs';
 				} else {
 					/* Pay */
-					$minutes = ($duration->h * 60) + ($duration->i);
-					$duration = "{$horse->name} har været på græs i {$duration->h} Timer og {$duration->i} Minutter";
+
+					$out_duration = "{$horse->name} har været på græs i ";
+					if ($duration->h > 0) {
+						$out_duration .= "{$duration->h} Timer og ";
+					}
+					$out_duration .= "{$duration->i} Minutter";
 				}
 			?>
-				<button style='pointer-events: none;' class='enter_graes btn compact_top_button'><?= $duration; ?></button>
+				<button style='pointer-events: none;' class='enter_graes btn compact_top_button'><?= $out_duration; ?></button>
 			<?php
 			}
 			if ($horse->breed_date && in_array($area, ['main_stud', 'horse_search', 'visit_user']) && $horse->graesning !== 'ja') {
