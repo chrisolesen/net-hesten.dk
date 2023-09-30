@@ -232,7 +232,7 @@ class auctions
 		//	game_data_auctions - id, creator, status_code, object_id, object_type, minimum_price, instant_price, creation_date, end_date
 		//	game_data_auction_bids - creator, auction, bid_amount, bid_date, status_code
 		//	game_data_status_codes - id, name, description = auction_live, auction_ended, auction_halted, bid_accepted, bid_refunded, bid_won
-		$sql = "SELECT * 
+		$sql = "SELECT a.* 
 		FROM  `{$GLOBALS['DB_NAME_NEW']}`.`game_data_auctions` a 
 		LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Heste` h ON a.object_id = h.ID
 		WHERE a.`status_code` = 1 "
