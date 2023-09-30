@@ -44,7 +44,7 @@
 			Dette gør vi for bedst muligt, at kunne sikre, at net-hesten forbliver et rart sted at være, for alle parter :-)
 		</p>
 		<p style="font-size: 14px;line-height: 1.5;">
-			Mens du venter på at blive godkendt, er det en god idé, at læse vores Regler og Hjælpe-side. 
+			Mens du venter på at blive godkendt, er det en god idé, at læse vores <a style="text-decoration:underline;" href="/infosheets/regler.php">Regler</a> og <a style="text-decoration:underline;" href="/infosheets/help.php">Hjælpe-side</a>.
 		</p>
 		<form id="request_membership_form" action="" method="post">
 			<input type="hidden" name="action" value="request_membership" />
