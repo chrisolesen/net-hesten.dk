@@ -123,7 +123,7 @@ class horse_list_filters
 
 		if (in_array($attr['zone'], ['home_idle_horses', 'home_horses_on_grass', 'home_breeding_horses', 'home_horses_at_contest', 'home_foels', 'home_foels_at_contest', 'home_', 'home'])) {
 			$match_zone = 'home';
-		} else if (in_array($attr['zone'], ['visit_idle_horses', 'visit_horses_on_grass', 'visit_breeding_horses', 'visit_horses_at_contest', 'visit_foels', 'visit_foels_at_contest', 'visit_'])) {
+		} else if (in_array($attr['zone'], ['other_auctions', 'visit_idle_horses', 'visit_horses_on_grass', 'visit_breeding_horses', 'visit_horses_at_contest', 'visit_foels', 'visit_foels_at_contest', 'visit_'])) {
 			$match_zone = 'visit';
 		} else {
 			$match_zone = $attr['zone'];

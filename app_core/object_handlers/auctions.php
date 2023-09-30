@@ -225,16 +225,20 @@ class auctions
 			isset($attr[$key]) ?: $attr[$key] = $value;
 		}
 		foreach ($attr as $key => $value) {
-			$attr[$key] = $link_new->real_escape_string($value);
+			if ($key != 'custom_filter') {
+				$attr[$key] = $link_new->real_escape_string($value);
+			}
 		}
-		//			game_data_auctions - id, creator, status_code, object_id, object_type, minimum_price, instant_price, creation_date, end_date
-		//			game_data_auction_bids - creator, auction, bid_amount, bid_date, status_code
-		//			game_data_status_codes - id, name, description = auction_live, auction_ended, auction_halted, bid_accepted, bid_refunded, bid_won
+		//	game_data_auctions - id, creator, status_code, object_id, object_type, minimum_price, instant_price, creation_date, end_date
+		//	game_data_auction_bids - creator, auction, bid_amount, bid_date, status_code
+		//	game_data_status_codes - id, name, description = auction_live, auction_ended, auction_halted, bid_accepted, bid_refunded, bid_won
 		$sql = "SELECT * 
-		FROM `game_data_auctions` 
-		WHERE `status_code` = 1 "
+		FROM  `{$GLOBALS['DB_NAME_NEW']}`.`game_data_auctions` a 
+		LEFT JOIN `{$GLOBALS['DB_NAME_OLD']}`.`Heste` h ON a.object_id = h.ID
+		WHERE a.`status_code` = 1 "
 			. (isset($attr['creator']) ? "AND `creator` = {$attr['creator']} " : '')
-			. 'ORDER BY `end_date` ASC, `id` ASC '
+			. (isset($attr['custom_filter']) ? "{$attr['custom_filter']} " : '')
+			. 'ORDER BY `end_date` ASC, a.`id` ASC '
 			. (isset($attr['limit']) ? "LIMIT {$attr['limit']} " : '')
 			. (isset($attr['offset']) ? "OFFSET {$attr['offset']} " : '');
 

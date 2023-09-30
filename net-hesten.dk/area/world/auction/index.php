@@ -16,6 +16,13 @@ $other_auctions_page = (int) filter_input(INPUT_GET, 'other_auctions_page') ?: 0
 $other_auctions_page = max($other_auctions_page, 0);
 $other_auctions_page_offset = $other_auctions_page * $horses_pr_page;
 
+$auctions_custom_filter = '';
+$auctions_filtered = false;
+$auctions_custom_filter .= horse_list_filters::get_filter_string(['zone' => 'other_auctions']);
+if ($auctions_custom_filter !== '') {
+	$auctions_filtered = true;
+}
+
 
 ob_start();
 $highest_bid_html = "<i class='fad fa-stars' title='Du har højeste bud' style='
@@ -29,7 +36,12 @@ right: -6px;
 --fa-primary-color: dodgerblue;
 position: absolute;
 '></i>";
-foreach (auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => $horses_pr_page]) as $auction) {
+if ($auctions_filtered) {
+	$auction_objects = auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => $horses_pr_page, 'custom_filter' => $auctions_custom_filter]);
+} else {
+	$auction_objects = auctions::get_all(['offset' => $other_auctions_page_offset, 'limit' => $horses_pr_page]);
+}
+foreach ($auction_objects as $auction) {
 	ob_clean();
 	$remote_data = json_decode(horses::bridge_get($auction['object_id']));
 ?>
@@ -131,7 +143,9 @@ ob_end_clean();
 					<h1>Dine heste</h1>
 				</header>
 				<div class="page_selector">
-					<span class="btn">Side: <?= $your_horses_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>&tab=your-horses">Forrige side</a>&nbsp;<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>&tab=your-horses">Næste side</a>
+					<span class="btn">Side: <?= $your_horses_page + 1; ?></span>
+					<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page - 1; ?>&tab=your-horses">Forrige side</a>
+					<a class="btn btn-info" href="?your_horses_page=<?= $your_horses_page + 1; ?>&tab=your-horses">Næste side</a>
 				</div>
 				<a class="btn btn-info" style="line-height: 30px;" data-button-type='modal_activator' data-target='filter_your_horses'>Filtre</a>
 			</div>
@@ -291,6 +305,7 @@ ob_end_clean();
 				<div class="page_selector">
 					<span class="btn">Side: <?= $other_auctions_page + 1; ?></span>&nbsp;<a class="btn btn-info" href="?other_auctions_page=<?= $other_auctions_page - 1; ?>&tab=other-auctions">Forrige side</a>&nbsp;<a class="btn btn-info" href="?other_auctions_page=<?= $other_auctions_page + 1; ?>&tab=other-auctions">Næste side</a>
 				</div>
+				<a class="btn btn-info" style="line-height: 30px;" data-button-type='modal_activator' data-target='filter_other_auctions'>Filtre</a>
 			</div>
 			<?php
 			foreach ($all_auctions as $auction) {
@@ -311,6 +326,17 @@ ob_end_clean();
 		</div>
 	</section>
 </section>
+<div id="filter_other_auctions" class="modal">
+	<script>
+		function filter_other_auctions(caller) {}
+	</script>
+	<style>
+	</style>
+	<div class="shadow"></div>
+	<div class="content">
+		<?= horse_list_filters::render_filter_settings(['zone' => 'other_auctions']); ?>
+	</div>
+</div>
 <div id="filter_your_horses" class="modal">
 	<script>
 		function filter_your_horses(caller) {}

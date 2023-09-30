@@ -92,7 +92,7 @@ if (isset($_POST['remove_user_thumbnail']) && empty($_POST['new_password']) && $
 	$link_new->query($sql);
 }
 /* Change list-style */
-if (isset($_POST['liststyle'])) {
+if (isset($_POST['liststyle']) && $_POST['liststyle'] != $_SESSION['settings']['list_style']) {
 	if ($_POST['liststyle'] == 'compact') {
 		$new_value = 'compact';
 	} else {
@@ -112,7 +112,7 @@ if (isset($_POST['accept_offers'])) {
 	$link_new->query($sql);
 	$_SESSION['settings']['accept_offers'] = $new_value;
 }
-if (isset($_POST['banner_size'])) {
+if (isset($_POST['banner_size']) && $_SESSION['settings']['banner_size'] != $_POST['banner_size']) {
 	if ($_POST['banner_size'] == 'hide') {
 		$new_value = 'hide';
 	} else {
@@ -122,7 +122,7 @@ if (isset($_POST['banner_size'])) {
 	$link_new->query($sql);
 	$_SESSION['settings']['banner_size'] = $new_value;
 }
-if (isset($_POST['display_width'])) {
+if (isset($_POST['display_width']) && $_SESSION['settings']['display_width'] != $_POST['display_width']) {
 	if ($_POST['display_width'] == 'slim') {
 		$new_value = 'slim';
 	} else {
@@ -132,7 +132,7 @@ if (isset($_POST['display_width'])) {
 	$link_new->query($sql);
 	$_SESSION['settings']['display_width'] = $new_value;
 }
-if (isset($_POST['left_menu_style'])) {
+if (isset($_POST['left_menu_style']) && $_SESSION['settings']['left_menu_style'] != $_POST['left_menu_style']) {
 	if ($_POST['left_menu_style'] == 'old_school') {
 		$new_value = 'old_school';
 	} else {
@@ -171,10 +171,6 @@ if (isset($_POST['alter_user_settings'])) {
 	$link_new->query($sql);
 	$_SESSION['settings']['accept_offers'] = $new_value;
 }
-if (isset($_POST['banner_size'])) {
-	header('Location: /area/stud/main/');
-	exit();
-}
 if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
 	$salt = uniqid('', true);
 	$algo = '6';
@@ -187,7 +183,7 @@ if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
 }
 if (isset($_POST['your_name']) && $_POST['your_name'] !== $user_info->name) {
 
-	//var_dump($_POST['your_name']);exit(); 
+
 	$new_name = $link_new->real_escape_string($_POST['your_name']);
 	$sql = "UPDATE `{$GLOBALS['DB_NAME_OLD']}`.Brugere SET navn = '{$new_name}' WHERE id = {$_SESSION['user_id']}";
 	$link_new->query($sql);
@@ -196,6 +192,11 @@ if (isset($_POST['user_language']) && $_POST['user_language'] !== $_SESSION['set
 	$new_value = $link_new->real_escape_string($_POST['user_language']);
 	$link_new->query("UPDATE user_data_varchar SET value = '{$new_value}', date = NOW() WHERE parent_id = {$_SESSION['user_id']} AND name = 'user_language'");
 	$_SESSION['settings']['user_language'] = $new_value;
+}
+
+if (isset($_POST['banner_size'])) {
+	header('Location: /area/stud/main/');
+	exit();
 }
 $your_horses_page = max(0, (int) filter_input(INPUT_GET, 'your_horses_page'));
 $horses_pr_page = 10;
@@ -267,7 +268,7 @@ $amount_active_selection = count($horse_array);
 		<?= $user_info->username; ?><br />
 		<span class="label">Navn:</span>
 		<?= $user_info->name; ?><br />
-		<span class="label">Antal heste:</span>
+		<span class="label"><?= $GLOBALS['language_strings']['AmountHorses']; ?></span>
 		<?= number_dotter($link_new->query("SELECT count(id) AS amount FROM `{$GLOBALS['DB_NAME_OLD']}`.Heste WHERE bruger = '{$user_info->username}' AND status <> '{$dead}'")->fetch_object()->amount); ?> <span style="font-variant: small-caps;font-size: 0.7em;">(
 			<?= number_dotter($amount_active_selection) . ($amount_active_selection >= 100 ? '+' : ''); ?>)</span><br />
 		<span class="label">Penge:</span><span class="user_money_pool">
@@ -288,7 +289,7 @@ $amount_active_selection = count($horse_array);
 		?>
 		<a data-button-type="modal_activator" data-target="edit_user_modal" class="btn btn-success"><?= $GLOBALS['language_strings']['Edit']; ?></a>
 		<a data-button-type="modal_activator" data-target="user_settings_modal" class="btn btn-info"><?= $GLOBALS['language_strings']['Settings']; ?></a>
-		<a href="?logout" class="btn btn-danger">Logud</a>
+		<a href="?logout" class="btn btn-danger"><?= $GLOBALS['language_strings']['Logout']; ?></a>
 	</div>
 	<div style="float:left;width: 460px;">
 		<!-- Old button array -->
@@ -398,7 +399,6 @@ ob_start();
 		width: 200px;
 		max-width: none;
 	}
-	
 </style>
 <?php
 require_once("{$basepath}/global_modules/modals/user_settings_profile.php");
