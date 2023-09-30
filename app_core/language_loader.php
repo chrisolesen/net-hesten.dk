@@ -4,6 +4,7 @@
 require_once("{$basepath}/languages/da_DK/horse_objects.php");
 require_once("{$basepath}/languages/da_DK/trade_terms.php");
 require_once("{$basepath}/languages/da_DK/settings.php");
+require_once("{$basepath}/languages/da_DK/headers.php");
 
 /* Load user language strings where they exists */
 
@@ -11,4 +12,5 @@ if (isset($_SESSION['settings']) && isset($_SESSION['settings']['user_language']
     @include("{$basepath}/languages/{$_SESSION['settings']['user_language']}/horse_objects.php");
     @include("{$basepath}/languages/{$_SESSION['settings']['user_language']}/trade_terms.php");
     @include("{$basepath}/languages/{$_SESSION['settings']['user_language']}/settings.php");
+    @include("{$basepath}/languages/{$_SESSION['settings']['user_language']}/headers.php");
 }
