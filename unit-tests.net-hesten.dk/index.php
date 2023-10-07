@@ -11,5 +11,5 @@ $sth = $GLOBALS['pdo_new']->prepare('SELECT time(NOW()) AS server_time', array(P
 $sth->execute();
 $pdo_time = $sth->fetch(PDO::FETCH_OBJ)->server_time;
 
-echo "TimeZone: ".PROJECT_TIMEZONE."<br />";
+echo "TimeZone: " . PROJECT_TIMEZONE . "<br />";
 echo "Server times: PHP = {$php_time} - DBLink = {$link_time} - PDO - {$pdo_time}";

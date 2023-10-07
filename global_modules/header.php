@@ -79,7 +79,7 @@ if (($_SESSION['logged_in'] ?? false) == true) {
 		});
 	</script>
 	<section id="top_banner" style="position: relative;">
-		<img alt="Net-Hesten" src="//files.<?= HTTP_HOST; ?>/graphics/top_banner/relaunch.png" style="position: absolute;top:50%;left:50%;transform:translateY(-50%) translateX(-50%);max-width: none;" height="200" width="1920" />
+		<img alt="Net-Hesten" src="//files.<?= HTTP_HOST; ?>/graphics/top_banner/hallo_ban_3.png" style="position: absolute;top:50%;left:50%;transform:translateY(-50%) translateX(-50%);max-width: none;" height="200" width="1920" />
 	</section>
 	<section id="top_menu">
 		<a href="/"><img src="//files.<?= HTTP_HOST; ?>/graphics/logo/logo_new.png" height="115" style="position:relative;top:5px;left:2em;height: 60px;" /></a>
