@@ -15,27 +15,31 @@
 		<a data-custom-title="Privat handel" <?= ((private_trade::list_trade_offers(['mode' => 'latest_offer']) > user::get_timing(['name' => 'checked_private_trade']))) && (($title ?? false) != 'Privat handel') ? 'message_status="blink"' : ''; ?> href="/area/world/privat_trade/"><img src="//files.<?= HTTP_HOST; ?>/graphics/private_trade.png"></a>
 		<a data-custom-title="Konto oversigt" href="/area/stud/accounting"><img src="//files.<?= HTTP_HOST; ?>/graphics/money.png"></a>
 		<a data-custom-title="Støt net-hesten" href="/area/world/support_nethesten/"><img src="//files.<?= HTTP_HOST; ?>/graphics/buy_wkr.png"></a>
+		<!-- Competition start -->
+		<?php
+		$competition_data = $link_new->query("SELECT `id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_simple_competition` WHERE `startdate` < NOW() ORDER BY `startdate` DESC LIMIT 1")->fetch_object();
+		$partaking = false;
+		if ($competition_data ?? false) {
+			$partaking = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_simple_competition_participants` WHERE `competition_id` = {$competition_data->id} AND `participant_id` = {$_SESSION['user_id']}");
+		}
+		?>
+		<a <?php if (!$partaking || !$partaking->fetch_object()) {
+			echo 'message_status=""';
+		} ?> data-custom-title="Lodtrækning" href="/area/world/simple_competition/"><img
+				src="//files.<?= HTTP_HOST; ?>/graphics/simple_competition.png"></a>
+		<!-- Competition end -->
+
 		<?php if (in_array('global_admin', $_SESSION['rights'])) { ?>
 			<a><img src="//files.<?= HTTP_HOST; ?>/graphics/blank.png"></a>
 		<?php } ?>
 		<?php if (in_array('tech_admin', $_SESSION['rights'])) { ?>
 			<a><img src="//files.<?= HTTP_HOST; ?>/graphics/blank.png"></a>
-			<?php
-			$competition_data = $link_new->query("SELECT `id` FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_simple_competition` WHERE `startdate` < NOW() ORDER BY `startdate` DESC LIMIT 1")->fetch_object();
-			$partaking = false;
-			if ($competition_data ?? false) {
-				$partaking = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`game_data_simple_competition_participants` WHERE `competition_id` = {$competition_data->id} AND `participant_id` = {$_SESSION['user_id']}");
-			}
-			?>
-			<a <?php if (!$partaking || !$partaking->fetch_object()) {
-					echo 'message_status=""';
-				} ?> data-custom-title="Lodtrækning" href="/area/world/simple_competition/"><img src="//files.<?= HTTP_HOST; ?>/graphics/simple_competition.png"></a>
 			<a data-custom-title="Vær din hest"><img src="//files.<?= HTTP_HOST; ?>/graphics/be_your_horse.png"></a>
 			<a><img src="//files.<?= HTTP_HOST; ?>/graphics/house.png"></a>
 			<a><img src="//files.<?= HTTP_HOST; ?>/graphics/lotto.png"></a>
 		<?php } ?>
 
-		<?php if (in_array('global_admin', $_SESSION['rights']) || in_array('admin_panel_access', $_SESSION['rights']) || in_array('site_helper', $_SESSION['rights'])) {	?>
+		<?php if (in_array('global_admin', $_SESSION['rights']) || in_array('admin_panel_access', $_SESSION['rights']) || in_array('site_helper', $_SESSION['rights'])) { ?>
 			<a data-custom-title="Admin" href="/admin/"><img src="//files.<?= HTTP_HOST; ?>/graphics/admin.png"></a>
 		<?php } ?>
 	<?php } ?>
