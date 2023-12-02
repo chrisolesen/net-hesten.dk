@@ -24,7 +24,7 @@
 		}
 		?>
 		<a <?php if (!$partaking || !$partaking->fetch_object()) {
-			echo 'message_status=""';
+			echo 'message_status="blink"';
 		} ?> data-custom-title="Lodtrækning" href="/area/world/simple_competition/"><img
 				src="//files.<?= HTTP_HOST; ?>/graphics/simple_competition.png"></a>
 		<!-- Competition end -->
