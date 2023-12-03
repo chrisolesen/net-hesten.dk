@@ -88,6 +88,7 @@ function render_horse_object($horse, $area)
 				$duration = $date_now->diff($date_then);
 				if ($duration->y > 0 || $duration->m > 0 || $duration->d > 0 || $duration->h > 13) {
 					/* Punish */
+					$out_duration = 'Hesten har været for længe på græs';
 					$duration = 'Hesten har været for længe på græs';
 				} else {
 					/* Pay */
