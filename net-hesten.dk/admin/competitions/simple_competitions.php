@@ -80,9 +80,9 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
 				'{$name}', '{$gender}', '{$race}', ' {$artist}', '{$thumb}', {$height}, '{$advantage}', '{$disadvantage}', '{$talent}', '', '', 'nej')";
 				$link_new->query($sql);
 ?>
-				<a href="/admin/hestetegner/edit_horse.php?horse_id=<?= mysqli_insert_id($link_old); ?>">ID: <?= mysqli_insert_id($link_old); ?></a>
+				<a href="/admin/hestetegner/edit_horse.php?horse_id=<?= mysqli_insert_id($link_new); ?>">ID: <?= mysqli_insert_id($link_new); ?></a>
 <?php
-				$error = $link_old->error;
+				$error = $link_new->error;
 				$tech_mail_message .= "Artist/Thumb: {$artist} // {$thumb}" . PHP_EOL;
 				$tech_mail_message .= "Race/kon: {$race}/{$gender}" . PHP_EOL;
 				$tech_mail_message .= "Egenskab/Ulempe/Talent: {$advantage}/{$disadvantage}/{$talent}" . PHP_EOL;
