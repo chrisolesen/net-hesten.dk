@@ -44,7 +44,7 @@ if (filter_input(INPUT_GET, 'partake') == true) {
 				<h1>Lodtrækninger</h1>
 			</header>
 		</div>
-		<p>Tilmeldinger lukker klokken 20 og starter klokken 5</p>
+		<p>Tilmeldingen forgår imellem 05 og 20</p>
 		<?php while ($competion_data = $competitions->fetch_object()) {
 			$competion_subdata = (object) json_decode($competion_data->data);
 		?>
