@@ -111,7 +111,7 @@ if (filter_input(INPUT_GET, 'do') === 'end_simple_competition') {
 	<ol>
 		<?php $competitions = $link_new->query("SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.game_data_simple_competition");
 		while ($competition = $competitions->fetch_object()) {
-			$competion_subdata = (object) json_decode($competion_data->data);
+			//$competion_subdata = (object) json_decode($competion_data->data);
 			//$competion_subdata->prize_id;
 		?>
 			<li style="border-bottom:1px dashed #333;">
