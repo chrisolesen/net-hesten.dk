@@ -1,7 +1,7 @@
 <section id="left_menu" class="<?= $_SESSION['settings']['left_menu_style'] ??= 'mode_default' ?>">
 	<?php if (($_SESSION['logged_in'] ?? false) == true) { ?>
 		<a data-custom-title="Indbakke" href="/area/stud/messages"><img src="//files.<?= HTTP_HOST; ?>/graphics/inbox.png"></a>
-		<a data-custom-title="Heste Handleren" href="/area/world/horsetrader"><img src="//files.<?= HTTP_HOST; ?>/graphics/trader.png"></a>
+		<a data-custom-title="Hestehandleren" href="/area/world/horsetrader"><img src="//files.<?= HTTP_HOST; ?>/graphics/trader.png"></a>
 
 		<a data-custom-title="Uofficielt Forum" href="http://nethesten.boards.net/" target="_BLANK"><img height="55" width="55" src="//files.<?= HTTP_HOST; ?>/graphics/forum.png"></a>
 

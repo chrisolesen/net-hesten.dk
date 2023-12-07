@@ -53,7 +53,7 @@ function render_horse_object($horse, $area)
 							<input type="hidden" name="gender" value="<?= filter_input(INPUT_POST, 'gender'); ?>" />
 						<?php } ?>
 						<div>ID: <?= $horse->id; ?><br /><br /></div>
-						<div>Du for: <?= number_dotter(($horse->value * 0.9)); ?> <span class="wkr_symbol">wkr</span><br /><br /></div>
+						<div>Du får: <?= number_dotter(($horse->value * 0.9)); ?> <span class="wkr_symbol">wkr</span><br /><br /></div>
 						<input type='submit' class='btn btn-success' name='sell_now' value="Sælg nu" />
 						<button class='close_sell_window btn btn-danger'>Luk</button>
 					</form>
