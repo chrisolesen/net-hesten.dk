@@ -17,9 +17,9 @@ $selected_race = substr($_GET['race'], 1, -1);
 <a href="/admin/hestetegner/admin_types_version_two.php">Tilbage</a><br />
 <?php
 if (filter_input(INPUT_GET, 'show_archive') == 'true') {
-	?><a href="/admin/hestetegner/change_generation_status_version_two.php?race=<?=$_GET['race'];?>&type=<?=$_GET['type'];?>">Skift til live</a><br /><?php
+	?><a href='/admin/hestetegner/change_generation_status_version_two.php?race=<?=$_GET['race'];?>&type=<?=$_GET['type'];?>'>Skift til live</a><br /><?php
 } else {
-	?><a href="/admin/hestetegner/change_generation_status_version_two.php?race=<?=$_GET['race'];?>&type=<?=$_GET['type'];?>&show_archive=true">Skift til arkiv</a><br /><?php
+	?><a href='/admin/hestetegner/change_generation_status_version_two.php?race=<?=$_GET['race'];?>&type=<?=$_GET['type'];?>&show_archive=true'>Skift til arkiv</a><br /><?php
 }
 ?>
 <br />
