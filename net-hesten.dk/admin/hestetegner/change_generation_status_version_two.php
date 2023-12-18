@@ -14,10 +14,20 @@ $Foelbox = 'Følkassen';
 $Foel = 'Føl';
 $selected_race = substr($_GET['race'], 1, -1);
 ?>
-<a href="/admin/hestetegner/admin_types_version_two.php">Tilbage</a><br /><br />
+<a href="/admin/hestetegner/admin_types_version_two.php">Tilbage</a><br />
+<?php
+if (filter_input(INPUT_GET, 'show_archive') == 'true') {
+	?><a href="/admin/hestetegner/admin_types_version_two.php?race=<?=$_GET['race'];?>&type=<?=$_GET['type'];?>">Skift til live</a><br /><?php
+} else {
+	?><a href="/admin/hestetegner/admin_types_version_two.php?race=<?=$_GET['race'];?>&type=<?=$_GET['type'];?>&show_archive=true">Skift til arkiv</a><br /><?php
+}
+?>
+<br />
 <section>
 	<header>
-		<h1>Genererings admin - <?= $selected_race; ?></h1>
+		<h1>Genererings admin -
+			<?= $selected_race; ?>
+		</h1>
 	</header>
 	<style>
 		ul {
@@ -146,17 +156,17 @@ $selected_race = substr($_GET['race'], 1, -1);
 		if (isset($_GET['do'])) {
 			$thumb = filter_input(INPUT_GET, 'thumb');
 			/*
-			  19	type_unique
-			  20	type_generation
-			  21	type_rebirth
-			  22	type_rebirth_generation
-			  23	type_rebirth_unique
-			  24	type_ordinary
-			  25	type_foel
-			  26	type_foel_rebirth
-		 */
+					   19	type_unique
+					   20	type_generation
+					   21	type_rebirth
+					   22	type_rebirth_generation
+					   23	type_rebirth_unique
+					   24	type_ordinary
+					   25	type_foel
+					   26	type_foel_rebirth
+				  */
 			//	&do=<?= (in_array($data->status, [21, 22, 23]) ? 'deaktivate' : 'activate')
-
+		
 		}
 		$target_status = false;
 		if (filter_input(INPUT_GET, 'do') === 'deaktivate') {
@@ -305,9 +315,11 @@ $selected_race = substr($_GET['race'], 1, -1);
 					)";
 					$link_new->query($sql);
 					echo ($link_new->error ?? false);
-		?>
-					<a href="/admin/hestetegner/edit_horse.php?horse_id=<?= mysqli_insert_id($link_new); ?>"><?= mysqli_insert_id($link_new); ?></a>
-			<?php
+					?>
+					<a href="/admin/hestetegner/edit_horse.php?horse_id=<?= mysqli_insert_id($link_new); ?>">
+						<?= mysqli_insert_id($link_new); ?>
+					</a>
+					<?php
 				}
 			}
 		}
@@ -326,7 +338,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 					continue;
 				}
 			}
-			if(filter_input(INPUT_GET, 'show_archive') == 'true'){
+			if (filter_input(INPUT_GET, 'show_archive') == 'true') {
 				if (!$data->archived) {
 					continue;
 				}
@@ -335,7 +347,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 					continue;
 				}
 			}
-			if (in_array($data->status, [19, 23])) {/* Unique */
+			if (in_array($data->status, [19, 23])) { /* Unique */
 				$amount = $link_new->query("SELECT count(`id`) AS `amount` 
 				FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` WHERE `thumb` LIKE '%{$data->image}%' AND `status` <> 'død'")->fetch_object()->amount;
 			}
@@ -344,49 +356,76 @@ $selected_race = substr($_GET['race'], 1, -1);
 
 			$genders = $data->allowed_gender;
 			/*
-			  19	type_unique
-			  20	type_generation
-			  21	type_rebirth
-			  22	type_rebirth_generation
-			  23	type_rebirth_unique
-			  24	type_ordinary
-			  25	type_foel
-			  26	type_foel_rebirth
+					   19	type_unique
+					   20	type_generation
+					   21	type_rebirth
+					   22	type_rebirth_generation
+					   23	type_rebirth_unique
+					   24	type_ordinary
+					   25	type_foel
+					   26	type_foel_rebirth
 
-			  20,21,22,24
-		 */
+					   20,21,22,24
+				  */
 			?>
-			<li title="Type ID: <?= $data->id; ?>" data-horse-thumb="<?= $data->image; ?>" class="<?= in_array($data->status, [21, 22, 23, 26]) ? 'rebirth' : ''; ?> <?php /*= in_array($data->status, [20, 22, 26]) ? 'generation' : ''; */ ?> <?= in_array($data->status, [19, 23]) ? 'unique' : ''; ?>">
+			<li title="Type ID: <?= $data->id; ?>" data-horse-thumb="<?= $data->image; ?>"
+				class="<?= in_array($data->status, [21, 22, 23, 26]) ? 'rebirth' : ''; ?> <?php /*= in_array($data->status, [20, 22, 26]) ? 'generation' : ''; */?> <?= in_array($data->status, [19, 23]) ? 'unique' : ''; ?>">
 				<img src="//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/imgHorse/<?= $data->image; ?>" />
 				<?php if (!in_array($data->status, [19, 23]) || (in_array($data->status, [19, 23]) && $amount == 0)) { ?>
-					<a class="generate_one btn btn-info" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=generate_one&id=<?= $data->id; ?>&type=<?= $_GET['type']; ?>">Lav én</a>
+					<a class="generate_one btn btn-info"
+						href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=generate_one&id=<?= $data->id; ?>&type=<?= $_GET['type']; ?>">Lav
+						én</a>
 				<?php } ?>
-				<a class="alter_gen btn <?= in_array($data->status, [21, 22, 23, 26]) ? 'btn-danger' : 'btn-success'; ?>" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [21, 22, 23, 26]) ? 'deaktivate' : 'activate'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><?= in_array($data->status, [21, 22, 23, 26]) ? 'Genfød ikke' : 'Genfød'; ?></a>
+				<a class="alter_gen btn <?= in_array($data->status, [21, 22, 23, 26]) ? 'btn-danger' : 'btn-success'; ?>"
+					href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [21, 22, 23, 26]) ? 'deaktivate' : 'activate'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">
+					<?= in_array($data->status, [21, 22, 23, 26]) ? 'Genfød ikke' : 'Genfød'; ?>
+				</a>
 				<?php if ($age_type !== 'foel') { ?>
-					<a class="unique_ness btn <?= in_array($data->status, [20, 21, 22, 24]) ? 'btn-success' : 'btn-danger'; ?>" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [20, 21, 22, 24]) ? 'make_unique' : 'make_normal'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><?= in_array($data->status, [20, 21, 22, 24]) ? 'Unik' : 'Normal'; ?></a>
-				<?php
+					<a class="unique_ness btn <?= in_array($data->status, [20, 21, 22, 24]) ? 'btn-success' : 'btn-danger'; ?>"
+						href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [20, 21, 22, 24]) ? 'make_unique' : 'make_normal'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">
+						<?= in_array($data->status, [20, 21, 22, 24]) ? 'Unik' : 'Normal'; ?>
+					</a>
+					<?php
 				} ?>
 				<!-- TO DO: finish -->
-				<a class="race btn btn-info" href="/admin/hestetegner/change_generation_race.php?id=<?= $data->id; ?>">ID: <?= $data->id; ?></a>
-				<a class="archive btn btn-danger" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=archive&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">Arkiver</a>
-				<a class="alter_type btn btn-info" href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [25, 26]) ? 'make_adult' : 'make_foel'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><?= in_array($data->status, [25, 26]) ? 'Bliv Hest' : 'Bliv Føl'; ?></a>
+				<a class="race btn btn-info" href="/admin/hestetegner/change_generation_race.php?id=<?= $data->id; ?>">ID:
+					<?= $data->id; ?>
+				</a>
+				<a class="archive btn btn-danger"
+					href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=archive&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">Arkiver</a>
+				<a class="alter_type btn btn-info"
+					href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [25, 26]) ? 'make_adult' : 'make_foel'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">
+					<?= in_array($data->status, [25, 26]) ? 'Bliv Hest' : 'Bliv Føl'; ?>
+				</a>
 				<div class="gender" style="overflow:hidden;height:32px;" onclick="slide_gender_toggle(this);">
 					<?php if ($genders == 2) { ?>
 						<i class="fa fa-mars fa-2x" style="color:#0f66b4; display:block;"></i></a>
-						<a href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_venus&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i class="fa fa-venus fa-2x" style="color:#bd362f; display:block;"></i></a>
-						<a href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_trans&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i class="fa fa-transgender fa-2x" style="color:#51a351; display:block;"></i></a>
+						<a
+							href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_venus&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i
+								class="fa fa-venus fa-2x" style="color:#bd362f; display:block;"></i></a>
+						<a
+							href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_trans&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i
+								class="fa fa-transgender fa-2x" style="color:#51a351; display:block;"></i></a>
 					<?php } else if ($genders == 3) { ?>
-						<i class="fa fa-venus fa-2x" style="color:#bd362f; display:block;"></i>
-						<a href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_mars&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i class="fa fa-mars fa-2x" style="color:#0f66b4; display:block;"></i></a>
-						<a href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_trans&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i class="fa fa-transgender fa-2x" style="color:#51a351; display:block;"></i></a>
+							<i class="fa fa-venus fa-2x" style="color:#bd362f; display:block;"></i>
+							<a
+								href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_mars&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i
+									class="fa fa-mars fa-2x" style="color:#0f66b4; display:block;"></i></a>
+							<a
+								href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_trans&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i
+									class="fa fa-transgender fa-2x" style="color:#51a351; display:block;"></i></a>
 					<?php } else if ($genders == 1) { ?>
-						<i class="fa fa-transgender fa-2x" style="color:#51a351; display:block;"></i>
-						<a href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_mars&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i class="fa fa-mars fa-2x" style="color:#0f66b4; display:block;"></i></a>
-						<a href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_venus&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i class="fa fa-venus fa-2x" style="color:#bd362f; display:block;"></i></a>
+								<i class="fa fa-transgender fa-2x" style="color:#51a351; display:block;"></i>
+								<a
+									href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_mars&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i
+										class="fa fa-mars fa-2x" style="color:#0f66b4; display:block;"></i></a>
+								<a
+									href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=make_venus&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>"><i
+										class="fa fa-venus fa-2x" style="color:#bd362f; display:block;"></i></a>
 					<?php } ?>
 				</div>
 			</li>
-		<?php
+			<?php
 		}
 		?>
 	</ul>
@@ -413,8 +452,8 @@ $selected_race = substr($_GET['race'], 1, -1);
 				<input id="switch_type_race__thumb" type="hidden" name="thumb" value="" />
 				<?php
 				foreach (array_sorter($cached_races, 'name', true) as $race) {
-				?><input class="btn btn-info" type="submit" value="<?= $race['name']; ?>" name="extra_race" />
-				<?php }	?>
+					?><input class="btn btn-info" type="submit" value="<?= $race['name']; ?>" name="extra_race" />
+				<?php } ?>
 			</form>
 		</div>
 	</div>
