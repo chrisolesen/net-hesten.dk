@@ -17,9 +17,15 @@ $selected_race = substr($_GET['race'], 1, -1);
 <a href="/admin/hestetegner/admin_types_version_two.php">Tilbage</a><br />
 <?php
 if (filter_input(INPUT_GET, 'show_archive') == 'true') {
-	?><a href='/admin/hestetegner/change_generation_status_version_two.php?race=<?=$_GET['race'];?>&type=<?=$_GET['type'];?>'>Skift til live</a><br /><?php
+	?><a
+		href='/admin/hestetegner/change_generation_status_version_two.php?race=<?= $_GET['race']; ?>&type=<?= $_GET['type']; ?>'>Skift
+		til live</a><br />
+	<?php
 } else {
-	?><a href='/admin/hestetegner/change_generation_status_version_two.php?race=<?=$_GET['race'];?>&type=<?=$_GET['type'];?>&show_archive=true'>Skift til arkiv</a><br /><?php
+	?><a
+		href='/admin/hestetegner/change_generation_status_version_two.php?race=<?= $_GET['race']; ?>&type=<?= $_GET['type']; ?>&show_archive=true'>Skift
+		til arkiv</a><br />
+	<?php
 }
 ?>
 <br />
@@ -156,15 +162,15 @@ if (filter_input(INPUT_GET, 'show_archive') == 'true') {
 		if (isset($_GET['do'])) {
 			$thumb = filter_input(INPUT_GET, 'thumb');
 			/*
-					   19	type_unique
-					   20	type_generation
-					   21	type_rebirth
-					   22	type_rebirth_generation
-					   23	type_rebirth_unique
-					   24	type_ordinary
-					   25	type_foel
-					   26	type_foel_rebirth
-				  */
+								19	type_unique
+								20	type_generation
+								21	type_rebirth
+								22	type_rebirth_generation
+								23	type_rebirth_unique
+								24	type_ordinary
+								25	type_foel
+								26	type_foel_rebirth
+						   */
 			//	&do=<?= (in_array($data->status, [21, 22, 23]) ? 'deaktivate' : 'activate')
 		
 		}
@@ -243,6 +249,10 @@ if (filter_input(INPUT_GET, 'show_archive') == 'true') {
 
 		if (filter_input(INPUT_GET, 'do') === 'archive') {
 			$result = $link_new->query("UPDATE `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` SET `archived` = 1 WHERE `image` = '{$thumb}' LIMIT 1");
+		}
+
+		if (filter_input(INPUT_GET, 'do') === 'un_archive') {
+			$result = $link_new->query("UPDATE `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` SET `archived` = 0 WHERE `image` = '{$thumb}' LIMIT 1");
 		}
 
 		if (filter_input(INPUT_GET, 'do') === 'make_mars') {
@@ -356,17 +366,17 @@ if (filter_input(INPUT_GET, 'show_archive') == 'true') {
 
 			$genders = $data->allowed_gender;
 			/*
-					   19	type_unique
-					   20	type_generation
-					   21	type_rebirth
-					   22	type_rebirth_generation
-					   23	type_rebirth_unique
-					   24	type_ordinary
-					   25	type_foel
-					   26	type_foel_rebirth
+								19	type_unique
+								20	type_generation
+								21	type_rebirth
+								22	type_rebirth_generation
+								23	type_rebirth_unique
+								24	type_ordinary
+								25	type_foel
+								26	type_foel_rebirth
 
-					   20,21,22,24
-				  */
+								20,21,22,24
+						   */
 			?>
 			<li title="Type ID: <?= $data->id; ?>" data-horse-thumb="<?= $data->image; ?>"
 				class="<?= in_array($data->status, [21, 22, 23, 26]) ? 'rebirth' : ''; ?> <?php /*= in_array($data->status, [20, 22, 26]) ? 'generation' : ''; */?> <?= in_array($data->status, [19, 23]) ? 'unique' : ''; ?>">
@@ -391,8 +401,20 @@ if (filter_input(INPUT_GET, 'show_archive') == 'true') {
 				<a class="race btn btn-info" href="/admin/hestetegner/change_generation_race.php?id=<?= $data->id; ?>">ID:
 					<?= $data->id; ?>
 				</a>
-				<a class="archive btn btn-danger"
-					href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=archive&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">Arkiver</a>
+				<?php
+
+				if (filter_input(INPUT_GET, 'show_archive') == 'true') {
+					?>
+					<a class="archive btn btn-danger"
+						href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=un_archive&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">Af arkiver</a>
+					<?php
+				} else {
+					?>
+					<a class="archive btn btn-danger"
+						href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=archive&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">Arkiver</a>
+					<?php
+				}
+				?>
 				<a class="alter_type btn btn-info"
 					href="/admin/hestetegner/change_generation_status_version_two.php?race='<?= $selected_race; ?>'&do=<?= (in_array($data->status, [25, 26]) ? 'make_adult' : 'make_foel'); ?>&thumb=<?= $data->image; ?>&type=<?= $_GET['type']; ?>">
 					<?= in_array($data->status, [25, 26]) ? 'Bliv Hest' : 'Bliv Føl'; ?>
