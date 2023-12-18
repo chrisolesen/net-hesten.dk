@@ -326,8 +326,14 @@ $selected_race = substr($_GET['race'], 1, -1);
 					continue;
 				}
 			}
-			if ($data->archived) {
-				continue;
+			if(filter_input(INPUT_GET, 'show_archive') == 'true'){
+				if (!$data->archived) {
+					continue;
+				}
+			} else {
+				if ($data->archived) {
+					continue;
+				}
 			}
 			if (in_array($data->status, [19, 23])) {/* Unique */
 				$amount = $link_new->query("SELECT count(`id`) AS `amount` 
