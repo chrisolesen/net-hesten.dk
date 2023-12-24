@@ -107,7 +107,7 @@ class artist_center
 				/* don't expose error messages */
 				$uploadOk = 0;
 			}
-			if ($attr['file']["size"] > 250000) {
+			if ($attr['file']["size"] > 450000) {
 				/* don't expose error messages */
 				$uploadOk = 0;
 			}
