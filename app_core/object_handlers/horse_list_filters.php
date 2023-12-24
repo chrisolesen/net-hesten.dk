@@ -210,12 +210,12 @@ class horse_list_filters
 				?>
 				<option value="all" <?= (in_array('all', $user_filter_data[$attr['zone']]['races']) ? 'SELECTED' : ''); ?>>Alle Racer</option>
 			</select>
-			<div class="filter_line">
+		<!--	<div class="filter_line">
 				<label for="filter_id">
 					ID
 				</label>
 				<input type="text" name="id" id="filter_id" value="" />
-			</div>
+			</div>-->
 			<?php if (in_array($match_zone, $filter_zone_match_array['name'])) { ?>
 				<div class="filter_line">
 					<label for="filter_name">
