@@ -75,8 +75,8 @@ if (isset($_FILES['fileToUpload'])) {
 	}
 	// Check file size
 
-	if ($_FILES["fileToUpload"]["size"] > 250000) {
-		echo "Beklager, din fil er for stor, den må maksimalt være 250kb.";
+	if ($_FILES["fileToUpload"]["size"] > 450000) {
+		echo "Beklager, din fil er for stor, den må maksimalt være 450kb.";
 		$uploadOk = 0;
 	}
 	// Allow certain file formats
