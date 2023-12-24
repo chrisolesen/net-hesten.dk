@@ -168,6 +168,9 @@ class horses
 			if ($username == 'hestehandleren') {
 				if (isset($attr['id_filter'])) {
 					unset($attr['id_filter']);
+					echo "Godt forsøgt bedre held næste gang!";
+					exit();
+					return false;
 				}
 			}
 
