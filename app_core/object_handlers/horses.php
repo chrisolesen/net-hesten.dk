@@ -69,10 +69,10 @@ class horses
 		}
 
 		if (
-			mb_strtolower($target_horse_data->status) == 'død'
-			|| mb_strtolower($target_horse_data->status) == 'føl'
+			mb_strtolower($target_horse_data->status) == 'død' 
+			|| mb_strtolower($target_horse_data->status) == 'føl' 
 			|| mb_strtolower($target_horse_data->kon) != 'hingst'
-			|| mb_strtolower($target_horse_data->race) != mb_strtolower($horse_data->race)
+			|| mb_strtolower($target_horse_data->race) != mb_strtolower($horse_data->race) 		
 		) {
 			return ["Venligst ikke snyd.", 'error'];
 		}
@@ -165,13 +165,6 @@ class horses
 		if (isset($attr['user_name'])) {
 			$username = $attr['user_name'];
 
-			if ($username == 'hestehandleren') {
-				if (isset($attr['id_filter'])) {
-					unset($attr['id_filter']);
-					return false;
-				}
-			}
-
 			$sql = "SELECT 
 			`heste`.`foersteplads` AS `gold_medal`, 
 			`heste`.`andenplads` AS `silver_medal`, 
@@ -219,7 +212,7 @@ class horses
 				. (isset($attr['custom_filter']) ? "{$attr['custom_filter']} " : '')
 				. (isset($attr['id_filter']) ? 'AND `id` = ' . $attr['id_filter'] . ' ' : '');
 			if (!($attr['custom_order'] ?? false)) {
-				$sql .= (($username == 'hestehandleren' && ($attr['noorder'] ?? false) == true) ? 'ORDER BY rand() ' : '')
+				$sql .= (($username == 'hestehandleren' && ($attr['noorder'] ?? false) == true) ? 'ORDER BY rand() '  : '')
 					. ((isset($attr['custom_filter']) && $username == 'hestehandleren') ? "ORDER BY `date` DESC " : '')
 					. ($username !== 'hestehandleren' ? "ORDER BY `unik` DESC, `original` DESC, `status` DESC, `alder` ASC " : '');
 			} else {
