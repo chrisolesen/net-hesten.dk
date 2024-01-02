@@ -7,7 +7,7 @@ if ($index_caller !== true) {
 
 if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 
-	$sql = "SELECT `morid` AS `mother`, `farid` AS `father` 
+	$sql = "SELECT CAST(`morid` AS UNSIGNED)  AS `mother`, CAST(`farid` AS UNSIGNED) AS `father` 
 	FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 	WHERE `id` = {$horse_id} 
 	LIMIT 1";
@@ -30,13 +30,6 @@ if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 	OR `id` IN (0,{$parents->father},{$parents->mother}) -- Parents 
 	OR (`farid` = {$parents->father} AND `farid` <> 0) OR (`morid` = {$parents->mother} AND `morid` <> 0) -- Siblings
 	";
-
-
-	if (filter_input(INPUT_GET, 'debug') == 'test_dev') {
-		echo $sql;
-		var_dump($parents);
-		exit();
-	}
 
 	$result = $link_new->query($sql);
 
