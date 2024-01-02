@@ -34,6 +34,7 @@ if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 
 	if (filter_input(INPUT_GET, 'debug') == 'test_dev') {
 		echo $sql;
+		var_dump($parents);
 		exit();
 	}
 
