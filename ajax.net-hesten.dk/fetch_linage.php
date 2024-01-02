@@ -28,7 +28,7 @@ if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 	`farid` = {$horse_id} OR `morid` = {$horse_id} -- Children 
 	OR `id` = {$horse_id} -- SELF  
 	OR `id` IN (0,{$parents->father},{$parents->mother}) -- Parents 
-	OR `farid` = {$parents->father} OR `morid` = {$parents->mother} -- Siblings
+	OR (`farid` = {$parents->father} AND `farid` <> 0) OR (`morid` = {$parents->mother} AND `morid` <> 0) -- Siblings
 	";
 
 	$result = $link_new->query($sql);
