@@ -31,6 +31,12 @@ if (($horse_id = filter_input(INPUT_GET, 'horse_id'))) {
 	OR (`farid` = {$parents->father} AND `farid` <> 0) OR (`morid` = {$parents->mother} AND `morid` <> 0) -- Siblings
 	";
 
+
+	if (filter_input(INPUT_GET, 'debug') == 'test_dev') {
+		echo $sql;
+		exit();
+	}
+
 	$result = $link_new->query($sql);
 
 	$return_data = [];
