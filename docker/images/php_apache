@@ -1,0 +1,23 @@
+FROM php:apache
+
+# Install supervisord
+RUN apt-get update && apt-get install -y supervisor && rm -rf /var/lib/apt/lists/*
+
+# Install MariaDB 
+RUN apt-get update && apt-get install mariadb-server -y && rm -rf /var/lib/apt/lists/*
+RUN update-rc.d mariadb defaults
+
+RUN service mariadb start \
+    && until mysqladmin ping -hlocalhost; do sleep 2; done \
+    && mariadb -u root \
+    && mysql -e "DROP DATABASE IF EXISTS nh_new;" \
+    && mysql -e "DROP DATABASE IF EXISTS nh_old;" \
+    && mysql -e "DROP USER IF EXISTS 'nh_dbu'@'localhost';" \
+    && mysql -e "CREATE DATABASE nh_new;" \
+    && mysql -e "CREATE DATABASE nh_old;" \
+    && mysql -e "CREATE USER 'nh_dbu'@'localhost' IDENTIFIED BY 'root';" \
+    && mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'nh_dbu'@'localhost' IDENTIFIED BY 'root';"
+
+# Install PHP Extentions
+RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install pdo pdo_mysql

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+
+  net-hesten.local:
+    image: php:apache
+    build:
+      context: .
+      dockerfile: docker/images/php_apache
+    ports:
+      - 80:80
+    volumes:
+      - ./:/var/www/html/
+      - ./docker/servers/php_apache/vhosts.conf:/etc/apache2/sites-enabled/vhosts.conf  # Mount custom vhosts file
+      - ./docker/servers/php_apache/mariadb_data:/etc/mysql
+      - ./docker/servers/php_apache/supervisord/logs:/var/log/supervisord
+      - ./docker/images/php_apache_supervisord.conf:/etc/supervisor/conf.d/supervisord.conf:ro  # Mount supervisord configuration file
+    networks:
+      default:
+        aliases:
+          - net-hesten.local # The main URL 
+          - ajax.net-hesten.local # All AJAX interactions cross this domain
+          - files.net-hesten.local # All static or even semi-static resoures are located here for easy and effective end client caching 
+          - unit-tests.net-hesten.local # For automated deploy tests
+          - install.net-hesten.local # Only used on local enviroments 
+    command: ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+
+volumes:
+  mariadb_data:

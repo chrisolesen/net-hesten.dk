@@ -35,3 +35,12 @@
 
 #htaccess
 /net-hesten.dk/.htaccess
+
+#Docker content
+/docker/servers/php_apache/mariadb_data/*
+!/docker/servers/php_apache/mariadb_data/.gitkeep
+/docker/servers/php_apache/supervisord/logs/*
+!/docker/servers/php_apache/supervisord/logs/.gitkeep
+
+# this should be moved to the supervisord logs folder but I can be bothered and V1 is stabile now :-)
+supervisord.pid 
