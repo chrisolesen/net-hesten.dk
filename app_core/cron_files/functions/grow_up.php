@@ -59,10 +59,23 @@ while ($data = $result->fetch_assoc()) {
 			$tilskrevet = $nyalder - $poalder->alder;
 
 			//------pluk en tilfældig thumb fra hestene i databasen-----------------------------------------
+
+			/*			
 			$thumb_data = $link_new->query("SELECT `tegner`, `thumb` 
 			FROM `{$GLOBALS['DB_NAME_OLD']}`.`Heste` 
 			WHERE `bruger` <> 'Hestehandleren*' AND `bruger` <> '{$Foelbox}' AND `race` = '$nyrace' AND `status` <> 'føl' AND `genfodes` = 'ja' AND `unik` <> 'ja' 
 			ORDER BY RAND() LIMIT 1 ");
+			*/
+
+			$thumb_data = $link_new->query("SELECT u.stutteri AS `tegner`,CONCAT('/imgHorse/',t.image) AS `thumb` 
+			FROM praktisk_nethest_new.horse_types t
+			INNER JOIN praktisk_nethest_old_db.Brugere u ON u.id IN (t.artists)
+			WHERE t.race = (SELECT race FROM `praktisk_nethest_old_db`.`Heste` WHERE id = {$nyid})
+			AND t.`status` IN (SELECT id FROM praktisk_nethest_new.game_data_status_codes s WHERE s.`name` IN ('type_rebirth','type_rebirth_generation'))
+			AND t.artists <> 0 
+			AND u.stutteri <> '' AND u.stutteri IS NOT NULL 
+			ORDER BY RAND() LIMIT 1");
+
 			$rand_heste_thumb = $thumb_data->fetch_object();
 			if ($rand_heste_thumb) {
 				//-----------SæT VARIABLER---------------------------------------
