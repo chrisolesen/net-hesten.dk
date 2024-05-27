@@ -35,7 +35,7 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_adm
 	<?php
 	if (in_array('admin_template_helper', $_SESSION['rights'])) {
 		?>
-		<a href='/admin/hestetegner/finish_type_addition.php'>Færdigør tilføjelser (<?= $number_of_new; ?>)</a>
+		<a class="btn btn-info" href='/admin/hestetegner/finish_type_addition.php'>Færdigør tilføjelser</a>
 		<a class="btn btn-info" href="/admin/hestetegner/submitted_horses.php">Vis indsendte heste (v2.0)</a>
 	<?php
 	}
