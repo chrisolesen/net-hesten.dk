@@ -13,7 +13,6 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_adm
 }
 $Foelbox = 'Følkassen';
 $Foel = 'Føl';
-$selected_race = substr($_GET['race'], 1, -1);
 ?>
 <a href="/admin/hestetegner/admin_types_version_two.php">Tilbage</a><br /><br />
 <section>
@@ -83,8 +82,12 @@ $selected_race = substr($_GET['race'], 1, -1);
 				$link_new->query($sql);
 			}
 		}
+		
 
-		$sql = "SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` WHERE (`status` IS NULL OR `race` IS NUll) AND `id` > 7000";
+		//$sql = "SELECT * FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_types` WHERE (`status` IS NULL OR `race` IS NUll) AND `id` > 7000";
+		$sql = "SELECT ht.*,b.stutteri FROM praktisk_nethest_new.`horse_types` ht
+		LEFT JOIN praktisk_nethest_old_db.Brugere b on b.id = ht.artists
+		WHERE (ht.`status` IS NULL OR ht.`race` IS NUll) AND ht.`id` > 7000";
 		$result = $link_new->query($sql);
 		$races = '';
 		while ($data = $result->fetch_object()) {
@@ -107,7 +110,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 						src="<?= $protocol; ?>//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/horses/imgs/<?= $data->image; ?>" />
 					<div style="float:left;width:200px;">
 						<label>Race</label><input type="text" list="horse_races" name="race" />
-						<label>Tegner</label><input type="text" list="usernames" name="artist" />
+						<label>Tegner</label><input type="text" list="usernames" name="artist" <?= ($data->stutteri ? "value='{$data->stutteri}'" : ''); ?> />
 						<label>status</label><select name="status">
 							<option value="22">Hest genereres</option>
 							<option value="26">Føl genereres</option>
