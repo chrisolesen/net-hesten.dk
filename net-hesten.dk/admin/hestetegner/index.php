@@ -32,6 +32,13 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_adm
 	<?php
 	}
 	?>
+	<?php
+	if (in_array('admin_template_helper', $_SESSION['rights'])) {
+	?>
+		<a class="btn btn-info" href="/admin/hestetegner/submitted_horses.php">Vis indsendte heste (v2.0)</a>
+	<?php
+	}
+	?>
 </section>
 <?php
 if (in_array('global_admin', $_SESSION['rights']) || in_array('hestetegner_admin', $_SESSION['rights'])) {
