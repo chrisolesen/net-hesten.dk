@@ -6,7 +6,7 @@ require "{$basepath}/app_core/object_loader.php";
 require "{$basepath}/global_modules/header.php";
 ?>
 <?php
-if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', ($_SESSION['rights'] ?? []))) {
+if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_admin', ($_SESSION['rights'] ?? [])) && !in_array('admin_template_helper', ($_SESSION['rights'] ?? []))) {
 	ob_end_clean();
 	header('Location: /');
 	exit();
@@ -89,21 +89,22 @@ $selected_race = substr($_GET['race'], 1, -1);
 		$races = '';
 		while ($data = $result->fetch_object()) {
 			/*
-			  19	type_unique
-			  20	type_generation
-			  21	type_rebirth
-			  22	type_rebirth_generation
-			  23	type_rebirth_unique
-			  24	type_ordinary
-			  25	type_foel
-			  26	type_foel_rebirth
-			 */
+					   19	type_unique
+					   20	type_generation
+					   21	type_rebirth
+					   22	type_rebirth_generation
+					   23	type_rebirth_unique
+					   24	type_ordinary
+					   25	type_foel
+					   26	type_foel_rebirth
+					  */
 			$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https:" : "http:";
-		?>
+			?>
 			<li>
 				<form action="" method="POST">
 					<input type="hidden" name="id" value="<?= $data->id; ?>" />
-					<img style="float:left;" src="<?= $protocol; ?>//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/horses/imgs/<?= $data->image; ?>" />
+					<img style="float:left;"
+						src="<?= $protocol; ?>//files.<?= filter_input(INPUT_SERVER, 'HTTP_HOST'); ?>/horses/imgs/<?= $data->image; ?>" />
 					<div style="float:left;width:200px;">
 						<label>Race</label><input type="text" list="horse_races" name="race" />
 						<label>Tegner</label><input type="text" list="usernames" name="artist" />
@@ -118,7 +119,7 @@ $selected_race = substr($_GET['race'], 1, -1);
 					</div>
 				</form>
 			</li>
-		<?php
+			<?php
 		}
 		?>
 	</ul>
@@ -126,19 +127,19 @@ $selected_race = substr($_GET['race'], 1, -1);
 		<?php
 		$result = $link_new->query("SELECT `stutteri` FROM `{$GLOBALS['DB_NAME_OLD']}`.`Brugere`");
 		while ($data = $result->fetch_object()) {
-		?>
+			?>
 			<option value="<?= $data->stutteri; ?>" /><?php
-													}
-														?>
+		}
+		?>
 	</datalist>
 	<datalist id="horse_races">
 		<?php
 		$result = $link_new->query("SELECT `name` FROM `{$GLOBALS['DB_NAME_NEW']}`.`horse_races`");
 		while ($data = $result->fetch_object()) {
-		?>
+			?>
 			<option value="<?= $data->name; ?>" /><?php
-												}
-													?>
+		}
+		?>
 	</datalist>
 </section>
 <?php

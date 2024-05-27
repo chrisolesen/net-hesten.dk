@@ -29,12 +29,13 @@ if (!in_array('global_admin', $_SESSION['rights']) && !in_array('hestetegner_adm
 		<a class="btn btn-info" href="/admin/hestetegner/edit_horse.php">Rediger enkelt hest</a>
 		<a class="btn btn-info" href="/admin/hestetegner/list_indsendte.php">Vis indsendte heste (v1.0)</a>
 		<a class="btn btn-info" href="/admin/hestetegner/submitted_horses.php">Vis indsendte heste (v2.0)</a>
-	<?php
+		<?php
 	}
 	?>
 	<?php
 	if (in_array('admin_template_helper', $_SESSION['rights'])) {
-	?>
+		?>
+		<a href='/admin/hestetegner/finish_type_addition.php'>Færdigør tilføjelser (<?= $number_of_new; ?>)</a>
 		<a class="btn btn-info" href="/admin/hestetegner/submitted_horses.php">Vis indsendte heste (v2.0)</a>
 	<?php
 	}
